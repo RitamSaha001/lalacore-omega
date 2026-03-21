@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-02-26T12:46:24.201312+00:00",
+  "total_questions": 410,
+  "expected_covered": 17,
+  "correct_on_expected": 17,
+  "accuracy_on_expected": 1.0,
+  "verified_true": 67,
+  "overconfidence_count": 0,
+  "single_provider_count": 0,
+  "persona_integrity_rate": 1.0,
+  "risk_mean": 0.8660110590227584,
+  "entropy_mean": 0.38065854249155434,
+  "wrong_questions": [],
+  "ingest_process_result": {}
+}

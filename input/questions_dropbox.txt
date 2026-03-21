@@ -1,0 +1,11 @@
+# One question per line. Lines starting with # are ignored.
+Find the constant term in (2x^2 - 3/x)^6.
+Find the constant term in (x^3 + 2/x)^9.
+Find the constant term in (3x - 1/x^2)^8.
+Find the constant term in (x^4 - 2/x)^7.
+Find the constant term in (2x^3 + 1/x^2)^10.
+Find the constant term in (x^2 - 3/x)^9.
+Find the constant term in (4x^2 + 1/x)^8.
+Find the constant term in (x^5 - 1/x^2)^7.
+Find the constant term in (3x^3 + 2/x)^8.
+Find the constant term in (x^2 + 4/x)^10.

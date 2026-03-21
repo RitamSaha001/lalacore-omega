@@ -1,0 +1,3322 @@
+[
+  {
+    "question_id": "imp_q_22",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statements is/are correct?",
+    "question_text_latex": "Which of the following statements is/are correct?",
+    "options": [
+      {
+        "label": "A",
+        "text": "There exists a function f : [0,1] \\to \\mathbb{\\mathbb{\\mathbbfrac(R)}} which is discontinuous at every point in [0,1] and |f(x)| is continuous at every point in [0,1]"
+      },
+      {
+        "label": "B",
+        "text": "Let F(x) = f(x) \\cdot g(x). If f(x) is differentiable at x = a, f(a) = 0 and g(x) is continuous at x = a, then F(x) is always differentiable at x = a."
+      },
+      {
+        "label": "C",
+        "text": "If f'(\\mathbb{\\mathbbfrac(R)}) a = 2 and f'(1) a = 3, then f(x) is non-differentiable at x = a but will be always continuous at x = a."
+      },
+      {
+        "label": "D",
+        "text": "If f(a) and f(b) possess opposite signs, then there must exist at least one of the equation f(x) = 0 in (a,b) provided f is continuous on [a,b]."
+      }
+    ],
+    "options_latex": {
+      "A": "There exists a function f : [0,1] \\to \\mathbb{R} \\text{ which is discontinuous at every point in } [0,1] \\text{ and } |f(x)| \\text{ is continuous at every point in } [0,1]",
+      "B": "Let F(x) = f(x) \\cdot g(x). \\text{ If } f(x) \\text{ is differentiable at } x = a, f(a) = 0 \\text{ and } g(x) \\text{ is continuous at } x = a, \\text{ then } F(x) \\text{ is always differentiable at } x = a.",
+      "C": "If f'(R) a = 2 \\text{ and } f'(L) a = 3, \\text{ then } f(x) \\text{ is non-differentiable at } x = a \\text{ but will be always continuous at } x = a.",
+      "D": "If f(a) \\text{ and } f(b) \\text{ possess opposite signs, then there must exist at least one solution of the equation } f(x) = 0 \\text{ in } (a,b) \\text{ provided } f \\text{ is continuous on } [a,b]."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_layer7_numeric_rules",
+      "layer7_option_layer7_artifact_rules",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:36:22+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_34",
+    "type": "MCQ_SINGLE",
+    "question_text": "List-1 List-II",
+    "question_text_latex": "List-I List-II",
+    "options": [
+      {
+        "label": "A",
+        "text": "(P)→3, (\\mathbb{\\mathbbfrac(Q)})→2, (\\mathbb{\\mathbbfrac(R)})→1, (S)→3"
+      },
+      {
+        "label": "B",
+        "text": "(P)→4, (\\mathbb{\\mathbbfrac(Q)})→1, (\\mathbb{\\mathbbfrac(R)})→2, (S)→4"
+      },
+      {
+        "label": "C",
+        "text": "(P)→3, (\\mathbb{\\mathbbfrac(Q)})→1, (\\mathbb{\\mathbbfrac(R)})→2, (S)→3"
+      },
+      {
+        "label": "D",
+        "text": "(P)→2, (\\mathbb{\\mathbbfrac(Q)})→2, (\\mathbb{\\mathbbfrac(R)})→1, (S)→3"
+      }
+    ],
+    "options_latex": {
+      "A": "(P)->3, (Q)->2, (R)->1, (S)->3",
+      "B": "(P)->4, (Q)->1, (R)->2, (S)->4",
+      "C": "(P)->3, (Q)->1, (R)->2, (S)->3",
+      "D": "(P)->2, (Q)->2, (R)->1, (S)->3"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Application of Derivatives",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "similarity_repaired",
+      "layer4_l1_token_repair",
+      "symbol_normalized",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer7_numeric_rules",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Application of Derivatives"
+    ],
+    "detected_issues": [
+      "truncated_list_match"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:59+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:37:15+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_26",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statement(s) is(are) correct?",
+    "question_text_latex": "Which of the following statement(s) is(are) correct?",
+    "options": [
+      {
+        "label": "A",
+        "text": "If f is a one-one mapping from set A to A, then f is onto."
+      },
+      {
+        "label": "B",
+        "text": "If f is an onto mapping from set A to A, then f is one-one."
+      },
+      {
+        "label": "C",
+        "text": "Let f and g be two functions defined from A to B such that g \\circ f is injective, then f must be injective."
+      },
+      {
+        "label": "D",
+        "text": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8."
+      }
+    ],
+    "options_latex": {
+      "A": "If \\ f \\text{ is a one-one mapping from set } A \\text{ to } A, \\text{ then } f \\text{ is onto.}",
+      "B": "If \\ f \\text{ is an onto mapping from set } A \\text{ to } A, \\text{ then } f \\text{ is one-one.}",
+      "C": "Let \\ f \\text{ and } g \\text{ be two functions defined from } A \\text{ to } B \\text{ such that } g \\circ f \\text{ is injective, then } f \\text{ must be injective.}",
+      "D": "If \\text{ set } A \\text{ contains } 3 \\text{ elements while set } B \\text{ contains } 2 \\text{ elements, then total number of functions from } A \\text{ to } B \\text{ is } 8."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required."
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:04+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:41:45+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_65",
+    "type": "MCQ_SINGLE",
+    "question_text": "The number of bijective functions f: {1, 3, 5, 7, e \\times t{...}, 99} 0 {2, 4, 6, 8, e \\times t{...}, 100}, such that",
+    "question_text_latex": "The number of bijective functions f: \\{1, 3, 5, 7, \\ldots, 99\\} \\to \\{2, 4, 6, 8, \\ldots, 100\\}, \\text{ such that}",
+    "options": [
+      {
+        "label": "A",
+        "text": "50P17 (2) 50P33 (3) 33! * 17! (4) 50! 2"
+      },
+      {
+        "label": "C",
+        "text": "(9) (15) (21) \\ldots (99) f^2 f^2 f \\geq \\geq \\geq \\geq \\geq , is. [JEE (Main) 2022]"
+      }
+    ],
+    "options_latex": {
+      "A": "50P17 (2) 50P33 (3) 33! \\cdot 17! (4) 50! 2",
+      "B": "",
+      "C": "(9) (15) (21) \\ldots (99) f^2 f^2 f \\geq \\geq \\geq \\geq \\geq , \\text{ is. [JEE (Main) 2022]}",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_numeric_rules",
+      "layer7_set_rules"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:06+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.914,
+      "processed_at": "2026-03-07T13:44:02+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_88",
+    "type": "MCQ_SINGLE",
+    "question_text": "The function f: [0,3] -> [1,29], defined by f(x) = 2*x^3 - 15*x^2 + 36*x + 1, is : floor(IIT JEE 2012)",
+    "question_text_latex": "The function f: [0,3] \\to [1,29], defined by f(x) = 2x^{3} - 15x^{2} + 36x + 1, is : [IIT JEE 2012]",
+    "options": [
+      {
+        "label": "A",
+        "text": "one-one and onto"
+      },
+      {
+        "label": "B",
+        "text": "onto but not one-one"
+      },
+      {
+        "label": "C",
+        "text": "one-one but not onto"
+      },
+      {
+        "label": "D",
+        "text": "neither one-one nor onto"
+      }
+    ],
+    "options_latex": {
+      "A": "one-one and onto",
+      "B": "onto but not one-one",
+      "C": "one-one but not onto",
+      "D": "neither one-one nor onto"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.375,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "layer4_post_ai_verify",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.625,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "unbalanced_parenthesis"
+    ],
+    "structural_integrity_score": 0.625,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:06+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.952,
+      "processed_at": "2026-03-07T13:45:01+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 0.8333,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.8333,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.625,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 0.8333,
+        "fragments": 6,
+        "valid": 5
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.8333
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.625
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_21",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let \\mathbb{\\mathbbfrac(R)} be a relation from \\mathbb{\\mathbbfrac(R)} (Set of real numbers) to \\mathbb{\\mathbbfrac(R)} defined by \\mathbb{\\mathbbfrac(R)} = {(x, y) | x, y ∈ \\mathbb{\\mathbbfrac(R)} and x*y is an irrational number}. Then which of the following is/are incorrect?",
+    "question_text_latex": "Let r be a relation from \\mathbb{R} \\text{ (Set of real numbers)} to \\mathbb{R} \\text{ defined by } r = \\{(x, y) \\mid x, y \\in \\mathbb{R} \\text{ and } xy \\text{ is an irrational number}\\}. \\text{ Then which of the following is/are incorrect?}",
+    "options": [
+      {
+        "label": "A",
+        "text": "relation is reflexive and symmetric only"
+      },
+      {
+        "label": "B",
+        "text": "relation is symmetric only"
+      },
+      {
+        "label": "C",
+        "text": "relation is symmetric and transitive only"
+      },
+      {
+        "label": "D",
+        "text": "relation is an equivalence relation"
+      }
+    ],
+    "options_latex": {
+      "A": "relation is reflexive and symmetric only",
+      "B": "relation is symmetric only",
+      "C": "relation is symmetric and transitive only",
+      "D": "relation is an equivalence relation"
+    },
+    "correct_answer": {
+      "single": "B",
+      "multiple": [
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented",
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_multiplication_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "unbalanced_parenthesis",
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:08+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.874,
+      "processed_at": "2026-03-07T13:46:13+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_24",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let A = \\mathbb{\\mathbbfrac(Z)}, the set of integers. Let \\mathbb{\\mathbbfrac(R)}1 = {(m, \\mathbb{\\mathbbfrac(N)}) ∈ \\mathbb{\\mathbbfrac(Z)} * \\mathbb{\\mathbbfrac(Z)}: (m + 4*\\mathbb{\\mathbbfrac(N)}) is divisible by 5 in \\mathbb{\\mathbbfrac(Z)}}. Let \\mathbb{\\mathbbfrac(R)}^2 = {(m, \\mathbb{\\mathbbfrac(N)}) ∈ \\mathbb{\\mathbbfrac(Z)} * \\mathbb{\\mathbbfrac(Z)}: (m + 9*\\mathbb{\\mathbbfrac(N)}) is divisible by 5 in \\mathbb{\\mathbbfrac(Z)}}. Which of the following is/are incorrect?",
+    "question_text_latex": "Let A = \\mathbb{Z}, \\text{ the set of integers. Let } R_1 = \\{(m, n) \\in \\mathbb{Z} \\times \\mathbb{Z}: (m + 4n) \\text{ is divisible by } 5 \\text{ in } \\mathbb{Z}\\}. \\text{ Let } R_2 = \\{(m, n) \\in \\mathbb{Z} \\times \\mathbb{Z}: (m + 9n) \\text{ is divisible by } 5 \\text{ in } \\mathbb{Z}\\}. \\text{ Which of the following is/are incorrect?}",
+    "options": [
+      {
+        "label": "A",
+        "text": "\\mathbb{\\mathbbfrac(R)}1 is a proper \\\\subset of \\mathbb{\\mathbbfrac(R)}^2"
+      },
+      {
+        "label": "B",
+        "text": "\\mathbb{\\mathbbfrac(R)}^2 is a proper \\\\subset of \\mathbb{\\mathbbfrac(R)}1"
+      },
+      {
+        "label": "C",
+        "text": "\\mathbb{\\mathbbfrac(R)}1 = \\mathbb{\\mathbbfrac(R)}^2"
+      },
+      {
+        "label": "D",
+        "text": "\\mathbb{\\mathbbfrac(R)}1 is not a symmetric relation on \\mathbb{\\mathbbfrac(Z)}"
+      }
+    ],
+    "options_latex": {
+      "A": "R_1 \\text{ is a proper subset of } R_2",
+      "B": "R_2 \\text{ is a proper subset of } R_1",
+      "C": "R_1 = R_2",
+      "D": "R_1 \\text{ is not a symmetric relation on } \\mathbb{Z}"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "equation_reconstructed",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.874,
+      "processed_at": "2026-03-07T13:46:35+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 3,
+        "valid": 3
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_26",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following is/are correct for relation \\mathbb{\\mathbbfrac(R)} on the set of real numbers?",
+    "question_text_latex": "Which of the following is/are correct for relation R on the set of real numbers?",
+    "options": [
+      {
+        "label": "A",
+        "text": "(x, y) ∈ \\mathbb{\\mathbbfrac(R)} ⇔ 0 < |x| - |y| ≤ 1 is neither transitive nor symmetric."
+      },
+      {
+        "label": "B",
+        "text": "(x, y) ∈ \\mathbb{\\mathbbfrac(R)} ⇔ 0 < |x - y| ≤ 1 is symmetric and transitive."
+      },
+      {
+        "label": "C",
+        "text": "(x, y) ∈ \\mathbb{\\mathbbfrac(R)} ⇔ |x| - |y| ≤ 1 is reflexive but not symmetric."
+      },
+      {
+        "label": "D",
+        "text": "(x, y) ∈ \\mathbb{\\mathbbfrac(R)} ⇔ |x - y| ≤ 1 is reflexive and symmetric."
+      }
+    ],
+    "options_latex": {
+      "A": "(x, y) \\in R \\iff 0 < |x| - |y| \\leq 1 \\text{ is neither transitive nor symmetric.}",
+      "B": "(x, y) \\in R \\iff 0 < |x - y| \\leq 1 \\text{ is symmetric and transitive.}",
+      "C": "(x, y) \\in R \\iff |x| - |y| \\leq 1 \\text{ is reflexive but not symmetric.}",
+      "D": "(x, y) \\in R \\iff |x - y| \\leq 1 \\text{ is reflexive and symmetric.}"
+    },
+    "correct_answer": {
+      "single": "B",
+      "multiple": [
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_inequality_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions",
+      "Complex Numbers and Quadratic Equations"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.922,
+      "processed_at": "2026-03-07T13:46:46+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_41",
+    "type": "NUMERICAL",
+    "question_text": "Let { } 10 10 11 min , ij A 1 j == =∑∑ and { } 10 10 11 max , ij B 1 j == =∑∑ . Then A + B is equal to ________.",
+    "question_text_latex": "Let A = \\sum_{i=1}^{10} \\sum_{j=1}^{10} \\min(i, j) \\text{ and } B = \\sum_{i=1}^{10} \\sum_{j=1}^{10} \\max(i, j). \\text{ Then } A + B \\text{ is equal to } ________.",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_numeric_rules"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.922,
+      "processed_at": "2026-03-07T13:47:37+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_62",
+    "type": "NUMERICAL",
+    "question_text": "Let A = {-3, -2, -1, 0, 1, 2, 3} and \\mathbb{\\mathbbfrac(R)} be a relation on A defined by xRy if and only if 2*x - y ∈ {0, 1}. Let 1 be the number of elements in \\mathbb{\\mathbbfrac(R)}. Let m and \\mathbb{\\mathbbfrac(N)} be the minimum number of elements required to be added in \\mathbb{\\mathbbfrac(R)} to make it reflexive and symmetric relations, respectively. Then 1 + mn is equal to :- [JEE (Main) 2025]",
+    "question_text_latex": "Let \\ A = \\{-3, -2, -1, 0, 1, 2, 3\\} \\text{ and } R \\text{ be a relation on } A \\text{ defined by } xRy \\text{ if and only if } 2x - y \\in \\{0, 1\\}. \\text{ Let } l \\text{ be the number of elements in } R. \\text{ Let } m \\text{ and } n \\text{ be the minimum number of elements required to be added in } R \\text{ to make it reflexive and symmetric relations, respectively. Then } l + mn \\text{ is equal to :- } [\\text{JEE (Main) } 2025]",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "00",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:{",
+      "unknown_token:}",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_numeric_rules",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "unbalanced_parenthesis",
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.922,
+      "processed_at": "2026-03-07T13:48:22+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_63",
+    "type": "NUMERICAL",
+    "question_text": "If \\mathbb{\\mathbbfrac(N)}(X) = mC6, then the value of m is __________.",
+    "question_text_latex": "If n(X) = mC_6, then the value of m is \\underline{\\hspace{1cm}}.",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.904,
+      "processed_at": "2026-03-07T13:48:29+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_66",
+    "type": "NUMERICAL",
+    "question_text": "36 7. 7 8. 13 9. 1100 10. 6 - JEE (Main)* . 1 2 3 4 5 6 7 8 9 10 . 4 4 4 4 2 2 8 4 1 1 . 11 12 13 14 15 16 17 18 19 20 . 2 2 4 4 2 3 4 3 6 2 - JEE (Advanced)* . 1 2 . 20.0 36.0",
+    "question_text_latex": "Consider the following questions from JEE (Main) and JEE (Advanced) with their respective answers.",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708765738",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708765738",
+    "published_at": 1772708765738,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer7_artifact_rules",
+      "layer7_numeric_rules"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.952,
+      "processed_at": "2026-03-07T13:48:47+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_4",
+    "type": "NUMERICAL",
+    "question_text": "323 1 73*lim 1->+ - + -x*x^2 x is equal to",
+    "question_text_latex": "323 \times 73 \times \text{lim}_{x \to 1} \\frac{1 - x^2}{x - 1} \\text{ is equal to}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_l1_token_repair",
+      "layer4_ai_rejected_low_similarity",
+      "symbol_normalized",
+      "layer4_post_ai_verify",
+      "layer7_multiplication_rules"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "missing_operand:+"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.99,
+      "processed_at": "2026-03-07T13:49:12+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 3,
+        "valid": 3
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_8",
+    "type": "NUMERICAL",
+    "question_text": "Let U_\\mathbb{\\mathbbfrac(N)} = \\mathbb{\\mathbbfrac(N)}! + \\mathbb{\\mathbbfrac(N)}^2 where \\mathbb{\\mathbbfrac(N)} ∈ ℕ. If S_\\mathbb{\\mathbbfrac(N)} = ∑_{\\mathbb{\\mathbbfrac(R)}=1}^{\\mathbb{\\mathbbfrac(N)}} \\mathbb{\\mathbbfrac(R)}^2 U_\\mathbb{\\mathbbfrac(R)} then lim_{\\mathbb{\\mathbbfrac(N)}->infinity} S_\\mathbb{\\mathbbfrac(N)} equals",
+    "question_text_latex": "Let U_n = n! + n^2 \\text{ where } n \\in \\mathbb{N}. \\text{ If } S_n = \\sum_{r=1}^{n} r^2 U_r \\text{ then } \\lim_{n \\to \\infty} S_n \\text{ equals}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "0.50",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:09+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.866,
+      "processed_at": "2026-03-07T13:49:25+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_20",
+    "type": "NUMERICAL",
+    "question_text": "2*\\mathbb{\\mathbbfrac(N)}^2 - JEE (Main + Advanced) : Mathematics [ 172 ]",
+    "question_text_latex": "2n^2 - \\text{JEE (Main + Advanced) : Mathematics} [ 172 ]",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "General JEE Mathematics",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "missing_operand:-"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "graph_missing_multiplication_fix",
+      "layer4_post_ai_verify",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "General JEE Mathematics"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:10+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.992,
+      "processed_at": "2026-03-07T13:49:52+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:22+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_95",
+    "type": "NUMERICAL",
+    "question_text": "Let->- - - = 2 22 40 4*lim x^2->a^2*x 1 x , a > 0. If 1 is finite, then - floor(IIT JEE 2009)",
+    "question_text_latex": "Let \\lim_{x \\to a} \\frac{x^2 - 2}{x} = L, \\ a > 0. If L \\text{ is finite, then - [IIT JEE 2009]}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "00",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "missing_operand:->",
+      "missing_operand:-",
+      "missing_operand:=",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_l1_token_repair",
+      "symbol_normalized",
+      "equation_reconstructed",
+      "layer4_deterministic_repair",
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer7_numeric_rules",
+      "layer7_multiplication_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "missing_operand:-"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:11+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.942,
+      "processed_at": "2026-03-07T13:52:17+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 5,
+        "valid": 5
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_100",
+    "type": "NUMERICAL",
+    "question_text": "Let m and \\mathbb{\\mathbbfrac(N)} be two positive integers greater than 1. If \\( \\alpha \\to 0 \\) then the value of \\( m \\mathbb{\\mathbbfrac(N)} \\) is [JEE (Advanced) 2015]",
+    "question_text_latex": "Let m and n be two positive integers greater than 1. If \\( \\alpha \\to 0 \\) then the value of \\( m n \\) is [JEE (Advanced) 2015]",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:11+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.896,
+      "processed_at": "2026-03-07T13:52:32+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_105",
+    "type": "NUMERICAL",
+    "question_text": "Let e denote the base of the natural logarithm. The value of the real number a for which the right-hand limit \\( \\lim_{x \\to 0^+} x^a e^x \\) is equal to a nonzero real number is.",
+    "question_text_latex": "Let e denote the base of the natural logarithm. The value of the real number a for which the right-hand limit \\( \\lim_{x \\to 0^+} x^a e^x \\) is equal to a nonzero real number is.",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "12",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:11+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.88,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.874,
+      "processed_at": "2026-03-07T13:52:44+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 4,
+        "valid": 4
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_112",
+    "type": "NUMERICAL",
+    "question_text": "2 7. 1 8. 167 9. 1 10. 1 - JEE (Main)* . 1 2 3 4 5 6 7 8 9 10 . 3 3 2 4 1 36 4 40 4 1 . 11 12 13 14 15 16 17 18 19 20 . 4 2 3 1 3 4 2 3 1 2 . 21 22 23 24 25 26 27 28 29 30 . 3 100 170 2 6 1 3 1 1 2 - JEE (Advanced)* . 1 2 3 4 5 6 7 8 9 10 . A,\\mathbb{\\mathbbfrac(C)} D B^2 0 2 7*A,\\mathbb{\\mathbbfrac(C)} D B,D . 11 12 13 14 15 16 . 1.0 8 0.50 5*B^2,\\mathbb{\\mathbbfrac(C)}",
+    "question_text_latex": "JEE \\text{ (Main) Previous Year Questions: } 1. 2 3 4 5 6 7 8 9 10 \\text{ Answers: } 3 3 2 4 1 36 4 40 4 1. \\text{ JEE (Advanced) Previous Year Questions: } 1. 2 3 4 5 6 7 8 9 10 \\text{ Answers: } A, C, D, B^2, 0, 2, 7, A, C, D, B, D.",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "General JEE Mathematics",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708768001",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708768001",
+    "published_at": 1772708768001,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer7_artifact_rules",
+      "layer7_numeric_rules",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "General JEE Mathematics"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:11+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.99,
+      "processed_at": "2026-03-07T13:53:22+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 5,
+        "valid": 5
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_11",
+    "type": "NUMERICAL",
+    "question_text": "Which of the following is an orthogonal matrix?",
+    "question_text_latex": "Which of the following is an orthogonal matrix?",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "12",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:12+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:53:53+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_29",
+    "type": "NUMERICAL",
+    "question_text": "Let 100 2 1 0 3 2 1 = A . If u1 and u^2 are column matrices such that 1 1 0 0 = Au and 2 0 1 0 = Au , then u1 + u^2 is equal to :",
+    "question_text_latex": "Let A = \\begin{pmatrix} 100 & 2 & 1 \\\\ 0 & 3 & 2 \\\\ 1 & 0 & 0 \\end{pmatrix}. If u_1 and u_2 are column matrices such that \\begin{pmatrix} 1 \\\\ 1 \\\\ 0 \\\\ 0 \\end{pmatrix} = Au_1 and \\begin{pmatrix} 2 \\\\ 0 \\\\ 1 \\\\ 0 \\end{pmatrix} = Au_2, then u_1 + u_2 is equal to:",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "30",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "General JEE Mathematics",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_deterministic_repair",
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "General JEE Mathematics"
+    ],
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:15+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.904,
+      "processed_at": "2026-03-07T13:55:22+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 0.75,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 0.75
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_42",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following options is/are correct?",
+    "question_text_latex": "Which of the following options is/are correct?",
+    "options": [
+      {
+        "label": "A",
+        "text": "Let A = \\beginfrac(pmatrix) 2 & 0 & 7 \\ 0 & 1 & 0 \\ 1 & 2 & 1 \\endfrac(pmatrix) and B = \\beginfrac(pmatrix) 14 & 7 & 0 \\ 1 & 0 & 42 \\ - & - & x^2 \\endfrac(pmatrix) are two matrices such that AB = (AB)^{-1} and AB \\neq 1 (where 1 is an identity matrix of order 3 \\times 3). Then \\textfrac(tr)(AB + AB + AB + AB) = 100."
+      },
+      {
+        "label": "B",
+        "text": "If A and B are square matrices of order 3, where |A| = -2 and |B| = 1, then (A^{-1} \\textfrac(adj)(B) \\textfrac(adj)(A)) = 8."
+      },
+      {
+        "label": "C",
+        "text": "If F(x) = \\cos(x) \\sin(0) \\sin(x) \\cos(0) \\cdot 0 \\cdot 0 \\cdot 1 - x^2, then F(x)F(y) = F(x + y) and [F(x)]^{-1} = F(-x)."
+      },
+      {
+        "label": "D",
+        "text": "Let X be the set of the equation Ax = 1, where A = \\beginfrac(pmatrix) 0 & 1 & 1 \\ 4 & 3 & 4 \\ 3 & 3 & 4 \\endfrac(pmatrix) and 1 is the corresponding unit matrix. Then the minimum value of \\sum_{x \\in X} (\\cos(x) + \\sin(x))^2 is 2."
+      }
+    ],
+    "options_latex": {
+      "A": "Let A = \\begin{pmatrix} 2 & 0 & 7 \\ 0 & 1 & 0 \\ 1 & 2 & 1 \\end{pmatrix} and B = \\begin{pmatrix} 14 & 7 & 0 \\ 1 & 0 & 42 \\ - & - & x^2 \\end{pmatrix} are two matrices such that AB = (AB)^{-1} and AB \\neq I (where I is an identity matrix of order 3 \\times 3). Then \\text{tr}(AB + AB + AB + AB) = 100.",
+      "B": "If A and B are square matrices of order 3, where |A| = -2 and |B| = 1, then (A^{-1} \\text{adj}(B) \\text{adj}(A)) = 8.",
+      "C": "If F(x) = \\cos(x) \\sin(0) \\sin(x) \\cos(0) \\cdot 0 \\cdot 0 \\cdot 1 - x^2, then F(x)F(y) = F(x + y) and [F(x)]^{-1} = F(-x).",
+      "D": "Let X be the solution set of the equation Ax = I, where A = \\begin{pmatrix} 0 & 1 & 1 \\ 4 & 3 & 4 \\ 3 & 3 & 4 \\end{pmatrix} and I is the corresponding unit matrix. Then the minimum value of \\sum_{x \\in X} (\\cos(x) + \\sin(x))^2 is 2."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Trigonometric Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer7_option_layer7_numeric_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_layer7_artifact_rules",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Trigonometric Functions",
+      "Matrices and Determinants"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:16+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.992,
+      "processed_at": "2026-03-07T13:56:47+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_50",
+    "type": "NUMERICAL",
+    "question_text": "If AX = B where A is a^3 * 3 matrix and X and B are 3 * 1 matrices, then which of the following is correct?",
+    "question_text_latex": "If \\mathbf{AX} = \\mathbf{B} \\text{ where } \\mathbf{A} \\text{ is a } 3 \\times 3 \\text{ matrix and } \\mathbf{X} \\text{ and } \\mathbf{B} \\text{ are } 3 \\times 1 \\text{ matrices, then which of the following is correct?}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "03",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "General JEE Mathematics",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "equation_reconstructed",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "General JEE Mathematics"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:17+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:57:54+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_59",
+    "type": "NUMERICAL",
+    "question_text": "Let A be the set of all 3 * 3 symmetric matrices all of whose entries are either 0 or 1. Five of these entries are 1 and four of them are 0. List-1 List-II",
+    "question_text_latex": "Let A be the set of all 3 \\times 3 \\text{ symmetric matrices all of whose entries are either 0 or 1. Five of these entries are 1 and four of them are 0. List-I List-II}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "30",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "layer4_post_ai_verify",
+      "layer7_numeric_rules"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "detected_issues": [
+      "truncated_list_match"
+    ],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:18+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:58:21+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 3,
+        "valid": 3
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_60",
+    "type": "MCQ_SINGLE",
+    "question_text": "Match the column-1 with column-II.",
+    "question_text_latex": "Match the column-I with column-II.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Let \\omega \\neq 1 be a cube root of unity and S be the set of all non-singular matrices of the form \\beginfrac(pmatrix) 2 & 1 & 1 \\ 1 & a & b \\ \\mathbb{\\mathbbfrac(C)} & 1 & 1 \\endfrac(pmatrix), where each of a, b and \\mathbb{\\mathbbfrac(C)} is either 0 or 2. Then the number of distinct matrices in the set S is-"
+      },
+      {
+        "label": "B",
+        "text": "Let M be a^3 \\times 3 matrix satisfying \\beginfrac(pmatrix) 0 & 1 & 1 \\ 1 & 1 & 2 \\ 1 & 0 & 3 \\endfrac(pmatrix) M = \\beginfrac(pmatrix) 10 & 10 & 1 \\ 12 \\endfrac(pmatrix). Then the \\\\sum of the diagonal entries of M is (\\mathbb{\\mathbbfrac(Q)}) 4."
+      },
+      {
+        "label": "C",
+        "text": "The number of 3 \\times 3 matrices A whose entries are either 0 or 1 and for which the system \\beginfrac(pmatrix) 1 & 0 & 0 \\endfrac(pmatrix) = x A y \\mathbb{\\mathbbfrac(Z)} has exactly two distinct solutions, is"
+      },
+      {
+        "label": "D",
+        "text": "Let k be a positive real number and let A = \\beginfrac(pmatrix) 2 & 1 & 2 \\ 2 & 2 & 1 \\ 2 & 2 & 2 \\endfrac(pmatrix) and B = \\beginfrac(pmatrix) 0 & 2 & 1 \\ 1 & 2 & 0 \\ 2 & 2 & 0 \\endfrac(pmatrix). If \\det(\\textfrac(adj ) A) + \\det(\\textfrac(adj ) B) = 106, then floor(k) is equal to [Note: adj M denotes the adjoint of a square matrix M and floor(k) denotes the largest integer less than or equal to k]. (S) 2 MT07-0352 Matrices [ 85 ]"
+      }
+    ],
+    "options_latex": {
+      "A": "Let \\omega \\neq 1 be a cube root of unity and S be the set of all non-singular matrices of the form \\begin{pmatrix} 2 & 1 & 1 \\ 1 & a & b \\ c & 1 & 1 \\end{pmatrix}, where each of a, b and c is either 0 or 2. Then the number of distinct matrices in the set S is-",
+      "B": "Let M be a 3 \\times 3 matrix satisfying \\begin{pmatrix} 0 & 1 & 1 \\ 1 & 1 & 2 \\ 1 & 0 & 3 \\end{pmatrix} M = \\begin{pmatrix} 10 & 10 & 1 \\ 12 \\end{pmatrix}. Then the sum of the diagonal entries of M is (Q) 4.",
+      "C": "The number of 3 \\times 3 matrices A whose entries are either 0 or 1 and for which the system \\begin{pmatrix} 1 & 0 & 0 \\end{pmatrix} = x A y z has exactly two distinct solutions, is",
+      "D": "Let k be a positive real number and let A = \\begin{pmatrix} 2 & 1 & 2 \\ 2 & 2 & 1 \\ 2 & 2 & 2 \\end{pmatrix} and B = \\begin{pmatrix} 0 & 2 & 1 \\ 1 & 2 & 0 \\ 2 & 2 & 0 \\end{pmatrix}. If \\det(\\text{adj } A) + \\det(\\text{adj } B) = 106, then [k] is equal to [Note: adj M denotes the adjoint of a square matrix M and [k] denotes the largest integer less than or equal to k]. (S) 2 MT07-0352 Matrices [ 85 ]"
+    },
+    "correct_answer": {
+      "single": "B",
+      "multiple": [
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Option A appears truncated.",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "equation_reconstructed",
+      "layer4_post_ai_verify",
+      "layer7_numeric_rules",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_layer7_latex_rules",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:18+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.995,
+      "processed_at": "2026-03-07T13:58:46+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 2,
+        "valid": 2
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_67",
+    "type": "NUMERICAL",
+    "question_text": "Let A, B and A + B be non-singular matrices of order 3 * 3 satisfying",
+    "question_text_latex": "Let \\mathbf{A}, \\mathbf{B} \\text{ and } \\mathbf{A} + \\mathbf{B} \\text{ be non-singular matrices of order } 3 \\times 3 \\text{ satisfying}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "4",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "General JEE Mathematics",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "General JEE Mathematics"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:18+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:59:27+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 3,
+        "valid": 3
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_79",
+    "type": "NUMERICAL",
+    "question_text": "Let A be a^3 * 3 matrix with det(A) = 4. Let \\mathbb{\\mathbbfrac(R)}_1 denote the 1-th row of A. If a matrix B is obtained by performing the operation \\mathbb{\\mathbbfrac(R)}^2 -> 2*\\mathbb{\\mathbbfrac(R)}^2 + 5*\\mathbb{\\mathbbfrac(R)}^3 on 2*A, then det(B) is equal to:",
+    "question_text_latex": "\\text{Let } A \\text{ be a } 3 \\times 3 \\text{ matrix with } \\det(A) = 4. \\text{ Let } R_i \\text{ denote the } i\\text{-th row of } A. \\text{ If a matrix } B \\text{ is obtained by performing the operation } R^2 \\rightarrow 2R^2 + 5R^3 \\text{ on } 2A, \\text{ then } \\det(B) \\text{ is equal to:}",
+    "options": [],
+    "options_latex": {
+      "A": "",
+      "B": "",
+      "C": "",
+      "D": ""
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "10",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.325,
+    "id": "bankq_1772708771808",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708771808",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "graph_missing_multiplication_fix",
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "symbol_normalized",
+      "equation_reconstructed",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_numeric_rules",
+      "layer7_set_rules",
+      "layer7_floor_frac_normalize"
+    ],
+    "repair_confidence": 0.675,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "structural_integrity_score": 0.675,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:29:18+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.904,
+      "processed_at": "2026-03-07T14:01:13+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 0.75,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.675,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:23+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 5,
+        "valid": 5
+      },
+      "layer5_structural_validator": {
+        "structure_score": 0.75
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.675
+      }
+    }
+  }
+]

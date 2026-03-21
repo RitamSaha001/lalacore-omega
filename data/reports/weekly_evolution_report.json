@@ -1,0 +1,82 @@
+{
+  "ts": "2026-02-25T18:08:04.474754+00:00",
+  "calibration_rows": 21,
+  "replay": {
+    "total_failures": 0,
+    "selected": 0,
+    "clusters": 0,
+    "output": "data/replay/weekly_replay.jsonl"
+  },
+  "trap_report": {
+    "trap_patterns_added": 0,
+    "candidate_phrases": {}
+  },
+  "provider_rankings": [
+    {
+      "provider": "mini",
+      "composite": 0.68208,
+      "ema_reliability": 0.945291,
+      "calibration_error": 0.162559,
+      "brier_score": 0.100651,
+      "avg_tokens_ema": 174.683,
+      "gain_per_1k_tokens_ema": 5.431525,
+      "total": 21
+    }
+  ],
+  "routing_thresholds": {
+    "default_arena_size": 3,
+    "efficiency_baseline": 5.431525484966878,
+    "gap_for_two_provider_mode": 0.14136854349068811,
+    "high_confidence_score": 0.4,
+    "question_token_ema": 7.0,
+    "token_baseline_ema": 174.68272153016403
+  },
+  "drift_detection": {
+    "drift_detected": false,
+    "flags": [],
+    "provider_deltas": {
+      "mini": 0.0
+    },
+    "entropy_mean": -0.0,
+    "risk_mean": 0.037619,
+    "mini_reliability": 0.856851,
+    "deterministic_pass_rate": 0.714286,
+    "routing_rebalance_recommended": false,
+    "routing_rebalance_plan": null
+  },
+  "synthetic_expansion": {
+    "generated": 0,
+    "clusters": 0
+  },
+  "error_memory": {
+    "total": 0,
+    "error_counts": {},
+    "clusters": 0
+  },
+  "distillation": {
+    "dataset": {
+      "path": "data/zaggle/LC9_MINI_WEEKLY_DATASET.jsonl",
+      "total": 0,
+      "by_source": {},
+      "by_subject": {},
+      "by_difficulty": {}
+    },
+    "prompt_effectiveness_rows": 2
+  },
+  "mini_evolution": {
+    "drift_score": 0.2038471608553638,
+    "replay_intensity": 0.23453112875407234,
+    "weekly_adjustments": {
+      "replay_intensity": 0.1779130743854888,
+      "confidence_multiplier": 1.0120030417597237,
+      "calibration_pressure": 0.318234365653801,
+      "curriculum_tracks": 1
+    }
+  },
+  "token_budget": {
+    "week": "2026-W09",
+    "weekly_total_tokens": 414.0,
+    "weekly_limit": 1000000,
+    "pressure": 0.000414
+  }
+}

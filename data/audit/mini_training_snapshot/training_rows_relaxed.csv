@@ -1,0 +1,1172 @@
+question,final_answer,reasoning_summary,winner_provider,verified,entropy,disagreement,risk,concept_cluster,difficulty,subject,source
+What is 6 * 7 = 42,42,Memory replay: Parsed arithmetic expression `6 * 7` and evaluated directly.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+If x+2=5 then x=3,3,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+What is 6*7?,42,Parsed arithmetic expression `6*7` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Explain E1 mechanism in tert-butyl bromide.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+"Let lpha and eta be real numbers such that -\pi/4 < eta < 0 < lpha < \pi/4. If \sin(lpha+eta) = 1/3 and \cos(lpha-eta) = 2/3, then find the greatest integer less than or equal to ( (\sinlpha)/(\coseta) + (\coseta)/(\sinlpha) + (\coslpha)/(\sineta) + (\sineta)/(\coslpha) )^2.",0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,hard,math,mini_shadow_logs
+"If y(x) is the solution of the differential equation x dy - (y^2 - 4y) dx = 0 for x > 0, with y(1) = 2, and the slope of the curve y = y(x) is never zero, then find the value of 10 y(\sqrt{2}).",-2,Parsed arithmetic expression `2 - 4` and evaluated directly.,mini,False,0.0,0.0,1.0,trap|jee|math|quadratic|roots|equation|algebra|chemistry,hard,math,mini_shadow_logs
+Find the greatest integer less than or equal to \int_{1}^{2} \log_2(x^3 + 1) dx + \int_{1}^{\log_2 9} (2^x - 1)^{1/3} dx.,4,Parsed arithmetic expression `3 + 1` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|jee|trap|verification,medium,math,mini_shadow_logs
+Find the product of all positive real values of x satisfying the equation x^{(16(\log_5 x)^3 - 68 \log_5 x)} = 5^{-16}.,-65,Parsed arithmetic expression `3 - 68` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+"If eta = \lim_{x 	o 0} rac{e^{x^3} - (1-x^3)^{1/3} + ((1-x^2)^{1/2} - 1)\sin x}{x \sin^2 x}, then find the value of 6eta.",0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|jee|trap|verification,hard,math,mini_shadow_logs
+"Let eta be a real number. Consider the matrix A = [[eta,0,1],[2,1,-2],[3,1,-2]]. If A^7 - (eta - 1)A^6 - eta A^5 is a singular matrix, then find the value of 9eta.","[[eta,0,1],[2,1,-2],[3,1,-2]]. If A^7 - (eta - 1)A^6 - eta A^5 is a singular matrix, then find the value of 9eta.",Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+"Consider the hyperbola x^2/100 - y^2/64 = 1 with foci at S and S1. Let P be a point in first quadrant. Let angle SPS1 = lpha, with lpha < \pi/2. Define \delta as the distance of P from the line SP1 and eta = S1P. Find the greatest integer less than or equal to (eta \delta / 9) sin(lpha/2).",0.02,Parsed arithmetic expression `2/100` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|physics|kinematics|units|equation|algebra,medium,math,mini_shadow_logs
+"Consider f(x) = x^2 + 5/12 and g(x) = 2(1 - 4|x|/3) for |x| <= 3/4, and 0 otherwise. If lpha is the area of region {(x,y) : |x| <= 3/4, 0 <= y <= min(f(x), g(x))}, then find 9lpha.",2.4166666666666665,Parsed arithmetic expression `2 + 5/12` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,hard,math,mini_shadow_logs
+"A hydrogen-like ion in its 3rd excited state undergoes a transition to the 1st excited state, emitting a photon. This photon strikes a perfectly reflecting solar sail of mass m and area A initially at rest in deep space. Derive the exact velocity imparted to the sail, expressing your answer in terms of the Rydberg constant R, Planck's constant h, the speed of light c, and the atomic number Z.",0,Applied retrieval-guided heuristic reasoning. Key hint: JEE Trap Memory: Common traps include ignoring domain restrictions and unit mismatch.,mini,False,0.0,0.0,1.0,jee|trap|verification|physics|kinematics|units|chemistry|equilibrium,medium,physics,mini_shadow_logs
+Let A be a 5x5 matrix with characteristic polynomial P(x) = x^5 - 4x^4 + 3x^3 + 2x^2 - x + 1. Find the exact trace of the matrix (A^3 - 2A^2 + A^-1) using the Cayley-Hamilton theorem and Newton's sums.,1,Parsed arithmetic expression `5 - 4` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,hard,math,mini_shadow_logs
+A non-ideal gas follows the equation of state P(V-nb) = nRT \exp(-a/RTV). Derive the exact analytical expression for the Joule-Thomson coefficient \mu_{JT} and explicitly find the inversion temperature T_i as a function of the van der Waals constants a and b.,nRT \exp(-a/RTV). Derive the exact analytical expression for the Joule-Thomson coefficient \mu_{JT} and explicitly find the inversion temperature T_i as a function of the van der Waals constants a and b.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|verification|chemistry|equilibrium,hard,math,mini_shadow_logs
+"A radioactive nucleus A (decay constant \lambda) decays into a daughter nucleus B, which simultaneously decays into a stable nucleus C (decay constant 2\lambda). If a sample initially contains pure A, find the exact time at which the rate of production of C is maximized. Show all calculus steps.",0,Applied retrieval-guided heuristic reasoning. Key hint: JEE Trap Memory: Common traps include ignoring domain restrictions and unit mismatch.,mini,False,0.0,0.0,1.0,jee|trap|verification|physics|kinematics|units|math|quadratic,easy,general,mini_shadow_logs
+"Find the total number of surjective functions f: \{1, 2, ..., 10\} \to \{1, 2, 3, 4\} such that f(1) \neq f(2) and f(3) = 1. Express the answer using the Principle of Inclusion-Exclusion and evaluate the final integer.",1. Express the answer using the Principle of Inclusion-Exclusion and evaluate the final integer.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate the definite integral \int_{0}^{\pi/2} \frac{\cos^2(x)}{\cos^2(x) + 4\sin^2(x)} \ln(\sin x) dx using Feynman's parameterization technique.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+"Solve the recurrence relation a_n = 5a_{n-1} - 6a_{n-2} + 2^n + n, with initial conditions a_0 = 1 and a_1 = 2, using the method of generating functions.","2, using the method of generating functions.",Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|physics|kinematics|units|chemistry|equilibrium,hard,math,mini_shadow_logs
+"A black body at temperature T_1 emits radiation with peak emission at wavelength \lambda_1. The temperature is increased to T_2, making the peak wavelength \lambda_1 / 2. Derive the exact ratio of the total power radiated at T_2 to that at T_1.",0.5,Parsed arithmetic expression `1 / 2` and evaluated directly.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|physics|kinematics|units|math|quadratic,easy,physics,mini_shadow_logs
+"A particle of mass m moves in a 1D potential V(x) = kx^4. Using the Bohr-Sommerfeld quantization rule \oint p dx = nh, derive the dependence of the quantized energy levels E_n on n.","nh, derive the dependence of the quantized energy levels E_n on n.",Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|jee|trap|verification,medium,math,mini_shadow_logs
+"Let f(x) be a polynomial of degree 4 with leading coefficient 1, satisfying f(1)=10, f(2)=20, f(3)=30 and f(12)+f(-8)=19840. Find f(0).",19840,Parsed arithmetic expression `19840` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+A uniform solid sphere of mass M and radius R is spinning with angular velocity \omega_0 about a horizontal axis. It is gently placed on a horizontal surface where the coefficient of friction is \mu = \mu_0 (1 - x/L). Derive the total distance traveled before pure rolling commences.,\mu_0 (1 - x/L). Derive the total distance traveled before pure rolling commences.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,physics|kinematics|units|jee|trap|verification|chemistry|equilibrium,medium,physics,mini_shadow_logs
+Evaluate the limit \lim_{n \to \infty} \frac{1}{n^3} \sum_{i=1}^{n} \sum_{j=1}^{n} \frac{i^2 j}{i^2 + j^2}.,1}^{n} \frac{i^2 j}{i^2 + j^2}.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|trap|verification,medium,math,mini_shadow_logs
+"Find the total number of ways to select 5 distinct numbers from {1,...,100} such that their sum is divisible by 5 using roots of unity.",100,Parsed arithmetic expression `100` and evaluated directly.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|quadratic|roots|verification,easy,general,mini_shadow_logs
+Solve x^2 y'' - 3xy' + 4y = x^2 \ln(x). Find the particular solution with y(1)=0 and y'(1)=0.,0.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Evaluate \int_{0}^{\infty} \frac{\ln(x)}{x^2 + 2x + 2} dx using contour integration.,4,Parsed arithmetic expression `2 + 2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Find the number of ways to distribute 20 identical chocolates to 5 children such that no child gets more than 6 chocolates.,0,Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|trap|verification|math|equation|algebra,easy,general,mini_shadow_logs
+Evaluate \int_{0}^{1} \frac{\ln(1-x)}{x} dx.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Find the exact determinant of an n x n matrix with diagonal elements 'a' and off-diagonal elements 'b'.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,math,mini_shadow_logs
+Find all real functions f(x) satisfying f(x^2 + y) = f(x) + f(y^2).,f(x) + f(y^2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+"A particle moves on a cycloid x=a(\theta - \sin\theta), y=a(1+\cos\theta). Derive the exact time period and prove isochronous behavior.",a(1+\cos\theta). Derive the exact time period and prove isochronous behavior.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+"If the coefficients of x^7 and x^8 in the expansion of (2 + x/3)^n are equal, then the value of n is",0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|jee|trap|verification,medium,math,mini_shadow_logs
+If x+2=5 find x,5 find x,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) in radians.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(-1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(0).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(0).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(0).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1/sqrt(3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sqrt(3)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(sqrt(2)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-sqrt(2)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|quadratic|roots|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-sqrt(2)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|quadratic|roots|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)/3).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sqrt(3)/2) + cos^(-1)(1/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(x) at x=1/sqrt(2).,1/sqrt(2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(x) at x=-1/sqrt(2).,-1/sqrt(2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(x) at x=-sqrt(3).,-sqrt(3).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(inf) (limit).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(-inf).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/sqrt(2)) + sin^(-1)(1/sqrt(2)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) - sin^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(x) + cos^(-1)(x) at x=1/3.,0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1/x) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1) + tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1/2) + tan^(-1)(1/3).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(2) + tan^(-1)(1/3).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1) - tan^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate 2tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + sin^(-1)(sqrt(3)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) + cos^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) - cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=2.,2.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=-2.,-2.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(2x*sqrt(1-x^2)) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1-2x^2) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin(2 sin^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos(2 cos^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan(2 tan^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + cos^(-1)(sqrt(3)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) - sin^(-1)(sqrt(3)/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)) - tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + tan^(-1)(1/sqrt(3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(sqrt(2)/2) + tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/sqrt(2)) - tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)) + cos^(-1)(1/2).,0,Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.,mini,False,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(x)+sin^(-1)(x) at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(x)+cos^(-1)(-x) at x=1/3.,0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)-tan^(-1)(-x) at x=2.,2.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + sin^(-1)(1/3).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1/2) + tan^(-1)(2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(3) - tan^(-1)(1).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(5*pi/6)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(5*pi/6)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(7*pi/6)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(3*pi/4)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(5*pi/4)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin(sin^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos(cos^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan(tan^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(-pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(-pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(-3*pi/4)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(4*pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(4*pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(7*pi/4)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(3*pi/2)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(3*pi/2)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(pi)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(2*pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(2*pi/3)).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve sin^(-1)(x)=pi/6. Find x.,pi/6. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve cos^(-1)(x)=pi/3. Find x.,pi/3. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve tan^(-1)(x)=pi/4. Find x.,pi/4. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve sin^(-1)(x)=-pi/6. Find x.,-pi/6. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve cos^(-1)(x)=2*pi/3. Find x.,2*pi/3. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve tan^(-1)(x)=-pi/4. Find x.,-pi/4. Find x.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi.,pi.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi/2.,pi/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|equation|algebra,medium,math,mini_shadow_logs
+Find x if 2sin^(-1)(x)=pi/2.,pi/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|physics|kinematics,easy,math,mini_shadow_logs
+Find x if tan^(-1)(x)+tan^(-1)(1)=pi/4.,pi/4.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Find x if tan^(-1)(x)+tan^(-1)(1/x)=pi/2 and x>0.,pi/2 and x>0.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Find x if sin^(-1)(2x)=pi/6.,pi/6.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Find x if cos^(-1)(2x-1)=pi/3.,pi/3.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|physics|kinematics|units|quadratic|roots,easy,math,mini_shadow_logs
+Find x if tan^(-1)(2x)=pi/3.,pi/3.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Find x if sin^(-1)(x)=cos^(-1)(x).,cos^(-1)(x).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Find x if tan^(-1)(x)=sin^(-1)(1/2).,sin^(-1)(1/2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Find x if cos^(-1)(x)=tan^(-1)(1).,tan^(-1)(1).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Find x if sin^(-1)(x)+sin^(-1)(1/2)=pi/2.,pi/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|physics|kinematics,medium,math,mini_shadow_logs
+Find x if cos^(-1)(x)+cos^(-1)(1/2)=pi.,pi.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|equation|algebra,medium,math,mini_shadow_logs
+Find x if tan^(-1)(x)=cos^(-1)(1/2).,cos^(-1)(1/2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) in radians.,pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1).,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-1/2).,-pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-1/2).,2*pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(-1).,-pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(0).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(0).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(0).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-1).,pi,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1/sqrt(3)).,pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sqrt(3)/2).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(sqrt(2)/2).,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-sqrt(2)/2).,-pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|quadratic|roots|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(-sqrt(2)/2).,3*pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|quadratic|roots|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)/3).,pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sqrt(3)/2) + cos^(-1)(1/2).,2*pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + cos^(-1)(1/2).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(x) at x=1/sqrt(2).,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(x) at x=-1/sqrt(2).,3*pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(x) at x=-sqrt(3).,-pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|equation|algebra|quadratic|roots|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(-1).,-pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(1).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(-inf).,-pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/sqrt(2)) + sin^(-1)(1/sqrt(2)).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) - sin^(-1)(1/2).,pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1/x) at x=1.,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1) + tan^(-1)(1).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(1/2) + tan^(-1)(1/3).,0.785398,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(2) + tan^(-1)(1/3).,1.428899,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1) - tan^(-1)(1/2).,-atan(1/2) + pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate 2tan^(-1)(1).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + sin^(-1)(sqrt(3)/2).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) + cos^(-1)(-1/2).,pi,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) - cos^(-1)(1/2).,-pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=2.,1.570796,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=-2.,-1.570796,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate sin(2 sin^(-1)(1/2)).,0.866025,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos(2 cos^(-1)(1/2)).,-0.5000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan(2 tan^(-1)(1/2)).,1.333333,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + cos^(-1)(sqrt(3)/2).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(1/2) - sin^(-1)(sqrt(3)/2).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)) - tan^(-1)(1).,pi/12,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|math|equation|algebra|chemistry|equilibrium|quadratic,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + tan^(-1)(1/sqrt(3)).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,medium,math,mini_shadow_logs
+Evaluate cos^(-1)(sqrt(2)/2) + tan^(-1)(1).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/sqrt(2)) - tan^(-1)(1).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|quadratic|roots|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(sqrt(3)) + cos^(-1)(1/2).,2*pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,trap|jee|chemistry|equilibrium|math|equation|algebra|quadratic,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(x)+sin^(-1)(x) at x=1/2.,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(x)-tan^(-1)(-x) at x=2.,2.214297,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate sin^(-1)(1/2) + sin^(-1)(1/3).,asin(1/3) + pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(1/2) + tan^(-1)(2).,1.570796,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(3) - tan^(-1)(1).,-pi/4 + atan(3),Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(pi/3)).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(5*pi/6)).,pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(5*pi/6)).,5*pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(7*pi/6)).,5*pi/6,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(3*pi/4)).,-pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(5*pi/4)).,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin(sin^(-1)(1/2)).,0.5000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate cos(cos^(-1)(1/2)).,0.5000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate tan(tan^(-1)(1/2)).,0.5000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(-pi/3)).,-pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(-pi/3)).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(-3*pi/4)).,pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(4*pi/3)).,-pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(4*pi/3)).,2*pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(7*pi/4)).,-pi/4,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(3*pi/2)).,-pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(3*pi/2)).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate tan^(-1)(tan(pi)).,0.0000,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate sin^(-1)(sin(2*pi/3)).,pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate cos^(-1)(cos(2*pi/3)).,2*pi/3,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve sin^(-1)(x)=pi/6. Find x.,0.5000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve cos^(-1)(x)=pi/3. Find x.,0.5000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve tan^(-1)(x)=pi/4. Find x.,1.0000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve sin^(-1)(x)=-pi/6. Find x.,-0.5000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve cos^(-1)(x)=2*pi/3. Find x.,-0.5000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Solve tan^(-1)(x)=-pi/4. Find x.,-1.0000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi.,no real solution,Deterministic inverse-trig equation solving.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Find x if tan^(-1)(x)+tan^(-1)(1/x)=pi/2 and x>0.,all real x > 0,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,medium,math,mini_shadow_logs
+Find x if sin^(-1)(x)=cos^(-1)(x).,0.707107,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Find x if tan^(-1)(x)=sin^(-1)(1/2).,0.57735,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Find x if cos^(-1)(x)=tan^(-1)(1).,0.707107,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Find x if cos^(-1)(x)+cos^(-1)(1/2)=pi.,-0.5000,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|quadratic|roots|chemistry|equilibrium|jee|equation|algebra,medium,math,mini_shadow_logs
+Find x if tan^(-1)(x)=cos^(-1)(1/2).,1.732051,Deterministic inverse-trig equation solving.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate tan^(-1)(inf) (limit).,pi/2,Deterministic inverse-trig evaluation.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−x^2)) from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^2) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x√(x^2−1)) from 2 to 3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(a^2−x^2)) from 0 to a/2 (a=2).,2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ 1/(1+x^2) dx from 0 to √3.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(4−x^2)) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2+4) from 0 to 2.,6,Parsed arithmetic expression `2+4` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(9−x^2)) from 0 to 3/2.,1.5,Parsed arithmetic expression `3/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+4x^2) from 0 to 1.,5,Parsed arithmetic expression `1+4` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−4x^2)) from 0 to 1/4.,0.25,Parsed arithmetic expression `1/4` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x/(√(1−x^2)) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ x/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2+9) from 0 to 3.,11,Parsed arithmetic expression `2+9` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(16−x^2)) from 0 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x√(x^2−4)) from 3 to 4.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+9x^2) from 0 to 1.,10,Parsed arithmetic expression `1+9` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(25−x^2)) from 0 to 5/2.,2.5,Parsed arithmetic expression `5/2` and evaluated directly.,mini,False,0.0,0.0,1.0,jee|trap|verification|chemistry|equilibrium|math|quadratic|roots,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^2) from 0 to tan(π/6).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/6).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^2) from 0 to 1/√3.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(2x) at x=1/4.,1/4.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate cos^(-1)(x^2) at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate tan^(-1)(3x) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(√x) at x=1/4.,0.25,Parsed arithmetic expression `1/4` and evaluated directly.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate tan^(-1)(x^2) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(x/(1+x^2)) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Differentiate cos^(-1)(2x−1) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate tan^(-1)(√x) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(x^2) at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate cos^(-1)(√(1−x^2)) at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Find d/dx [sin^(-1)(x)+cos^(-1)(x)] at x=1/3.,0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Differentiate tan^(-1)(1/x) at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(sin x) at x=π/6.,π/6.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate cos^(-1)(cos x) at x=π/3.,π/3.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate tan^(-1)(tan x) at x=π/4.,π/4.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Differentiate sin^(-1)(2x√(1−x^2)) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate tan^(-1)((2x)/(1−x^2)) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Differentiate sin^(-1)(1−2x^2) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate cos^(-1)(1−2x^2) at x=1/2.,1/2.,Used equation RHS fallback from prompt structure.,mini,True,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Differentiate tan^(-1)((1−x)/(1+x)) at x=0.,0.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ x·sin^(-1)(x) dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ x·tan^(-1)(x) dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ sin^(-1)(x) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ tan^(-1)(x) dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ cos^(-1)(x) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x^2/(√(1−x^2)) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ x^2/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ x·cos^(-1)(x) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x·sin^(-1)(2x) dx from 0 to 1/4.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ x·tan^(-1)(2x) dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ sin^(-1)(x)/√(1−x^2) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ tan^(-1)(x)/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ cos^(-1)(x)/(√(1−x^2)) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ sin^(-1)(x)^2 dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ tan^(-1)(x)^2 dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x·sin^(-1)(x^2) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ x·tan^(-1)(x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ sin^(-1)(x)/(1+x^2) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate ∫ tan^(-1)(x)/(√(1+x^2)) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ cos^(-1)(x)/(1−x^2) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2√(1−1/x^2)) from 2 to 3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(x^2−1)) from 1 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x√(x^2−4)) from 3 to 5.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(a^2−x^2)) from 0 to a/√2 (a=3).,3).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^4) from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2+2x+2) from 0 to 1.,4,Parsed arithmetic expression `2+2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(4+x^2) from 0 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(16−4x^2)) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+4x^2) from 0 to tan(π/8).,5,Parsed arithmetic expression `1+4` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−4x^2)) from 0 to sin(π/8).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^2)^2 from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2+a^2) from 0 to a (a=2).,2).,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(9−x^2)) from 0 to 3.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x√(x^2+1)) from 1 to 2.,3,Parsed arithmetic expression `2+1` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(1+x^2) from 0 to tan(π/4).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/4).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(25−x^2)) from 0 to 5.,0,Applied retrieval-guided heuristic reasoning. Key hint: JEE Trap Memory: Common traps include ignoring domain restrictions and unit mismatch.,mini,False,0.0,0.0,1.0,jee|trap|verification|math|equation|algebra|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(x^2+1) from 0 to tan(π/3).,3,Parsed arithmetic expression `2+1` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/3).,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate d/dx [sin^(-1)(x)+tan^(-1)(x)] at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,medium,math,mini_shadow_logs
+Evaluate d/dx [cos^(-1)(x)−tan^(-1)(x)] at x=1/3.,0.3333333333333333,Parsed arithmetic expression `1/3` and evaluated directly.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,medium,math,mini_shadow_logs
+Evaluate ∫ (sin^(-1)(x)+cos^(-1)(x)) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,medium,math,mini_shadow_logs
+Evaluate ∫ (tan^(-1)(x)+tan^(-1)(1/x)) dx from 1 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,medium,math,mini_shadow_logs
+Evaluate ∫ sin^(-1)(x)/(√(1−x^2)) dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ x/(x^2+1)^2 dx from 0 to 1.,3,Parsed arithmetic expression `2+1` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ (1/(1+x^2) + 1/√(1−x^2)) dx from 0 to 1/2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,medium,math,mini_shadow_logs
+Evaluate ∫ (sin^(-1)(x))' dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ (tan^(-1)(x))' dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ (cos^(-1)(x))' dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x·(sin^(-1)(x))' dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ x·(tan^(-1)(x))' dx from 0 to 1.,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,math,mini_shadow_logs
+Evaluate ∫ (sin^(-1)(x))^2 dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate ∫ (tan^(-1)(x))^2 dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+Evaluate ∫ (cos^(-1)(x))^2 dx from 0 to 1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|chemistry|equilibrium,easy,math,mini_shadow_logs
+Evaluate d/dx [sin^(-1)(x^2)] at x=1/2.,0.5,Parsed arithmetic expression `1/2` and evaluated directly.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|physics|kinematics,medium,math,mini_shadow_logs
+Evaluate d/dx [tan^(-1)(x^2)] at x=1.,1.,Used equation RHS fallback from prompt structure.,mini,False,0.0,0.0,1.0,math|quadratic|roots|jee|trap|verification|equation|algebra,easy,math,mini_shadow_logs
+How many subsets of {1–7} contain both 1 and 7?,0,Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|trap|verification,easy,general,mini_shadow_logs
+How many subsets of {1–7} contain neither 1 nor 7?,0,Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|quadratic|roots,easy,general,mini_shadow_logs
+How many permutations of 1–6 where 1 appears before 2?,0,Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|math|quadratic|roots|trap|verification,easy,general,mini_shadow_logs
+How many permutations of 1–6 where 1 appears before 2 and 3?,0,Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.,mini,False,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|trap|verification,easy,general,mini_shadow_logs
+How many 4-digit numbers from 1–9 with no repetition and sum odd?,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,math,mini_shadow_logs
+How many 4-digit numbers from 1–9 with no repetition and sum even?,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,math,mini_shadow_logs
+How many arrangements of 6 books if 3 specific books stay together?,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,general,mini_shadow_logs
+How many arrangements of 6 books if 3 specific books are separated?,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,general,mini_shadow_logs
+How many 5-digit numbers from 1–7 without repetition greater than 50000?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",mini,False,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+How many 3-digit numbers from 1–9 with exactly one even digit?,0,Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.,mini,False,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+How many subsets of {1–7} contain both 1 and 7?,32,Deterministic subset counting with two fixed included elements.,mini,True,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|trap|verification,easy,general,mini_shadow_logs
+How many subsets of {1–7} contain neither 1 nor 7?,32,Deterministic subset counting with two excluded elements.,mini,True,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|quadratic|roots,easy,general,mini_shadow_logs
+How many permutations of 1–6 where 1 appears before 2?,360,Deterministic permutation precedence counting by relative-order symmetry.,mini,True,0.0,0.0,1.0,chemistry|equilibrium|jee|math|quadratic|roots|trap|verification,easy,general,mini_shadow_logs
+How many permutations of 1–6 where 1 appears before 2 and 3?,240,Deterministic permutation precedence counting by relative-order symmetry.,mini,True,0.0,0.0,1.0,chemistry|equilibrium|jee|math|equation|algebra|trap|verification,easy,general,mini_shadow_logs
+How many 4-digit numbers from 1–9 with no repetition and sum odd?,1440,Deterministic parity-constrained counting over non-repeating digit permutations.,mini,True,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,math,mini_shadow_logs
+How many 4-digit numbers from 1–9 with no repetition and sum even?,1584,Deterministic parity-constrained counting over non-repeating digit permutations.,mini,True,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,math,mini_shadow_logs
+How many arrangements of 6 books if 3 specific books stay together?,144,Deterministic block method for grouped books.,mini,True,0.0,0.0,1.0,math|equation|algebra|chemistry|equilibrium|jee|quadratic|roots,easy,general,mini_shadow_logs
+How many arrangements of 6 books if 3 specific books are separated?,144,Deterministic slot method for pairwise-separated specific books.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|jee|trap|verification,easy,general,mini_shadow_logs
+How many 5-digit numbers from 1–7 without repetition greater than 50000?,1080,Deterministic threshold counting over non-repeating digit permutations.,mini,True,0.0,0.0,1.0,math|quadratic|roots|equation|algebra|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+How many 3-digit numbers from 1–9 with exactly one even digit?,240,Deterministic parity-count constrained counting over non-repeating digit permutations.,mini,True,0.0,0.0,1.0,math|equation|algebra|quadratic|roots|chemistry|equilibrium|jee,easy,math,mini_shadow_logs
+What is 6 * 7 = 42,42,"Memory replay: Parsed arithmetic expression `6 * 7` and evaluated directly.
+Final Answer: 42",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"If the coefficients of x^7 and x^8 in the expansion of (2 + x/3)^n are equal, then the value of n is",0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+If x+2=5 find x,5 find x,"Used equation RHS fallback from prompt structure.
+Final Answer: 5 find x",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate sin^(-1)(1/2) in radians.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(-1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(0).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(0).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(0).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1/sqrt(3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sqrt(3)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(sqrt(2)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-sqrt(2)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-sqrt(2)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)/3).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sqrt(3)/2) + cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) + cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(x) at x=1/sqrt(2).,1/sqrt(2).,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/sqrt(2).",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(x) at x=-1/sqrt(2).,-1/sqrt(2).,"Used equation RHS fallback from prompt structure.
+Final Answer: -1/sqrt(2).",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(x) at x=-sqrt(3).,-sqrt(3).,"Used equation RHS fallback from prompt structure.
+Final Answer: -sqrt(3).",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(inf) (limit).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,calculus|trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(-inf).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/sqrt(2)) + sin^(-1)(1/sqrt(2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) - sin^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(x) + cos^(-1)(x) at x=1/3.,0.3333333333333333,"Parsed arithmetic expression `1/3` and evaluated directly.
+Final Answer: 0.3333333333333333",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1/x) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1) + tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1/2) + tan^(-1)(1/3).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(2) + tan^(-1)(1/3).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1) - tan^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate 2tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + sin^(-1)(sqrt(3)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) + cos^(-1)(-1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) - cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=2.,2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=-2.,-2.,"Used equation RHS fallback from prompt structure.
+Final Answer: -2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(2x*sqrt(1-x^2)) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1-2x^2) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin(2 sin^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos(2 cos^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan(2 tan^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + cos^(-1)(sqrt(3)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) - sin^(-1)(sqrt(3)/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)) - tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + tan^(-1)(1/sqrt(3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(sqrt(2)/2) + tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/sqrt(2)) - tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)) + cos^(-1)(1/2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Trap Warning: Check domain constraints and eliminate extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(x)+sin^(-1)(x) at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(x)+cos^(-1)(-x) at x=1/3.,0.3333333333333333,"Parsed arithmetic expression `1/3` and evaluated directly.
+Final Answer: 0.3333333333333333",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)-tan^(-1)(-x) at x=2.,2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) + sin^(-1)(1/3).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1/2) + tan^(-1)(2).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(3) - tan^(-1)(1).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(5*pi/6)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(5*pi/6)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(7*pi/6)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(3*pi/4)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(5*pi/4)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin(sin^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos(cos^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan(tan^(-1)(1/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(-pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(-pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(-3*pi/4)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(4*pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(4*pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(7*pi/4)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(3*pi/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(3*pi/2)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(pi)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(2*pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(2*pi/3)).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve sin^(-1)(x)=pi/6. Find x.,pi/6. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/6. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve cos^(-1)(x)=pi/3. Find x.,pi/3. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/3. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve tan^(-1)(x)=pi/4. Find x.,pi/4. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/4. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve sin^(-1)(x)=-pi/6. Find x.,-pi/6. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: -pi/6. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve cos^(-1)(x)=2*pi/3. Find x.,2*pi/3. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: 2*pi/3. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve tan^(-1)(x)=-pi/4. Find x.,-pi/4. Find x.,"Used equation RHS fallback from prompt structure.
+Final Answer: -pi/4. Find x.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi.,pi.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi/2.,pi/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if 2sin^(-1)(x)=pi/2.,pi/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/2.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if tan^(-1)(x)+tan^(-1)(1)=pi/4.,pi/4.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/4.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if tan^(-1)(x)+tan^(-1)(1/x)=pi/2 and x>0.,pi/2 and x>0.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/2 and x>0.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if sin^(-1)(2x)=pi/6.,pi/6.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/6.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if cos^(-1)(2x-1)=pi/3.,pi/3.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/3.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if tan^(-1)(2x)=pi/3.,pi/3.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/3.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if sin^(-1)(x)=cos^(-1)(x).,cos^(-1)(x).,"Used equation RHS fallback from prompt structure.
+Final Answer: cos^(-1)(x).",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if tan^(-1)(x)=sin^(-1)(1/2).,sin^(-1)(1/2).,"Used equation RHS fallback from prompt structure.
+Final Answer: sin^(-1)(1/2).",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if cos^(-1)(x)=tan^(-1)(1).,tan^(-1)(1).,"Used equation RHS fallback from prompt structure.
+Final Answer: tan^(-1)(1).",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if sin^(-1)(x)+sin^(-1)(1/2)=pi/2.,pi/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi/2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if cos^(-1)(x)+cos^(-1)(1/2)=pi.,pi.,"Used equation RHS fallback from prompt structure.
+Final Answer: pi.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if tan^(-1)(x)=cos^(-1)(1/2).,cos^(-1)(1/2).,"Used equation RHS fallback from prompt structure.
+Final Answer: cos^(-1)(1/2).",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) in radians.,pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(1/2).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1).,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-1/2).,-pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-1/2).,2*pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: 2*pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(-1).,-pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(0).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(0).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(0).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-1).,pi,"Deterministic inverse-trig evaluation.
+Final Answer: pi",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1/sqrt(3)).,pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sqrt(3)/2).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(sqrt(2)/2).,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-sqrt(2)/2).,-pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(-sqrt(2)/2).,3*pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: 3*pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)/3).,pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sqrt(3)/2) + cos^(-1)(1/2).,2*pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: 2*pi/3",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) + cos^(-1)(1/2).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(x) at x=1/sqrt(2).,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(x) at x=-1/sqrt(2).,3*pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: 3*pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(x) at x=-sqrt(3).,-pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(-1).,-pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(1).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(-inf).,-pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/sqrt(2)) + sin^(-1)(1/sqrt(2)).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) - sin^(-1)(1/2).,pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: pi/6",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1/x) at x=1.,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1) + tan^(-1)(1).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(1/2) + tan^(-1)(1/3).,0.785398,"Deterministic inverse-trig evaluation.
+Final Answer: 0.785398",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(2) + tan^(-1)(1/3).,1.428899,"Deterministic inverse-trig evaluation.
+Final Answer: 1.428899",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1) - tan^(-1)(1/2).,-atan(1/2) + pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: -atan(1/2) + pi/4",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate 2tan^(-1)(1).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + sin^(-1)(sqrt(3)/2).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) + cos^(-1)(-1/2).,pi,"Deterministic inverse-trig evaluation.
+Final Answer: pi",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) - cos^(-1)(1/2).,-pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/6",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=2.,1.570796,"Deterministic inverse-trig evaluation.
+Final Answer: 1.570796",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)+tan^(-1)(1/x) at x=-2.,-1.570796,"Deterministic inverse-trig evaluation.
+Final Answer: -1.570796",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin(2 sin^(-1)(1/2)).,0.866025,"Deterministic inverse-trig evaluation.
+Final Answer: 0.866025",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos(2 cos^(-1)(1/2)).,-0.5000,"Deterministic inverse-trig evaluation.
+Final Answer: -0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan(2 tan^(-1)(1/2)).,1.333333,"Deterministic inverse-trig evaluation.
+Final Answer: 1.333333",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + cos^(-1)(sqrt(3)/2).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(1/2) - sin^(-1)(sqrt(3)/2).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)) - tan^(-1)(1).,pi/12,"Deterministic inverse-trig evaluation.
+Final Answer: pi/12",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(1/2) + tan^(-1)(1/sqrt(3)).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate cos^(-1)(sqrt(2)/2) + tan^(-1)(1).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/sqrt(2)) - tan^(-1)(1).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(sqrt(3)) + cos^(-1)(1/2).,2*pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: 2*pi/3",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(x)+sin^(-1)(x) at x=1/2.,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(x)-tan^(-1)(-x) at x=2.,2.214297,"Deterministic inverse-trig evaluation.
+Final Answer: 2.214297",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate sin^(-1)(1/2) + sin^(-1)(1/3).,asin(1/3) + pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: asin(1/3) + pi/6",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(1/2) + tan^(-1)(2).,1.570796,"Deterministic inverse-trig evaluation.
+Final Answer: 1.570796",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(3) - tan^(-1)(1).,-pi/4 + atan(3),"Deterministic inverse-trig evaluation.
+Final Answer: -pi/4 + atan(3)",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(pi/3)).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(5*pi/6)).,pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(5*pi/6)).,5*pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: 5*pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(7*pi/6)).,5*pi/6,"Deterministic inverse-trig evaluation.
+Final Answer: 5*pi/6",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(3*pi/4)).,-pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(5*pi/4)).,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin(sin^(-1)(1/2)).,0.5000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos(cos^(-1)(1/2)).,0.5000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan(tan^(-1)(1/2)).,0.5000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(-pi/3)).,-pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(-pi/3)).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(-3*pi/4)).,pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(4*pi/3)).,-pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(4*pi/3)).,2*pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: 2*pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(7*pi/4)).,-pi/4,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/4",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(3*pi/2)).,-pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: -pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(3*pi/2)).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate tan^(-1)(tan(pi)).,0.0000,"Deterministic inverse-trig evaluation.
+Final Answer: 0.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate sin^(-1)(sin(2*pi/3)).,pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate cos^(-1)(cos(2*pi/3)).,2*pi/3,"Deterministic inverse-trig evaluation.
+Final Answer: 2*pi/3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve sin^(-1)(x)=pi/6. Find x.,0.5000,"Deterministic inverse-trig equation solving.
+Final Answer: 0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve cos^(-1)(x)=pi/3. Find x.,0.5000,"Deterministic inverse-trig equation solving.
+Final Answer: 0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve tan^(-1)(x)=pi/4. Find x.,1.0000,"Deterministic inverse-trig equation solving.
+Final Answer: 1.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve sin^(-1)(x)=-pi/6. Find x.,-0.5000,"Deterministic inverse-trig equation solving.
+Final Answer: -0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve cos^(-1)(x)=2*pi/3. Find x.,-0.5000,"Deterministic inverse-trig equation solving.
+Final Answer: -0.5000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Solve tan^(-1)(x)=-pi/4. Find x.,-1.0000,"Deterministic inverse-trig equation solving.
+Final Answer: -1.0000",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if sin^(-1)(x)+cos^(-1)(x)=pi.,no real solution,"Deterministic inverse-trig equation solving.
+Final Answer: no real solution",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if tan^(-1)(x)+tan^(-1)(1/x)=pi/2 and x>0.,all real x > 0,"Deterministic inverse-trig equation solving.
+Final Answer: all real x > 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if sin^(-1)(x)=cos^(-1)(x).,0.707107,"Deterministic inverse-trig equation solving.
+Final Answer: 0.707107",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if tan^(-1)(x)=sin^(-1)(1/2).,0.57735,"Deterministic inverse-trig equation solving.
+Final Answer: 0.57735",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if cos^(-1)(x)=tan^(-1)(1).,0.707107,"Deterministic inverse-trig equation solving.
+Final Answer: 0.707107",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find x if cos^(-1)(x)+cos^(-1)(1/2)=pi.,-0.5000,"Deterministic inverse-trig equation solving.
+Final Answer: -0.5000",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Find x if tan^(-1)(x)=cos^(-1)(1/2).,1.732051,"Deterministic inverse-trig equation solving.
+Final Answer: 1.732051",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate tan^(-1)(inf) (limit).,pi/2,"Deterministic inverse-trig evaluation.
+Final Answer: pi/2",mini,False,1.0,0.0,1.0,calculus|trigonometry,medium,math,solver_debug
+Evaluate ∫ dx/(√(1−x^2)) from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+x^2) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x√(x^2−1)) from 2 to 3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(a^2−x^2)) from 0 to a/2 (a=2).,2).,"Used equation RHS fallback from prompt structure.
+Final Answer: 2).",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ 1/(1+x^2) dx from 0 to √3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(4−x^2)) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x^2+4) from 0 to 2.,6,"Parsed arithmetic expression `2+4` and evaluated directly.
+Final Answer: 6",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(9−x^2)) from 0 to 3/2.,1.5,"Parsed arithmetic expression `3/2` and evaluated directly.
+Final Answer: 1.5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+4x^2) from 0 to 1.,5,"Parsed arithmetic expression `1+4` and evaluated directly.
+Final Answer: 5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(1−4x^2)) from 0 to 1/4.,0.25,"Parsed arithmetic expression `1/4` and evaluated directly.
+Final Answer: 0.25",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ x/(√(1−x^2)) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ x/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x^2+9) from 0 to 3.,11,"Parsed arithmetic expression `2+9` and evaluated directly.
+Final Answer: 11",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(16−x^2)) from 0 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x√(x^2−4)) from 3 to 4.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+9x^2) from 0 to 1.,10,"Parsed arithmetic expression `1+9` and evaluated directly.
+Final Answer: 10",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(25−x^2)) from 0 to 5/2.,2.5,"Parsed arithmetic expression `5/2` and evaluated directly.
+Final Answer: 2.5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+x^2) from 0 to tan(π/6).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/6).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(1+x^2) from 0 to 1/√3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Differentiate sin^(-1)(2x) at x=1/4.,1/4.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/4.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate cos^(-1)(x^2) at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)(3x) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate sin^(-1)(√x) at x=1/4.,0.25,"Parsed arithmetic expression `1/4` and evaluated directly.
+Final Answer: 0.25",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)(x^2) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate sin^(-1)(x/(1+x^2)) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Differentiate cos^(-1)(2x−1) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)(√x) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate sin^(-1)(x^2) at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate cos^(-1)(√(1−x^2)) at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find d/dx [sin^(-1)(x)+cos^(-1)(x)] at x=1/3.,0.3333333333333333,"Parsed arithmetic expression `1/3` and evaluated directly.
+Final Answer: 0.3333333333333333",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Differentiate tan^(-1)(1/x) at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate sin^(-1)(sin x) at x=π/6.,π/6.,"Used equation RHS fallback from prompt structure.
+Final Answer: π/6.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate cos^(-1)(cos x) at x=π/3.,π/3.,"Used equation RHS fallback from prompt structure.
+Final Answer: π/3.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)(tan x) at x=π/4.,π/4.,"Used equation RHS fallback from prompt structure.
+Final Answer: π/4.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate sin^(-1)(2x√(1−x^2)) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)((2x)/(1−x^2)) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Differentiate sin^(-1)(1−2x^2) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate cos^(-1)(1−2x^2) at x=1/2.,1/2.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1/2.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Differentiate tan^(-1)((1−x)/(1+x)) at x=0.,0.,"Used equation RHS fallback from prompt structure.
+Final Answer: 0.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·sin^(-1)(x) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·tan^(-1)(x) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ sin^(-1)(x) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ tan^(-1)(x) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ cos^(-1)(x) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x^2/(√(1−x^2)) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ x^2/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ x·cos^(-1)(x) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·sin^(-1)(2x) dx from 0 to 1/4.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·tan^(-1)(2x) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ sin^(-1)(x)/√(1−x^2) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ tan^(-1)(x)/(1+x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ cos^(-1)(x)/(√(1−x^2)) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ sin^(-1)(x)^2 dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ tan^(-1)(x)^2 dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·sin^(-1)(x^2) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·tan^(-1)(x^2) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ sin^(-1)(x)/(1+x^2) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate ∫ tan^(-1)(x)/(√(1+x^2)) dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ cos^(-1)(x)/(1−x^2) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(x^2√(1−1/x^2)) from 2 to 3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(x^2−1)) from 1 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x√(x^2−4)) from 3 to 5.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(a^2−x^2)) from 0 to a/√2 (a=3).,3).,"Used equation RHS fallback from prompt structure.
+Final Answer: 3).",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+x^4) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x^2+2x+2) from 0 to 1.,4,"Parsed arithmetic expression `2+2` and evaluated directly.
+Final Answer: 4",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(4+x^2) from 0 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(16−4x^2)) from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+4x^2) from 0 to tan(π/8).,5,"Parsed arithmetic expression `1+4` and evaluated directly.
+Final Answer: 5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(√(1−4x^2)) from 0 to sin(π/8).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(1+x^2)^2 from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x^2+a^2) from 0 to a (a=2).,2).,"Used equation RHS fallback from prompt structure.
+Final Answer: 2).",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(√(9−x^2)) from 0 to 3.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x√(x^2+1)) from 1 to 2.,3,"Parsed arithmetic expression `2+1` and evaluated directly.
+Final Answer: 3",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(1+x^2) from 0 to tan(π/4).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/4).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(√(25−x^2)) from 0 to 5.,0,"Applied retrieval-guided heuristic reasoning. Key hint: JEE Trap Memory: Common traps include ignoring domain restrictions and unit mismatch.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ dx/(x^2+1) from 0 to tan(π/3).,3,"Parsed arithmetic expression `2+1` and evaluated directly.
+Final Answer: 3",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ dx/(√(1−x^2)) from 0 to sin(π/3).,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate d/dx [sin^(-1)(x)+tan^(-1)(x)] at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate d/dx [cos^(-1)(x)−tan^(-1)(x)] at x=1/3.,0.3333333333333333,"Parsed arithmetic expression `1/3` and evaluated directly.
+Final Answer: 0.3333333333333333",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate ∫ (sin^(-1)(x)+cos^(-1)(x)) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate ∫ (tan^(-1)(x)+tan^(-1)(1/x)) dx from 1 to 2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate ∫ sin^(-1)(x)/(√(1−x^2)) dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x/(x^2+1)^2 dx from 0 to 1.,3,"Parsed arithmetic expression `2+1` and evaluated directly.
+Final Answer: 3",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+Evaluate ∫ (1/(1+x^2) + 1/√(1−x^2)) dx from 0 to 1/2.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,medium,general,solver_debug
+Evaluate ∫ (sin^(-1)(x))' dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ (tan^(-1)(x))' dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ (cos^(-1)(x))' dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·(sin^(-1)(x))' dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ x·(tan^(-1)(x))' dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ (sin^(-1)(x))^2 dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ (tan^(-1)(x))^2 dx from 0 to 1.,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate ∫ (cos^(-1)(x))^2 dx from 0 to 1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Evaluate d/dx [sin^(-1)(x^2)] at x=1/2.,0.5,"Parsed arithmetic expression `1/2` and evaluated directly.
+Final Answer: 0.5",mini,False,1.0,0.0,1.0,trigonometry,medium,math,solver_debug
+Evaluate d/dx [tan^(-1)(x^2)] at x=1.,1.,"Used equation RHS fallback from prompt structure.
+Final Answer: 1.",mini,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+Find the distance in m,5 m,"Reasoning: distance computed.
+Final Answer: 5 m",test_provider,False,1.0,0.0,1.0,trigonometry,easy,math,solver_debug
+How many subsets of {1–7} contain both 1 and 7?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many subsets of {1–7} contain both 1 and 7?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many subsets of {1–7} contain neither 1 nor 7?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many subsets of {1–7} contain neither 1 nor 7?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many permutations of 1–6 where 1 appears before 2?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many permutations of 1–6 where 1 appears before 2?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many permutations of 1–6 where 1 appears before 2 and 3?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many permutations of 1–6 where 1 appears before 2 and 3?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Memory replay: Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 4-digit numbers from 1–9 with no repetition and sum odd?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 4-digit numbers from 1–9 with no repetition and sum odd?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 4-digit numbers from 1–9 with no repetition and sum even?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 4-digit numbers from 1–9 with no repetition and sum even?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many arrangements of 6 books if 3 specific books stay together?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many arrangements of 6 books if 3 specific books stay together?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many arrangements of 6 books if 3 specific books are separated?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many arrangements of 6 books if 3 specific books are separated?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Memory replay: Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 5-digit numbers from 1–7 without repetition greater than 50000?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 5-digit numbers from 1–7 without repetition greater than 50000?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 3-digit numbers from 1–9 with exactly one even digit?,0,"Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 3-digit numbers from 1–9 with exactly one even digit?
+Candidate Final Answer: 0
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",0,"Applied retrieval-guided heuristic reasoning.
+Final Answer: 0",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many subsets of {1–7} contain both 1 and 7?,32,"Deterministic subset counting with two fixed included elements.
+Final Answer: 32",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many subsets of {1–7} contain both 1 and 7?
+Candidate Final Answer: 32
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",32,"Deterministic subset counting with two fixed included elements.
+Final Answer: 32",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many subsets of {1–7} contain neither 1 nor 7?,32,"Deterministic subset counting with two excluded elements.
+Final Answer: 32",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many subsets of {1–7} contain neither 1 nor 7?
+Candidate Final Answer: 32
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",32,"Deterministic subset counting with two excluded elements.
+Final Answer: 32",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many permutations of 1–6 where 1 appears before 2?,360,"Deterministic permutation precedence counting by relative-order symmetry.
+Final Answer: 360",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many permutations of 1–6 where 1 appears before 2?
+Candidate Final Answer: 360
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",240,"Deterministic permutation precedence counting by relative-order symmetry.
+Final Answer: 240",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many permutations of 1–6 where 1 appears before 2 and 3?,240,"Deterministic permutation precedence counting by relative-order symmetry.
+Final Answer: 240",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many permutations of 1–6 where 1 appears before 2 and 3?
+Candidate Final Answer: 240
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",180,"Deterministic permutation precedence counting by relative-order symmetry.
+Final Answer: 180",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 4-digit numbers from 1–9 with no repetition and sum odd?,1440,"Deterministic parity-constrained counting over non-repeating digit permutations.
+Final Answer: 1440",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 4-digit numbers from 1–9 with no repetition and sum odd?
+Candidate Final Answer: 1440
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",1440,"Deterministic parity-constrained counting over non-repeating digit permutations.
+Final Answer: 1440",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 4-digit numbers from 1–9 with no repetition and sum even?,1584,"Deterministic parity-constrained counting over non-repeating digit permutations.
+Final Answer: 1584",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 4-digit numbers from 1–9 with no repetition and sum even?
+Candidate Final Answer: 1584
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",1584,"Deterministic parity-constrained counting over non-repeating digit permutations.
+Final Answer: 1584",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many arrangements of 6 books if 3 specific books stay together?,144,"Deterministic block method for grouped books.
+Final Answer: 144",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many arrangements of 6 books if 3 specific books stay together?
+Candidate Final Answer: 144
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",144,"Deterministic block method for grouped books.
+Final Answer: 144",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many arrangements of 6 books if 3 specific books are separated?,144,"Deterministic slot method for pairwise-separated specific books.
+Final Answer: 144",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many arrangements of 6 books if 3 specific books are separated?
+Candidate Final Answer: 144
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",144,"Deterministic slot method for pairwise-separated specific books.
+Final Answer: 144",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 5-digit numbers from 1–7 without repetition greater than 50000?,1080,"Deterministic threshold counting over non-repeating digit permutations.
+Final Answer: 1080",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 5-digit numbers from 1–7 without repetition greater than 50000?
+Candidate Final Answer: 1080
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",1080,"Deterministic threshold counting over non-repeating digit permutations.
+Final Answer: 1080",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+How many 3-digit numbers from 1–9 with exactly one even digit?,240,"Deterministic parity-count constrained counting over non-repeating digit permutations.
+Final Answer: 240",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug
+"Meta-verification task:
+Given the original question and candidate final answer, check logical consistency.
+If inconsistent, provide a corrected final answer.
+
+Question: How many 3-digit numbers from 1–9 with exactly one even digit?
+Candidate Final Answer: 240
+
+Return format:
+Reasoning: <brief consistency check>
+Final Answer: <same as candidate if consistent, else corrected answer>",240,"Deterministic parity-count constrained counting over non-repeating digit permutations.
+Final Answer: 240",mini,False,1.0,0.0,1.0,general,easy,general,solver_debug

@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-02-26T11:16:34.766337+00:00",
+  "total_questions": 50,
+  "correct": 50,
+  "accuracy": 1.0,
+  "accuracy_by_category": {
+    "A": {
+      "correct": 8,
+      "total": 8,
+      "accuracy": 1.0
+    },
+    "B": {
+      "correct": 8,
+      "total": 8,
+      "accuracy": 1.0
+    },
+    "C": {
+      "correct": 10,
+      "total": 10,
+      "accuracy": 1.0
+    },
+    "D": {
+      "correct": 8,
+      "total": 8,
+      "accuracy": 1.0
+    },
+    "E": {
+      "correct": 8,
+      "total": 8,
+      "accuracy": 1.0
+    },
+    "F": {
+      "correct": 8,
+      "total": 8,
+      "accuracy": 1.0
+    }
+  },
+  "hard_case_accuracy": 1.0,
+  "rare_cluster_accuracy": 1.0,
+  "overconfidence_count": 0,
+  "low_entropy_wrong_count": 0,
+  "low_entropy_overconfidence_count": 0,
+  "single_provider_count": 49,
+  "single_provider_frequency": 0.98,
+  "persona_integrity_rate": 1.0,
+  "verification_correctness_rate": 1.0,
+  "risk_mean": 0.1769833078853247,
+  "entropy_mean": 0.3852444120671275,
+  "confidence_mean": 0.8230166921146751,
+  "wrong_questions": [],
+  "stability_probe_count": 0,
+  "stability_unstable_count": 0
+}

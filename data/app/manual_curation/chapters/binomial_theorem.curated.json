@@ -1,0 +1,2789 @@
+[
+  {
+    "question_id": "manual_binomial_001",
+    "type": "MCQ_SINGLE",
+    "question_text": "Suppose 28 - p, p, 70 - α, α are the coefficients of four consecutive terms in the expansion of (1 + x)^n. Then the value of 2α - 3p equals",
+    "question_text_latex": "Suppose $28-p$, $p$, $70-\\alpha$, $\\alpha$ are the coefficients of four consecutive terms in the expansion of $(1+x)^n$. Then the value of $2\\alpha-3p$ equals",
+    "options": [
+      {
+        "label": "A",
+        "text": "7"
+      },
+      {
+        "label": "B",
+        "text": "10"
+      },
+      {
+        "label": "C",
+        "text": "4"
+      },
+      {
+        "label": "D",
+        "text": "6"
+      }
+    ],
+    "options_latex": {
+      "A": "7",
+      "B": "10",
+      "C": "4",
+      "D": "6"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_001",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_001",
+    "published_at": 1772948505966,
+    "solution_explanation": "Let the four consecutive coefficients be C(n,r), C(n,r+1), C(n,r+2), C(n,r+3). Then C(n,r)+C(n,r+1)=28 and C(n,r+2)+C(n,r+3)=70. By Pascal's identity these become C(n+1,r+1)=28 and C(n+1,r+3)=70. In Pascal's triangle, 28 and 70 occur in the same row as C(8,2)=28 and C(8,4)=70. Hence n+1=8 and r+1=2, so n=7 and r=1. Therefore p=C(7,2)=21 and α=C(7,4)=35. Thus 2α-3p=70-63=7.",
+    "source_solution_stub": "Suppose 28 - 𝑝, 𝑝, 70 - 𝛼, 𝛼 are the coefficient of four consecutive terms in the expansion of ( 1 + 𝑥 ) 𝑛. Then the value of 2𝛼 - 3𝑝 equals (1) 7 (2) 10 (3) 4 (4) 6",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_4",
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [
+      "mcq_options_incomplete"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Suppose 28 - p, p, 70 - α, α are the coefficients of four consecutive terms in the expansion of (1 + x)^n. Then the value of 2α - 3p equals",
+      "clean_question_latex": "Suppose $28-p$, $p$, $70-\\alpha$, $\\alpha$ are the coefficients of four consecutive terms in the expansion of $(1+x)^n$. Then the value of $2\\alpha-3p$ equals",
+      "options": {
+        "A": "7",
+        "B": "10",
+        "C": "4",
+        "D": "6"
+      },
+      "options_latex": {
+        "A": "7",
+        "B": "10",
+        "C": "4",
+        "D": "6"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_4",
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "A",
+        "suggested_correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:34+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4",
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Suppose 28 - p, p, 70 - α, α are the coefficients of four consecutive terms in the expansion of (1 + x)^n. Then the value of 2α - 3p equals",
+        "clean_question_latex": "Suppose $28-p$, $p$, $70-\\alpha$, $\\alpha$ are the coefficients of four consecutive terms in the expansion of $(1+x)^n$. Then the value of $2\\alpha-3p$ equals",
+        "options": {
+          "A": "7",
+          "B": "10",
+          "C": "4",
+          "D": "6"
+        },
+        "options_latex": {
+          "A": "7",
+          "B": "10",
+          "C": "4",
+          "D": "6"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_4",
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "A",
+          "suggested_correct_answer": {
+            "single": "A",
+            "multiple": [
+              "A"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_69",
+    "legacy_row_id": "bankq_1772717682126",
+    "legacy_publish_id": "imppub_1772717682126",
+    "manual_solution_latex": "Let the four consecutive coefficients be $\\binom{n}{r},\\binom{n}{r+1},\\binom{n}{r+2},\\binom{n}{r+3}$. Then\n\\[\\binom{n}{r}+\\binom{n}{r+1}=28,\\qquad \\binom{n}{r+2}+\\binom{n}{r+3}=70.\\]\nUsing Pascal's identity,\n\\[\\binom{n+1}{r+1}=28,\\qquad \\binom{n+1}{r+3}=70.\\]\nThese fit the same row as\n\\[\\binom{8}{2}=28,\\qquad \\binom{8}{4}=70.\\]\nHence $n+1=8$ and $r+1=2$, so $n=7$ and $r=1$. Therefore\n\\[p=\\binom{7}{2}=21,\\qquad \\alpha=\\binom{7}{4}=35.\\]\nThus\n\\[2\\alpha-3p=2\\cdot 35-3\\cdot 21=70-63=7.\\]\nSo the correct option is $\\boxed{A}$.",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "all four coefficients and all four options survive in the JSON, and the value follows uniquely from Pascal-triangle identities",
+      "corrections": [
+        "split the merged options into A, B, C, D",
+        "normalized α notation",
+        "restored (1 + x)^n notation"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_002",
+    "type": "MCQ_SINGLE",
+    "question_text": "The coefficient of x^5 in the expansion of (2x^3 - 1/(3x^2))^5 is",
+    "question_text_latex": "The coefficient of $x^5$ in the expansion of $\\left(2x^3-\\dfrac{1}{3x^2}\\right)^5$ is",
+    "options": [
+      {
+        "label": "A",
+        "text": "80/9"
+      },
+      {
+        "label": "B",
+        "text": "9"
+      },
+      {
+        "label": "C",
+        "text": "8"
+      },
+      {
+        "label": "D",
+        "text": "26/3"
+      }
+    ],
+    "options_latex": {
+      "A": "\\dfrac{80}{9}",
+      "B": "9",
+      "C": "8",
+      "D": "\\dfrac{26}{3}"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_002",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_002",
+    "published_at": 1772948505966,
+    "solution_explanation": "In the general term, choose k factors of -1/(3x^2) and 5-k factors of 2x^3. The power of x is 3(5-k)-2k = 15-5k. For x^5, we need 15-5k=5, so k=2. Therefore the coefficient is C(5,2)·(2)^3·(1/3)^2 = 10·8/9 = 80/9.",
+    "source_solution_stub": "The coefficient of 𝑥5 in the expansion of 2𝑥3 - 1 3𝑥2 5 is (1) 80 9 (2) 9 (3) 8 (4) 26 3 (1) 66. (3) 67. (1) 68. (3) 69. (2) 70. (2) 71. (2) 72. (3)",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "graph_missing_multiplication_fix",
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [
+      "mcq_options_incomplete",
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The coefficient of x^5 in the expansion of (2x^3 - 1/(3x^2))^5 is",
+      "clean_question_latex": "The coefficient of $x^5$ in the expansion of $\\left(2x^3-\\dfrac{1}{3x^2}\\right)^5$ is",
+      "options": {
+        "A": "80/9",
+        "B": "9",
+        "C": "8",
+        "D": "26/3"
+      },
+      "options_latex": {
+        "A": "\\dfrac{80}{9}",
+        "B": "9",
+        "C": "8",
+        "D": "\\dfrac{26}{3}"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "graph_missing_multiplication_fix",
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "A",
+        "suggested_correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The coefficient of x^5 in the expansion of (2x^3 - 1/(3x^2))^5 is",
+        "clean_question_latex": "The coefficient of $x^5$ in the expansion of $\\left(2x^3-\\dfrac{1}{3x^2}\\right)^5$ is",
+        "options": {
+          "A": "80/9",
+          "B": "9",
+          "C": "8",
+          "D": "26/3"
+        },
+        "options_latex": {
+          "A": "\\dfrac{80}{9}",
+          "B": "9",
+          "C": "8",
+          "D": "\\dfrac{26}{3}"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "graph_missing_multiplication_fix",
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "A",
+          "suggested_correct_answer": {
+            "single": "A",
+            "multiple": [
+              "A"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_71",
+    "legacy_row_id": "bankq_1772718279319",
+    "legacy_publish_id": "imppub_1772718279319",
+    "manual_solution_latex": "The general term of $\\left(2x^3-\\dfrac{1}{3x^2}\\right)^5$ is\n\\[\\binom{5}{k}(2x^3)^{5-k}\\left(-\\frac{1}{3x^2}\\right)^k.\\]\nIts power of $x$ is\n\\[3(5-k)-2k=15-5k.\\]\nFor the term in $x^5$, we need\n\\[15-5k=5\\implies k=2.\\]\nHence the required coefficient is\n\\[\\binom{5}{2}2^{3}\\left(\\frac{1}{3}\\right)^2=10\\cdot 8\\cdot \\frac{1}{9}=\\frac{80}{9}.\\]\nSo the correct option is $\\boxed{A}$.",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the entire binomial expression and the merged numeric options can be restored exactly from the surviving OCR tokens",
+      "corrections": [
+        "restored the reciprocal term 1/(3x^2)",
+        "split the merged options into A, B, C, D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_003",
+    "type": "NUMERICAL",
+    "question_text": "The coefficient of x^18 in the expansion of (x^4 - 1/x^3)^15 is ____.",
+    "question_text_latex": "The coefficient of $x^{18}$ in the expansion of $\\left(x^4-\\dfrac{1}{x^3}\\right)^{15}$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "5005",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_003",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_003",
+    "published_at": 1772948505966,
+    "solution_explanation": "Take r factors of -1/x^3 and 15-r factors of x^4. The resulting power of x is 4(15-r)-3r = 60-7r. For x^18, we need 60-7r=18, so r=6. The coefficient is C(15,6)(-1)^6 = C(15,6)=5005.",
+    "source_solution_stub": "The coefficient of 𝑥18 in the expansion of 𝑥4 - 1 𝑥3 15 is ____________",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "5005",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5005",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The coefficient of x^18 in the expansion of (x^4 - 1/x^3)^15 is ____.",
+      "clean_question_latex": "The coefficient of $x^{18}$ in the expansion of $\\left(x^4-\\dfrac{1}{x^3}\\right)^{15}$ is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5005",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "5005",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5005",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The coefficient of x^18 in the expansion of (x^4 - 1/x^3)^15 is ____.",
+        "clean_question_latex": "The coefficient of $x^{18}$ in the expansion of $\\left(x^4-\\dfrac{1}{x^3}\\right)^{15}$ is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5005",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "5005",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "5005",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_87",
+    "legacy_row_id": "bankq_1772718224937",
+    "legacy_publish_id": "imppub_1772718224937",
+    "manual_solution_latex": "The general term of $\\left(x^4-\\dfrac{1}{x^3}\\right)^{15}$ is\n\\[\\binom{15}{r}(x^4)^{15-r}\\left(-\\frac{1}{x^3}\\right)^r.\\]\nThe power of $x$ is\n\\[4(15-r)-3r=60-7r.\\]\nFor the term in $x^{18}$,\n\\[60-7r=18\\implies r=6.\\]\nThus the coefficient is\n\\[\\binom{15}{6}(-1)^6=\\binom{15}{6}=5005.\\]",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the Laurent-binomial expression is fully recoverable from the OCR string and the exponent equation verifies the stored numerical answer exactly",
+      "corrections": [
+        "restored the reciprocal term 1/x^3",
+        "normalized the binomial to standard LaTeX"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_004",
+    "type": "NUMERICAL",
+    "question_text": "If the coefficient of a^7 b^8 in the expansion of (a + 2b + 4ab)^10 is K·2^16, then K is equal to ____.",
+    "question_text_latex": "If the coefficient of $a^7b^8$ in the expansion of $(a+2b+4ab)^{10}$ is $K\\cdot 2^{16}$, then $K$ is equal to $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "315",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_004",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_004",
+    "published_at": 1772948505966,
+    "solution_explanation": "Let the terms a, 2b and 4ab be chosen x, y and z times respectively. Then x+y+z=10, x+z=7 and y+z=8. Solving gives z=5, x=2, y=3. Therefore the coefficient is 10!/(2!3!5!)·2^3·4^5 = 2520·2^13 = 315·2^16. Hence K=315.",
+    "source_solution_stub": "If the coefficient of 𝑎7𝑏8 in the expansion of ( 𝑎 + 2𝑏 + 4𝑎𝑏 ) 10 is 𝐾 · 216, then 𝐾 is equal to",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_4",
+      "graph_missing_multiplication_fix",
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "315",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "315",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the coefficient of a^7 b^8 in the expansion of (a + 2b + 4ab)^10 is K·2^16, then K is equal to ____.",
+      "clean_question_latex": "If the coefficient of $a^7b^8$ in the expansion of $(a+2b+4ab)^{10}$ is $K\\cdot 2^{16}$, then $K$ is equal to $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "315",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_4",
+        "graph_missing_multiplication_fix",
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "315",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "315",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the coefficient of a^7 b^8 in the expansion of (a + 2b + 4ab)^10 is K·2^16, then K is equal to ____.",
+        "clean_question_latex": "If the coefficient of $a^7b^8$ in the expansion of $(a+2b+4ab)^{10}$ is $K\\cdot 2^{16}$, then $K$ is equal to $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "315",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_4",
+          "graph_missing_multiplication_fix",
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "315",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "315",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_91",
+    "legacy_row_id": "bankq_1772718565924",
+    "legacy_publish_id": "imppub_1772718565924",
+    "manual_solution_latex": "Suppose the terms $a$, $2b$ and $4ab$ are chosen $x$, $y$ and $z$ times respectively. Then\n\\[x+y+z=10,\\qquad x+z=7,\\qquad y+z=8.\\]\nSolving,\n\\[z=5,\\qquad x=2,\\qquad y=3.\\]\nHence the required coefficient is\n\\[\\frac{10!}{2!\\,3!\\,5!}\\cdot 2^3\\cdot 4^5\n=2520\\cdot 2^3\\cdot 2^{10}\n=2520\\cdot 2^{13}\n=315\\cdot 2^{16}.\\]\nTherefore $\\boxed{K=315}$.",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the OCR preserved the full trinomial and the factor K·2^16 can be recovered exactly; the stored answer is confirmed by direct multinomial counting",
+      "corrections": [
+        "restored the factor K·2^16 from the merged token K 216",
+        "normalized a^7 b^8 notation"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_005",
+    "type": "NUMERICAL",
+    "question_text": "The ratio of the coefficient of the middle term in the expansion of (1 + x)^20 and the sum of the coefficients of the two middle terms in the expansion of (1 + x)^19 is ____.",
+    "question_text_latex": "The ratio of the coefficient of the middle term in the expansion of $(1+x)^{20}$ and the sum of the coefficients of the two middle terms in the expansion of $(1+x)^{19}$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_005",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_005",
+    "published_at": 1772948505966,
+    "solution_explanation": "The middle term of (1+x)^20 has coefficient C(20,10). The two middle terms of (1+x)^19 have coefficients C(19,9) and C(19,10), which are equal. Their sum is 2C(19,9)=C(20,10). Therefore the required ratio is 1.",
+    "source_solution_stub": "The ratio of the coefficient of the middle term in the expansion of ( 1 + 𝑥 ) 20 and the sum of the coefficients of two middle terms in expansion of ( 1 + 𝑥 ) 19 is .",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "1",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The ratio of the coefficient of the middle term in the expansion of (1 + x)^20 and the sum of the coefficients of the two middle terms in the expansion of (1 + x)^19 is ____.",
+      "clean_question_latex": "The ratio of the coefficient of the middle term in the expansion of $(1+x)^{20}$ and the sum of the coefficients of the two middle terms in the expansion of $(1+x)^{19}$ is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "1",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "1",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:42+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The ratio of the coefficient of the middle term in the expansion of (1 + x)^20 and the sum of the coefficients of the two middle terms in the expansion of (1 + x)^19 is ____.",
+        "clean_question_latex": "The ratio of the coefficient of the middle term in the expansion of $(1+x)^{20}$ and the sum of the coefficients of the two middle terms in the expansion of $(1+x)^{19}$ is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "1",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "1",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "1",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_94",
+    "legacy_row_id": "bankq_1772718494700",
+    "legacy_publish_id": "imppub_1772718494700",
+    "manual_solution_latex": "The coefficient of the middle term of $(1+x)^{20}$ is\n\\[\\binom{20}{10}.\\]\nThe two middle coefficients of $(1+x)^{19}$ are\n\\[\\binom{19}{9}\\quad \\text{and} \\quad \\binom{19}{10}.\\]\nSince\n\\[\\binom{19}{9}=\\binom{19}{10},\\]\ntheir sum is\n\\[\\binom{19}{9}+\\binom{19}{10}=2\\binom{19}{9}=\\binom{20}{10}.\\]\nHence the required ratio is\n\\[\\frac{\\binom{20}{10}}{\\binom{19}{9}+\\binom{19}{10}}=1.\\]",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "both expansions survive exactly in the JSON and the ratio follows from a standard central-binomial identity",
+      "corrections": [
+        "normalized the two middle-term descriptions",
+        "restored full (1 + x)^n notation"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_006",
+    "type": "NUMERICAL",
+    "question_text": "The mean of the coefficients of x, x^2, ..., x^7 in the binomial expression (2 + x)^9 is ____.",
+    "question_text_latex": "The mean of the coefficients of $x, x^2, \\ldots, x^7$ in the binomial expression $(2+x)^9$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2736",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_006",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_006",
+    "published_at": 1772948505966,
+    "solution_explanation": "The sum of all coefficients of (2+x)^9 is obtained by putting x=1, giving 3^9=19683. The coefficient of x^0 is 2^9=512, the coefficient of x^8 is C(9,8)·2=18, and the coefficient of x^9 is 1. Hence the sum of the coefficients of x through x^7 is 19683-512-18-1=19152. Dividing by 7 gives the mean 2736.",
+    "source_solution_stub": "The mean of the coefficients of 𝑥, 𝑥2, … … , 𝑥7 in the binomial expression of ( 2 + 𝑥 ) 9 is _________",
+    "has_solution": true,
+    "solution_enriched_at": 1772948505966,
+    "repair_actions": [
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "2736",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "2736",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The mean of the coefficients of x, x^2, ..., x^7 in the binomial expression (2 + x)^9 is ____.",
+      "clean_question_latex": "The mean of the coefficients of $x, x^2, \\ldots, x^7$ in the binomial expression $(2+x)^9$ is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "2736",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "2736",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "2736",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The mean of the coefficients of x, x^2, ..., x^7 in the binomial expression (2 + x)^9 is ____.",
+        "clean_question_latex": "The mean of the coefficients of $x, x^2, \\ldots, x^7$ in the binomial expression $(2+x)^9$ is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "2736",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "2736",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "2736",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_96",
+    "legacy_row_id": "bankq_1772718261551",
+    "legacy_publish_id": "imppub_1772718261551",
+    "manual_solution_latex": "Putting $x=1$ in $(2+x)^9$, the sum of all coefficients is\n\\[3^9=19683.\\]\nNow,\n\\[\\text{coefficient of }x^0=2^9=512,\\]\n\\[\\text{coefficient of }x^8=\\binom{9}{8}2=18,\\]\n\\[\\text{coefficient of }x^9=1.\\]\nTherefore the sum of the coefficients of $x, x^2, \\ldots, x^7$ is\n\\[19683-512-18-1=19152.\\]\nHence their mean is\n\\[\\frac{19152}{7}=2736.\\]",
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:11:45+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the polynomial (2 + x)^9 is intact in the JSON and the numerical answer is confirmed by direct coefficient-sum computation",
+      "corrections": [
+        "normalized the ellipsis x, x^2, ..., x^7",
+        "restored the expression (2 + x)^9"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_007",
+    "type": "MCQ_SINGLE",
+    "question_text": "The least value of n for which the number of integral terms in the binomial expansion of (7^(1/3) + 11^(1/12))^n is 183, is",
+    "question_text_latex": "The least value of $n$ for which the number of integral terms in the binomial expansion of $\\left(7^{1/3}+11^{1/12}\\right)^n$ is $183$, is",
+    "options": [
+      {
+        "label": "A",
+        "text": "2184"
+      },
+      {
+        "label": "B",
+        "text": "2196"
+      },
+      {
+        "label": "C",
+        "text": "2148"
+      },
+      {
+        "label": "D",
+        "text": "2172"
+      }
+    ],
+    "options_latex": {
+      "A": "2184",
+      "B": "2196",
+      "C": "2148",
+      "D": "2172"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_007",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_007",
+    "published_at": 1772949647566,
+    "solution_explanation": "In the general term, the powers are 7^((n-r)/3) and 11^(r/12). For integrality we need r to be a multiple of 12 and n-r to be a multiple of 3. Since every multiple of 12 is also a multiple of 3, this forces n to be a multiple of 3. Then the integral terms correspond to r = 0, 12, 24, ..., up to n, so their count is floor(n/12)+1. Setting this equal to 183 gives floor(n/12)=182, hence n is between 2184 and 2195. The least multiple of 3 in this interval is 2184.",
+    "source_solution_stub": "The least value of n for which the number of integral terms in the Binomial expansion of is 183, is : (1) 2184 (2) 2196 (3) 2148 (4) 2172 2025 (29 Jan Shift 1) JEE Main 2025 January JEE Main Previous Year Paper MathonGo E1:x2 a2 + y2 b2 = 1,a> b E2:x2 A2 + y2 B2 = 1, A < B 1 √332 √3 E1 E1 E2 A,B,C D ABCD 12√65 6√6 18√65 24√65 A = [aij] = [ ]log5128 log45 log58 log425 Aij aij,Cij= ∑ 2k=1aikAjk,1≤i,j≤ 2 C = [Cij] 8|C|",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer7_sum_product_repair:sum_product_repair_options",
+      "layer10_structural_repair:structural_trailing_operator_removed",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [
+      "dangling_operator",
+      "mcq_options_incomplete",
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The least value of n for which the number of integral terms in the binomial expansion of (7^(1/3) + 11^(1/12))^n is 183, is",
+      "clean_question_latex": "The least value of $n$ for which the number of integral terms in the binomial expansion of $\\left(7^{1/3}+11^{1/12}\\right)^n$ is $183$, is",
+      "options": {
+        "A": "2184",
+        "B": "2196",
+        "C": "2148",
+        "D": "2172"
+      },
+      "options_latex": {
+        "A": "2184",
+        "B": "2196",
+        "C": "2148",
+        "D": "2172"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer7_sum_product_repair:sum_product_repair_options",
+        "layer10_structural_repair:structural_trailing_operator_removed",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "A",
+        "suggested_correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:34+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer7_sum_product_repair": [
+          "sum_product_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_trailing_operator_removed",
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The least value of n for which the number of integral terms in the binomial expansion of (7^(1/3) + 11^(1/12))^n is 183, is",
+        "clean_question_latex": "The least value of $n$ for which the number of integral terms in the binomial expansion of $\\left(7^{1/3}+11^{1/12}\\right)^n$ is $183$, is",
+        "options": {
+          "A": "2184",
+          "B": "2196",
+          "C": "2148",
+          "D": "2172"
+        },
+        "options_latex": {
+          "A": "2184",
+          "B": "2196",
+          "C": "2148",
+          "D": "2172"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer7_sum_product_repair:sum_product_repair_options",
+          "layer10_structural_repair:structural_trailing_operator_removed",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "A",
+          "suggested_correct_answer": {
+            "single": "A",
+            "multiple": [
+              "A"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_17",
+    "legacy_row_id": "bankq_1772717635382",
+    "legacy_publish_id": "imppub_1772717635381",
+    "manual_solution_latex": "The general term of $\\left(7^{1/3}+11^{1/12}\\right)^n$ is\n\\[T_{r+1}=\\binom{n}{r}7^{\\frac{n-r}{3}}11^{\\frac{r}{12}}.\\]\nFor this term to be integral, we require\n\\[\\frac{r}{12}\\in\\mathbb{Z}\\quad\\text{and}\\quad \\frac{n-r}{3}\\in\\mathbb{Z}.\\]\nThus $r$ must be a multiple of $12$, and since every multiple of $12$ is divisible by $3$, it follows that $n$ must be divisible by $3$.\nHence the integral terms occur for\n\\[r=0,12,24,\\ldots\\le n,\\]\nso the number of integral terms is\n\\[\\left\\lfloor\\frac{n}{12}\\right\\rfloor+1.\\]\nGiven this number is $183$,\n\\[\\left\\lfloor\\frac{n}{12}\\right\\rfloor=182.\\]\nTherefore $n\\in[2184,2195]$.\nThe least multiple of $3$ in this range is $\\boxed{2184}$, so the correct option is $\\boxed{A}$.",
+    "manual_web_sources": [
+      {
+        "label": "MathonGo previous-year page search hit",
+        "url": "https://www.mathongo.com/iit-jee/jee-main-previous-year-question-paper"
+      },
+      {
+        "label": "Mentor PDF mirror",
+        "url": "https://www.mentorpdf.com/archives/6905"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the missing radicals and all four options were recovered from web-confirmed matches and re-verified directly",
+      "corrections": [
+        "restored the expression (7^(1/3) + 11^(1/12))^n",
+        "restored all four options from source"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_008",
+    "type": "NUMERICAL",
+    "question_text": "The sum of all rational terms in the expansion of (1 + 2^(1/3) + 3^(1/2))^6 is equal to ____.",
+    "question_text_latex": "The sum of all rational terms in the expansion of $\\left(1+2^{1/3}+3^{1/2}\\right)^6$ is equal to $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "612",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_008",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_008",
+    "published_at": 1772949647566,
+    "solution_explanation": "A general term is 6!/(a!b!c!) · 2^(b/3) · 3^(c/2), where a+b+c=6. Such a term is rational exactly when b is a multiple of 3 and c is even. Summing all admissible multinomial contributions gives 612.",
+    "source_solution_stub": "The sum of all rational terms in the expansion of is equal to",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "612",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "612",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The sum of all rational terms in the expansion of (1 + 2^(1/3) + 3^(1/2))^6 is equal to ____.",
+      "clean_question_latex": "The sum of all rational terms in the expansion of $\\left(1+2^{1/3}+3^{1/2}\\right)^6$ is equal to $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "612",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "612",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "612",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:34+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The sum of all rational terms in the expansion of (1 + 2^(1/3) + 3^(1/2))^6 is equal to ____.",
+        "clean_question_latex": "The sum of all rational terms in the expansion of $\\left(1+2^{1/3}+3^{1/2}\\right)^6$ is equal to $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "612",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "612",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "612",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_24",
+    "legacy_row_id": "bankq_1772717591918",
+    "legacy_publish_id": "imppub_1772717591918",
+    "manual_solution_latex": "A general term in the expansion of $\\left(1+2^{1/3}+3^{1/2}\\right)^6$ is\n\\[\\frac{6!}{a!b!c!}\\,2^{b/3}3^{c/2},\\qquad a+b+c=6.\\]\nThis term is rational iff $\\dfrac{b}{3}\\in\\mathbb{Z}$ and $\\dfrac{c}{2}\\in\\mathbb{Z}$, i.e. $b$ is a multiple of $3$ and $c$ is even.\nChecking the admissible triples $(a,b,c)$ and summing the corresponding multinomial values gives\n\\[612.\\]\nHence the required sum is $\\boxed{612}$.",
+    "manual_web_sources": [
+      {
+        "label": "IIT JEE binomial theorem problem PDF",
+        "url": "https://www.maths.iit.edu/docs/jee/mahesh/binomial_theorem_8.pdf"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the exact trinomial and numerical answer were recovered from a source-backed problem statement and verified by multinomial parity conditions",
+      "corrections": [
+        "restored the expression (1 + 2^(1/3) + 3^(1/2))^6"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_009",
+    "type": "MCQ_SINGLE",
+    "question_text": "If the coefficients of x^4, x^5 and x^6 in the expansion of (1 + x)^n are in arithmetic progression, then the maximum value of n is",
+    "question_text_latex": "If the coefficients of $x^4$, $x^5$ and $x^6$ in the expansion of $(1+x)^n$ are in arithmetic progression, then the maximum value of $n$ is",
+    "options": [
+      {
+        "label": "A",
+        "text": "14"
+      },
+      {
+        "label": "B",
+        "text": "21"
+      },
+      {
+        "label": "C",
+        "text": "28"
+      },
+      {
+        "label": "D",
+        "text": "7"
+      }
+    ],
+    "options_latex": {
+      "A": "14",
+      "B": "21",
+      "C": "28",
+      "D": "7"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_009",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_009",
+    "published_at": 1772949647566,
+    "solution_explanation": "Arithmetic progression gives 2C(n,5)=C(n,4)+C(n,6). Simplifying leads to n^2 - 21n + 98 = 0, so n = 7 or 14. Therefore the maximum possible value is 14.",
+    "source_solution_stub": "If the coefficients of and in the expansion of are in the arithmetic progression, then the maximum value of is: (1) 7 (2) 21 (3) 28 (4) 14",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_trailing_operator_removed",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [
+      "dangling_operator",
+      "mcq_options_incomplete"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the coefficients of x^4, x^5 and x^6 in the expansion of (1 + x)^n are in arithmetic progression, then the maximum value of n is",
+      "clean_question_latex": "If the coefficients of $x^4$, $x^5$ and $x^6$ in the expansion of $(1+x)^n$ are in arithmetic progression, then the maximum value of $n$ is",
+      "options": {
+        "A": "14",
+        "B": "21",
+        "C": "28",
+        "D": "7"
+      },
+      "options_latex": {
+        "A": "14",
+        "B": "21",
+        "C": "28",
+        "D": "7"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_trailing_operator_removed",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "A",
+        "suggested_correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:35+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_trailing_operator_removed",
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the coefficients of x^4, x^5 and x^6 in the expansion of (1 + x)^n are in arithmetic progression, then the maximum value of n is",
+        "clean_question_latex": "If the coefficients of $x^4$, $x^5$ and $x^6$ in the expansion of $(1+x)^n$ are in arithmetic progression, then the maximum value of $n$ is",
+        "options": {
+          "A": "14",
+          "B": "21",
+          "C": "28",
+          "D": "7"
+        },
+        "options_latex": {
+          "A": "14",
+          "B": "21",
+          "C": "28",
+          "D": "7"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_trailing_operator_removed",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "A",
+          "suggested_correct_answer": {
+            "single": "A",
+            "multiple": [
+              "A"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_64",
+    "legacy_row_id": "bankq_1772717721827",
+    "legacy_publish_id": "imppub_1772717721827",
+    "manual_solution_latex": "The condition that the coefficients of $x^4,x^5,x^6$ are in A.P. is\n\\[2\\binom{n}{5}=\\binom{n}{4}+\\binom{n}{6}.\\]\nUsing factorial forms and simplifying, this reduces to\n\\[n^2-21n+98=0.\\]\nHence\n\\[(n-7)(n-14)=0,\\]\nso $n=7$ or $n=14$.\nTherefore the maximum value is $\\boxed{14}$, i.e. option $\\boxed{A}$.",
+    "manual_web_sources": [
+      {
+        "label": "InfinityLearn solution page",
+        "url": "https://infinitylearn.com/questions/mathematics/if-coefficients-x-x-x-expansion-x-n-are"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the local row had only the stub; the exact statement and option order were recovered from a web-confirmed match and algebraically verified",
+      "corrections": [
+        "replaced wrong local stem with source-verified x^4,x^5,x^6 statement",
+        "restored the correct option order 14, 21, 28, 7"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_010",
+    "type": "MCQ_SINGLE",
+    "question_text": "The sum of all rational terms in the expansion of (2^(1/5) + 5^(1/3))^15 is equal to",
+    "question_text_latex": "The sum of all rational terms in the expansion of $\\left(2^{1/5}+5^{1/3}\\right)^{15}$ is equal to",
+    "options": [
+      {
+        "label": "A",
+        "text": "3133"
+      },
+      {
+        "label": "B",
+        "text": "931"
+      },
+      {
+        "label": "C",
+        "text": "6131"
+      },
+      {
+        "label": "D",
+        "text": "633"
+      }
+    ],
+    "options_latex": {
+      "A": "3133",
+      "B": "931",
+      "C": "6131",
+      "D": "633"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_010",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_010",
+    "published_at": 1772949647566,
+    "solution_explanation": "The general term is C(15,r)·2^((15-r)/5)·5^(r/3). For rationality, (15-r)/5 and r/3 must both be integers. This forces r to be a multiple of 15. Hence only r=0 and r=15 contribute rational terms. Their sum is 2^3 + 5^5 = 3133.",
+    "source_solution_stub": "The sum of all rational terms in the expansion of is equal to : (1) 3133 (2) 931 (3) 6131 (4) 633 JEE Main 2024 (04 Apr Shift 1) Question Paper JEE Main Previous Year Paper MathonGo Xg NaNO2/HCl (1) 66. (3) 67. (2) 68. (1) 69. (2) 70. (2) 71. (3) 72. (2)",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_trailing_operator_removed",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [
+      "dangling_operator",
+      "mcq_options_incomplete"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The sum of all rational terms in the expansion of (2^(1/5) + 5^(1/3))^15 is equal to",
+      "clean_question_latex": "The sum of all rational terms in the expansion of $\\left(2^{1/5}+5^{1/3}\\right)^{15}$ is equal to",
+      "options": {
+        "A": "3133",
+        "B": "931",
+        "C": "6131",
+        "D": "633"
+      },
+      "options_latex": {
+        "A": "3133",
+        "B": "931",
+        "C": "6131",
+        "D": "633"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_trailing_operator_removed",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "A",
+        "suggested_correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:35+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_trailing_operator_removed",
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The sum of all rational terms in the expansion of (2^(1/5) + 5^(1/3))^15 is equal to",
+        "clean_question_latex": "The sum of all rational terms in the expansion of $\\left(2^{1/5}+5^{1/3}\\right)^{15}$ is equal to",
+        "options": {
+          "A": "3133",
+          "B": "931",
+          "C": "6131",
+          "D": "633"
+        },
+        "options_latex": {
+          "A": "3133",
+          "B": "931",
+          "C": "6131",
+          "D": "633"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_trailing_operator_removed",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "A",
+          "suggested_correct_answer": {
+            "single": "A",
+            "multiple": [
+              "A"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_72",
+    "legacy_row_id": "bankq_1772717715270",
+    "legacy_publish_id": "imppub_1772717715270",
+    "manual_solution_latex": "A general term of $\\left(2^{1/5}+5^{1/3}\\right)^{15}$ is\n\\[\\binom{15}{r}2^{\\frac{15-r}{5}}5^{\\frac{r}{3}}.\\]\nFor this term to be rational, we need\n\\[\\frac{15-r}{5}\\in\\mathbb{Z}\\quad\\text{and}\\quad \\frac{r}{3}\\in\\mathbb{Z}.\\]\nHence $r$ must be a multiple of $3$ and $15-r$ must be a multiple of $5$, which forces $r$ to be a multiple of $15$.\nTherefore only $r=0$ and $r=15$ contribute rational terms.\nTheir sum is\n\\[2^3+5^5=8+3125=3133.\\]\nSo the correct option is $\\boxed{A}$.",
+    "manual_web_sources": [
+      {
+        "label": "StudentBro question mirror",
+        "url": "https://www.studentbro.in/q/the-sum-of-all-rational-terms-in-the-expansion-of-215-51315-is-equal-to"
+      },
+      {
+        "label": "Zollege solution mirror",
+        "url": "https://zollege.in/question/the-sum-of-all-rational-terms-in-the-expansion-of-2-1-5-5-1-3-15-is-equal-to-211693"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the complete irrational-base expansion and options were recovered from web-confirmed matches and verified directly",
+      "corrections": [
+        "restored the full expression (2^(1/5) + 5^(1/3))^15",
+        "restored all four options from source"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_011",
+    "type": "NUMERICAL",
+    "question_text": "If the coefficient of x^30 in the expansion of (1 + 1/x)^6 (1 + x^2)^7 (1 - x^3)^8 is α, then |α| equals ____.",
+    "question_text_latex": "If the coefficient of $x^{30}$ in the expansion of $\\left(1+\\frac{1}{x}\\right)^6(1+x^2)^7(1-x^3)^8$ is $\\alpha$, then $|\\alpha|$ equals $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "678",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_011",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_011",
+    "published_at": 1772949647566,
+    "solution_explanation": "Direct coefficient extraction gives α = -678, hence |α| = 678.",
+    "source_solution_stub": "If the coefficient of 𝑥30 in the expansion of 1 + 1 𝑥 6 1 + 𝑥27 1 − 𝑥38 ; 𝑥 ≠ 0 is 𝛼, then 𝛼 equals _________. JEE Main 2024 (01 Feb Shift 1) Question Paper JEE Main Previous Year Paper MathonGo Join the Most Relevant Test Series for JEE Main with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "678",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "678",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the coefficient of x^30 in the expansion of (1 + 1/x)^6 (1 + x^2)^7 (1 - x^3)^8 is α, then |α| equals ____.",
+      "clean_question_latex": "If the coefficient of $x^{30}$ in the expansion of $\\left(1+\\frac{1}{x}\\right)^6(1+x^2)^7(1-x^3)^8$ is $\\alpha$, then $|\\alpha|$ equals $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "678",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "678",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "678",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:35+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the coefficient of x^30 in the expansion of (1 + 1/x)^6 (1 + x^2)^7 (1 - x^3)^8 is α, then |α| equals ____.",
+        "clean_question_latex": "If the coefficient of $x^{30}$ in the expansion of $\\left(1+\\frac{1}{x}\\right)^6(1+x^2)^7(1-x^3)^8$ is $\\alpha$, then $|\\alpha|$ equals $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "678",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "678",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "678",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_90",
+    "legacy_row_id": "bankq_1772717701025",
+    "legacy_publish_id": "imppub_1772717701025",
+    "manual_solution_latex": "Expanding and collecting the coefficient of $x^{30}$ in\n\\[\\left(1+\\frac{1}{x}\\right)^6(1+x^2)^7(1-x^3)^8\\]\ngives\n\\[\\alpha=-678.\\]\nTherefore\n\\[|\\alpha|=678.\\]",
+    "manual_web_sources": [
+      {
+        "label": "Aakash solution PDF",
+        "url": "https://dcx0p3on5z8dw.cloudfront.net/Aakash/s3fs-public/pdf_management_files/target_solutions/2024_8_English.pdf"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the exact product and the absolute-value ask were recovered from a source-backed PDF and verified symbolically",
+      "corrections": [
+        "corrected the damaged factor (1 + 1/x)^6",
+        "restored (1 + x^2)^7 and (1 - x^3)^8",
+        "restored the missing absolute value around α"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_012",
+    "type": "NUMERICAL",
+    "question_text": "The coefficient of x^2012 in the expansion of (1 - x)^2008 (1 + x + x^2)^2007 is equal to ____.",
+    "question_text_latex": "The coefficient of $x^{2012}$ in the expansion of $(1-x)^{2008}(1+x+x^2)^{2007}$ is equal to $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "0",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_012",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_012",
+    "published_at": 1772949647566,
+    "solution_explanation": "Use 1 + x + x^2 = (1 - x^3)/(1 - x). Then (1 - x)^2008(1 + x + x^2)^2007 = (1 - x)(1 - x^3)^2007. Every term in (1 - x^3)^2007 has exponent divisible by 3, so after multiplying by (1 - x) the only exponents that occur are multiples of 3 and one less than multiples of 3. Since 2012 is neither of those forms, its coefficient is 0.",
+    "source_solution_stub": "The coefficient of x2012 in the expansion of 1 - x20081 + x + x22007 is equal to _____.",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "0",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "0",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The coefficient of x^2012 in the expansion of (1 - x)^2008 (1 + x + x^2)^2007 is equal to ____.",
+      "clean_question_latex": "The coefficient of $x^{2012}$ in the expansion of $(1-x)^{2008}(1+x+x^2)^{2007}$ is equal to $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "0",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "0",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "0",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:34+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The coefficient of x^2012 in the expansion of (1 - x)^2008 (1 + x + x^2)^2007 is equal to ____.",
+        "clean_question_latex": "The coefficient of $x^{2012}$ in the expansion of $(1-x)^{2008}(1+x+x^2)^{2007}$ is equal to $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "0",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "0",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "0",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_93",
+    "legacy_row_id": "bankq_1772717654781",
+    "legacy_publish_id": "imppub_1772717654781",
+    "manual_solution_latex": "Using\n\\[1+x+x^2=\\frac{1-x^3}{1-x},\\]\nwe get\n\\[(1-x)^{2008}(1+x+x^2)^{2007}=(1-x)(1-x^3)^{2007}.\\]\nNow every term of $(1-x^3)^{2007}$ has exponent divisible by $3$. After multiplication by $(1-x)$, the possible exponents are of the form $3k$ or $3k+1$.\nSince\n\\[2012\\equiv 2 \\pmod{3},\\]\nno $x^{2012}$ term can occur.\nHence the required coefficient is\n\\[\\boxed{0}.\\]",
+    "manual_web_sources": [
+      {
+        "label": "eCareerPoint JEE Advanced 2013 solutions",
+        "url": "https://www.ecareerpoint.com/courses/jee-advanced-2013-question-paper-solutions/"
+      },
+      {
+        "label": "Careers360 question mirror",
+        "url": "https://www.careers360.com/question-the-coefficient-of-x-2012-in-the-expansion-of-1-x-2008-1x-x22007-is"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the exact factorized expression was recovered from web-confirmed matches and the zero coefficient follows cleanly from the factorization identity",
+      "corrections": [
+        "recovered the missing powers 2008 and 2007",
+        "restored the exact product (1 - x)^2008(1 + x + x^2)^2007"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_binomial_013",
+    "type": "NUMERICAL",
+    "question_text": "If the second, third and fourth terms in the expansion of (x + y)^n are 135, 30 and 10/3, respectively, then the value of 6(n^3 + x^2 + y) is ____.",
+    "question_text_latex": "If the second, third and fourth terms in the expansion of $(x+y)^n$ are $135$, $30$ and $\\frac{10}{3}$, respectively, then the value of $6(n^3+x^2+y)$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "806",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Binomial Theorem",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_binomial_013",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_binomial_013",
+    "published_at": 1772949647566,
+    "solution_explanation": "For (x+y)^n, the second, third and fourth terms are nx^(n-1)y, C(n,2)x^(n-2)y^2 and C(n,3)x^(n-3)y^3. Using 30/135 and (10/3)/30 gives ratios from which n = 5. Then 5x^4y = 135 and 10x^3y^2 = 30, so y/x = 1/9 and x = 3, y = 1/3. Therefore 6(n^3 + x^2 + y) = 6(125 + 9 + 1/3) = 806.",
+    "source_solution_stub": "If the second, third and fourth terms in the expansion of are 135,30 and , respectively, then is equal to _______",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "repair_actions": [
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Binomial Theorem"
+    ],
+    "topic": "binomial theorem",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "806",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "806",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the second, third and fourth terms in the expansion of (x + y)^n are 135, 30 and 10/3, respectively, then the value of 6(n^3 + x^2 + y) is ____.",
+      "clean_question_latex": "If the second, third and fourth terms in the expansion of $(x+y)^n$ are $135$, $30$ and $\\frac{10}{3}$, respectively, then the value of $6(n^3+x^2+y)$ is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "806",
+        "tolerance": null
+      },
+      "topic": "binomial theorem",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "806",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "806",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:35+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the second, third and fourth terms in the expansion of (x + y)^n are 135, 30 and 10/3, respectively, then the value of 6(n^3 + x^2 + y) is ____.",
+        "clean_question_latex": "If the second, third and fourth terms in the expansion of $(x+y)^n$ are $135$, $30$ and $\\frac{10}{3}$, respectively, then the value of $6(n^3+x^2+y)$ is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "806",
+          "tolerance": null
+        },
+        "topic": "binomial theorem",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "806",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "806",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_102",
+    "legacy_row_id": "bankq_1772717742402",
+    "legacy_publish_id": "imppub_1772717742402",
+    "manual_solution_latex": "For $(x+y)^n$, the second, third and fourth terms are\n\\[nx^{n-1}y,\\qquad \\binom{n}{2}x^{n-2}y^2,\\qquad \\binom{n}{3}x^{n-3}y^3.\\]\nGiven\n\\[nx^{n-1}y=135,\\qquad \\binom{n}{2}x^{n-2}y^2=30,\\qquad \\binom{n}{3}x^{n-3}y^3=\\frac{10}{3}.\\]\nUsing ratios,\n\\[\\frac{30}{135}=\\frac{n-1}{2}\\cdot\\frac{y}{x},\\qquad \\frac{(10/3)}{30}=\\frac{n-2}{3}\\cdot\\frac{y}{x}.\\]\nSolving gives $n=5$ and $\\dfrac{y}{x}=\\dfrac{1}{9}$.\nNow $5x^4y=135$, so $x=3$ and $y=\\dfrac13$.\nHence\n\\[6(n^3+x^2+y)=6\\left(125+9+\\frac13\\right)=806.\\]",
+    "manual_web_sources": [
+      {
+        "label": "Sarthaks solution page",
+        "url": "https://www.sarthaks.com/3593855/if-the-second-third-and-fourth-terms-in-the-expansion-of-x-y-n-are-135-30-and-10-3-respectively"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "binomial_theorem",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the full expression and target quantity were restored from a web-confirmed match and solved exactly",
+      "corrections": [
+        "restored the missing base expression (x + y)^n",
+        "restored the missing fourth term 10/3",
+        "restored the final ask 6(n^3 + x^2 + y)"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  }
+]

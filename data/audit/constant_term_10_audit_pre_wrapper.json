@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Find the constant term in (2x^2 - 3/x)^6.",
+    "expected": 4860,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": false,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.6583936879137338,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (x^3 + 2/x)^9.",
+    "expected": 0,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": true,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.6583936879137338,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (3x - 1/x^2)^8.",
+    "expected": 0,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": true,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (x^4 - 2/x)^7.",
+    "expected": -672,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": false,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (2x^3 + 1/x^2)^10.",
+    "expected": 0,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": true,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (x^2 - 3/x)^9.",
+    "expected": -252,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": false,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (4x^2 + 1/x)^8.",
+    "expected": 1792,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": false,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (x^5 - 1/x^2)^7.",
+    "expected": 0,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": true,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (3x^3 + 2/x)^8.",
+    "expected": 0,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": true,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  },
+  {
+    "question": "Find the constant term in (x^2 + 4/x)^10.",
+    "expected": 15360,
+    "final_answer": "0",
+    "parsed": 0,
+    "correct": false,
+    "verified": false,
+    "risk": 1.0,
+    "entropy": 0.38,
+    "winner_provider": "mini",
+    "persona_integrity": true
+  }
+]

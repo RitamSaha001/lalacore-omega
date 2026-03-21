@@ -1,0 +1,13 @@
+{
+  "answer_variance": 0.6666666666666666,
+  "dominant_answer": "4",
+  "entropy_shift": 0.22484562605386735,
+  "instability_clusters": [
+    "algebra",
+    "trap"
+  ],
+  "reasoning_divergence": 0.6666666666666666,
+  "runs": 3,
+  "self_disagreement_rate": 0.33333333333333337,
+  "stability_score": 0.5937885934865332
+}

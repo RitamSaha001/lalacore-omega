@@ -1,0 +1,167 @@
+{
+  "mode": "manual_editorial_curation",
+  "started_at": "2026-03-08",
+  "completed_chapters": 6,
+  "total_chapters": 15,
+  "chapters": [
+    {
+      "chapter": "Complex Numbers and Quadratic Equations",
+      "slug": "complex_numbers_and_quadratic_equations",
+      "status": "completed",
+      "raw_count": 80,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/complex_numbers_and_quadratic_equations.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/complex_numbers_and_quadratic_equations.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/complex_numbers_and_quadratic_equations.notes.md",
+      "accepted_count": 5,
+      "rejected_count": 75,
+      "completed_at": "2026-03-08T10:33:03+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/complex_numbers_and_quadratic_equations.rejected.json"
+    },
+    {
+      "chapter": "Binomial Theorem",
+      "slug": "binomial_theorem",
+      "status": "completed",
+      "raw_count": 240,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/binomial_theorem.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/binomial_theorem.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/binomial_theorem.notes.md",
+      "accepted_count": 13,
+      "rejected_count": 227,
+      "completed_at": "2026-03-08T11:30:47+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/binomial_theorem.rejected.json"
+    },
+    {
+      "chapter": "Permutations and Combinations",
+      "slug": "permutations_and_combinations",
+      "status": "completed",
+      "raw_count": 237,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/permutations_and_combinations.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/permutations_and_combinations.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/permutations_and_combinations.notes.md",
+      "accepted_count": 4,
+      "rejected_count": 233,
+      "completed_at": "2026-03-08T11:30:47+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/permutations_and_combinations.rejected.json"
+    },
+    {
+      "chapter": "Coordinate Geometry",
+      "slug": "coordinate_geometry",
+      "status": "pending",
+      "raw_count": 881,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/coordinate_geometry.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/coordinate_geometry.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/coordinate_geometry.notes.md"
+    },
+    {
+      "chapter": "Limits, Continuity and Differentiability",
+      "slug": "limits_continuity_and_differentiability",
+      "status": "pending",
+      "raw_count": 522,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/limits_continuity_and_differentiability.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/limits_continuity_and_differentiability.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/limits_continuity_and_differentiability.notes.md"
+    },
+    {
+      "chapter": "Integral Calculus",
+      "slug": "integral_calculus",
+      "status": "pending",
+      "raw_count": 499,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/integral_calculus.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/integral_calculus.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/integral_calculus.notes.md"
+    },
+    {
+      "chapter": "Relations and Functions",
+      "slug": "relations_and_functions",
+      "status": "pending",
+      "raw_count": 717,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/relations_and_functions.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/relations_and_functions.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/relations_and_functions.notes.md"
+    },
+    {
+      "chapter": "Sets, Relations and Functions",
+      "slug": "sets_relations_and_functions",
+      "status": "pending",
+      "raw_count": 184,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/sets_relations_and_functions.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/sets_relations_and_functions.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/sets_relations_and_functions.notes.md"
+    },
+    {
+      "chapter": "Three Dimensional Geometry",
+      "slug": "three_dimensional_geometry",
+      "status": "pending",
+      "raw_count": 756,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/three_dimensional_geometry.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/three_dimensional_geometry.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/three_dimensional_geometry.notes.md"
+    },
+    {
+      "chapter": "Matrices and Determinants",
+      "slug": "matrices_and_determinants",
+      "status": "completed",
+      "raw_count": 138,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/matrices_and_determinants.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/matrices_and_determinants.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/matrices_and_determinants.notes.md",
+      "accepted_count": 5,
+      "rejected_count": 133,
+      "completed_at": "2026-03-08T11:18:00+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/matrices_and_determinants.rejected.json"
+    },
+    {
+      "chapter": "Application of Derivatives",
+      "slug": "application_of_derivatives",
+      "status": "pending",
+      "raw_count": 577,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/application_of_derivatives.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/application_of_derivatives.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/application_of_derivatives.notes.md"
+    },
+    {
+      "chapter": "Probability and Statistics",
+      "slug": "probability_and_statistics",
+      "status": "pending",
+      "raw_count": 231,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/probability_and_statistics.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/probability_and_statistics.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/probability_and_statistics.notes.md"
+    },
+    {
+      "chapter": "Trigonometric Functions",
+      "slug": "trigonometric_functions",
+      "status": "pending",
+      "raw_count": 353,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/trigonometric_functions.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/trigonometric_functions.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/trigonometric_functions.notes.md"
+    },
+    {
+      "chapter": "Differential Equations",
+      "slug": "differential_equations",
+      "status": "completed",
+      "raw_count": 124,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/differential_equations.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/differential_equations.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/differential_equations.notes.md",
+      "accepted_count": 1,
+      "rejected_count": 123,
+      "completed_at": "2026-03-08T11:32:00+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/differential_equations.rejected.json"
+    },
+    {
+      "chapter": "Vector Algebra",
+      "slug": "vector_algebra",
+      "status": "completed",
+      "raw_count": 22,
+      "raw_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/vector_algebra.raw.json",
+      "curated_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/vector_algebra.curated.json",
+      "review_notes_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/vector_algebra.notes.md",
+      "accepted_count": 2,
+      "rejected_count": 20,
+      "completed_at": "2026-03-08T11:02:00+05:30",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/vector_algebra.rejected.json"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "ts": "2026-02-25T18:08:04.474468+00:00",
+  "provider_accuracy": {
+    "mini": 1.0
+  },
+  "provider_counts": {
+    "mini": 21
+  },
+  "entropy_mean": -7.142857730288361e-10,
+  "risk_mean": 0.0376190476190476,
+  "mini_reliability": 0.8568512979648977,
+  "deterministic_pass_rate": 0.7142857142857143
+}

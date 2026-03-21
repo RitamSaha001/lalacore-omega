@@ -1,0 +1,192 @@
+[
+  {
+    "question_id": "imp_q_19",
+    "type": "MCQ_SINGLE",
+    "question_text": "If f(x) = sgn(x^5), then which of the following is/are false (where sgn denotes the signum function) -",
+    "question_text_latex": "If \\( f(x) = \\text{sgn}(x^5) \\), then which of the following is/are false (where sgn denotes the signum function) -",
+    "options": [
+      {
+        "label": "A",
+        "text": "f′(0+) = 1"
+      },
+      {
+        "label": "B",
+        "text": "f′(0-) = -1"
+      },
+      {
+        "label": "C",
+        "text": "f is continuous but not differentiable at x = 0"
+      },
+      {
+        "label": "D",
+        "text": "f is discontinuous at x = 0"
+      }
+    ],
+    "options_latex": {
+      "A": "\\( f' (0+) = 1 \\)",
+      "B": "\\( f' (0-) = -1 \\)",
+      "C": "\\( f \\text{ is continuous but not differentiable at } x = 0 \\)",
+      "D": "\\( f \\text{ is discontinuous at } x = 0 \\)"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "Options are too similar; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.4536,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "similarity_repaired",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar"
+    ],
+    "repair_confidence": 0.9064,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "structural_integrity_score": 0.5464,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.64,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.856,
+      "processed_at": "2026-03-07T13:34:53+00:00"
+    }
+  },
+  {
+    "question_id": "imp_q_23",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let f be a function. Define g by g(x) = |f(x)| for all x. Then which of the following is/are not always true?",
+    "question_text_latex": "Let f : \\to \\text{ be a function. Define } g : \\to \\text{ by } g(x) = |f(x)| \\text{ for all } x. \\text{ Then which of the following is/are not always true?}",
+    "options": [
+      {
+        "label": "A",
+        "text": "If f is continuous then g is also continuous"
+      },
+      {
+        "label": "B",
+        "text": "If f is one-one then g is also one-one"
+      },
+      {
+        "label": "C",
+        "text": "If f is onto then g is also onto"
+      },
+      {
+        "label": "D",
+        "text": "If f is differentiable then g is also differentiable"
+      }
+    ],
+    "options_latex": {
+      "A": "If f \\text{ is continuous then } g \\text{ is also continuous}",
+      "B": "If f \\text{ is one-one then } g \\text{ is also one-one}",
+      "C": "If f \\text{ is onto then } g \\text{ is also onto}",
+      "D": "If f \\text{ is differentiable then } g \\text{ is also differentiable}"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.2831,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "similarity_repaired",
+      "layer4_l1_token_repair",
+      "symbol_normalized",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar"
+    ],
+    "repair_confidence": 0.8869,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Sets, Relations and Functions",
+      "Limits, Continuity and Differentiability"
+    ],
+    "detected_issues": [
+      "corrupted_piecewise",
+      "expression_parse_failure"
+    ],
+    "structural_integrity_score": 0.7169,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:58+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 0.74,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.826,
+      "processed_at": "2026-03-07T13:35:16+00:00"
+    }
+  }
+]

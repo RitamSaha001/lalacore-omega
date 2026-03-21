@@ -1,0 +1,3381 @@
+[
+  {
+    "question_id": "imp_q_18",
+    "type": "MCQ_SINGLE",
+    "question_text": "Select the correct statements -",
+    "question_text_latex": "$$Select the correct statements -$$",
+    "options": [
+      {
+        "label": "A",
+        "text": "The function f defined by 22 3 for 1() 3 2 for 1 xxfx xx +<== +> is neither differentiable nor continuous at x=1.",
+        "latex": "The function f defined by 22 3 for 1() 3 2 for 1 xxfx xx +<== +> is neither differentiable nor continuous at x=1."
+      },
+      {
+        "label": "B",
+        "text": "The function f(x)=x^2 |x| is twice differentiable at x=0.",
+        "latex": "The function f(x)=$x^2$ |x| is twice differentiable at x=0."
+      },
+      {
+        "label": "C",
+        "text": "If f is continuous at x=5 and f(5)=2 then 2 2 lim (4 11) x fx -> - exists",
+        "latex": "If f is continuous at x=5 and f(5)=2 then 2 2 lim (4 11) x fx -> - exists"
+      },
+      {
+        "label": "D",
+        "text": "If ( )lim ( ) ( ) 2 xa f x g x -> += and ( )lim ( ) ( ) 1 xa f x g x -> -= then lim ( ). ( ) xa f x g x -> need not exist. CD04-0449",
+        "latex": "If ( )lim ( ) ( ) 2 xa f x g x -> += and ( )lim ( ) ( ) 1 xa f x g x -> -= then lim ( ). ( ) xa f x g x -> need not exist. CD04-0449"
+      }
+    ],
+    "options_latex": {
+      "A": "The function f defined by 22 3 for 1() 3 2 for 1 xxfx xx +<== +> is neither differentiable nor continuous at x=1.",
+      "B": "The function f(x)=$x^2$ |x| is twice differentiable at x=0.",
+      "C": "If f is continuous at x=5 and f(5)=2 then 2 2 lim (4 11) x fx -> - exists",
+      "D": "If ( )lim ( ) ( ) 2 xa f x g x -> += and ( )lim ( ) ( ) 1 xa f x g x -> -= then lim ( ). ( ) xa f x g x -> need not exist. CD04-0449"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.27,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "Select the correct statements -",
+    "latex_question": "$$Select the correct statements -$$",
+    "concept_tags": [
+      "limits",
+      "continuity"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.27,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "Select the correct statements -",
+      "latex_question": "$$Select the correct statements -$$",
+      "options": [
+        {
+          "label": "A",
+          "text": "The function f defined by 22 3 for 1() 3 2 for 1 xxfx xx +<== +> is neither differentiable nor continuous at x=1.",
+          "latex": "The function f defined by 22 3 for 1() 3 2 for 1 xxfx xx +<== +> is neither differentiable nor continuous at x=1."
+        },
+        {
+          "label": "B",
+          "text": "The function f(x)=x^2 |x| is twice differentiable at x=0.",
+          "latex": "The function f(x)=$x^2$ |x| is twice differentiable at x=0."
+        },
+        {
+          "label": "C",
+          "text": "If f is continuous at x=5 and f(5)=2 then 2 2 lim (4 11) x fx -> - exists",
+          "latex": "If f is continuous at x=5 and f(5)=2 then 2 2 lim (4 11) x fx -> - exists"
+        },
+        {
+          "label": "D",
+          "text": "If ( )lim ( ) ( ) 2 xa f x g x -> += and ( )lim ( ) ( ) 1 xa f x g x -> -= then lim ( ). ( ) xa f x g x -> need not exist. CD04-0449",
+          "latex": "If ( )lim ( ) ( ) 2 xa f x g x -> += and ( )lim ( ) ( ) 1 xa f x g x -> -= then lim ( ). ( ) xa f x g x -> need not exist. CD04-0449"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_19",
+    "type": "MCQ_SINGLE",
+    "question_text": "If f(x)=sgn(x^5), then which of the following is/are false (where sgn denotes signum function) -",
+    "question_text_latex": "If f(x)=sgn($x^5$), then which of the following is/are false (where sgn denotes signum function) -",
+    "options": [
+      {
+        "label": "A",
+        "text": "f′(0+)=1",
+        "latex": "f′(0+)=1"
+      },
+      {
+        "label": "B",
+        "text": "f′(0-)=-1",
+        "latex": "f′(0-)=-1"
+      },
+      {
+        "label": "C",
+        "text": "f is continuous but not differentiable at x=0",
+        "latex": "f is continuous but not differentiable at x=0"
+      },
+      {
+        "label": "D",
+        "text": "f is discontinuous at x=0 CD04-0465",
+        "latex": "f is discontinuous at x=0 CD04-0465"
+      }
+    ],
+    "options_latex": {
+      "A": "f′(0+)=1",
+      "B": "f′(0-)=-1",
+      "C": "f is continuous but not differentiable at x=0",
+      "D": "f is discontinuous at x=0 CD04-0465"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "Options are too similar; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.27,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "If f(x)=sgn(x^5), then which of the following is/are false (where sgn denotes signum function) -",
+    "latex_question": "If f(x)=sgn($x^5$), then which of the following is/are false (where sgn denotes signum function) -",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.27,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "If f(x)=sgn(x^5), then which of the following is/are false (where sgn denotes signum function) -",
+      "latex_question": "If f(x)=sgn($x^5$), then which of the following is/are false (where sgn denotes signum function) -",
+      "options": [
+        {
+          "label": "A",
+          "text": "f′(0+)=1",
+          "latex": "f′(0+)=1"
+        },
+        {
+          "label": "B",
+          "text": "f′(0-)=-1",
+          "latex": "f′(0-)=-1"
+        },
+        {
+          "label": "C",
+          "text": "f is continuous but not differentiable at x=0",
+          "latex": "f is continuous but not differentiable at x=0"
+        },
+        {
+          "label": "D",
+          "text": "f is discontinuous at x=0 CD04-0465",
+          "latex": "f is discontinuous at x=0 CD04-0465"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_22",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statements is/are correct ?",
+    "question_text_latex": "Which of the following statements is/are correct ?",
+    "options": [
+      {
+        "label": "A",
+        "text": "There exists a function f : [0,1] -> which is discontinuous at every point in [0,1] & |f(x)| is continuous at every point in [0,1]",
+        "latex": "There exists a function f : [0,1] -> which is discontinuous at every point in [0,1] & |f(x)| is continuous at every point in [0,1]"
+      },
+      {
+        "label": "B",
+        "text": "Let F(x)=f(x).g(x). If f(x) is differentiable at x=a,f(a)=0 and g(x) is continuous at x=a then F(x) is always differentiable at x=a.",
+        "latex": "Let F(x)=f(x).g(x). If f(x) is differentiable at x=a,f(a)=0 and g(x) is continuous at x=a then F(x) is always differentiable at x=a."
+      },
+      {
+        "label": "C",
+        "text": "If ()'Rf a = 2 & ()'Lf a = 3, then f(x) is non-differentiable at x=a but will be always continuous at x=a",
+        "latex": "If ()'Rf a = 2 & ()'Lf a = 3, then f(x) is non-differentiable at x=a but will be always continuous at x=a"
+      },
+      {
+        "label": "D",
+        "text": "If f(a) and f(b) possess opposite signs then there must exist at least one solution of the equation f(x)=0 in (a,b) provided f is continuous on [a,b] CD03-0291",
+        "latex": "If f(a) and f(b) possess opposite signs then there must exist at least one solution of the equation f(x)=0 in (a,b) provided f is continuous on [a,b] CD03-0291"
+      }
+    ],
+    "options_latex": {
+      "A": "There exists a function f : [0,1] -> which is discontinuous at every point in [0,1] & |f(x)| is continuous at every point in [0,1]",
+      "B": "Let F(x)=f(x).g(x). If f(x) is differentiable at x=a,f(a)=0 and g(x) is continuous at x=a then F(x) is always differentiable at x=a.",
+      "C": "If ()'Rf a = 2 & ()'Lf a = 3, then f(x) is non-differentiable at x=a but will be always continuous at x=a",
+      "D": "If f(a) and f(b) possess opposite signs then there must exist at least one solution of the equation f(x)=0 in (a,b) provided f is continuous on [a,b] CD03-0291"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Which of the following statements is/are correct ?",
+    "latex_question": "Which of the following statements is/are correct ?",
+    "concept_tags": [
+      "limits",
+      "continuity"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Which of the following statements is/are correct ?",
+      "latex_question": "Which of the following statements is/are correct ?",
+      "options": [
+        {
+          "label": "A",
+          "text": "There exists a function f : [0,1] -> which is discontinuous at every point in [0,1] & |f(x)| is continuous at every point in [0,1]",
+          "latex": "There exists a function f : [0,1] -> which is discontinuous at every point in [0,1] & |f(x)| is continuous at every point in [0,1]"
+        },
+        {
+          "label": "B",
+          "text": "Let F(x)=f(x).g(x). If f(x) is differentiable at x=a,f(a)=0 and g(x) is continuous at x=a then F(x) is always differentiable at x=a.",
+          "latex": "Let F(x)=f(x).g(x). If f(x) is differentiable at x=a,f(a)=0 and g(x) is continuous at x=a then F(x) is always differentiable at x=a."
+        },
+        {
+          "label": "C",
+          "text": "If ()'Rf a = 2 & ()'Lf a = 3, then f(x) is non-differentiable at x=a but will be always continuous at x=a",
+          "latex": "If ()'Rf a = 2 & ()'Lf a = 3, then f(x) is non-differentiable at x=a but will be always continuous at x=a"
+        },
+        {
+          "label": "D",
+          "text": "If f(a) and f(b) possess opposite signs then there must exist at least one solution of the equation f(x)=0 in (a,b) provided f is continuous on [a,b] CD03-0291",
+          "latex": "If f(a) and f(b) possess opposite signs then there must exist at least one solution of the equation f(x)=0 in (a,b) provided f is continuous on [a,b] CD03-0291"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_23",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+    "question_text_latex": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+    "options": [
+      {
+        "label": "A",
+        "text": "If f is continuous then g is also continuous",
+        "latex": "If f is continuous then g is also continuous"
+      },
+      {
+        "label": "B",
+        "text": "If f is one-one then g is also one-one",
+        "latex": "If f is one-one then g is also one-one"
+      },
+      {
+        "label": "C",
+        "text": "If f is onto then g is also onto",
+        "latex": "If f is onto then g is also onto"
+      },
+      {
+        "label": "D",
+        "text": "If f is differentiable then g is also differentiable CD03-0284",
+        "latex": "If f is differentiable then g is also differentiable CD03-0284"
+      }
+    ],
+    "options_latex": {
+      "A": "If f is continuous then g is also continuous",
+      "B": "If f is one-one then g is also one-one",
+      "C": "If f is onto then g is also onto",
+      "D": "If f is differentiable then g is also differentiable CD03-0284"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.27,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Sets, Relations and Functions",
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+    "latex_question": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.27,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+      "latex_question": "Let f : -> be a function. Define g : -> by g(x)=|f(x)| for all x. Then which of the following is/are not always true-",
+      "options": [
+        {
+          "label": "A",
+          "text": "If f is continuous then g is also continuous",
+          "latex": "If f is continuous then g is also continuous"
+        },
+        {
+          "label": "B",
+          "text": "If f is one-one then g is also one-one",
+          "latex": "If f is one-one then g is also one-one"
+        },
+        {
+          "label": "C",
+          "text": "If f is onto then g is also onto",
+          "latex": "If f is onto then g is also onto"
+        },
+        {
+          "label": "D",
+          "text": "If f is differentiable then g is also differentiable CD03-0284",
+          "latex": "If f is differentiable then g is also differentiable CD03-0284"
+        }
+      ],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_28",
+    "type": "MCQ_MULTI",
+    "question_text": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+    "question_text_latex": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+    "options": [
+      {
+        "label": "A",
+        "text": "continuous at x=1",
+        "latex": "$$continuous at x=1$$"
+      },
+      {
+        "label": "B",
+        "text": "not differentiable at x=1",
+        "latex": "$$not differentiable at x=1$$"
+      },
+      {
+        "label": "C",
+        "text": "continuous and differentiable at x=2",
+        "latex": "continuous and differentiable at x=2"
+      },
+      {
+        "label": "D",
+        "text": "continuous but not differentiable at x=3 CD04-0468",
+        "latex": "continuous but not differentiable at x=3 CD04-0468"
+      }
+    ],
+    "options_latex": {
+      "A": "$$continuous at x=1$$",
+      "B": "$$not differentiable at x=1$$",
+      "C": "continuous and differentiable at x=2",
+      "D": "continuous but not differentiable at x=3 CD04-0468"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+    "latex_question": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+      "latex_question": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+      "options": [
+        {
+          "label": "A",
+          "text": "continuous at x=1",
+          "latex": "$$continuous at x=1$$"
+        },
+        {
+          "label": "B",
+          "text": "not differentiable at x=1",
+          "latex": "$$not differentiable at x=1$$"
+        },
+        {
+          "label": "C",
+          "text": "continuous and differentiable at x=2",
+          "latex": "continuous and differentiable at x=2"
+        },
+        {
+          "label": "D",
+          "text": "continuous but not differentiable at x=3 CD04-0468",
+          "latex": "continuous but not differentiable at x=3 CD04-0468"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_31",
+    "type": "NUMERICAL",
+    "question_text": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+    "question_text_latex": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "10",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.47,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.69,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.53,
+    "detected_issues": [
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "reconstructed_question": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+    "latex_question": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.69,
+      "publish_risk_score": 0.47,
+      "detected_issues": [
+        "dangling_operator",
+        "unbalanced_parenthesis"
+      ],
+      "reconstructed_question": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+      "latex_question": "Number of points in [-10,10] where f(x)*is non- derivable is -",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.53
+    }
+  },
+  {
+    "question_id": "imp_q_32",
+    "type": "NUMERICAL",
+    "question_text": "If f(x)*is continuous in [-2,10] then -",
+    "question_text_latex": "If f(x)*is continuous in [-2,10] then -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "18",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.47,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.69,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.53,
+    "detected_issues": [
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "reconstructed_question": "If f(x)*is continuous in [-2,10] then -",
+    "latex_question": "If f(x)*is continuous in [-2,10] then -",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.69,
+      "publish_risk_score": 0.47,
+      "detected_issues": [
+        "dangling_operator",
+        "unbalanced_parenthesis"
+      ],
+      "reconstructed_question": "If f(x)*is continuous in [-2,10] then -",
+      "latex_question": "If f(x)*is continuous in [-2,10] then -",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.53
+    }
+  },
+  {
+    "question_id": "imp_q_34",
+    "type": "MCQ_SINGLE",
+    "question_text": "List-I List-II",
+    "question_text_latex": "$$List-I List-II$$",
+    "options": [
+      {
+        "label": "A",
+        "text": "(P) -> 3, (Q) -> 2, (R) -> 1, (S) -> 3",
+        "latex": "$$(P) -> 3, (Q) -> 2, (R) -> 1, (S) -> 3$$"
+      },
+      {
+        "label": "B",
+        "text": "(P) -> 4, (Q) -> 1, (R) -> 2, (S) -> 4",
+        "latex": "$$(P) -> 4, (Q) -> 1, (R) -> 2, (S) -> 4$$"
+      },
+      {
+        "label": "C",
+        "text": "(P) -> 3, (Q) -> 1, (R) -> 2, (S) -> 3",
+        "latex": "$$(P) -> 3, (Q) -> 1, (R) -> 2, (S) -> 3$$"
+      },
+      {
+        "label": "D",
+        "text": "(P) -> 2, (Q) -> 2, (R) -> 1, (S) -> 3 CD04-0454",
+        "latex": "(P) -> 2, (Q) -> 2, (R) -> 1, (S) -> 3 CD04-0454"
+      },
+      {
+        "label": "P",
+        "text": "If f(x) is derivable at x=3 & f′(3)=2, (1) 0 then 22 20 (3 ) (3 )lim 2h f h f h^2-> + - - equals",
+        "latex": "If f(x) is derivable at x=3 & f′(3)=2, (1) 0 then 22 20 (3 ) (3 )lim 2h f h f $h^2$-> + - - equals"
+      },
+      {
+        "label": "Q",
+        "text": "Let f(x) be a function satisfying the condition (2) 1 f(-x)=f(x) for all real x. If f′(0) exists, then its value is equal to",
+        "latex": "Let f(x) be a function satisfying the condition (2) 1 f(-x)=f(x) for all real x. If f′(0) exists, then its value is equal to"
+      },
+      {
+        "label": "R",
+        "text": "For the function f(x)= 1/ ,01 0, 0 x^2 xe x != + = (3) 2 the derivative from the left Lf ′(0) equals",
+        "latex": "For the function f(x)= 1/ ,01 0, 0 $x^2$ xe x != + = (3) 2 the derivative from the left Lf ′(0) equals"
+      },
+      {
+        "label": "S",
+        "text": "The number of points at which the function (4) 3 f(x)=max.{a-x,a+x,b}, -infinity<x<infinity, 0<a<b cannot be differentiable is",
+        "latex": "The number of points at which the function (4) 3 f(x)=max.{a-x,a+x,b}, -infinity<x<infinity, 0<a<b cannot be differentiable is"
+      }
+    ],
+    "options_latex": {
+      "A": "$$(P) -> 3, (Q) -> 2, (R) -> 1, (S) -> 3$$",
+      "B": "$$(P) -> 4, (Q) -> 1, (R) -> 2, (S) -> 4$$",
+      "C": "$$(P) -> 3, (Q) -> 1, (R) -> 2, (S) -> 3$$",
+      "D": "(P) -> 2, (Q) -> 2, (R) -> 1, (S) -> 3 CD04-0454",
+      "P": "If f(x) is derivable at x=3 & f′(3)=2, (1) 0 then 22 20 (3 ) (3 )lim 2h f h f $h^2$-> + - - equals",
+      "Q": "Let f(x) be a function satisfying the condition (2) 1 f(-x)=f(x) for all real x. If f′(0) exists, then its value is equal to",
+      "R": "For the function f(x)= 1/ ,01 0, 0 $x^2$ xe x != + = (3) 2 the derivative from the left Lf ′(0) equals",
+      "S": "The number of points at which the function (4) 3 f(x)=max.{a-x,a+x,b}, -infinity<x<infinity, 0<a<b cannot be differentiable is"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Application of Derivatives",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.23,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.95,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Application of Derivatives"
+    ],
+    "structural_integrity_score": 0.77,
+    "detected_issues": [],
+    "reconstructed_question": "List-I List-II",
+    "latex_question": "$$List-I List-II$$",
+    "concept_tags": [
+      "differentiability"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "review",
+      "repair_confidence": 0.95,
+      "publish_risk_score": 0.23,
+      "detected_issues": [],
+      "reconstructed_question": "List-I List-II",
+      "latex_question": "$$List-I List-II$$",
+      "options": [
+        {
+          "label": "A",
+          "text": "(P) -> 3, (Q) -> 2, (R) -> 1, (S) -> 3",
+          "latex": "$$(P) -> 3, (Q) -> 2, (R) -> 1, (S) -> 3$$"
+        },
+        {
+          "label": "B",
+          "text": "(P) -> 4, (Q) -> 1, (R) -> 2, (S) -> 4",
+          "latex": "$$(P) -> 4, (Q) -> 1, (R) -> 2, (S) -> 4$$"
+        },
+        {
+          "label": "C",
+          "text": "(P) -> 3, (Q) -> 1, (R) -> 2, (S) -> 3",
+          "latex": "$$(P) -> 3, (Q) -> 1, (R) -> 2, (S) -> 3$$"
+        },
+        {
+          "label": "D",
+          "text": "(P) -> 2, (Q) -> 2, (R) -> 1, (S) -> 3 CD04-0454",
+          "latex": "(P) -> 2, (Q) -> 2, (R) -> 1, (S) -> 3 CD04-0454"
+        },
+        {
+          "label": "P",
+          "text": "If f(x) is derivable at x=3 & f′(3)=2, (1) 0 then 22 20 (3 ) (3 )lim 2h f h f h^2-> + - - equals",
+          "latex": "If f(x) is derivable at x=3 & f′(3)=2, (1) 0 then 22 20 (3 ) (3 )lim 2h f h f $h^2$-> + - - equals"
+        },
+        {
+          "label": "Q",
+          "text": "Let f(x) be a function satisfying the condition (2) 1 f(-x)=f(x) for all real x. If f′(0) exists, then its value is equal to",
+          "latex": "Let f(x) be a function satisfying the condition (2) 1 f(-x)=f(x) for all real x. If f′(0) exists, then its value is equal to"
+        },
+        {
+          "label": "R",
+          "text": "For the function f(x)= 1/ ,01 0, 0 x^2 xe x != + = (3) 2 the derivative from the left Lf ′(0) equals",
+          "latex": "For the function f(x)= 1/ ,01 0, 0 $x^2$ xe x != + = (3) 2 the derivative from the left Lf ′(0) equals"
+        },
+        {
+          "label": "S",
+          "text": "The number of points at which the function (4) 3 f(x)=max.{a-x,a+x,b}, -infinity<x<infinity, 0<a<b cannot be differentiable is",
+          "latex": "The number of points at which the function (4) 3 f(x)=max.{a-x,a+x,b}, -infinity<x<infinity, 0<a<b cannot be differentiable is"
+        }
+      ],
+      "concept_tags": [
+        "differentiability"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.77
+    }
+  },
+  {
+    "question_id": "imp_q_35",
+    "type": "MCQ_SINGLE",
+    "question_text": "Given f(x) = sgn(x^2 - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+    "question_text_latex": "Given f(x) = sgn($x^2$ - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+    "options": [
+      {
+        "label": "A",
+        "text": "= 0 (P) 0",
+        "latex": "$$= 0 (P) 0$$"
+      },
+      {
+        "label": "B",
+        "text": "= 4 (Q) 3",
+        "latex": "$$= 4 (Q) 3$$"
+      },
+      {
+        "label": "C",
+        "text": "= 5 (R) 4",
+        "latex": "$$= 5 (R) 4$$"
+      },
+      {
+        "label": "D",
+        "text": "= 2 (S) 2 IF02-0016 Differentiability www.allen.in [ 25 ]",
+        "latex": "= 2 (S) 2 IF02-0016 Differentiability www.allen.in [ 25 ]"
+      }
+    ],
+    "options_latex": {
+      "A": "$$= 0 (P) 0$$",
+      "B": "$$= 4 (Q) 3$$",
+      "C": "$$= 5 (R) 4$$",
+      "D": "= 2 (S) 2 IF02-0016 Differentiability www.allen.in [ 25 ]"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Given f(x) = sgn(x^2 - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+    "latex_question": "Given f(x) = sgn($x^2$ - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Given f(x) = sgn(x^2 - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+      "latex_question": "Given f(x) = sgn($x^2$ - 4|x| + ) (where sgn(x)*denotes signum fuction of x, ∈ R)*In the column-I there are values of and in the column-II there are number of points where f(x)*is non-differentiable. Column-I Column-II",
+      "options": [
+        {
+          "label": "A",
+          "text": "= 0 (P) 0",
+          "latex": "$$= 0 (P) 0$$"
+        },
+        {
+          "label": "B",
+          "text": "= 4 (Q) 3",
+          "latex": "$$= 4 (Q) 3$$"
+        },
+        {
+          "label": "C",
+          "text": "= 5 (R) 4",
+          "latex": "$$= 5 (R) 4$$"
+        },
+        {
+          "label": "D",
+          "text": "= 2 (S) 2 IF02-0016 Differentiability www.allen.in [ 25 ]",
+          "latex": "= 2 (S) 2 IF02-0016 Differentiability www.allen.in [ 25 ]"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_36",
+    "type": "NUMERICAL",
+    "question_text": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n x^2 xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+    "question_text_latex": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n $x^2$ xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n x^2 xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+    "latex_question": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n $x^2$ xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n x^2 xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+      "latex_question": "If the function f(x)*defined as f(x)= 2 for 02 1*sin for 0*n $x^2$ xx x -<= > is continuous but not derivable at x=0 then sum of all non-negative integral value(s)*of ′n' is CD04-0470",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_39",
+    "type": "NUMERICAL",
+    "question_text": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+    "question_text_latex": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "4",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Application of Derivatives",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Application of Derivatives"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+    "latex_question": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+    "concept_tags": [
+      "differentiability",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+      "latex_question": "A derivable function f : + -> satisfies the condition f(x)-f(y) >= n(x/y)+x-y for every x,y ∈ ℝ+. If g denotes the derivative of f then compute the value of the sum 100 1 1*n g n= ∑ . CD04-0466",
+      "options": [],
+      "concept_tags": [
+        "differentiability",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_40",
+    "type": "NUMERICAL",
+    "question_text": "Let f(x)=[[x]+{x^2}]+{[x^2]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+    "question_text_latex": "Let f(x)=[[x]+{$x^2$}]+{[$x^2$]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.17,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.91,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.83,
+    "detected_issues": [
+      "unbalanced_parenthesis"
+    ],
+    "reconstructed_question": "Let f(x)=[[x]+{x^2}]+{[x^2]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+    "latex_question": "Let f(x)=[[x]+{$x^2$}]+{[$x^2$]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "review",
+      "repair_confidence": 0.91,
+      "publish_risk_score": 0.17,
+      "detected_issues": [
+        "unbalanced_parenthesis"
+      ],
+      "reconstructed_question": "Let f(x)=[[x]+{x^2}]+{[x^2]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+      "latex_question": "Let f(x)=[[x]+{$x^2$}]+{[$x^2$]+{x}}, then number of points where |f(x)| is non -derivable in [-3, 3] is equal to (where [.] denotes greatest integer function & {.} denotes fractional part function)*CD04-0458",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.83
+    }
+  },
+  {
+    "question_id": "imp_q_45",
+    "type": "NUMERICAL",
+    "question_text": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+    "question_text_latex": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions",
+      "Complex Numbers and Quadratic Equations"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+    "latex_question": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+      "latex_question": "Find the natural number 'a' for which 1*()*n k f a k = +∑ = 2048*(2*n - 1), where the function ‘f’ satisfies the relation f(x + y) = f(x) . f(y)*for all natural numbers x & y and further f(1) = 2 CD03-0299 EXERCISE (S)*JEE (Main + Advanced) : Mathematics [ 26 ] www.allen.in",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_46",
+    "type": "NUMERICAL",
+    "question_text": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+    "question_text_latex": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:{",
+      "unknown_token:}",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+    "latex_question": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+      "latex_question": "Suppose a differentiable function f(x)*satisfies the identity f(x+y)=f(x)+f(y)+xy2+x2y, for all real x and y. If lim_{x->?} 0*f(x)*x = 1, then f′(3)*is equal to. [JEE (Main)*2020] CD03-0300",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_54",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+    "question_text_latex": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+    "options": [
+      {
+        "label": "A",
+        "text": "continuous in [-2, 2] but not differentiable at more than four points in (-2, 2)",
+        "latex": "continuous in [-2, 2] but not differentiable at more than four points in (-2, 2)"
+      },
+      {
+        "label": "B",
+        "text": "not continuous at exactly three points in [-2, 2]",
+        "latex": "not continuous at exactly three points in [-2, 2]"
+      },
+      {
+        "label": "C",
+        "text": "continuous in [-2, 2] but not differentiable at exactly three points in (-2, 2)",
+        "latex": "continuous in [-2, 2] but not differentiable at exactly three points in (-2, 2)"
+      },
+      {
+        "label": "D",
+        "text": "not continuous at exactly four points in [-2, 2] CD03-0303",
+        "latex": "not continuous at exactly four points in [-2, 2] CD03-0303"
+      }
+    ],
+    "options_latex": {
+      "A": "continuous in [-2, 2] but not differentiable at more than four points in (-2, 2)",
+      "B": "not continuous at exactly three points in [-2, 2]",
+      "C": "continuous in [-2, 2] but not differentiable at exactly three points in (-2, 2)",
+      "D": "not continuous at exactly four points in [-2, 2] CD03-0303"
+    },
+    "correct_answer": {
+      "single": "B",
+      "multiple": [
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented",
+      "expression_parse_failure",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.45,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.79,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Coordinate Geometry"
+    ],
+    "structural_integrity_score": 0.63,
+    "detected_issues": [
+      "unbalanced_parenthesis",
+      "invalid_token_sequences"
+    ],
+    "reconstructed_question": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+    "latex_question": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.79,
+      "publish_risk_score": 0.45,
+      "detected_issues": [
+        "unbalanced_parenthesis",
+        "invalid_token_sequences"
+      ],
+      "reconstructed_question": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+      "latex_question": "Let [t] denote the greatest integer less than or equal to t. Let f(x)=x-[x], g(x)=1-x+[x], and ℎ(x)=min{f(x), g(x)},x∈[-2,2]. Then ℎ is : [JEE (Main)*2021]",
+      "options": [
+        {
+          "label": "A",
+          "text": "continuous in [-2, 2] but not differentiable at more than four points in (-2, 2)",
+          "latex": "continuous in [-2, 2] but not differentiable at more than four points in (-2, 2)"
+        },
+        {
+          "label": "B",
+          "text": "not continuous at exactly three points in [-2, 2]",
+          "latex": "not continuous at exactly three points in [-2, 2]"
+        },
+        {
+          "label": "C",
+          "text": "continuous in [-2, 2] but not differentiable at exactly three points in (-2, 2)",
+          "latex": "continuous in [-2, 2] but not differentiable at exactly three points in (-2, 2)"
+        },
+        {
+          "label": "D",
+          "text": "not continuous at exactly four points in [-2, 2] CD03-0303",
+          "latex": "not continuous at exactly four points in [-2, 2] CD03-0303"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.63
+    }
+  },
+  {
+    "question_id": "imp_q_56",
+    "type": "NUMERICAL",
+    "question_text": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+    "question_text_latex": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "12",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Coordinate Geometry",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Coordinate Geometry",
+      "Sets, Relations and Functions",
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+    "latex_question": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+    "concept_tags": [
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+      "latex_question": "If [t] denotes the greatest integer <= t, then number of points, at which the function f(x)=4 |2*x + 3| + 9 + 1 2*x -12 [x + 20] is not differentiable in the open interval (-20, 20), is. [JEE (Main)*2022] CD03-0311",
+      "options": [],
+      "concept_tags": [
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_61",
+    "type": "NUMERICAL",
+    "question_text": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+    "question_text_latex": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "10",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+    "latex_question": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+      "latex_question": "Let : {0}f --> be a function satisfying () ()*x f xf y f y = for all x,y,f(y) != 0. If",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_69",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|x^3-x|)+b|x|sin(|x^3+x|). Then f is - [JEE (Advanced)*2016]",
+    "question_text_latex": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|$x^3$-x|)+b|x|sin(|$x^3$+x|). Then f is - [JEE (Advanced)*2016]",
+    "options": [
+      {
+        "label": "A",
+        "text": "differentiable at x=0 if a=0 and b=1",
+        "latex": "differentiable at x=0 if a=0 and b=1"
+      },
+      {
+        "label": "B",
+        "text": "differentiable at x=1 if a=1 and b=0",
+        "latex": "differentiable at x=1 if a=1 and b=0"
+      },
+      {
+        "label": "C",
+        "text": "NOT differentiable at x=0 if a=1 and b=0",
+        "latex": "NOT differentiable at x=0 if a=1 and b=0"
+      },
+      {
+        "label": "D",
+        "text": "NOT differentiable at x=1 if a=1 and b=1 CD03-0308 EXERCISE - JEE (Advanced) PYQ JEE (Main + Advanced) : Mathematics [ 30 ] www.allen.in",
+        "latex": "NOT differentiable at x=1 if a=1 and b=1 CD03-0308 EXERCISE - JEE (Advanced) PYQ JEE (Main + Advanced) : Mathematics [ 30 ] www.allen.in"
+      }
+    ],
+    "options_latex": {
+      "A": "differentiable at x=0 if a=0 and b=1",
+      "B": "differentiable at x=1 if a=1 and b=0",
+      "C": "NOT differentiable at x=0 if a=1 and b=0",
+      "D": "NOT differentiable at x=1 if a=1 and b=1 CD03-0308 EXERCISE - JEE (Advanced) PYQ JEE (Main + Advanced) : Mathematics [ 30 ] www.allen.in"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|x^3-x|)+b|x|sin(|x^3+x|). Then f is - [JEE (Advanced)*2016]",
+    "latex_question": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|$x^3$-x|)+b|x|sin(|$x^3$+x|). Then f is - [JEE (Advanced)*2016]",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|x^3-x|)+b|x|sin(|x^3+x|). Then f is - [JEE (Advanced)*2016]",
+      "latex_question": "Let a,b∈ℝ and f:ℝ->ℝ be defined by f(x)=acos(|$x^3$-x|)+b|x|sin(|$x^3$+x|). Then f is - [JEE (Advanced)*2016]",
+      "options": [
+        {
+          "label": "A",
+          "text": "differentiable at x=0 if a=0 and b=1",
+          "latex": "differentiable at x=0 if a=0 and b=1"
+        },
+        {
+          "label": "B",
+          "text": "differentiable at x=1 if a=1 and b=0",
+          "latex": "differentiable at x=1 if a=1 and b=0"
+        },
+        {
+          "label": "C",
+          "text": "NOT differentiable at x=0 if a=1 and b=0",
+          "latex": "NOT differentiable at x=0 if a=1 and b=0"
+        },
+        {
+          "label": "D",
+          "text": "NOT differentiable at x=1 if a=1 and b=1 CD03-0308 EXERCISE - JEE (Advanced) PYQ JEE (Main + Advanced) : Mathematics [ 30 ] www.allen.in",
+          "latex": "NOT differentiable at x=1 if a=1 and b=1 CD03-0308 EXERCISE - JEE (Advanced) PYQ JEE (Main + Advanced) : Mathematics [ 30 ] www.allen.in"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_70",
+    "type": "NUMERICAL",
+    "question_text": "Let",
+    "question_text_latex": "Let",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.21,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 0.97,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.79,
+    "detected_issues": [],
+    "reconstructed_question": "Let",
+    "latex_question": "Let",
+    "concept_tags": [
+      "limits",
+      "continuity"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "review",
+      "repair_confidence": 0.97,
+      "publish_risk_score": 0.21,
+      "detected_issues": [],
+      "reconstructed_question": "Let",
+      "latex_question": "Let",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.79
+    }
+  },
+  {
+    "question_id": "imp_q_71",
+    "type": "NUMERICAL",
+    "question_text": ",2 2*f --> and",
+    "question_text_latex": "$$,2 2*f --> and$$",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.33,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 0.67,
+    "detected_issues": [],
+    "reconstructed_question": ",2 2*f --> and",
+    "latex_question": "$$,2 2*f --> and$$",
+    "concept_tags": [
+      "limits",
+      "continuity"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.85,
+      "publish_risk_score": 0.33,
+      "detected_issues": [],
+      "reconstructed_question": ",2 2*f --> and",
+      "latex_question": "$$,2 2*f --> and$$",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.67
+    }
+  },
+  {
+    "question_id": "imp_q_72",
+    "type": "MCQ_SINGLE",
+    "question_text": ",2 2*g --> be function defined by f(x)=[x^2-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+    "question_text_latex": ",2 2*g --> be function defined by f(x)=[$x^2$-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+    "options": [
+      {
+        "label": "A",
+        "text": "f is discontinuous exactly at three points in 1 ,22 -",
+        "latex": "f is discontinuous exactly at three points in 1 ,22 -"
+      },
+      {
+        "label": "B",
+        "text": "f is discontinuous exactly at four points in 1 ,22 -",
+        "latex": "f is discontinuous exactly at four points in 1 ,22 -"
+      },
+      {
+        "label": "C",
+        "text": "g is NOT differentiable exactly at four points in 1 ,22 -",
+        "latex": "g is NOT differentiable exactly at four points in 1 ,22 -"
+      },
+      {
+        "label": "D",
+        "text": "g is NOT differentiable exactly at five points in 1 ,22 - [JEE (Advanced) 2016] CD04-0480",
+        "latex": "g is NOT differentiable exactly at five points in 1 ,22 - [JEE (Advanced) 2016] CD04-0480"
+      }
+    ],
+    "options_latex": {
+      "A": "f is discontinuous exactly at three points in 1 ,22 -",
+      "B": "f is discontinuous exactly at four points in 1 ,22 -",
+      "C": "g is NOT differentiable exactly at four points in 1 ,22 -",
+      "D": "g is NOT differentiable exactly at five points in 1 ,22 - [JEE (Advanced) 2016] CD04-0480"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": ",2 2*g --> be function defined by f(x)=[x^2-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+    "latex_question": ",2 2*g --> be function defined by f(x)=[$x^2$-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": ",2 2*g --> be function defined by f(x)=[x^2-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+      "latex_question": ",2 2*g --> be function defined by f(x)=[$x^2$-3] and g(x)=|x|f(x)+|4*x-7| f(x), where [y] denotes the greatest integer less than or equal to y for y∈ℝ. Then",
+      "options": [
+        {
+          "label": "A",
+          "text": "f is discontinuous exactly at three points in 1 ,22 -",
+          "latex": "f is discontinuous exactly at three points in 1 ,22 -"
+        },
+        {
+          "label": "B",
+          "text": "f is discontinuous exactly at four points in 1 ,22 -",
+          "latex": "f is discontinuous exactly at four points in 1 ,22 -"
+        },
+        {
+          "label": "C",
+          "text": "g is NOT differentiable exactly at four points in 1 ,22 -",
+          "latex": "g is NOT differentiable exactly at four points in 1 ,22 -"
+        },
+        {
+          "label": "D",
+          "text": "g is NOT differentiable exactly at five points in 1 ,22 - [JEE (Advanced) 2016] CD04-0480",
+          "latex": "g is NOT differentiable exactly at five points in 1 ,22 - [JEE (Advanced) 2016] CD04-0480"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_77",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let the function f : ℝ -> ℝ be defined by f(x)=x^3-x^2+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+    "question_text_latex": "Let the function f : ℝ -> ℝ be defined by f(x)=$x^3$-$x^2$+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+    "options": [
+      {
+        "label": "A",
+        "text": "If g is continuous at x=1, then fg is differentiable at x=1",
+        "latex": "If g is continuous at x=1, then fg is differentiable at x=1"
+      },
+      {
+        "label": "B",
+        "text": "If fg is differentiable at x=1, then g is continuous at x=1",
+        "latex": "If fg is differentiable at x=1, then g is continuous at x=1"
+      },
+      {
+        "label": "C",
+        "text": "If g is differentiable at x=1, then fg is differentiable at x=1",
+        "latex": "If g is differentiable at x=1, then fg is differentiable at x=1"
+      },
+      {
+        "label": "D",
+        "text": "If fg is differentiable at x=1, then g is differentiable at x=1 CD04-0473",
+        "latex": "If fg is differentiable at x=1, then g is differentiable at x=1 CD04-0473"
+      }
+    ],
+    "options_latex": {
+      "A": "If g is continuous at x=1, then fg is differentiable at x=1",
+      "B": "If fg is differentiable at x=1, then g is continuous at x=1",
+      "C": "If g is differentiable at x=1, then fg is differentiable at x=1",
+      "D": "If fg is differentiable at x=1, then g is differentiable at x=1 CD04-0473"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions",
+      "Trigonometric Functions"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Let the function f : ℝ -> ℝ be defined by f(x)=x^3-x^2+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+    "latex_question": "Let the function f : ℝ -> ℝ be defined by f(x)=$x^3$-$x^2$+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Let the function f : ℝ -> ℝ be defined by f(x)=x^3-x^2+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+      "latex_question": "Let the function f : ℝ -> ℝ be defined by f(x)=$x^3$-$x^2$+(x-1)*sin(x)*and let g:ℝ -> ℝ be an arbitrary function. Let fg: ℝ -> ℝ be the product function defined by (fg)(x)=f(x)*g(x). Then which of the following statements is/are TRUE ? [JEE (Advanced)*2020]",
+      "options": [
+        {
+          "label": "A",
+          "text": "If g is continuous at x=1, then fg is differentiable at x=1",
+          "latex": "If g is continuous at x=1, then fg is differentiable at x=1"
+        },
+        {
+          "label": "B",
+          "text": "If fg is differentiable at x=1, then g is continuous at x=1",
+          "latex": "If fg is differentiable at x=1, then g is continuous at x=1"
+        },
+        {
+          "label": "C",
+          "text": "If g is differentiable at x=1, then fg is differentiable at x=1",
+          "latex": "If g is differentiable at x=1, then fg is differentiable at x=1"
+        },
+        {
+          "label": "D",
+          "text": "If fg is differentiable at x=1, then g is differentiable at x=1 CD04-0473",
+          "latex": "If fg is differentiable at x=1, then g is differentiable at x=1 CD04-0473"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_78",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+    "question_text_latex": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+    "options": [
+      {
+        "label": "A",
+        "text": "f is differentiable at every x∈ℝ [JEE (Advanced) 2020]",
+        "latex": "f is differentiable at every x∈ℝ [JEE (Advanced) 2020]"
+      },
+      {
+        "label": "B",
+        "text": "If g(0)=1, then g is differentiable at every x∈ℝ",
+        "latex": "If g(0)=1, then g is differentiable at every x∈ℝ"
+      },
+      {
+        "label": "C",
+        "text": "The derivative f′(1) is equal to 1",
+        "latex": "The derivative f′(1) is equal to 1"
+      },
+      {
+        "label": "D",
+        "text": "The derivative f′(0) is equal to 1 CD04-0477",
+        "latex": "The derivative f′(0) is equal to 1 CD04-0477"
+      }
+    ],
+    "options_latex": {
+      "A": "f is differentiable at every x∈ℝ [JEE (Advanced) 2020]",
+      "B": "If g(0)=1, then g is differentiable at every x∈ℝ",
+      "C": "The derivative f′(1) is equal to 1",
+      "D": "The derivative f′(0) is equal to 1 CD04-0477"
+    },
+    "correct_answer": {
+      "single": "B",
+      "multiple": [
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Application of Derivatives",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented",
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.35,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Application of Derivatives"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "invalid_token_sequences"
+    ],
+    "reconstructed_question": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+    "latex_question": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+    "concept_tags": [
+      "limits",
+      "differentiability",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.35,
+      "detected_issues": [
+        "invalid_token_sequences"
+      ],
+      "reconstructed_question": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+      "latex_question": "Let f:ℝ->ℝ and g:ℝ->ℝ be functions satisfying f(x+y)=f(x)+f(y)+f(x)*f(y)*and f(x)=xg(x)*for all x,y∈ℝ. If lim_{x->0}*g(x)=1, then which of the following statements is/are TRUE?",
+      "options": [
+        {
+          "label": "A",
+          "text": "f is differentiable at every x∈ℝ [JEE (Advanced) 2020]",
+          "latex": "f is differentiable at every x∈ℝ [JEE (Advanced) 2020]"
+        },
+        {
+          "label": "B",
+          "text": "If g(0)=1, then g is differentiable at every x∈ℝ",
+          "latex": "If g(0)=1, then g is differentiable at every x∈ℝ"
+        },
+        {
+          "label": "C",
+          "text": "The derivative f′(1) is equal to 1",
+          "latex": "The derivative f′(1) is equal to 1"
+        },
+        {
+          "label": "D",
+          "text": "The derivative f′(0) is equal to 1 CD04-0477",
+          "latex": "The derivative f′(0) is equal to 1 CD04-0477"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "differentiability",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_79",
+    "type": "NUMERICAL",
+    "question_text": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+    "question_text_latex": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions",
+      "Limits, Continuity and Differentiability",
+      "Coordinate Geometry"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+    "latex_question": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+    "concept_tags": [
+      "continuity",
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+      "latex_question": "Let the functions f: (-1,1) -> and g:(-1,1) -> (-1,1)*be defined by f(x)=|2*x-1|+|2*x+1| and g(x)=x-[x], where [x] denotes the greatest integer less than or equal to x. Let fog:(-1,1) -> be the composite function defined by (fog)(x)=f(g(x)). Suppose c is the number of points in the interval (-1,1)*at which fog is NOT continuous, and suppose d is the number of points in the interval (-1,1)*at which fog is NOT differentiable. Then the value of c+d is _____ [JEE (Advanced)*2020] CD04-0484",
+      "options": [],
+      "concept_tags": [
+        "continuity",
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_80",
+    "type": "MCQ_MULTI",
+    "question_text": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f x^2*x^2 , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+    "question_text_latex": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f $x^2$*$x^2$ , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+    "options": [
+      {
+        "label": "A",
+        "text": "The function f is discontinuous exactly at one point in (0,1)",
+        "latex": "The function f is discontinuous exactly at one point in (0,1)"
+      },
+      {
+        "label": "B",
+        "text": "There is exactly one point in (0,1) at which the function f is continuous but NOT differentiable",
+        "latex": "There is exactly one point in (0,1) at which the function f is continuous but NOT differentiable"
+      },
+      {
+        "label": "C",
+        "text": "The function f is NOT differentiable at more than three points in (0,1)",
+        "latex": "The function f is NOT differentiable at more than three points in (0,1)"
+      },
+      {
+        "label": "D",
+        "text": "The minimum value of the function f is - 1 512 CD04-0476",
+        "latex": "The minimum value of the function f is - 1 512 CD04-0476"
+      }
+    ],
+    "options_latex": {
+      "A": "The function f is discontinuous exactly at one point in (0,1)",
+      "B": "There is exactly one point in (0,1) at which the function f is continuous but NOT differentiable",
+      "C": "The function f is NOT differentiable at more than three points in (0,1)",
+      "D": "The minimum value of the function f is - 1 512 CD04-0476"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A",
+        "B"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Coordinate Geometry",
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f x^2*x^2 , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+    "latex_question": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f $x^2$*$x^2$ , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+    "concept_tags": [
+      "limits",
+      "continuity",
+      "functions"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f x^2*x^2 , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+      "latex_question": "Let f : (0,1)-> be the function defined as = - - 2 11*( ) [4 ] 42*f $x^2$*$x^2$ , where [x] denotes the greatest integer less than or equal to x . Then which of the following statements is(are)*true? [JEE (Advanced)*2023]",
+      "options": [
+        {
+          "label": "A",
+          "text": "The function f is discontinuous exactly at one point in (0,1)",
+          "latex": "The function f is discontinuous exactly at one point in (0,1)"
+        },
+        {
+          "label": "B",
+          "text": "There is exactly one point in (0,1) at which the function f is continuous but NOT differentiable",
+          "latex": "There is exactly one point in (0,1) at which the function f is continuous but NOT differentiable"
+        },
+        {
+          "label": "C",
+          "text": "The function f is NOT differentiable at more than three points in (0,1)",
+          "latex": "The function f is NOT differentiable at more than three points in (0,1)"
+        },
+        {
+          "label": "D",
+          "text": "The minimum value of the function f is - 1 512 CD04-0476",
+          "latex": "The minimum value of the function f is - 1 512 CD04-0476"
+        }
+      ],
+      "concept_tags": [
+        "limits",
+        "continuity",
+        "functions"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_83",
+    "type": "NUMERICAL",
+    "question_text": "1 2. 2 3. 8 4. 5150 5. 1",
+    "question_text_latex": "1 2. 2 3. 8 4. 5150 5. 1",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "1 2. 2 3. 8 4. 5150 5. 1",
+    "latex_question": "1 2. 2 3. 8 4. 5150 5. 1",
+    "concept_tags": [
+      "limits",
+      "continuity"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "1 2. 2 3. 8 4. 5150 5. 1",
+      "latex_question": "1 2. 2 3. 8 4. 5150 5. 1",
+      "options": [],
+      "concept_tags": [
+        "limits",
+        "continuity"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_4",
+    "type": "NUMERICAL",
+    "question_text": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+    "question_text_latex": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1024",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+    "latex_question": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+      "latex_question": "Range of function 2 4*( )*log(22)*fx xx = + + - is given by",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_8",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+    "question_text_latex": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+    "options": [
+      {
+        "label": "A",
+        "text": "one-one but not onto (B) many one but not-onto",
+        "latex": "one-one but not onto (B) many one but not-onto"
+      },
+      {
+        "label": "C",
+        "text": "one-one and onto (D) many one and onto FN01-0174 EXERCISE (O-1) Functions www.allen.in [ 75 ]",
+        "latex": "one-one and onto (D) many one and onto FN01-0174 EXERCISE (O-1) Functions www.allen.in [ 75 ]"
+      }
+    ],
+    "options_latex": {
+      "A": "one-one but not onto (B) many one but not-onto",
+      "C": "one-one and onto (D) many one and onto FN01-0174 EXERCISE (O-1) Functions www.allen.in [ 75 ]"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.27,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+    "latex_question": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.27,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+      "latex_question": "Let f: 15 1 22 -{ } { }- -> -{ } { }{ } { } be defined by 10*()*2 15 xfx x += + then f(x)*is-",
+      "options": [
+        {
+          "label": "A",
+          "text": "one-one but not onto (B) many one but not-onto",
+          "latex": "one-one but not onto (B) many one but not-onto"
+        },
+        {
+          "label": "C",
+          "text": "one-one and onto (D) many one and onto FN01-0174 EXERCISE (O-1) Functions www.allen.in [ 75 ]",
+          "latex": "one-one and onto (D) many one and onto FN01-0174 EXERCISE (O-1) Functions www.allen.in [ 75 ]"
+        }
+      ],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_9",
+    "type": "NUMERICAL",
+    "question_text": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+    "question_text_latex": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "0",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "missing_operand:->",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.37,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "ocr_symbol_swap"
+    ],
+    "repair_confidence": 0.71,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.63,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+    "latex_question": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.71,
+      "publish_risk_score": 0.37,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+      "latex_question": "f ∶ -> 2 2 2 5 3*()*8 9 11 f(x) xx -+= ++ , then f is -",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.63
+    }
+  },
+  {
+    "question_id": "imp_q_13",
+    "type": "NUMERICAL",
+    "question_text": "If the function",
+    "question_text_latex": "If the function",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "14",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.21,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.97,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.79,
+    "detected_issues": [],
+    "reconstructed_question": "If the function",
+    "latex_question": "If the function",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "review",
+      "repair_confidence": 0.97,
+      "publish_risk_score": 0.21,
+      "detected_issues": [],
+      "reconstructed_question": "If the function",
+      "latex_question": "If the function",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.79
+    }
+  },
+  {
+    "question_id": "imp_q_14",
+    "type": "NUMERICAL",
+    "question_text": ", ,24*f -> - be defined by f(x) = x^2 - 7*x + 10 then f-1*(x)*is-",
+    "question_text_latex": ", ,24*f -> - be defined by f(x) = $x^2$ - 7*x + 10 then f-1*(x)*is-",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.37,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.71,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.63,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": ", ,24*f -> - be defined by f(x) = x^2 - 7*x + 10 then f-1*(x)*is-",
+    "latex_question": ", ,24*f -> - be defined by f(x) = $x^2$ - 7*x + 10 then f-1*(x)*is-",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.71,
+      "publish_risk_score": 0.37,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": ", ,24*f -> - be defined by f(x) = x^2 - 7*x + 10 then f-1*(x)*is-",
+      "latex_question": ", ,24*f -> - be defined by f(x) = $x^2$ - 7*x + 10 then f-1*(x)*is-",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.63
+    }
+  },
+  {
+    "question_id": "imp_q_16",
+    "type": "NUMERICAL",
+    "question_text": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f x^2 =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+    "question_text_latex": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f $x^2$ =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "16",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented",
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.45,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.71,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.63,
+    "detected_issues": [
+      "invalid_token_sequences"
+    ],
+    "reconstructed_question": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f x^2 =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+    "latex_question": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f $x^2$ =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.71,
+      "publish_risk_score": 0.45,
+      "detected_issues": [
+        "invalid_token_sequences"
+      ],
+      "reconstructed_question": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f x^2 =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+      "latex_question": "Let f ∶ (0, infinity) -> (1, infinity)*be a function such that 3*( )*1 2*f $x^2$ =+ and g(x)*is inverse of f(x)*then the point where f(x)*and g(x)*intersect is (A)*11,44",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.63
+    }
+  },
+  {
+    "question_id": "imp_q_18",
+    "type": "NUMERICAL",
+    "question_text": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+    "question_text_latex": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "18",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.37,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.71,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.63,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+    "latex_question": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.71,
+      "publish_risk_score": 0.37,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+      "latex_question": "Let f ∶ -> be a real valued function such that f(10 + x) = f(10 - x)∀ x ∈ ℝ and f(20 + x) = -f(20 - x)∀x ∈ ℝ. Then which of the following statements is true -",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.63
+    }
+  },
+  {
+    "question_id": "imp_q_20",
+    "type": "NUMERICAL",
+    "question_text": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+    "question_text_latex": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "00",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:{",
+      "unknown_token:}",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.47,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.69,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.53,
+    "detected_issues": [
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "reconstructed_question": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+    "latex_question": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.69,
+      "publish_risk_score": 0.47,
+      "detected_issues": [
+        "dangling_operator",
+        "unbalanced_parenthesis"
+      ],
+      "reconstructed_question": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+      "latex_question": "Period of function f(x) = min{sin(x), |x|} + xx - (where [.] denotes greatest integer function)*is -",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.53
+    }
+  },
+  {
+    "question_id": "imp_q_23",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let f(x) = x^2 + 3*x + 2, then number of solutions to -",
+    "question_text_latex": "Let f(x) = $x^2$ + 3*x + 2, then number of solutions to -",
+    "options": [
+      {
+        "label": "A",
+        "text": "f(|x|) = 2 is 1 (B) f(|x|) = 2 is 3",
+        "latex": "f(|x|) = 2 is 1 (B) f(|x|) = 2 is 3"
+      },
+      {
+        "label": "C",
+        "text": "|f(x)| = 0.125 is 4 (D) |f(|x|)| = 0.125 is 8 FN07-0129",
+        "latex": "|f(x)| = 0.125 is 4 (D) |f(|x|)| = 0.125 is 8 FN07-0129"
+      }
+    ],
+    "options_latex": {
+      "A": "f(|x|) = 2 is 1 (B) f(|x|) = 2 is 3",
+      "C": "|f(x)| = 0.125 is 4 (D) |f(|x|)| = 0.125 is 8 FN07-0129"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.27,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 0.81,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.73,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "Let f(x) = x^2 + 3*x + 2, then number of solutions to -",
+    "latex_question": "Let f(x) = $x^2$ + 3*x + 2, then number of solutions to -",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.81,
+      "publish_risk_score": 0.27,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "Let f(x) = x^2 + 3*x + 2, then number of solutions to -",
+      "latex_question": "Let f(x) = $x^2$ + 3*x + 2, then number of solutions to -",
+      "options": [
+        {
+          "label": "A",
+          "text": "f(|x|) = 2 is 1 (B) f(|x|) = 2 is 3",
+          "latex": "f(|x|) = 2 is 1 (B) f(|x|) = 2 is 3"
+        },
+        {
+          "label": "C",
+          "text": "|f(x)| = 0.125 is 4 (D) |f(|x|)| = 0.125 is 8 FN07-0129",
+          "latex": "|f(x)| = 0.125 is 4 (D) |f(|x|)| = 0.125 is 8 FN07-0129"
+        }
+      ],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.73
+    }
+  },
+  {
+    "question_id": "imp_q_25",
+    "type": "NUMERICAL",
+    "question_text": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+    "question_text_latex": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1024",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.07,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.93,
+    "detected_issues": [],
+    "reconstructed_question": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+    "latex_question": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "publish_risk_score": 0.07,
+      "detected_issues": [],
+      "reconstructed_question": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+      "latex_question": "For the function f(x) = |x + 3| - |x + 1| - |x - 1| + |x - 3|, identify correct option(s)",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.93
+    }
+  },
+  {
+    "question_id": "imp_q_26",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statement(s)*is(are)*correct ?",
+    "question_text_latex": "Which of the following statement(s)*is(are)*correct ?",
+    "options": [
+      {
+        "label": "A",
+        "text": "If f is a one-one mapping from set A to A, then f is onto.",
+        "latex": "If f is a one-one mapping from set A to A, then f is onto."
+      },
+      {
+        "label": "B",
+        "text": "If f is an onto mapping from set A to A, then f is one-one",
+        "latex": "If f is an onto mapping from set A to A, then f is one-one"
+      },
+      {
+        "label": "C",
+        "text": "Let f and g be two functions defined from -> such that gof is injective, then f must be injective.",
+        "latex": "Let f and g be two functions defined from -> such that gof is injective, then f must be injective."
+      },
+      {
+        "label": "D",
+        "text": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8. FN07-0127",
+        "latex": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8. FN07-0127"
+      }
+    ],
+    "options_latex": {
+      "A": "If f is a one-one mapping from set A to A, then f is onto.",
+      "B": "If f is an onto mapping from set A to A, then f is one-one",
+      "C": "Let f and g be two functions defined from -> such that gof is injective, then f must be injective.",
+      "D": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8. FN07-0127"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Sets, Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Options are too similar; review required."
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Sets, Relations and Functions"
+    ],
+    "structural_integrity_score": 1.0,
+    "detected_issues": [],
+    "reconstructed_question": "Which of the following statement(s)*is(are)*correct ?",
+    "latex_question": "Which of the following statement(s)*is(are)*correct ?",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "publish_risk_score": 0.0,
+      "detected_issues": [],
+      "reconstructed_question": "Which of the following statement(s)*is(are)*correct ?",
+      "latex_question": "Which of the following statement(s)*is(are)*correct ?",
+      "options": [
+        {
+          "label": "A",
+          "text": "If f is a one-one mapping from set A to A, then f is onto.",
+          "latex": "If f is a one-one mapping from set A to A, then f is onto."
+        },
+        {
+          "label": "B",
+          "text": "If f is an onto mapping from set A to A, then f is one-one",
+          "latex": "If f is an onto mapping from set A to A, then f is one-one"
+        },
+        {
+          "label": "C",
+          "text": "Let f and g be two functions defined from -> such that gof is injective, then f must be injective.",
+          "latex": "Let f and g be two functions defined from -> such that gof is injective, then f must be injective."
+        },
+        {
+          "label": "D",
+          "text": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8. FN07-0127",
+          "latex": "If set A contains 3 elements while set B contains 2 elements, then total number of functions from A to B is 8. FN07-0127"
+        }
+      ],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 1.0
+    }
+  },
+  {
+    "question_id": "imp_q_30",
+    "type": "NUMERICAL",
+    "question_text": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+    "question_text_latex": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "0",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:{",
+      "unknown_token:}",
+      "expression_fragmented",
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.47,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.69,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.53,
+    "detected_issues": [
+      "dangling_operator",
+      "unbalanced_parenthesis"
+    ],
+    "reconstructed_question": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+    "latex_question": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "reject",
+      "repair_confidence": 0.69,
+      "publish_risk_score": 0.47,
+      "detected_issues": [
+        "dangling_operator",
+        "unbalanced_parenthesis"
+      ],
+      "reconstructed_question": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+      "latex_question": "Let f: {1,2,3,4,5} -> {1,2,3,4,5} is such that f(x)*is a one-one function satisfying following condition f(x) = x + 1 if and only if x is even (i.e. f(3) != 4, f(4) = 5 etc). Then f-1*(2)*can be-",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.53
+    }
+  },
+  {
+    "question_id": "imp_q_36",
+    "type": "NUMERICAL",
+    "question_text": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+    "question_text_latex": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "16",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented",
+      "dangling_operator",
+      "piecewise_case_incomplete",
+      "unbalanced_parenthesis"
+    ],
+    "publish_risk_score": 0.67,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.57,
+    "repair_status": "unrecoverable",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.33,
+    "detected_issues": [
+      "dangling_operator",
+      "unbalanced_parenthesis",
+      "corrupted_piecewise"
+    ],
+    "reconstructed_question": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+    "latex_question": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "unrecoverable",
+      "repair_confidence": 0.57,
+      "publish_risk_score": 0.67,
+      "detected_issues": [
+        "dangling_operator",
+        "unbalanced_parenthesis",
+        "corrupted_piecewise"
+      ],
+      "reconstructed_question": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+      "latex_question": "If f(0) = 5, then minimum possible number of values of x satisfying f(x) = 5, for x ∈ [0, 170] is-",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.33
+    }
+  },
+  {
+    "question_id": "imp_q_38",
+    "type": "NUMERICAL",
+    "question_text": "f-1*(x)*is equal to -",
+    "question_text_latex": "f-1*(x)*is equal to -",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "18",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Relations and Functions",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.63,
+    "id": "bankq_1772708764337",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708764337",
+    "published_at": 1772708764337,
+    "repair_actions": [],
+    "repair_confidence": 0.63,
+    "repair_status": "unrecoverable",
+    "chapter_tags": [
+      "Relations and Functions"
+    ],
+    "structural_integrity_score": 0.37,
+    "detected_issues": [
+      "dangling_operator"
+    ],
+    "reconstructed_question": "f-1*(x)*is equal to -",
+    "latex_question": "f-1*(x)*is equal to -",
+    "concept_tags": [
+      "functions",
+      "relations"
+    ],
+    "difficulty_estimate": "JEE Advanced",
+    "layer2_reconstruction": {
+      "repair_status": "unrecoverable",
+      "repair_confidence": 0.63,
+      "publish_risk_score": 0.63,
+      "detected_issues": [
+        "dangling_operator"
+      ],
+      "reconstructed_question": "f-1*(x)*is equal to -",
+      "latex_question": "f-1*(x)*is equal to -",
+      "options": [],
+      "concept_tags": [
+        "functions",
+        "relations"
+      ],
+      "difficulty_estimate": "JEE Advanced",
+      "structural_integrity_score": 0.37
+    }
+  }
+]

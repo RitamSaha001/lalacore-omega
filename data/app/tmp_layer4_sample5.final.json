@@ -1,0 +1,271 @@
+[
+  {
+    "question_id": "imp_q_18",
+    "type": "MCQ_SINGLE",
+    "question_text": "Select the correct statements.",
+    "question_text_latex": "Select the correct statements.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The function f defined by f(x) = { 22, for x < 1; 3x + 2, for x \\geq 1 } is neither differentiable nor continuous at x=1."
+      },
+      {
+        "label": "B",
+        "text": "The function f(x) = x^2 |x| is twice differentiable at x=0."
+      },
+      {
+        "label": "C",
+        "text": "If f is continuous at x=5 and f(5)=2, then \\lim_{x \\to 5} f(x) = 2 exists."
+      },
+      {
+        "label": "D",
+        "text": "If \\lim_{x \\to a} f(x) + g(x) exists and \\lim_{x \\to a} f(x) - g(x) exists, then \\lim_{x \\to a} f(x) g(x) need not exist."
+      }
+    ],
+    "options_latex": {
+      "A": "The function f defined by f(x) = \\begin{cases} 22, & \\text{for } x < 1; \\\\ 3x + 2, & \\text{for } x \\geq 1 \\end{cases} is neither differentiable nor continuous at x=1.",
+      "B": "The function f(x) = x^2 |x| is twice differentiable at x=0.",
+      "C": "If f is continuous at x=5 and f(5)=2, then \\lim_{x \\to 5} f(x) = 2 exists.",
+      "D": "If \\lim_{x \\to a} (f(x) + g(x)) exists and \\lim_{x \\to a} (f(x) - g(x)) exists, then \\lim_{x \\to a} (f(x) g(x)) need not exist."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.0052,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "similarity_repaired",
+      "layer4_l1_token_repair",
+      "symbol_normalized",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 0.9948,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9948,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.992,
+      "processed_at": "2026-03-07T13:34:46+00:00"
+    }
+  },
+  {
+    "question_id": "imp_q_22",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statements is/are correct?",
+    "question_text_latex": "Which of the following statements is/are correct?",
+    "options": [
+      {
+        "label": "A",
+        "text": "There exists a function f : [0,1] \\to \\mathbb{R} which is discontinuous at every point in [0,1] and |f(x)| is continuous at every point in [0,1]"
+      },
+      {
+        "label": "B",
+        "text": "Let F(x) = f(x) \\cdot g(x). If f(x) is differentiable at x = a, f(a) = 0 and g(x) is continuous at x = a, then F(x) is always differentiable at x = a."
+      },
+      {
+        "label": "C",
+        "text": "If f'(R) a = 2 and f'(L) a = 3, then f(x) is non-differentiable at x = a but will be always continuous at x = a."
+      },
+      {
+        "label": "D",
+        "text": "If f(a) and f(b) possess opposite signs, then there must exist at least one solution of the equation f(x) = 0 in (a,b) provided f is continuous on [a,b]."
+      }
+    ],
+    "options_latex": {
+      "A": "There exists a function f : [0,1] \\to \\mathbb{R} \\text{ which is discontinuous at every point in } [0,1] \\text{ and } |f(x)| \\text{ is continuous at every point in } [0,1]",
+      "B": "Let F(x) = f(x) \\cdot g(x). \\text{ If } f(x) \\text{ is differentiable at } x = a, f(a) = 0 \\text{ and } g(x) \\text{ is continuous at } x = a, \\text{ then } F(x) \\text{ is always differentiable at } x = a.",
+      "C": "If f'(R) a = 2 \\text{ and } f'(L) a = 3, \\text{ then } f(x) \\text{ is non-differentiable at } x = a \\text{ but will be always continuous at } x = a.",
+      "D": "If f(a) \\text{ and } f(b) \\text{ possess opposite signs, then there must exist at least one solution of the equation } f(x) = 0 \\text{ in } (a,b) \\text{ provided } f \\text{ is continuous on } [a,b]."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 1.0,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:35:07+00:00"
+    }
+  },
+  {
+    "question_id": "imp_q_28",
+    "type": "MCQ_MULTI",
+    "question_text": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*xx xx xx - <= <= + < < - <= <= . Then in 0<=x<=4 function y=f(f(x))*is",
+    "question_text_latex": "Let f(x) = 1, (0, 1) \times 2, (1, 2) \times 4, (2, 4) \times x^2. \\text{ Then in } 0 \\leq x \\leq 4, \\text{ the function } y = f(f(x)) \\text{ is}",
+    "options": [
+      {
+        "label": "A",
+        "text": "continuous at x=1"
+      },
+      {
+        "label": "B",
+        "text": "not differentiable at x=1"
+      },
+      {
+        "label": "C",
+        "text": "continuous and differentiable at x=2"
+      },
+      {
+        "label": "D",
+        "text": "continuous but not differentiable at x=3"
+      }
+    ],
+    "options_latex": {
+      "A": "continuous \\text{ at } x=1",
+      "B": "not differentiable \\text{ at } x=1",
+      "C": "continuous \\text{ and differentiable at } x=2",
+      "D": "continuous \\text{ but not differentiable at } x=3"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.2089,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar"
+    ],
+    "repair_confidence": 0.9311,
+    "repair_status": "review",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "structural_integrity_score": 0.7911,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:58+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.894,
+      "processed_at": "2026-03-07T13:35:28+00:00"
+    }
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "input": {
+      "question_id": "ex_lim_1",
+      "type": "NUMERICAL",
+      "question_text": "Find lim x->0 sinx/x",
+      "options": [],
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1",
+        "tolerance": null
+      }
+    },
+    "output": {
+      "question_id": "ex_lim_1",
+      "repaired_question_text": "Find lim_{x->0} sin(x)/x",
+      "repaired_latex": "Find lim_{x->0} sin(x)/x",
+      "options": [],
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1",
+        "tolerance": null
+      },
+      "repair_actions": [
+        "equation_reconstructed",
+        "graph_limit_fix",
+        "solver_verified"
+      ],
+      "repair_confidence": 1.0,
+      "repair_status": "safe",
+      "detected_question_type": "NUMERICAL",
+      "validation_issues": [],
+      "solver_notes": [
+        "limit_computed"
+      ]
+    }
+  },
+  {
+    "input": {
+      "question_id": "ex_func_1",
+      "type": "MCQ_SINGLE",
+      "question_text": "If f*(x)=x2+3x then f(2)= ?",
+      "options": [
+        "4",
+        "10",
+        "14",
+        "16"
+      ],
+      "correct_answer": {
+        "single": "C",
+        "multiple": [
+          "C"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "output": {
+      "question_id": "ex_func_1",
+      "repaired_question_text": "If f(x)=x^2+3*x then f(2)= ?",
+      "repaired_latex": "If f(x)=x^2+3*x then f(2)= ?",
+      "options": [
+        {
+          "label": "A",
+          "text": "4"
+        },
+        {
+          "label": "B",
+          "text": "10"
+        },
+        {
+          "label": "C",
+          "text": "14"
+        },
+        {
+          "label": "D",
+          "text": "16"
+        }
+      ],
+      "correct_answer": {
+        "single": "C",
+        "multiple": [
+          "C"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "repair_actions": [
+        "equation_reconstructed",
+        "graph_missing_multiplication_fix"
+      ],
+      "repair_confidence": 1.0,
+      "repair_status": "safe",
+      "detected_question_type": "MCQ_SINGLE",
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ]
+    }
+  },
+  {
+    "input": {
+      "question_id": "ex_piece_1",
+      "type": "MCQ_SINGLE",
+      "question_text": "f(x)=x2 for x<=1 2x+1 for x>1. Is f continuous at x=1?",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "output": {
+      "question_id": "ex_piece_1",
+      "repaired_question_text": "f(x)=x^2 for x<=1 2*x+1 for x>1. Is f continuous at x=1?",
+      "repaired_latex": "f(x)=x^2 for x<=1 2*x+1 for x>1. Is f continuous at x=1?",
+      "options": [
+        {
+          "label": "A",
+          "text": "Yes"
+        },
+        {
+          "label": "B",
+          "text": "No"
+        }
+      ],
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "repair_actions": [
+        "equation_reconstructed",
+        "graph_missing_multiplication_fix"
+      ],
+      "repair_confidence": 1.0,
+      "repair_status": "safe",
+      "detected_question_type": "MCQ_SINGLE",
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ]
+    }
+  }
+]

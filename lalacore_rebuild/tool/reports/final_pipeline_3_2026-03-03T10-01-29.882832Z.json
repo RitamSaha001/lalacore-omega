@@ -1,0 +1,152 @@
+{
+  "run_id": "2026-03-03T10-01-29.882832Z",
+  "chat_results": [
+    {
+      "index": 1,
+      "question_hash": "650f542d4e2fa7a98bf95dcd49205b30ed88fa0a",
+      "ok": true,
+      "status": "ok",
+      "provider": "hf",
+      "winner_provider": "hf",
+      "answer": "\\boxed{-\\frac{1}{2}}",
+      "answer_len": 20,
+      "final_status": "Completed",
+      "quality_reasons": [
+        "verification_unavailable",
+        "high_entropy"
+      ],
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": true,
+          "issues": [],
+          "score": 1.0,
+          "expected_type": "solution",
+          "echo_ratio": 0.070423
+        },
+        "plausibility_score": 1.0,
+        "plausibility_failed": false,
+        "entropy": 0.9249449001688845,
+        "raw_risk_score": 1.0
+      }
+    },
+    {
+      "index": 2,
+      "question_hash": "5b71b4c8aeae135c2c022e49816bf8c8b6a073a4",
+      "ok": true,
+      "status": "ok",
+      "provider": "openrouter",
+      "winner_provider": "openrouter",
+      "answer": "40320",
+      "answer_len": 5,
+      "final_status": "Completed",
+      "quality_reasons": [
+        "verification_unavailable",
+        "cross_provider_disagreement",
+        "high_entropy"
+      ],
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": true,
+          "issues": [],
+          "score": 1.0,
+          "expected_type": "numeric",
+          "echo_ratio": 0.012346
+        },
+        "plausibility_score": 1.0,
+        "plausibility_failed": false,
+        "entropy": 1.4232075505945005,
+        "raw_risk_score": 1.0
+      }
+    },
+    {
+      "index": 3,
+      "question_hash": "621de1075eb73a7be5ffae273db75779c46e82e8",
+      "ok": true,
+      "status": "ok",
+      "provider": "openrouter",
+      "winner_provider": "openrouter",
+      "answer": "\\boxed{2k\\pi R^2\\rho}",
+      "answer_len": 21,
+      "final_status": "Completed",
+      "quality_reasons": [
+        "verification_unavailable",
+        "cross_provider_disagreement",
+        "high_entropy"
+      ],
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": true,
+          "issues": [],
+          "score": 1.0,
+          "expected_type": "solution",
+          "echo_ratio": 0.119205
+        },
+        "plausibility_score": 1.0,
+        "plausibility_failed": false,
+        "entropy": 1.4531934205954715,
+        "raw_risk_score": 1.0
+      }
+    }
+  ],
+  "chat_failed_indices": [],
+  "ai_generate": {
+    "ok": true,
+    "status": "SUCCESS",
+    "message": null,
+    "question_count": 3
+  },
+  "import_parse": {
+    "ok": true,
+    "status": "SUCCESS",
+    "count": 2,
+    "summary": {
+      "valid": 0,
+      "review": 2,
+      "invalid": 0
+    }
+  },
+  "import_save": {
+    "ok": true,
+    "status": "SUCCESS",
+    "saved_count": 2
+  },
+  "import_publish": {
+    "ok": true,
+    "status": "SUCCESS",
+    "published_count": 2
+  },
+  "ocr": {
+    "status": "ok",
+    "detected_type": "mixed",
+    "ocr_available": true,
+    "winner_provider": "hf",
+    "answer_len": 35
+  }
+}

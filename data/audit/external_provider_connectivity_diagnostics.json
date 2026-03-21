@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-02-26T12:07:37.713001Z",
+  "env": {
+    "sandbox_network_disabled_flag_in_process": "1"
+  },
+  "dns_probe_outside_sandbox": {
+    "openrouter.ai": {
+      "ok": true,
+      "ips": [
+        "104.18.2.115",
+        "104.18.3.115",
+        "2606:4700:8d90:eaa1:32d9:503:ba36:2d7e"
+      ]
+    },
+    "api.groq.com": {
+      "ok": true,
+      "ips": [
+        "104.18.38.236",
+        "172.64.149.20",
+        "2606:4700:8d93:ce55:6dd9:504:5caa:d12d"
+      ]
+    },
+    "generativelanguage.googleapis.com": {
+      "ok": true,
+      "ips": [
+        "2001:4860:4802:32::223",
+        "2001:4860:4802:34::223",
+        "2001:4860:4802:36::223",
+        "2001:4860:4802:38::223"
+      ]
+    },
+    "router.huggingface.co": {
+      "ok": true,
+      "ips": [
+        "13.35.20.18",
+        "13.35.20.30",
+        "13.35.20.43",
+        "13.35.20.95"
+      ]
+    }
+  },
+  "key_registry_counts": {
+    "openrouter": 3,
+    "groq": 1,
+    "gemini": 3,
+    "hf": 1
+  },
+  "provider_generate_probe": {
+    "openrouter": {
+      "final_answer": "4",
+      "failure_reason": null,
+      "error": null
+    },
+    "groq": {
+      "final_answer": "4",
+      "failure_reason": null,
+      "error": null
+    },
+    "gemini": {
+      "final_answer": "4",
+      "failure_reason": null,
+      "error": null
+    },
+    "hf": {
+      "final_answer": "4",
+      "failure_reason": null,
+      "error": null
+    }
+  },
+  "root_cause": [
+    "Primary prior blocker in this Codex session was sandbox DNS/network isolation for non-escalated runs.",
+    "Secondary prior blocker was deprecated provider defaults: GROQ model llama3-8b-8192 and HF legacy api-inference endpoint."
+  ]
+}

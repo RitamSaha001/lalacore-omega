@@ -1,0 +1,2224 @@
+[
+  {
+    "question": "Find the coefficient of x^10 in (1 + x)^20.",
+    "expected": 184756,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "",
+      "display_answer": "",
+      "winner_provider": "openrouter",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short|empty_semantics|expected_numeric_type|type_mismatch,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short",
+            "empty_semantics",
+            "expected_numeric_type",
+            "type_mismatch"
+          ],
+          "score": 0.0,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.0,
+        "plausibility_failed": true,
+        "entropy": 0.6500024215381879,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.6500024215381879,
+        "raw_entropy": 0.6500024215381879,
+        "disagreement": 0.0,
+        "winner_margin": 0.09979147053783799,
+        "single_provider_mode": false,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": -1.0525265085628706,
+          "agreement": 1.0,
+          "entropy": 0.6500024215381879,
+          "deterministic": 0.0,
+          "calibration_ema": 0.009158855438295716,
+          "answer_type_match": 0.0,
+          "winner_margin": 0.09979147053783799,
+          "adaptive_ema_error": 0.04639674819647397
+        },
+        "adaptive": {
+          "ema_error": 0.04546881323254449,
+          "count": 269.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:26.429718+00:00",
+          "count": 273,
+          "ema_abs_error": 0.009158855438295716,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.6500024215381879,
+      "provider_diagnostics": {
+        "winner_provider": "openrouter",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "openrouter",
+            "score": -0.3280314889796766
+          },
+          {
+            "provider": "groq",
+            "score": -0.3280314889796766
+          },
+          {
+            "provider": "gemini",
+            "score": -0.3280314889796766
+          },
+          {
+            "provider": "hf",
+            "score": -0.3280314889796766
+          },
+          {
+            "provider": "mini",
+            "score": -0.4551405713822608
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "",
+      "display_answer": "Hmm. You always bring me the interesting ones.\n\n\n\nSee? I've got you.\nDon't rush the next one.",
+      "winner_provider": "groq",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short|empty_semantics|expected_numeric_type|type_mismatch,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short",
+            "empty_semantics",
+            "expected_numeric_type",
+            "type_mismatch"
+          ],
+          "score": 0.0,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.0,
+        "plausibility_failed": true,
+        "entropy": 0.7404601426188083,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.7404601426188083,
+        "raw_entropy": 0.7404601426188083,
+        "disagreement": 0.0,
+        "winner_margin": 0.1259922025490532,
+        "single_provider_mode": false,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": -1.2200861066946254,
+          "agreement": 1.0,
+          "entropy": 0.7404601426188083,
+          "deterministic": 0.0,
+          "calibration_ema": 0.007785027122551359,
+          "answer_type_match": 0.0,
+          "winner_margin": 0.1259922025490532,
+          "adaptive_ema_error": 0.04546881323254449
+        },
+        "adaptive": {
+          "ema_error": 0.0445594369678936,
+          "count": 270.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.146659+00:00",
+          "count": 274,
+          "ema_abs_error": 0.007785027122551359,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.7404601426188083
+    },
+    "parsed": null,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^9 in (1 + x)^18.",
+    "expected": 48620,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3057226852931763,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.006617273054168655,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.0445594369678936,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.043668248228535725,
+          "count": 271.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.169131+00:00",
+          "count": 275,
+          "ema_abs_error": 0.006617273054168655,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.23398685455322,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.33400988578796,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.97270894050598,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.33369898796082,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.45553022231948803
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.30754433052041,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.005624682096043356,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.043668248228535725,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.04279488326396501,
+          "count": 272.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.192194+00:00",
+          "count": 276,
+          "ema_abs_error": 0.005624682096043356,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^7 in (1 + x)^14 + (1 - x)^14.",
+    "expected": 0,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.309092728963559,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.004780979781636853,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.04279488326396501,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.04193898559868571,
+          "count": 273.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.216318+00:00",
+          "count": 277,
+          "ema_abs_error": 0.004780979781636853,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.18686389923096,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.2868869304657,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.92558598518372,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.28657603263855,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.3167945721335276
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.310408867640235,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.004063832814391325,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.04193898559868571,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.041100205886711996,
+          "count": 274.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.239543+00:00",
+          "count": 278,
+          "ema_abs_error": 0.004063832814391325,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": true,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^8 in (1 + x)^16 - (1 - x)^16.",
+    "expected": 0,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.31152758551541,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0034542578922326264,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.041100205886711996,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.040278201768977756,
+          "count": 275.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.265876+00:00",
+          "count": 279,
+          "ema_abs_error": 0.0034542578922326264,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.13935279846191,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.23937582969666,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.87807488441467,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.2390649318695,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.3509288316932935
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3124784957093087,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0029361192083977323,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.040278201768977756,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.0394726377335982,
+          "count": 276.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.289150+00:00",
+          "count": 280,
+          "ema_abs_error": 0.0029361192083977323,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": true,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^12 in (1 + x)^24.",
+    "expected": 2704156,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3132867693741224,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.002495701327138072,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.0394726377335982,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.038683184978926234,
+          "count": 277.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.314123+00:00",
+          "count": 281,
+          "ema_abs_error": 0.002495701327138072,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.08982300758362,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.18984603881836,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.82854509353638,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.18953514099121,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.46204260554308313
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3139738019892144,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0021213461280673615,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.038683184978926234,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.037909521279347706,
+          "count": 278.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.337236+00:00",
+          "count": 282,
+          "ema_abs_error": 0.0021213461280673615,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^6 in (1 + x)^12 + (1 - x)^12.",
+    "expected": 1848,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3145577797120422,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0018031442088572572,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.037909521279347706,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.03715133085376075,
+          "count": 279.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.360048+00:00",
+          "count": 283,
+          "ema_abs_error": 0.0018031442088572572,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.041818857193,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.14184188842773,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.78054094314575,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.14153099060059,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.37621918092332823
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3150541607764463,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0015326725775286687,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.03715133085376075,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.036408304236685535,
+          "count": 280.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.406193+00:00",
+          "count": 284,
+          "ema_abs_error": 0.0015326725775286687,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^5 in (1 + x)^11 - (1 - x)^11.",
+    "expected": 924,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3154760846811895,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0013027716908993684,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.036408304236685535,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.035680138151951826,
+          "count": 281.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.430887+00:00",
+          "count": 285,
+          "ema_abs_error": 0.0013027716908993684,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 118.9728798866272,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.07290291786194,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.71160197257996,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.07259202003479,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.39629740807934355
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.315834720000221,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.001107355937264463,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.035680138151951826,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.03496653538891279,
+          "count": 282.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.455300+00:00",
+          "count": 286,
+          "ema_abs_error": 0.001107355937264463,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^4 in (1 + x)^8 (1 - x)^8.",
+    "expected": 28,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.316139560021398,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0009412525466747936,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.03496653538891279,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.03426720468113453,
+          "count": 283.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.480742+00:00",
+          "count": 287,
+          "ema_abs_error": 0.0009412525466747936,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 118.92309665679932,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.02311968803406,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.66181874275208,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 119.02280879020691,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4598459260169361
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3163986740393985,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0008000646646735745,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.03426720468113453,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.03358186058751184,
+          "count": 284.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.504440+00:00",
+          "count": 288,
+          "ema_abs_error": 0.0008000646646735745,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^15 in (1 + x)^30.",
+    "expected": 155117520,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.045455
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.316618920954699,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0006800549649725383,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.03358186058751184,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.032910223375761605,
+          "count": 285.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.529610+00:00",
+          "count": 289,
+          "ema_abs_error": 0.0006800549649725383,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 118.87476563453674,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 118.97478866577148,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.6134877204895,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 118.97447776794434,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.46548756830895954
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.045455
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3168061308327044,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0005780467202266575,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.032910223375761605,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.032252018908246374,
+          "count": 286.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.554507+00:00",
+          "count": 290,
+          "ema_abs_error": 0.0005780467202266575,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": false,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  },
+  {
+    "question": "Find the coefficient of x^3 in (1 + x)^9 + (1 - x)^9.",
+    "expected": 0,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3169652592290086,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0004913397121926589,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.032252018908246374,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.031606978530081445,
+          "count": 287.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.580548+00:00",
+          "count": 291,
+          "ema_abs_error": 0.0004913397121926589,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38,
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 118.82390570640564,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 118.92392873764038,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 119.5626277923584,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 118.92361783981323,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4110726796107649
+          }
+        ],
+        "provider_comparison_vision": []
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.3171005183658675,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0004176387553637601,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.031606978530081445,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.030974838959479816,
+          "count": 288.0,
+          "offsets": {
+            "agreement": 0.018151163832475913,
+            "answer_type_match": 0.018151163832475913,
+            "calibration_ema": -0.017621308315278163,
+            "deterministic": 0.018151163832475913,
+            "entropy": -0.004356279319794217,
+            "winner_margin": 0.01704900762356305
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T10:42:27.604435+00:00",
+          "count": 292,
+          "ema_abs_error": 0.0004176387553637601,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "entropy": 0.38
+    },
+    "parsed": 0,
+    "correct": true,
+    "persona_integrity": true,
+    "overconfidence_wrong": false
+  }
+]

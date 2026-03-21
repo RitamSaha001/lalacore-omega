@@ -1,0 +1,13 @@
+{
+  "stage": "layer7_postvalidate",
+  "status": "done",
+  "updated_at": "2026-03-07T14:04:23+00:00",
+  "done": 96,
+  "total": 96,
+  "progress_pct": 100.0,
+  "kept": 27,
+  "dropped": 69,
+  "similarity_recovered": 0,
+  "output": "data/app/import_question_bank_layer7_final.live.json",
+  "report": "data/app/repair_report_layer7.live.json"
+}

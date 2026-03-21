@@ -1,0 +1,18 @@
+{
+  "bias": -1.4087903428905462,
+  "bt_margin": -0.9872691612222435,
+  "critic_score": -1.724260094848627,
+  "deterministic_dominance": -0.7872691612222434,
+  "disagreement": 1.2,
+  "disagreement_cluster_size": 0.45,
+  "entropy": 0.6000000000872701,
+  "graph_missing_inference": 0.45,
+  "graph_redundancy": 0.3,
+  "process_reward": -0.5,
+  "provider_reliability": -1.9386349715378794,
+  "retrieval_strength": -0.8467155092556197,
+  "structural_coherence": -0.65,
+  "trap_probability": 1.0,
+  "uncertainty": -0.06072494539438125,
+  "verification_fail": 1.6
+}

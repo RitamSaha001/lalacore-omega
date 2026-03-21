@@ -1,0 +1,13 @@
+{
+  "stage": "layer7_postvalidate",
+  "status": "done",
+  "updated_at": "2026-03-07T14:04:10+00:00",
+  "done": 3,
+  "total": 3,
+  "progress_pct": 100.0,
+  "kept": 1,
+  "dropped": 2,
+  "similarity_recovered": 0,
+  "output": "data/app/tmp_layer7_sample5.final.json",
+  "report": "data/app/tmp_layer7_sample5.report.json"
+}

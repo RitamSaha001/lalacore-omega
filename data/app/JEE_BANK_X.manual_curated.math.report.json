@@ -1,0 +1,43 @@
+{
+  "input_rows": 19342,
+  "accepted_rows": 185,
+  "rejected_rows": 18258,
+  "accepted_by_chapter": {
+    "Three Dimensional Geometry": 43,
+    "Integral Calculus": 21,
+    "Limits, Continuity and Differentiability": 19,
+    "Coordinate Geometry": 16,
+    "Application of Derivatives": 13,
+    "Probability and Statistics": 12,
+    "Sequences and Series": 11,
+    "Trigonometric Functions": 11,
+    "Relations and Functions": 9,
+    "Differential Equations": 8,
+    "Sets, Relations and Functions": 7,
+    "Binomial Theorem": 6,
+    "Vector Algebra": 4,
+    "Matrices and Determinants": 3,
+    "Complex Numbers and Quadratic Equations": 1,
+    "Permutations and Combinations": 1
+  },
+  "rejection_reasons": {
+    "unsupported_chapter": 10134,
+    "solution_looks_like_option_dump": 8410,
+    "short_solution": 6528,
+    "chapter_keyword_mismatch": 5157,
+    "answer_table_question": 4731,
+    "solution_repeats_question": 4586,
+    "short_question": 3360,
+    "requires_human_review": 3220,
+    "non_math_question": 3037,
+    "answer_table_solution": 2967,
+    "heavy_ocr_question": 2776,
+    "non_math_solution": 2600,
+    "truncated_question": 1975,
+    "figure_dependency": 848,
+    "placeholder_question": 664,
+    "unsafe_status": 161
+  },
+  "output_file": "/Users/ritamsaha/lalacore_omega/data/app/JEE_BANK_X.manual_curated.math.json",
+  "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/JEE_BANK_X.manual_curated.math.rejected.json"
+}

@@ -1,0 +1,38 @@
+{
+  "updated_at": "2026-03-08T11:30:47+05:30",
+  "completed_chapters": 6,
+  "total_chapters": 15,
+  "rows_in_live_bank": 30,
+  "chapter_counts": [
+    {
+      "chapter": "Binomial Theorem",
+      "slug": "binomial_theorem",
+      "count": 13
+    },
+    {
+      "chapter": "Complex Numbers and Quadratic Equations",
+      "slug": "complex_numbers_and_quadratic_equations",
+      "count": 5
+    },
+    {
+      "chapter": "Matrices and Determinants",
+      "slug": "matrices_and_determinants",
+      "count": 5
+    },
+    {
+      "chapter": "Permutations and Combinations",
+      "slug": "permutations_and_combinations",
+      "count": 4
+    },
+    {
+      "chapter": "Vector Algebra",
+      "slug": "vector_algebra",
+      "count": 2
+    },
+    {
+      "chapter": "Differential Equations",
+      "slug": "differential_equations",
+      "count": 1
+    }
+  ]
+}

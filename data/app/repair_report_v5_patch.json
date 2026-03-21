@@ -1,0 +1,19 @@
+{
+  "generated_at_utc": "2026-03-06T07:10:03.164360Z",
+  "type": "targeted_function_notation_cleanup",
+  "pattern": "[A-Za-z]*(",
+  "summary": {
+    "import_question_bank.json": {
+      "touch_events": 1332,
+      "fix_count": 1332
+    },
+    "import_drafts.json": {
+      "touch_events": 1332,
+      "fix_count": 1332
+    },
+    "ai_generated_quizzes.json": {
+      "touch_events": 118,
+      "fix_count": 118
+    }
+  }
+}

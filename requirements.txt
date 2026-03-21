@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+asyncpg
+httpx
+requests
+sympy
+z3-solver
+pint
+cachetools
+jsonschema
+numpy
+sentence-transformers
+pillow
+pytesseract
+pdf2image

@@ -1,0 +1,1058 @@
+{
+  "providers": {
+    "gemini": {
+      "brier_score": 0.0683337064504268,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.07450175289723412,
+          "calibration_error": 0.270360006379611,
+          "ema_reliability": 0.0008637642568501416,
+          "total": 145,
+          "verified_pass": 2
+        },
+        "hard": {
+          "brier": 0.0636052116227256,
+          "calibration_error": 0.25201505012696196,
+          "ema_reliability": 1.6912748829003016e-43,
+          "total": 765,
+          "verified_pass": 0
+        },
+        "medium": {
+          "brier": 0.07226235606716884,
+          "calibration_error": 0.26271564705028744,
+          "ema_reliability": 0.00645566799258693,
+          "total": 42,
+          "verified_pass": 3
+        }
+      },
+      "by_subject": {
+        "chemistry": {
+          "brier": 0.4518301251983783,
+          "calibration_error": 0.4776777789128472,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general": {
+          "brier": 0.06387528777023271,
+          "calibration_error": 0.24902487755156194,
+          "ema_reliability": 0.0026470342610625686,
+          "total": 41,
+          "verified_pass": 0
+        },
+        "math": {
+          "brier": 0.06954769458472732,
+          "calibration_error": 0.26143025545062876,
+          "ema_reliability": 4.1598734351691374e-46,
+          "total": 904,
+          "verified_pass": 5
+        },
+        "physics": {
+          "brier": 0.2566563798755227,
+          "calibration_error": 0.3457724984163646,
+          "ema_reliability": 0.23220204339199998,
+          "total": 6,
+          "verified_pass": 0
+        }
+      },
+      "by_subject_difficulty": {
+        "chemistry:easy": {
+          "brier": 0.4518301251983783,
+          "calibration_error": 0.4776777789128472,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general:easy": {
+          "brier": 0.06387528777023271,
+          "calibration_error": 0.24902487755156194,
+          "ema_reliability": 0.0026470342610625686,
+          "total": 41,
+          "verified_pass": 0
+        },
+        "math:easy": {
+          "brier": 0.0873454411620282,
+          "calibration_error": 0.2930886077281677,
+          "ema_reliability": 0.015489714930583712,
+          "total": 102,
+          "verified_pass": 2
+        },
+        "math:hard": {
+          "brier": 0.0636052116227256,
+          "calibration_error": 0.25201505012696196,
+          "ema_reliability": 3.204799310141519e-43,
+          "total": 760,
+          "verified_pass": 0
+        },
+        "math:medium": {
+          "brier": 0.07226235606716884,
+          "calibration_error": 0.26271564705028744,
+          "ema_reliability": 0.00645566799258693,
+          "total": 42,
+          "verified_pass": 3
+        },
+        "physics:easy": {
+          "brier": 0.4491237848013167,
+          "calibration_error": 0.4730885807516431,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "physics:hard": {
+          "brier": 0.28350538244185314,
+          "calibration_error": 0.3599745132801085,
+          "ema_reliability": 0.2638659584,
+          "total": 5,
+          "verified_pass": 0
+        }
+      },
+      "calibration_error": 0.2749191337474934,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.9999999999999996,
+          "total": 776
+        },
+        "chemistry": {
+          "failure_ema": 0.9999999999999996,
+          "total": 604
+        },
+        "equation": {
+          "failure_ema": 0.9999999999999996,
+          "total": 776
+        },
+        "equilibrium": {
+          "failure_ema": 0.9999999999999996,
+          "total": 599
+        },
+        "jee": {
+          "failure_ema": 0.9999999999999996,
+          "total": 947
+        },
+        "kinematics": {
+          "failure_ema": 0.9658723707991966,
+          "total": 21
+        },
+        "math": {
+          "failure_ema": 0.9999999999999996,
+          "total": 948
+        },
+        "physics": {
+          "failure_ema": 0.9841509895268978,
+          "total": 27
+        },
+        "quadratic": {
+          "failure_ema": 0.9999999999999996,
+          "total": 828
+        },
+        "roots": {
+          "failure_ema": 0.9999999999999996,
+          "total": 825
+        },
+        "trap": {
+          "failure_ema": 0.9999999999999996,
+          "total": 632
+        },
+        "units": {
+          "failure_ema": 0.9051046914384604,
+          "total": 13
+        },
+        "verification": {
+          "failure_ema": 0.9999999999999996,
+          "total": 620
+        }
+      },
+      "ema_reliability": 1.8707652568761914e-39,
+      "token_stats": {
+        "avg_tokens_ema": 805.30047479147,
+        "by_subject": {
+          "chemistry": {
+            "avg_tokens_ema": 694.0,
+            "calls": 1,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "general": {
+            "avg_tokens_ema": 268.30559489594606,
+            "calls": 41,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "math": {
+            "avg_tokens_ema": 838.6482395248369,
+            "calls": 904,
+            "gain_per_1k_tokens_ema": 1.4364221114578417e-53
+          },
+          "physics": {
+            "avg_tokens_ema": 156.2202844864,
+            "calls": 6,
+            "gain_per_1k_tokens_ema": 0.0
+          }
+        },
+        "calls": 952,
+        "gain_per_1k_tokens_ema": 5.689772680729348e-47,
+        "total_tokens": 617332.0
+      },
+      "total": 952,
+      "verified_pass": 5
+    },
+    "groq": {
+      "brier_score": 0.08319373502738406,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.07517285862521683,
+          "calibration_error": 0.2722871850915779,
+          "ema_reliability": 5.0718090308468e-10,
+          "total": 162,
+          "verified_pass": 0
+        },
+        "hard": {
+          "brier": 0.09545266088993677,
+          "calibration_error": 0.3017852928388906,
+          "ema_reliability": 1.4836131497193827e-41,
+          "total": 730,
+          "verified_pass": 0
+        },
+        "medium": {
+          "brier": 0.09482959483453228,
+          "calibration_error": 0.2954196538430632,
+          "ema_reliability": 0.0015874141641202511,
+          "total": 45,
+          "verified_pass": 0
+        }
+      },
+      "by_subject": {
+        "general": {
+          "brier": 0.0668958899974772,
+          "calibration_error": 0.25812007815755605,
+          "ema_reliability": 0.00030127631383829954,
+          "total": 58,
+          "verified_pass": 0
+        },
+        "math": {
+          "brier": 0.07993011856467983,
+          "calibration_error": 0.2788688030902949,
+          "ema_reliability": 1.940260843654024e-49,
+          "total": 872,
+          "verified_pass": 0
+        },
+        "physics": {
+          "brier": 0.24189244403281498,
+          "calibration_error": 0.35116527123436975,
+          "ema_reliability": 0.20433779818495998,
+          "total": 7,
+          "verified_pass": 0
+        }
+      },
+      "by_subject_difficulty": {
+        "general:easy": {
+          "brier": 0.0668958899974772,
+          "calibration_error": 0.25812007815755605,
+          "ema_reliability": 0.00030127631383829954,
+          "total": 58,
+          "verified_pass": 0
+        },
+        "math:easy": {
+          "brier": 0.09133399943883427,
+          "calibration_error": 0.2983035920845123,
+          "ema_reliability": 1.0869324725019432e-06,
+          "total": 102,
+          "verified_pass": 0
+        },
+        "math:hard": {
+          "brier": 0.09545266088993677,
+          "calibration_error": 0.3017852928388906,
+          "ema_reliability": 2.811300780736449e-41,
+          "total": 725,
+          "verified_pass": 0
+        },
+        "math:medium": {
+          "brier": 0.09482959483453228,
+          "calibration_error": 0.2954196538430632,
+          "ema_reliability": 0.0015874141641202511,
+          "total": 45,
+          "verified_pass": 0
+        },
+        "physics:easy": {
+          "brier": 0.40823513420366725,
+          "calibration_error": 0.4558787110974904,
+          "ema_reliability": 0.3872,
+          "total": 2,
+          "verified_pass": 0
+        },
+        "physics:hard": {
+          "brier": 0.2903196925544084,
+          "calibration_error": 0.3744494835985778,
+          "ema_reliability": 0.2638659584,
+          "total": 5,
+          "verified_pass": 0
+        }
+      },
+      "calibration_error": 0.2878863018707279,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.9999999999999996,
+          "total": 756
+        },
+        "chemistry": {
+          "failure_ema": 0.9999999999999996,
+          "total": 606
+        },
+        "equation": {
+          "failure_ema": 0.9999999999999996,
+          "total": 756
+        },
+        "equilibrium": {
+          "failure_ema": 0.9999999999999996,
+          "total": 601
+        },
+        "jee": {
+          "failure_ema": 0.9999999999999996,
+          "total": 932
+        },
+        "kinematics": {
+          "failure_ema": 0.9612186031809052,
+          "total": 20
+        },
+        "math": {
+          "failure_ema": 0.9999999999999996,
+          "total": 934
+        },
+        "physics": {
+          "failure_ema": 0.9819897608260203,
+          "total": 26
+        },
+        "quadratic": {
+          "failure_ema": 0.9999999999999996,
+          "total": 825
+        },
+        "roots": {
+          "failure_ema": 0.9999999999999996,
+          "total": 822
+        },
+        "trap": {
+          "failure_ema": 0.9999999999999996,
+          "total": 609
+        },
+        "units": {
+          "failure_ema": 0.8921644220891596,
+          "total": 12
+        },
+        "verification": {
+          "failure_ema": 0.9999999999999996,
+          "total": 597
+        }
+      },
+      "ema_reliability": 6.671159879551902e-44,
+      "token_stats": {
+        "avg_tokens_ema": 744.6505714071683,
+        "by_subject": {
+          "general": {
+            "avg_tokens_ema": 416.6609055510303,
+            "calls": 58,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "math": {
+            "avg_tokens_ema": 736.40692899364,
+            "calls": 872,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "physics": {
+            "avg_tokens_ema": 400.80748794649605,
+            "calls": 7,
+            "gain_per_1k_tokens_ema": 0.0
+          }
+        },
+        "calls": 937,
+        "gain_per_1k_tokens_ema": 2.102260283310598e-52,
+        "total_tokens": 1159807.0
+      },
+      "total": 937,
+      "verified_pass": 0
+    },
+    "hf": {
+      "brier_score": 0.14449667725891815,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.07350901917259803,
+          "calibration_error": 0.26937274606921574,
+          "ema_reliability": 1.8239976307129833e-10,
+          "total": 170,
+          "verified_pass": 0
+        },
+        "hard": {
+          "brier": 0.16887138520491873,
+          "calibration_error": 0.40383891869997657,
+          "ema_reliability": 6.824771488813581e-36,
+          "total": 628,
+          "verified_pass": 0
+        },
+        "medium": {
+          "brier": 0.09779692477332196,
+          "calibration_error": 0.29568192694882095,
+          "ema_reliability": 0.005699851350131931,
+          "total": 35,
+          "verified_pass": 0
+        }
+      },
+      "by_subject": {
+        "chemistry": {
+          "brier": 0.45071599222619835,
+          "calibration_error": 0.4758597137069414,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general": {
+          "brier": 0.0654227555803747,
+          "calibration_error": 0.25548651334016126,
+          "ema_reliability": 0.0001399139513977253,
+          "total": 64,
+          "verified_pass": 0
+        },
+        "math": {
+          "brier": 0.14576533003461106,
+          "calibration_error": 0.37088820145068585,
+          "ema_reliability": 2.8202233929245368e-43,
+          "total": 761,
+          "verified_pass": 0
+        },
+        "physics": {
+          "brier": 0.2416837102703225,
+          "calibration_error": 0.3506101345648462,
+          "ema_reliability": 0.20433779818495998,
+          "total": 7,
+          "verified_pass": 0
+        }
+      },
+      "by_subject_difficulty": {
+        "chemistry:easy": {
+          "brier": 0.45071599222619835,
+          "calibration_error": 0.4758597137069414,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general:easy": {
+          "brier": 0.0654227555803747,
+          "calibration_error": 0.25548651334016126,
+          "ema_reliability": 0.0001399139513977253,
+          "total": 64,
+          "verified_pass": 0
+        },
+        "math:easy": {
+          "brier": 0.09306670175993417,
+          "calibration_error": 0.30235844522823374,
+          "ema_reliability": 9.5650057580171e-07,
+          "total": 103,
+          "verified_pass": 0
+        },
+        "math:hard": {
+          "brier": 0.16887138520491873,
+          "calibration_error": 0.40383891869997657,
+          "ema_reliability": 1.293226972171182e-35,
+          "total": 623,
+          "verified_pass": 0
+        },
+        "math:medium": {
+          "brier": 0.09779692477332196,
+          "calibration_error": 0.29568192694882095,
+          "ema_reliability": 0.005699851350131931,
+          "total": 35,
+          "verified_pass": 0
+        },
+        "physics:easy": {
+          "brier": 0.4088081016064352,
+          "calibration_error": 0.45691273808663047,
+          "ema_reliability": 0.3872,
+          "total": 2,
+          "verified_pass": 0
+        },
+        "physics:hard": {
+          "brier": 0.28980858560618933,
+          "calibration_error": 0.37334865788405236,
+          "ema_reliability": 0.2638659584,
+          "total": 5,
+          "verified_pass": 0
+        }
+      },
+      "calibration_error": 0.32487864413927026,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.9999999999999996,
+          "total": 685
+        },
+        "chemistry": {
+          "failure_ema": 0.9999999999999996,
+          "total": 521
+        },
+        "equation": {
+          "failure_ema": 0.9999999999999996,
+          "total": 685
+        },
+        "equilibrium": {
+          "failure_ema": 0.9999999999999996,
+          "total": 516
+        },
+        "jee": {
+          "failure_ema": 0.9999999999999996,
+          "total": 827
+        },
+        "kinematics": {
+          "failure_ema": 0.9735715639468978,
+          "total": 23
+        },
+        "math": {
+          "failure_ema": 0.9999999999999996,
+          "total": 829
+        },
+        "physics": {
+          "failure_ema": 0.9877265262896296,
+          "total": 29
+        },
+        "quadratic": {
+          "failure_ema": 0.9999999999999996,
+          "total": 739
+        },
+        "roots": {
+          "failure_ema": 0.9999999999999996,
+          "total": 736
+        },
+        "trap": {
+          "failure_ema": 0.9999999999999996,
+          "total": 536
+        },
+        "units": {
+          "failure_ema": 0.9164921284658452,
+          "total": 14
+        },
+        "verification": {
+          "failure_ema": 0.9999999999999996,
+          "total": 524
+        }
+      },
+      "ema_reliability": 3.828074377414494e-39,
+      "token_stats": {
+        "avg_tokens_ema": 762.1151650514685,
+        "by_subject": {
+          "chemistry": {
+            "avg_tokens_ema": 463.0,
+            "calls": 1,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "general": {
+            "avg_tokens_ema": 408.97658037696556,
+            "calls": 64,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "math": {
+            "avg_tokens_ema": 761.569453268814,
+            "calls": 761,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "physics": {
+            "avg_tokens_ema": 308.93611394732795,
+            "calls": 7,
+            "gain_per_1k_tokens_ema": 0.0
+          }
+        },
+        "calls": 833,
+        "gain_per_1k_tokens_ema": 1.2487876121367464e-46,
+        "total_tokens": 628973.0
+      },
+      "total": 833,
+      "verified_pass": 0
+    },
+    "mini": {
+      "brier_score": 0.04564928833104205,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.054474537714155835,
+          "calibration_error": 0.23247273218164127,
+          "ema_reliability": 6.71653874560006e-06,
+          "total": 1837,
+          "verified_pass": 443
+        },
+        "hard": {
+          "brier": 0.04738395545462316,
+          "calibration_error": 0.2174005015169866,
+          "ema_reliability": 1.1543840416050745e-44,
+          "total": 786,
+          "verified_pass": 0
+        },
+        "medium": {
+          "brier": 0.05147323954254117,
+          "calibration_error": 0.22521200170964056,
+          "ema_reliability": 0.0028195614843565062,
+          "total": 205,
+          "verified_pass": 86
+        }
+      },
+      "by_subject": {
+        "chemistry": {
+          "brier": 0.449317798670943,
+          "calibration_error": 0.47343853825323656,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general": {
+          "brier": 0.049895136542621954,
+          "calibration_error": 0.22330202174377634,
+          "ema_reliability": 5.082520503668159e-16,
+          "total": 605,
+          "verified_pass": 33
+        },
+        "math": {
+          "brier": 0.0451195543907132,
+          "calibration_error": 0.2122371888389592,
+          "ema_reliability": 6.13822324287491e-48,
+          "total": 2212,
+          "verified_pass": 496
+        },
+        "physics": {
+          "brier": 0.19368985635603148,
+          "calibration_error": 0.3364903070087839,
+          "ema_reliability": 0.13925048800470105,
+          "total": 10,
+          "verified_pass": 0
+        }
+      },
+      "by_subject_difficulty": {
+        "chemistry:easy": {
+          "brier": 0.449317798670943,
+          "calibration_error": 0.47343853825323656,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general:easy": {
+          "brier": 0.049895136542621954,
+          "calibration_error": 0.22330202174377634,
+          "ema_reliability": 5.082520503668159e-16,
+          "total": 605,
+          "verified_pass": 33
+        },
+        "math:easy": {
+          "brier": 0.06204169817436575,
+          "calibration_error": 0.24692936936584178,
+          "ema_reliability": 0.00438533724305104,
+          "total": 1234,
+          "verified_pass": 416
+        },
+        "math:hard": {
+          "brier": 0.04738395545462316,
+          "calibration_error": 0.2174005015169866,
+          "ema_reliability": 2.1874440503900072e-44,
+          "total": 781,
+          "verified_pass": 0
+        },
+        "math:medium": {
+          "brier": 0.05147323954302634,
+          "calibration_error": 0.22521200170986805,
+          "ema_reliability": 0.0028195614849622535,
+          "total": 203,
+          "verified_pass": 86
+        },
+        "physics:easy": {
+          "brier": 0.36576651985661474,
+          "calibration_error": 0.4296101206662901,
+          "ema_reliability": 0.340736,
+          "total": 3,
+          "verified_pass": 0
+        },
+        "physics:hard": {
+          "brier": 0.29651339022067913,
+          "calibration_error": 0.3879995248443814,
+          "ema_reliability": 0.2638659584,
+          "total": 5,
+          "verified_pass": 0
+        },
+        "physics:medium": {
+          "brier": 0.41131115905848215,
+          "calibration_error": 0.46047218866432615,
+          "ema_reliability": 0.3872,
+          "total": 2,
+          "verified_pass": 0
+        }
+      },
+      "calibration_error": 0.2530084542663642,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2327
+        },
+        "chemistry": {
+          "failure_ema": 0.9999999999999996,
+          "total": 1995
+        },
+        "equation": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2327
+        },
+        "equilibrium": {
+          "failure_ema": 0.9999999999999996,
+          "total": 1989
+        },
+        "jee": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2819
+        },
+        "kinematics": {
+          "failure_ema": 0.987526708788579,
+          "total": 41
+        },
+        "math": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2822
+        },
+        "physics": {
+          "failure_ema": 0.9942073525857691,
+          "total": 47
+        },
+        "quadratic": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2530
+        },
+        "roots": {
+          "failure_ema": 0.9999999999999996,
+          "total": 2511
+        },
+        "trap": {
+          "failure_ema": 0.9999999999999996,
+          "total": 1611
+        },
+        "units": {
+          "failure_ema": 0.9458304816309995,
+          "total": 21
+        },
+        "verification": {
+          "failure_ema": 0.9999999999999996,
+          "total": 1584
+        }
+      },
+      "ema_reliability": 3.027779988008356e-42,
+      "token_stats": {
+        "avg_tokens_ema": 472.3190571716117,
+        "by_subject": {
+          "chemistry": {
+            "avg_tokens_ema": 282.0,
+            "calls": 1,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "general": {
+            "avg_tokens_ema": 168.48129067515282,
+            "calls": 605,
+            "gain_per_1k_tokens_ema": 8.95552023053515e-18
+          },
+          "math": {
+            "avg_tokens_ema": 466.23881555058813,
+            "calls": 2205,
+            "gain_per_1k_tokens_ema": 1.8741496535060498e-55
+          },
+          "physics": {
+            "avg_tokens_ema": 314.49257057906584,
+            "calls": 10,
+            "gain_per_1k_tokens_ema": 0.0
+          }
+        },
+        "calls": 2821,
+        "gain_per_1k_tokens_ema": 4.387098297433439e-50,
+        "total_tokens": 840012.0
+      },
+      "total": 2834,
+      "verified_pass": 535
+    },
+    "openrouter": {
+      "brier_score": 0.07751388770615161,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.07283629401156516,
+          "calibration_error": 0.26833930930642014,
+          "ema_reliability": 1.0938429157895696e-10,
+          "total": 174,
+          "verified_pass": 0
+        },
+        "hard": {
+          "brier": 0.08262094551116897,
+          "calibration_error": 0.2792120699862007,
+          "ema_reliability": 4.5995933792629707e-29,
+          "total": 505,
+          "verified_pass": 0
+        },
+        "medium": {
+          "brier": 0.07712742133903455,
+          "calibration_error": 0.2666128751550166,
+          "ema_reliability": 0.0030079934784801917,
+          "total": 40,
+          "verified_pass": 0
+        }
+      },
+      "by_subject": {
+        "chemistry": {
+          "brier": 0.4495097762850342,
+          "calibration_error": 0.4737812544794314,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general": {
+          "brier": 0.06537177473884369,
+          "calibration_error": 0.2554552008184971,
+          "ema_reliability": 8.39057474524814e-05,
+          "total": 68,
+          "verified_pass": 0
+        },
+        "math": {
+          "brier": 0.07468610962950284,
+          "calibration_error": 0.26964367777849857,
+          "ema_reliability": 1.0030629676985414e-36,
+          "total": 643,
+          "verified_pass": 0
+        },
+        "physics": {
+          "brier": 0.24409497328396212,
+          "calibration_error": 0.3549099142732228,
+          "ema_reliability": 0.20433779818495998,
+          "total": 7,
+          "verified_pass": 0
+        }
+      },
+      "by_subject_difficulty": {
+        "chemistry:easy": {
+          "brier": 0.4495097762850342,
+          "calibration_error": 0.4737812544794314,
+          "ema_reliability": 0.44,
+          "total": 1,
+          "verified_pass": 0
+        },
+        "general:easy": {
+          "brier": 0.06537177473884369,
+          "calibration_error": 0.2554552008184971,
+          "ema_reliability": 8.39057474524814e-05,
+          "total": 68,
+          "verified_pass": 0
+        },
+        "math:easy": {
+          "brier": 0.09132077013616734,
+          "calibration_error": 0.3001189630178567,
+          "ema_reliability": 9.5650057580171e-07,
+          "total": 103,
+          "verified_pass": 0
+        },
+        "math:hard": {
+          "brier": 0.08262094551116897,
+          "calibration_error": 0.2792120699862007,
+          "ema_reliability": 8.715776387286663e-29,
+          "total": 500,
+          "verified_pass": 0
+        },
+        "math:medium": {
+          "brier": 0.07712742133903455,
+          "calibration_error": 0.2666128751550166,
+          "ema_reliability": 0.0030079934784801917,
+          "total": 40,
+          "verified_pass": 0
+        },
+        "physics:easy": {
+          "brier": 0.40735831623801955,
+          "calibration_error": 0.4545094630147458,
+          "ema_reliability": 0.3872,
+          "total": 2,
+          "verified_pass": 0
+        },
+        "physics:hard": {
+          "brier": 0.29298494663125146,
+          "calibration_error": 0.37891672255271236,
+          "ema_reliability": 0.2638659584,
+          "total": 5,
+          "verified_pass": 0
+        }
+      },
+      "calibration_error": 0.283647917905882,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.9999999999999996,
+          "total": 557
+        },
+        "chemistry": {
+          "failure_ema": 0.9999999999999996,
+          "total": 495
+        },
+        "equation": {
+          "failure_ema": 0.9999999999999996,
+          "total": 557
+        },
+        "equilibrium": {
+          "failure_ema": 0.9999999999999996,
+          "total": 490
+        },
+        "jee": {
+          "failure_ema": 0.9999999999999996,
+          "total": 715
+        },
+        "kinematics": {
+          "failure_ema": 0.9499207169174914,
+          "total": 18
+        },
+        "math": {
+          "failure_ema": 0.9999999999999996,
+          "total": 715
+        },
+        "physics": {
+          "failure_ema": 0.9767429762732701,
+          "total": 24
+        },
+        "quadratic": {
+          "failure_ema": 0.9999999999999996,
+          "total": 659
+        },
+        "roots": {
+          "failure_ema": 0.9999999999999996,
+          "total": 657
+        },
+        "trap": {
+          "failure_ema": 0.9999999999999996,
+          "total": 433
+        },
+        "units": {
+          "failure_ema": 0.8774595705558631,
+          "total": 11
+        },
+        "verification": {
+          "failure_ema": 0.9999999999999996,
+          "total": 421
+        }
+      },
+      "ema_reliability": 6.299909216791184e-34,
+      "token_stats": {
+        "avg_tokens_ema": 716.1080242708483,
+        "by_subject": {
+          "chemistry": {
+            "avg_tokens_ema": 432.0,
+            "calls": 1,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "general": {
+            "avg_tokens_ema": 381.54952994758503,
+            "calls": 68,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "math": {
+            "avg_tokens_ema": 707.8132813305756,
+            "calls": 643,
+            "gain_per_1k_tokens_ema": 0.0
+          },
+          "physics": {
+            "avg_tokens_ema": 344.8367581560321,
+            "calls": 7,
+            "gain_per_1k_tokens_ema": 0.0
+          }
+        },
+        "calls": 719,
+        "gain_per_1k_tokens_ema": 2.6635690312074454e-40,
+        "total_tokens": 704334.0
+      },
+      "total": 719,
+      "verified_pass": 0
+    },
+    "symbolic_guard": {
+      "brier_score": 0.40964016309171986,
+      "by_difficulty": {
+        "easy": {
+          "brier": 0.3927075453299771,
+          "calibration_error": 0.42244436287218967,
+          "ema_reliability": 0.6128,
+          "total": 2,
+          "verified_pass": 2
+        }
+      },
+      "by_subject": {
+        "math": {
+          "brier": 0.3927075453299771,
+          "calibration_error": 0.42244436287218967,
+          "ema_reliability": 0.6128,
+          "total": 2,
+          "verified_pass": 2
+        }
+      },
+      "by_subject_difficulty": {
+        "math:easy": {
+          "brier": 0.3927075453299771,
+          "calibration_error": 0.42244436287218967,
+          "ema_reliability": 0.6128,
+          "total": 2,
+          "verified_pass": 2
+        }
+      },
+      "calibration_error": 0.39393096867051547,
+      "cluster_weakness": {
+        "algebra": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "chemistry": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "equation": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "equilibrium": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "jee": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "math": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "quadratic": {
+          "failure_ema": 0.3872,
+          "total": 2
+        },
+        "roots": {
+          "failure_ema": 0.3872,
+          "total": 2
+        }
+      },
+      "ema_reliability": 0.5950000000000001,
+      "token_stats": {
+        "avg_tokens_ema": 198.7152,
+        "by_subject": {
+          "math": {
+            "avg_tokens_ema": 57.0,
+            "calls": 2,
+            "gain_per_1k_tokens_ema": 17.543859649122805
+          }
+        },
+        "calls": 2,
+        "gain_per_1k_tokens_ema": 5.661574736842104,
+        "total_tokens": 114.0
+      },
+      "total": 2,
+      "verified_pass": 2
+    }
+  },
+  "routing_thresholds": {
+    "default_arena_size": 3,
+    "efficiency_baseline": 0.9435957894736839,
+    "gap_for_two_provider_mode": 0.12211165289368589,
+    "high_confidence_score": 0.05,
+    "question_token_ema": 161.43398517176922,
+    "token_baseline_ema": 616.5347487820944
+  },
+  "weekly_rankings": [
+    {
+      "avg_tokens_ema": 174.683,
+      "brier_score": 0.100651,
+      "calibration_error": 0.162559,
+      "composite": 0.68208,
+      "ema_reliability": 0.945291,
+      "gain_per_1k_tokens_ema": 5.431525,
+      "provider": "mini",
+      "total": 21
+    }
+  ]
+}

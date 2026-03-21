@@ -1,0 +1,56 @@
+{
+  "started_at_utc": "20260306T070146Z",
+  "app_dir": "/Users/ritamsaha/lalacore_omega/data/app",
+  "targets": [
+    {
+      "file": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank.json",
+      "backup": "/Users/ritamsaha/lalacore_omega/data/app/backups/import_question_bank.json.20260306T070146Z.bak",
+      "status": "ok",
+      "questions_seen": 12766,
+      "questions_changed": 12766,
+      "manual_review_count": 70,
+      "avg_repair_confidence": 0.9255,
+      "action_counts": {
+        "equation_reconstructed": 184,
+        "graph_missing_multiplication_fix": 184
+      }
+    },
+    {
+      "file": "/Users/ritamsaha/lalacore_omega/data/app/import_drafts.json",
+      "backup": "/Users/ritamsaha/lalacore_omega/data/app/backups/import_drafts.json.20260306T070146Z.bak",
+      "status": "ok",
+      "questions_seen": 12766,
+      "questions_changed": 12766,
+      "manual_review_count": 70,
+      "avg_repair_confidence": 0.9255,
+      "action_counts": {
+        "equation_reconstructed": 184,
+        "graph_missing_multiplication_fix": 184
+      }
+    },
+    {
+      "file": "/Users/ritamsaha/lalacore_omega/data/app/ai_generated_quizzes.json",
+      "backup": "/Users/ritamsaha/lalacore_omega/data/app/backups/ai_generated_quizzes.json.20260306T070146Z.bak",
+      "status": "ok",
+      "questions_seen": 728,
+      "questions_changed": 728,
+      "manual_review_count": 84,
+      "avg_repair_confidence": 0.8994,
+      "action_counts": {
+        "equation_reconstructed": 33,
+        "graph_missing_multiplication_fix": 33
+      }
+    }
+  ],
+  "totals": {
+    "questions_seen": 26260,
+    "questions_changed": 26260,
+    "manual_review_count": 224,
+    "avg_repair_confidence": 0.9248,
+    "action_counts": {
+      "equation_reconstructed": 401,
+      "graph_missing_multiplication_fix": 401
+    }
+  },
+  "finished_at_utc": "20260306T070511Z"
+}

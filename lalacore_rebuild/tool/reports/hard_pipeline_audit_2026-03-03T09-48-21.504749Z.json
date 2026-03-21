@@ -1,0 +1,2557 @@
+{
+  "run_id": "2026-03-03T09-48-21.504749Z",
+  "run_started": "2026-03-03T09:48:21.504749+00:00",
+  "run_finished": "2026-03-03T09:49:32.363041+00:00",
+  "questions_total": 3,
+  "chat_failures_count": 3,
+  "chat_failures": [
+    {
+      "index": 1,
+      "question_hash": "650f542d4e2fa7a98bf95dcd49205b30ed88fa0a",
+      "failures": [
+        "final_status_failed"
+      ]
+    },
+    {
+      "index": 2,
+      "question_hash": "5b71b4c8aeae135c2c022e49816bf8c8b6a073a4",
+      "failures": [
+        "final_status_failed"
+      ]
+    },
+    {
+      "index": 3,
+      "question_hash": "621de1075eb73a7be5ffae273db75779c46e82e8",
+      "failures": [
+        "final_status_failed"
+      ]
+    }
+  ],
+  "chat_results": [
+    {
+      "index": 1,
+      "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+      "question_hash": "650f542d4e2fa7a98bf95dcd49205b30ed88fa0a",
+      "http_status": 200,
+      "latency_s": 9.697,
+      "response": {
+        "ok": true,
+        "status": "ok",
+        "answer": "The minimum value of f(x) - x^3 is -1/2.",
+        "provider": "openrouter",
+        "model": "research-grade-v2",
+        "winner_provider": "openrouter",
+        "raw": {
+          "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "reasoning": "Reasoning: \nTo find the minimum value of f(x) - x^3, we first need to find the expression for f(x). We can do this by evaluating the integral. Then, we can differentiate the expression for f(x) with respect to x, set the derivative equal to -3 (since we want to find the minimum value of f(x) - x^3), and solve for x. We must also check the domain of the function to ensure that the solution is valid.",
+          "final_answer": "The minimum value of f(x) - x^3 is -1/2.",
+          "verification": {
+            "verified": false,
+            "confidence_score": 0.0,
+            "stage_results": {},
+            "stage_timings": {},
+            "risk_score": 1.0,
+            "escalate": true,
+            "reason": "No expected answer found",
+            "failure_reason": "missing_ground_truth",
+            "trap_probability": 0.0,
+            "plausibility": {
+              "plausible": true,
+              "issues": [
+                "expected_numeric_type"
+              ],
+              "score": 0.7,
+              "expected_type": "numeric",
+              "echo_ratio": 0.395062
+            },
+            "plausibility_score": 0.7,
+            "plausibility_failed": false,
+            "entropy": 1.3807975322563049,
+            "raw_risk_score": 1.0
+          },
+          "plausibility": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.395062
+          },
+          "routing_decision": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['gemini', 'groq', 'openrouter'], high_score=0.050, gap=0.116, shadow_mini=True",
+          "escalate": true,
+          "winner_provider": "openrouter",
+          "answer_resolution": {
+            "provider_independent": true,
+            "switched": false,
+            "reason": "keep_current",
+            "resolved_provider": "openrouter"
+          },
+          "profile": {
+            "subject": "math",
+            "difficulty": "medium",
+            "numeric": true,
+            "multiConcept": false,
+            "trapProbability": 0.0
+          },
+          "arena": {
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.11036043062996229
+              },
+              {
+                "provider": "gemini",
+                "score": -0.3355471538583288
+              },
+              {
+                "provider": "groq",
+                "score": -0.5174017061697733
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5466294326344948
+              },
+              {
+                "provider": "hf",
+                "score": -0.5474125212625115
+              }
+            ],
+            "judge_results": [
+              {
+                "provider": "openrouter",
+                "score": 0.30005609177232556,
+                "risk": 0.26412110358177143,
+                "rule_score": 0.40759999999999996,
+                "critic_score": 0.408,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "gemini",
+                "score": 0.2758739293432811,
+                "risk": 0.2089701248373353,
+                "rule_score": 0.342349770186642,
+                "critic_score": 0.3592,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "mini",
+                "score": 0.23024756216996894,
+                "risk": 0.21817726571850204,
+                "rule_score": 0.30326178089879996,
+                "critic_score": 0.2802070441747924,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "groq",
+                "score": 0.21542604024165093,
+                "risk": 0.300041093731053,
+                "rule_score": 0.2961057318915206,
+                "critic_score": 0.32680000000000003,
+                "verified": false,
+                "notes": []
+              }
+            ],
+            "bt_thetas": {
+              "gemini": -1.040350273218331,
+              "groq": -2.3963201652166255,
+              "openrouter": 0.046992018028420346,
+              "mini": 0.9376587253362318
+            },
+            "posteriors": {
+              "gemini": 0.25229416631761115,
+              "groq": 0.013662368887130787,
+              "openrouter": 1.228837678568319e-07,
+              "mini": 0.7340433419114901
+            },
+            "winner_margin": 0.481749175593879,
+            "arena_confidence": 0.44698192356750316,
+            "pairwise_confidence_margin": 0.8906667073078115,
+            "uncertainty_adjusted_margin": 0.7783251487682152,
+            "disagreement": 0.6238240292409482,
+            "disagreement_case_count": 1,
+            "deterministic_dominance": false,
+            "entropy": 1.3807975322563049,
+            "plausibility_by_provider": {
+              "gemini": {
+                "plausible": false,
+                "score": 0.0,
+                "issues": [
+                  "too_short",
+                  "empty_semantics",
+                  "expected_numeric_type",
+                  "type_mismatch"
+                ]
+              },
+              "groq": {
+                "plausible": false,
+                "score": 0.0,
+                "issues": [
+                  "too_short",
+                  "empty_semantics",
+                  "expected_numeric_type",
+                  "type_mismatch"
+                ]
+              },
+              "openrouter": {
+                "plausible": true,
+                "score": 0.7,
+                "issues": [
+                  "expected_numeric_type"
+                ]
+              },
+              "mini": {
+                "plausible": false,
+                "score": 0.35,
+                "issues": [
+                  "echo_fragment",
+                  "expected_numeric_type"
+                ]
+              }
+            },
+            "winner_structure": {
+              "graph_depth": 2.0,
+              "branching_factor": 1.0,
+              "dependency_chain_length": 2.0,
+              "circular_reasoning": 0.0,
+              "step_redundancy_rate": 0.0,
+              "missing_inference_rate": 0.0,
+              "structural_coherence_score": 1.0,
+              "process_reward_score": 0.88
+            },
+            "winner_process_reward": 0.88,
+            "debate_lite": {
+              "triggered": true,
+              "accepted": false,
+              "provider": "openrouter"
+            },
+            "answer_pool": [
+              {
+                "normalized_answer": "theminimumvalueoff(x)-x^3is-1/2.",
+                "providers": [
+                  "openrouter"
+                ],
+                "score": 0.1925056644749281,
+                "posterior_mass": 1.228837678568319e-07,
+                "verified_count": 0,
+                "plausible_count": 1,
+                "judge_mean": 0.30005609177232556,
+                "support": 1,
+                "representative_provider": "openrouter"
+              },
+              {
+                "normalized_answer": "\\int_0^x(t^4+3t^2+1)/(t^2+1)dt.findtheminimumvalueoff(x)-x^3forrealx.",
+                "providers": [
+                  "mini"
+                ],
+                "score": 0.1280454910270086,
+                "posterior_mass": 0.7340433419114901,
+                "verified_count": 0,
+                "plausible_count": 0,
+                "judge_mean": 0.23024756216996894,
+                "support": 1,
+                "representative_provider": "mini"
+              }
+            ],
+            "dominance_enforced": false,
+            "auto_corrected": false,
+            "sanity_issues": []
+          },
+          "retrieval": {
+            "top_blocks": [
+              {
+                "id": "jee_traps",
+                "title": "JEE Trap Memory",
+                "score": 0.087831,
+                "source": "vault"
+              },
+              {
+                "id": "math_quadratic",
+                "title": "Quadratic Equations",
+                "score": 0.08,
+                "source": "vault"
+              },
+              {
+                "id": "chem_equilibrium",
+                "title": "Chemical Equilibrium",
+                "score": 0.03,
+                "source": "vault"
+              },
+              {
+                "id": "math_linear_equation",
+                "title": "Linear Equations",
+                "score": 0.005875,
+                "source": "vault"
+              },
+              {
+                "id": "physics_kinematics",
+                "title": "Kinematics",
+                "score": -0.071611,
+                "source": "vault"
+              }
+            ],
+            "claim_support_score": 0.07624133333333334
+          },
+          "engine": {
+            "name": "LALACORE_X",
+            "version": "research-grade-v2",
+            "backward_compatible": true,
+            "mini_shadow": true,
+            "shadow_diversity": {
+              "enabled": true,
+              "attempted_extra": [],
+              "collected_extra": 0,
+              "policy": {
+                "difficulty_medium_plus": true,
+                "multi_concept": false,
+                "rare_cluster": false,
+                "entropy_band": false,
+                "deterministic_confidence_low": true,
+                "exploration_sample": false,
+                "trigger_count": 2,
+                "collect_extra": false,
+                "enabled": true
+              }
+            },
+            "degraded_mode": false,
+            "degraded_reason": null,
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "half_open",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": [
+                  "circuit_half_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "half_open",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": [
+                  "circuit_half_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            }
+          },
+          "quality_gate": {
+            "completion_ok": false,
+            "final_status": "Failed",
+            "force_escalate": true,
+            "reasons": [
+              "verification_failed_high_risk",
+              "cross_provider_disagreement",
+              "high_entropy"
+            ]
+          },
+          "final_status": "Failed",
+          "status": "ok",
+          "input_metadata": {
+            "input_detected_type": "text",
+            "files": [],
+            "ocr_available": false,
+            "pdf_available": false,
+            "vision_available": false,
+            "ocr_question_count": 0,
+            "pdf_question_count": 0
+          },
+          "ocr_data": null,
+          "pdf_data": null,
+          "vision_analysis": null,
+          "provider_diagnostics": {
+            "winner_provider": "openrouter",
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "half_open",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": [
+                  "circuit_half_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "half_open",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": [
+                  "circuit_half_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            },
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.11036043062996229
+              },
+              {
+                "provider": "gemini",
+                "score": -0.3355471538583288
+              },
+              {
+                "provider": "groq",
+                "score": -0.5174017061697733
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5466294326344948
+              },
+              {
+                "provider": "hf",
+                "score": -0.5474125212625115
+              }
+            ],
+            "provider_comparison_vision": []
+          },
+          "research_verification": {
+            "score": 0.0861,
+            "answer_type": {
+              "expected": "numeric",
+              "observed": "expression",
+              "match": false
+            },
+            "units": {
+              "expected": [],
+              "observed": [],
+              "match": true
+            },
+            "context_alignment": 0.0,
+            "cross_modal_consistency": {
+              "score": 0.0,
+              "ocr_vs_vision": 0.0,
+              "ocr_vs_reasoning": 0.0,
+              "vision_vs_reasoning": 0.0,
+              "issues": [
+                "ocr_vision_mismatch",
+                "ocr_reasoning_mismatch",
+                "vision_reasoning_mismatch"
+              ]
+            },
+            "reasoning_quality": 0.64,
+            "deterministic_verified": false,
+            "issues": [
+              "deterministic_not_verified",
+              "answer_type_mismatch:numeric->expression",
+              "low_context_alignment",
+              "cross_modal_mismatch"
+            ]
+          },
+          "calibration_metrics": {
+            "risk_score": 1.0,
+            "raw_risk_score": 1.0,
+            "confidence_score": 0.0,
+            "verified": false,
+            "entropy": 1.3807975322563049,
+            "raw_entropy": 1.3807975322563049,
+            "disagreement": 0.6238240292409482,
+            "winner_margin": 0.481749175593879,
+            "single_provider_mode": false,
+            "cross_modal_penalty": 0.0,
+            "cross_modal_score": 0.0,
+            "bayesian": {
+              "prior_confidence": 0.0,
+              "posterior_confidence": 0.0,
+              "posterior_risk": 1.0,
+              "evidence_log_lr": -3.163436360355615,
+              "agreement": 0.37617597075905185,
+              "entropy": 1.0,
+              "deterministic": 0.0,
+              "calibration_ema": 0.028398438095449563,
+              "answer_type_match": 0.0,
+              "winner_margin": 0.481749175593879,
+              "adaptive_ema_error": 0.042944694043603016
+            },
+            "adaptive": {
+              "ema_error": 0.04208580016273095,
+              "count": 1711.0,
+              "offsets": {
+                "agreement": 0.10497193243601868,
+                "answer_type_match": 0.10485603707134754,
+                "calibration_ema": -0.10128662560383685,
+                "deterministic": 0.1186104422738138,
+                "entropy": -0.02503121385928941,
+                "winner_margin": 0.10200265352813674
+              }
+            },
+            "drift": {
+              "updated_at": "2026-03-03T09:48:27.338089+00:00",
+              "count": 1751,
+              "ema_abs_error": 0.028398438095449563,
+              "last_expected": 0.0,
+              "last_observed": 0.0
+            }
+          },
+          "meta_verification": {
+            "attempted": true,
+            "provider": "openrouter",
+            "consistent": false,
+            "review_reasoning": "Provider error: provider_call_cancelled",
+            "review_final_answer": "",
+            "suggested_correction": "",
+            "self_contradiction": {
+              "contradiction": false,
+              "signals": []
+            },
+            "circular_reasoning": false,
+            "flags": [],
+            "timed_out": false,
+            "override_allowed": true
+          },
+          "entropy": 1.3807975322563049,
+          "disagreement": 0.6238240292409482,
+          "latency_metrics": {
+            "solver_s": 5.404842582996935,
+            "meta_verification_s": 4.015780375004397
+          },
+          "user_context": {
+            "user_id": "codex_pipeline_audit_user",
+            "chat_id": "codex_pipeline_audit_chat_1_1772531301685"
+          },
+          "display_answer": "The minimum value of f(x) - x^3 is -1/2."
+        },
+        "explanation": "Reasoning: \nTo find the minimum value of f(x) - x^3, we first need to find the expression for f(x). We can do this by evaluating the integral. Then, we can differentiate the expression for f(x) with respect to x, set the derivative equal to -3 (since we want to find the minimum value of f(x) - x^3), and solve for x. We must also check the domain of the function to ensure that the solution is valid.",
+        "confidence": 0.0,
+        "concept": "math"
+      },
+      "summary": {
+        "ok": true,
+        "status": "ok",
+        "message": "",
+        "provider": "openrouter",
+        "winner_provider": "openrouter",
+        "answer_len": 40,
+        "raw_final_status": "Failed",
+        "raw_degraded_mode": false,
+        "raw_degraded_reason": "None",
+        "raw_quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ],
+        "raw_latency_metrics": {
+          "solver_s": 5.404842582996935,
+          "meta_verification_s": 4.015780375004397
+        }
+      },
+      "routing_decision": {
+        "ts": "2026-03-03T09:48:21.969374+00:00",
+        "event_type": "routing_decision",
+        "question_hash": "650f542d4e2fa7a98bf95dcd49205b30ed88fa0a",
+        "available": [
+          "mini",
+          "openrouter",
+          "groq",
+          "gemini",
+          "hf"
+        ],
+        "provider_health": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "half_open",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": [
+              "circuit_half_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "half_open",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": [
+              "circuit_half_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          }
+        },
+        "ranked": [
+          {
+            "provider": "mini",
+            "score": -0.11036043062996229
+          },
+          {
+            "provider": "gemini",
+            "score": -0.3355471538583288
+          },
+          {
+            "provider": "groq",
+            "score": -0.5174017061697733
+          },
+          {
+            "provider": "openrouter",
+            "score": -0.5466294326344948
+          },
+          {
+            "provider": "hf",
+            "score": -0.5474125212625115
+          }
+        ],
+        "router_selected": [
+          "gemini",
+          "groq",
+          "openrouter"
+        ],
+        "orchestrator_selected": [
+          "gemini",
+          "groq",
+          "openrouter"
+        ],
+        "rationale": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['gemini', 'groq', 'openrouter'], high_score=0.050, gap=0.116, shadow_mini=True"
+      },
+      "final_status_event": {
+        "ts": "2026-03-03T09:48:27.070558+00:00",
+        "event_type": "final_status",
+        "question_hash": "650f542d4e2fa7a98bf95dcd49205b30ed88fa0a",
+        "winner_provider": "openrouter",
+        "verified": false,
+        "risk": 1.0,
+        "plausible": true,
+        "plausibility_score": 0.7,
+        "disagreement": 0.6238240292409482,
+        "entropy": 1.3807975322563049,
+        "escalate": true,
+        "final_status": "Failed",
+        "quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ]
+      },
+      "provider_outputs": [
+        {
+          "provider": "openrouter",
+          "extracted_answer": "The minimum value of f(x) - x^3 is -1/2.",
+          "tokens_used": 338,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "tokens_used": 176,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "gemini",
+          "extracted_answer": "",
+          "tokens_used": 0,
+          "extraction_matched": false,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3807975322563049
+        },
+        {
+          "provider": "groq",
+          "extracted_answer": "",
+          "tokens_used": 0,
+          "extraction_matched": false,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3807975322563049
+        },
+        {
+          "provider": "openrouter",
+          "extracted_answer": "The minimum value of f(x) - x^3 is -1/2.",
+          "tokens_used": 338,
+          "extraction_matched": true,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3807975322563049
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "tokens_used": 176,
+          "extraction_matched": false,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3807975322563049
+        },
+        {
+          "provider": "openrouter",
+          "extracted_answer": "\\boxed{0}",
+          "tokens_used": 333,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "hf",
+          "extracted_answer": "y = (-b \u00b1 \u221a(b^2 - 4ac)) / 2a",
+          "tokens_used": 452,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "tokens_used": 63,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        }
+      ],
+      "extraction_failures": [],
+      "plausibility_checks": [
+        {
+          "ts": "2026-03-03T09:48:27.053109+00:00",
+          "event_type": "plausibility_check",
+          "provider": "gemini",
+          "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "answer": "",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "too_short",
+              "empty_semantics",
+              "expected_numeric_type",
+              "type_mismatch"
+            ],
+            "score": 0.0,
+            "expected_type": "numeric",
+            "echo_ratio": 0.0
+          }
+        },
+        {
+          "ts": "2026-03-03T09:48:27.053811+00:00",
+          "event_type": "plausibility_check",
+          "provider": "groq",
+          "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "answer": "",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "too_short",
+              "empty_semantics",
+              "expected_numeric_type",
+              "type_mismatch"
+            ],
+            "score": 0.0,
+            "expected_type": "numeric",
+            "echo_ratio": 0.0
+          }
+        },
+        {
+          "ts": "2026-03-03T09:48:27.054961+00:00",
+          "event_type": "plausibility_check",
+          "provider": "openrouter",
+          "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "answer": "The minimum value of f(x) - x^3 is -1/2.",
+          "report": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.395062
+          }
+        },
+        {
+          "ts": "2026-03-03T09:48:27.055584+00:00",
+          "event_type": "plausibility_check",
+          "provider": "mini",
+          "question": "JEE Advanced Mathematics (Hard): Let f(x)=\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "answer": "\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "echo_fragment",
+              "expected_numeric_type"
+            ],
+            "score": 0.35,
+            "expected_type": "numeric",
+            "echo_ratio": 1.0
+          }
+        }
+      ],
+      "failures": [
+        "final_status_failed"
+      ]
+    },
+    {
+      "index": 2,
+      "question": "JEE Advanced Mathematics (Hard): Number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1.",
+      "question_hash": "5b71b4c8aeae135c2c022e49816bf8c8b6a073a4",
+      "http_status": 200,
+      "latency_s": 24.143,
+      "response": {
+        "ok": true,
+        "status": "ok",
+        "answer": "The final answer is 56/9.",
+        "provider": "openrouter",
+        "model": "research-grade-v2",
+        "winner_provider": "openrouter",
+        "raw": {
+          "question": "JEE Advanced Mathematics (Hard): Number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1.",
+          "reasoning": "Reasoning: To find the number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1, we can use the concept of Stirling numbers of the second kind. The Stirling number S(n, k) represents the number of ways to partition a set of n elements into k non-empty subsets. In this case, we want to partition the 7-element set into 4 non-empty subsets, with exactly one subset containing a single element. This is equivalent to choosing 1 element from the 7-element set to be in the subset with size 1, and then partitioning the remaining 6 elements into 3 non-empty subsets. The number of ways to do this is S(6, 3). However, we also need to consider the number of ways to choose the element that will be in the subset with size 1, which is 7. Therefore, the total number of onto functions is 7*S(6, 3).\n\nReasoning continued: S(6, 3) can be calculated using the formula S(n, k) = (1/k!) * \u03a3 (i=0 to k) (-1)^(k-i) * (k choose i) * (n choose i). Plugging in n=6 and k=3, we get S(6, 3) = (1/3!) * ( (-1)^0 * (3 choose 0) * (6 choose 0) + (-1)^1 * (3 choose 1) * (6 choose 1) + (-1)^2 * (3 choose 2) * (6 choose 2) ). Simplifying this expression, we get S(6, 3) = (1/6) * (1 * 1 * 1 + (-3) * 6 + 3 * 15) = (1/6) * (1 - 18 + 45) = (1/6) * 28 = 14/3.\n\nReasoning continued: However, we made a mistake in our calculation of S(6, 3). The correct calculation is S(6, 3) = (1/3!) * ( (-1)^0 * (3 choose 0) * (6 choose 0) + (-1)^1 * (3 choose 1) * (6 choose 1) + (-1)^2 * (3 choose 2) * (6 choose 2) + (-1)^3 * (3 choose 3) * (6 choose 3) ). Simplifying this expression, we get S(6, 3) = (1/6) * (1 * 1 * 1 + (-3) * 6 + 3 * 15 + (-1) * 20) = (1/6) * (1 - 18 + 45 - 20) = (1/6) * 8 = 4/3.\n\nReasoning continued: Now, we multiply the number of ways to choose the element in the subset with size 1 (7) by the correct value of S(6, 3) (4/3), we get 7 * (4/3) = 28/3.\n\nReasoning continued: However, we are asked for the number of onto functions, and we have calculated the number of ways to partition the set. To get the number of onto functions, we need to multiply this by the number of ways to map the remaining elements to the other 3 subsets. Since each of the 3 subsets can have any number of elements from 1 to 6, we need to sum over all possible combinations of sizes for the 3 subsets. However, this is equivalent to calculating the number of onto functions from a 6-element set to a 3-element set, which is S(6, 3). We already calculated this value as 4/3.\n\nReasoning continued: However, we made another mistake. The correct calculation for the number of onto functions is 7 * S(6, 3) * S(6, 3). We already calculated S(6, 3) as 4/3. Therefore, the correct answer is 7 * (4/3) * (4/3) = 56/9.",
+          "final_answer": "The final answer is 56/9.",
+          "verification": {
+            "verified": false,
+            "confidence_score": 0.0,
+            "stage_results": {},
+            "stage_timings": {},
+            "risk_score": 1.0,
+            "escalate": true,
+            "reason": "No expected answer found",
+            "failure_reason": "missing_ground_truth",
+            "trap_probability": 0.0,
+            "plausibility": {
+              "plausible": true,
+              "issues": [
+                "expected_numeric_type"
+              ],
+              "score": 0.7,
+              "expected_type": "numeric",
+              "echo_ratio": 0.131868
+            },
+            "plausibility_score": 0.7,
+            "plausibility_failed": false,
+            "entropy": 1.3702311113903838,
+            "raw_risk_score": 1.0
+          },
+          "plausibility": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.131868
+          },
+          "routing_decision": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['openrouter', 'hf'], high_score=0.050, gap=0.116, shadow_mini=True",
+          "escalate": true,
+          "winner_provider": "openrouter",
+          "answer_resolution": {
+            "provider_independent": true,
+            "switched": false,
+            "reason": "keep_current",
+            "resolved_provider": "openrouter"
+          },
+          "profile": {
+            "subject": "math",
+            "difficulty": "easy",
+            "numeric": true,
+            "multiConcept": false,
+            "trapProbability": 0.0
+          },
+          "arena": {
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.32295099574156644
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5752637038915536
+              },
+              {
+                "provider": "hf",
+                "score": -0.5764498719801967
+              }
+            ],
+            "judge_results": [
+              {
+                "provider": "openrouter",
+                "score": 0.2870838672900647,
+                "risk": 0.2719963603096163,
+                "rule_score": 0.3948,
+                "critic_score": 0.39359999999999995,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "hf",
+                "score": 0.2796969319078065,
+                "risk": 0.2784621506867029,
+                "rule_score": 0.38839999999999997,
+                "critic_score": 0.38639999999999997,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "mini",
+                "score": 0.2462914183237331,
+                "risk": 0.23260997666828992,
+                "rule_score": 0.315130935281407,
+                "critic_score": 0.3304360001249028,
+                "verified": false,
+                "notes": []
+              }
+            ],
+            "bt_thetas": {
+              "openrouter": 0.6891892297277893,
+              "hf": -0.23943479374257048,
+              "mini": -1.4299618846715108
+            },
+            "posteriors": {
+              "openrouter": 9.958071628818723e-07,
+              "hf": 6.354419333729952e-07,
+              "mini": 0.9999983687509038
+            },
+            "winner_margin": 0.9999973729437409,
+            "arena_confidence": 0.9116092574965844,
+            "pairwise_confidence_margin": 0.9286240234703598,
+            "uncertainty_adjusted_margin": 0.7891250967000805,
+            "disagreement": 0.5277695441666068,
+            "disagreement_case_count": 1,
+            "deterministic_dominance": false,
+            "entropy": 1.3702311113903838,
+            "plausibility_by_provider": {
+              "openrouter": {
+                "plausible": true,
+                "score": 0.7,
+                "issues": [
+                  "expected_numeric_type"
+                ]
+              },
+              "hf": {
+                "plausible": true,
+                "score": 0.7,
+                "issues": [
+                  "expected_numeric_type"
+                ]
+              },
+              "mini": {
+                "plausible": false,
+                "score": 0.0,
+                "issues": [
+                  "too_short",
+                  "empty_semantics",
+                  "expected_numeric_type",
+                  "type_mismatch"
+                ]
+              }
+            },
+            "winner_structure": {
+              "graph_depth": 6.0,
+              "branching_factor": 1.0,
+              "dependency_chain_length": 6.0,
+              "circular_reasoning": 0.0,
+              "step_redundancy_rate": 0.0,
+              "missing_inference_rate": 0.0,
+              "structural_coherence_score": 1.0,
+              "process_reward_score": 0.8
+            },
+            "winner_process_reward": 0.8,
+            "debate_lite": {
+              "triggered": true,
+              "accepted": false,
+              "provider": "openrouter"
+            },
+            "answer_pool": [
+              {
+                "normalized_answer": "thefinalansweris56/9.",
+                "providers": [
+                  "openrouter"
+                ],
+                "score": 0.19537550150889643,
+                "posterior_mass": 9.958071628818723e-07,
+                "verified_count": 0,
+                "plausible_count": 1,
+                "judge_mean": 0.2870838672900647,
+                "support": 1,
+                "representative_provider": "openrouter"
+              },
+              {
+                "normalized_answer": "\\boxed{4\\cdots(63)+4\\cdots(64)}",
+                "providers": [
+                  "hf"
+                ],
+                "score": 0.19463664580631734,
+                "posterior_mass": 6.354419333729952e-07,
+                "verified_count": 0,
+                "plausible_count": 1,
+                "judge_mean": 0.2796969319078065,
+                "support": 1,
+                "representative_provider": "hf"
+              }
+            ],
+            "dominance_enforced": false,
+            "auto_corrected": false,
+            "sanity_issues": []
+          },
+          "retrieval": {
+            "top_blocks": [
+              {
+                "id": "math_quadratic",
+                "title": "Quadratic Equations",
+                "score": 0.17245,
+                "source": "vault"
+              },
+              {
+                "id": "jee_traps",
+                "title": "JEE Trap Memory",
+                "score": 0.152679,
+                "source": "vault"
+              },
+              {
+                "id": "physics_kinematics",
+                "title": "Kinematics",
+                "score": 0.0,
+                "source": "vault"
+              },
+              {
+                "id": "chem_equilibrium",
+                "title": "Chemical Equilibrium",
+                "score": -0.022414,
+                "source": "vault"
+              },
+              {
+                "id": "math_linear_equation",
+                "title": "Linear Equations",
+                "score": -0.024828,
+                "source": "vault"
+              }
+            ],
+            "claim_support_score": 0.110941
+          },
+          "engine": {
+            "name": "LALACORE_X",
+            "version": "research-grade-v2",
+            "backward_compatible": true,
+            "mini_shadow": false,
+            "shadow_diversity": {
+              "enabled": true,
+              "attempted_extra": [],
+              "collected_extra": 0,
+              "policy": {
+                "difficulty_medium_plus": false,
+                "multi_concept": false,
+                "rare_cluster": false,
+                "entropy_band": false,
+                "deterministic_confidence_low": true,
+                "exploration_sample": false,
+                "trigger_count": 1,
+                "collect_extra": false,
+                "enabled": true
+              }
+            },
+            "degraded_mode": false,
+            "degraded_reason": null,
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "open",
+                "open_for_s": 111.16320896148682,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "open",
+                "open_for_s": 113.49714589118958,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            }
+          },
+          "quality_gate": {
+            "completion_ok": false,
+            "final_status": "Failed",
+            "force_escalate": true,
+            "reasons": [
+              "verification_failed_high_risk",
+              "cross_provider_disagreement",
+              "high_entropy"
+            ]
+          },
+          "final_status": "Failed",
+          "status": "ok",
+          "input_metadata": {
+            "input_detected_type": "text",
+            "files": [],
+            "ocr_available": false,
+            "pdf_available": false,
+            "vision_available": false,
+            "ocr_question_count": 0,
+            "pdf_question_count": 0
+          },
+          "ocr_data": null,
+          "pdf_data": null,
+          "vision_analysis": null,
+          "provider_diagnostics": {
+            "winner_provider": "openrouter",
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "open",
+                "open_for_s": 111.16320896148682,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "open",
+                "open_for_s": 113.49714589118958,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            },
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.32295099574156644
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5752637038915536
+              },
+              {
+                "provider": "hf",
+                "score": -0.5764498719801967
+              }
+            ],
+            "provider_comparison_vision": []
+          },
+          "research_verification": {
+            "score": 0.04094999999999999,
+            "answer_type": {
+              "expected": "numeric",
+              "observed": "expression",
+              "match": false
+            },
+            "units": {
+              "expected": [
+                "a"
+              ],
+              "observed": [],
+              "match": false
+            },
+            "context_alignment": 0.0,
+            "cross_modal_consistency": {
+              "score": 0.0,
+              "ocr_vs_vision": 0.0,
+              "ocr_vs_reasoning": 0.0,
+              "vision_vs_reasoning": 0.0,
+              "issues": [
+                "ocr_vision_mismatch",
+                "ocr_reasoning_mismatch",
+                "vision_reasoning_mismatch"
+              ]
+            },
+            "reasoning_quality": 0.78,
+            "deterministic_verified": false,
+            "issues": [
+              "deterministic_not_verified",
+              "answer_type_mismatch:numeric->expression",
+              "unit_mismatch",
+              "low_context_alignment",
+              "cross_modal_mismatch"
+            ]
+          },
+          "calibration_metrics": {
+            "risk_score": 1.0,
+            "raw_risk_score": 1.0,
+            "confidence_score": 0.0,
+            "verified": false,
+            "entropy": 1.3702311113903838,
+            "raw_entropy": 1.3702311113903838,
+            "disagreement": 0.5277695441666068,
+            "winner_margin": 0.9999973729437409,
+            "single_provider_mode": false,
+            "cross_modal_penalty": 0.0,
+            "cross_modal_score": 0.0,
+            "bayesian": {
+              "prior_confidence": 0.0,
+              "posterior_confidence": 0.0,
+              "posterior_risk": 1.0,
+              "evidence_log_lr": -2.2188052052424907,
+              "agreement": 0.4722304558333932,
+              "entropy": 1.0,
+              "deterministic": 0.0,
+              "calibration_ema": 0.02413867238113213,
+              "answer_type_match": 0.0,
+              "winner_margin": 0.9999973729437409,
+              "adaptive_ema_error": 0.04208580016273095
+            },
+            "adaptive": {
+              "ema_error": 0.041244084159476335,
+              "count": 1712.0,
+              "offsets": {
+                "agreement": 0.10497193243601868,
+                "answer_type_match": 0.10485603707134754,
+                "calibration_ema": -0.10128662560383685,
+                "deterministic": 0.1186104422738138,
+                "entropy": -0.02503121385928941,
+                "winner_margin": 0.10200265352813674
+              }
+            },
+            "drift": {
+              "updated_at": "2026-03-03T09:48:51.504509+00:00",
+              "count": 1752,
+              "ema_abs_error": 0.02413867238113213,
+              "last_expected": 0.0,
+              "last_observed": 0.0
+            }
+          },
+          "meta_verification": {
+            "attempted": true,
+            "provider": "openrouter",
+            "consistent": false,
+            "review_reasoning": "Provider error: provider_call_cancelled",
+            "review_final_answer": "",
+            "suggested_correction": "",
+            "self_contradiction": {
+              "contradiction": false,
+              "signals": []
+            },
+            "circular_reasoning": false,
+            "flags": [],
+            "timed_out": false,
+            "override_allowed": true
+          },
+          "entropy": 1.3702311113903838,
+          "disagreement": 0.5277695441666068,
+          "latency_metrics": {
+            "solver_s": 20.107013417000417,
+            "meta_verification_s": 4.00578720800695
+          },
+          "user_context": {
+            "user_id": "codex_pipeline_audit_user",
+            "chat_id": "codex_pipeline_audit_chat_2_1772531311382"
+          },
+          "display_answer": "The final answer is 56/9."
+        },
+        "explanation": "Reasoning: To find the number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1, we can use the concept of Stirling numbers of the second kind. The Stirling number S(n, k) represents the number of ways to partition a set of n elements into k non-empty subsets. In this case, we want to partition the 7-element set into 4 non-empty subsets, with exactly one subset containing a single element. This is equivalent to choosing 1 element from the 7-element set to be in the subset with size 1, and then partitioning the remaining 6 elements into 3 non-empty subsets. The number of ways to do this is S(6, 3). However, we also need to consider the number of ways to choose the element that will be in the subset with size 1, which is 7. Therefore, the total number of onto functions is 7*S(6, 3).\n\nReasoning continued: S(6, 3) can be calculated using the formula S(n, k) = (1/k!) * \u03a3 (i=0 to k) (-1)^(k-i) * (k choose i) * (n choose i). Plugging in n=6 and k=3, we get S(6, 3) = (1/3!) * ( (-1)^0 * (3 choose 0) * (6 choose 0) + (-1)^1 * (3 choose 1) * (6 choose 1) + (-1)^2 * (3 choose 2) * (6 choose 2) ). Simplifying this expression, we get S(6, 3) = (1/6) * (1 * 1 * 1 + (-3) * 6 + 3 * 15) = (1/6) * (1 - 18 + 45) = (1/6) * 28 = 14/3.\n\nReasoning continued: However, we made a mistake in our calculation of S(6, 3). The correct calculation is S(6, 3) = (1/3!) * ( (-1)^0 * (3 choose 0) * (6 choose 0) + (-1)^1 * (3 choose 1) * (6 choose 1) + (-1)^2 * (3 choose 2) * (6 choose 2) + (-1)^3 * (3 choose 3) * (6 choose 3) ). Simplifying this expression, we get S(6, 3) = (1/6) * (1 * 1 * 1 + (-3) * 6 + 3 * 15 + (-1) * 20) = (1/6) * (1 - 18 + 45 - 20) = (1/6) * 8 = 4/3.\n\nReasoning continued: Now, we multiply the number of ways to choose the element in the subset with size 1 (7) by the correct value of S(6, 3) (4/3), we get 7 * (4/3) = 28/3.\n\nReasoning continued: However, we are asked for the number of onto functions, and we have calculated the number of ways to partition the set. To get the number of onto functions, we need to multiply this by the number of ways to map the remaining elements to the other 3 subsets. Since each of the 3 subsets can have any number of elements from 1 to 6, we need to sum over all possible combinations of sizes for the 3 subsets. However, this is equivalent to calculating the number of onto functions from a 6-element set to a 3-element set, which is S(6, 3). We already calculated this value as 4/3.\n\nReasoning continued: However, we made another mistake. The correct calculation for the number of onto functions is 7 * S(6, 3) * S(6, 3). We already calculated S(6, 3) as 4/3. Therefore, the correct answer is 7 * (4/3) * (4/3) = 56/9.",
+        "confidence": 0.0,
+        "concept": "math"
+      },
+      "summary": {
+        "ok": true,
+        "status": "ok",
+        "message": "",
+        "provider": "openrouter",
+        "winner_provider": "openrouter",
+        "answer_len": 25,
+        "raw_final_status": "Failed",
+        "raw_degraded_mode": false,
+        "raw_degraded_reason": "None",
+        "raw_quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ],
+        "raw_latency_metrics": {
+          "solver_s": 20.107013417000417,
+          "meta_verification_s": 4.00578720800695
+        }
+      },
+      "routing_decision": {
+        "ts": "2026-03-03T09:48:31.398654+00:00",
+        "event_type": "routing_decision",
+        "question_hash": "5b71b4c8aeae135c2c022e49816bf8c8b6a073a4",
+        "available": [
+          "mini",
+          "openrouter",
+          "hf"
+        ],
+        "provider_health": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 111.16320896148682,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 113.49714589118958,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          }
+        },
+        "ranked": [
+          {
+            "provider": "mini",
+            "score": -0.32295099574156644
+          },
+          {
+            "provider": "openrouter",
+            "score": -0.5752637038915536
+          },
+          {
+            "provider": "hf",
+            "score": -0.5764498719801967
+          }
+        ],
+        "router_selected": [
+          "openrouter",
+          "hf"
+        ],
+        "orchestrator_selected": [
+          "openrouter",
+          "hf",
+          "mini"
+        ],
+        "rationale": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['openrouter', 'hf'], high_score=0.050, gap=0.116, shadow_mini=True"
+      },
+      "final_status_event": {
+        "ts": "2026-03-03T09:48:51.418756+00:00",
+        "event_type": "final_status",
+        "question_hash": "5b71b4c8aeae135c2c022e49816bf8c8b6a073a4",
+        "winner_provider": "openrouter",
+        "verified": false,
+        "risk": 1.0,
+        "plausible": true,
+        "plausibility_score": 0.7,
+        "disagreement": 0.5277695441666068,
+        "entropy": 1.3702311113903838,
+        "escalate": true,
+        "final_status": "Failed",
+        "quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ]
+      },
+      "provider_outputs": [
+        {
+          "provider": "mini",
+          "extracted_answer": "",
+          "tokens_used": 193,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "hf",
+          "extracted_answer": "\\boxed{4 \\cdot S(6, 3) + 4 \\cdot S(6, 4)}",
+          "tokens_used": 388,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "openrouter",
+          "extracted_answer": "The final answer is 56/9.",
+          "tokens_used": 1117,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "openrouter",
+          "extracted_answer": "The final answer is 56/9.",
+          "tokens_used": 1117,
+          "extraction_matched": true,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3702311113903838
+        },
+        {
+          "provider": "hf",
+          "extracted_answer": "\\boxed{4 \\cdot S(6, 3) + 4 \\cdot S(6, 4)}",
+          "tokens_used": 388,
+          "extraction_matched": true,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3702311113903838
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "",
+          "tokens_used": 193,
+          "extraction_matched": false,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.3702311113903838
+        }
+      ],
+      "extraction_failures": [],
+      "plausibility_checks": [
+        {
+          "ts": "2026-03-03T09:48:47.128744+00:00",
+          "event_type": "plausibility_check",
+          "provider": "openrouter",
+          "question": "JEE Advanced Mathematics (Hard): Number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1.",
+          "answer": "The final answer is 56/9.",
+          "report": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.131868
+          }
+        },
+        {
+          "ts": "2026-03-03T09:48:47.129241+00:00",
+          "event_type": "plausibility_check",
+          "provider": "hf",
+          "question": "JEE Advanced Mathematics (Hard): Number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1.",
+          "answer": "\\boxed{4 \\cdot S(6, 3) + 4 \\cdot S(6, 4)}",
+          "report": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.171717
+          }
+        },
+        {
+          "ts": "2026-03-03T09:48:47.129586+00:00",
+          "event_type": "plausibility_check",
+          "provider": "mini",
+          "question": "JEE Advanced Mathematics (Hard): Number of onto functions from a 7-element set to a 4-element set such that exactly one codomain element has preimage size 1.",
+          "answer": "",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "too_short",
+              "empty_semantics",
+              "expected_numeric_type",
+              "type_mismatch"
+            ],
+            "score": 0.0,
+            "expected_type": "numeric",
+            "echo_ratio": 0.0
+          }
+        }
+      ],
+      "failures": [
+        "final_status_failed"
+      ]
+    },
+    {
+      "index": 3,
+      "question": "JEE Advanced Physics (Hard): A solid insulating sphere of radius R has charge density rho=kr. Find potential difference V(0)-V(R).",
+      "question_hash": "621de1075eb73a7be5ffae273db75779c46e82e8",
+      "http_status": 200,
+      "latency_s": 15.194,
+      "response": {
+        "ok": true,
+        "status": "ok",
+        "answer": "(3/2) * k^2 / R",
+        "provider": "openrouter",
+        "model": "research-grade-v2",
+        "winner_provider": "openrouter",
+        "raw": {
+          "question": "JEE Advanced Physics (Hard): A solid insulating sphere of radius R has charge density rho=kr. Find potential difference V(0)-V(R).",
+          "reasoning": "Reasoning: To find the potential difference V(0)-V(R), we need to calculate the electric potential at the center (r=0) and at the surface (r=R) of the sphere. The electric potential due to a continuous charge distribution is given by V(r) = k * \u222b(\u03c1 / r^2) dr from 0 to r. For the center of the sphere, the potential is V(0) = k * \u222b(\u03c1 / r^2) dr from 0 to 0, which is 0 since the integral is over an infinitesimal interval. For the surface of the sphere, the potential is V(R) = k * \u222b(\u03c1 / r^2) dr from 0 to R. Since \u03c1 = kr, we can substitute this into the integral to get V(R) = k * \u222b(k / r^2) dr from 0 to R. Evaluating the integral, we get V(R) = -k^2/R. The potential difference V(0)-V(R) is then 0 - (-k^2/R) = k^2/R.",
+          "final_answer": "(3/2) * k^2 / R",
+          "verification": {
+            "verified": false,
+            "confidence_score": 0.0,
+            "stage_results": {},
+            "stage_timings": {},
+            "risk_score": 1.0,
+            "escalate": true,
+            "reason": "No expected answer found",
+            "failure_reason": "missing_ground_truth",
+            "trap_probability": 0.0,
+            "plausibility": {
+              "plausible": true,
+              "issues": [
+                "expected_numeric_type"
+              ],
+              "score": 0.7,
+              "expected_type": "numeric",
+              "echo_ratio": 0.014815
+            },
+            "plausibility_score": 0.7,
+            "plausibility_failed": false,
+            "entropy": 1.348910507620304,
+            "raw_risk_score": 1.0
+          },
+          "plausibility": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.014815
+          },
+          "routing_decision": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['openrouter', 'hf'], high_score=0.050, gap=0.116, shadow_mini=True",
+          "escalate": true,
+          "winner_provider": "openrouter",
+          "answer_resolution": {
+            "provider_independent": true,
+            "switched": false,
+            "reason": "keep_current",
+            "resolved_provider": "openrouter"
+          },
+          "profile": {
+            "subject": "math",
+            "difficulty": "easy",
+            "numeric": true,
+            "multiConcept": false,
+            "trapProbability": 0.0
+          },
+          "arena": {
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.34632723552956346
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5901946851324801
+              },
+              {
+                "provider": "hf",
+                "score": -0.5925224072414006
+              }
+            ],
+            "judge_results": [
+              {
+                "provider": "openrouter",
+                "score": 0.25673596124405457,
+                "risk": 0.3327492416410942,
+                "rule_score": 0.38565711999999996,
+                "critic_score": 0.38331426,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "hf",
+                "score": 0.20624906478515828,
+                "risk": 0.36329046562846273,
+                "rule_score": 0.31711999999999996,
+                "critic_score": 0.33504000000000006,
+                "verified": false,
+                "notes": []
+              },
+              {
+                "provider": "mini",
+                "score": 0.1817015148323524,
+                "risk": 0.3515252613614365,
+                "rule_score": 0.28020665315431986,
+                "critic_score": 0.28018465279774724,
+                "verified": false,
+                "notes": []
+              }
+            ],
+            "bt_thetas": {
+              "openrouter": 0.700234289007885,
+              "hf": -1.4297260726716072,
+              "mini": -0.2674928346744617
+            },
+            "posteriors": {
+              "openrouter": 6.489426070719217e-07,
+              "hf": 1.5962544797614801e-07,
+              "mini": 0.9999991914319449
+            },
+            "winner_margin": 0.9999985424893378,
+            "arena_confidence": 0.9116103236679785,
+            "pairwise_confidence_margin": 0.9677271236823467,
+            "uncertainty_adjusted_margin": 0.8223540859962443,
+            "disagreement": 0.6073857501971667,
+            "disagreement_case_count": 3,
+            "deterministic_dominance": false,
+            "entropy": 1.348910507620304,
+            "plausibility_by_provider": {
+              "openrouter": {
+                "plausible": true,
+                "score": 0.7,
+                "issues": [
+                  "expected_numeric_type"
+                ]
+              },
+              "hf": {
+                "plausible": false,
+                "score": 0.4,
+                "issues": [
+                  "formatting_only",
+                  "expected_numeric_type"
+                ]
+              },
+              "mini": {
+                "plausible": false,
+                "score": 0.35,
+                "issues": [
+                  "echo_fragment",
+                  "expected_numeric_type"
+                ]
+              }
+            },
+            "winner_structure": {
+              "graph_depth": 7.0,
+              "branching_factor": 1.0,
+              "dependency_chain_length": 7.0,
+              "circular_reasoning": 0.0,
+              "step_redundancy_rate": 0.0,
+              "missing_inference_rate": 0.0,
+              "structural_coherence_score": 1.0,
+              "process_reward_score": 0.742857
+            },
+            "winner_process_reward": 0.742857,
+            "debate_lite": {
+              "triggered": true,
+              "accepted": false,
+              "provider": "openrouter"
+            },
+            "answer_pool": [
+              {
+                "normalized_answer": "k^2/r",
+                "providers": [
+                  "openrouter"
+                ],
+                "score": 0.19234055481524528,
+                "posterior_mass": 6.489426070719217e-07,
+                "verified_count": 0,
+                "plausible_count": 1,
+                "judge_mean": 0.25673596124405457,
+                "support": 1,
+                "representative_provider": "openrouter"
+              },
+              {
+                "normalized_answer": "kr.findpotentialdifferencev(0)-v(r).",
+                "providers": [
+                  "mini"
+                ],
+                "score": 0.169692759002997,
+                "posterior_mass": 0.9999991914319449,
+                "verified_count": 0,
+                "plausible_count": 0,
+                "judge_mean": 0.1817015148323524,
+                "support": 1,
+                "representative_provider": "mini"
+              },
+              {
+                "normalized_answer": "\\boxed{0}",
+                "providers": [
+                  "hf"
+                ],
+                "score": 0.013052075741821928,
+                "posterior_mass": 1.5962544797614801e-07,
+                "verified_count": 0,
+                "plausible_count": 0,
+                "judge_mean": 0.20624906478515828,
+                "support": 1,
+                "representative_provider": "hf"
+              }
+            ],
+            "dominance_enforced": false,
+            "auto_corrected": false,
+            "sanity_issues": []
+          },
+          "retrieval": {
+            "top_blocks": [
+              {
+                "id": "math_quadratic",
+                "title": "Quadratic Equations",
+                "score": 0.131434,
+                "source": "vault"
+              },
+              {
+                "id": "jee_traps",
+                "title": "JEE Trap Memory",
+                "score": 0.075502,
+                "source": "vault"
+              },
+              {
+                "id": "math_linear_equation",
+                "title": "Linear Equations",
+                "score": -0.036642,
+                "source": "vault"
+              },
+              {
+                "id": "physics_kinematics",
+                "title": "Kinematics",
+                "score": -0.056344,
+                "source": "vault"
+              },
+              {
+                "id": "chem_equilibrium",
+                "title": "Chemical Equilibrium",
+                "score": -0.086642,
+                "source": "vault"
+              }
+            ],
+            "claim_support_score": 0.04506000000000001
+          },
+          "engine": {
+            "name": "LALACORE_X",
+            "version": "research-grade-v2",
+            "backward_compatible": true,
+            "mini_shadow": true,
+            "shadow_diversity": {
+              "enabled": true,
+              "attempted_extra": [],
+              "collected_extra": 0,
+              "policy": {
+                "difficulty_medium_plus": false,
+                "multi_concept": false,
+                "rare_cluster": false,
+                "entropy_band": false,
+                "deterministic_confidence_low": true,
+                "exploration_sample": false,
+                "trigger_count": 1,
+                "collect_extra": false,
+                "enabled": true
+              }
+            },
+            "degraded_mode": false,
+            "degraded_reason": null,
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "open",
+                "open_for_s": 87.02875590324402,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "open",
+                "open_for_s": 89.36270213127136,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            }
+          },
+          "quality_gate": {
+            "completion_ok": false,
+            "final_status": "Failed",
+            "force_escalate": true,
+            "reasons": [
+              "verification_failed_high_risk",
+              "cross_provider_disagreement",
+              "high_entropy"
+            ]
+          },
+          "final_status": "Failed",
+          "status": "ok",
+          "input_metadata": {
+            "input_detected_type": "text",
+            "files": [],
+            "ocr_available": false,
+            "pdf_available": false,
+            "vision_available": false,
+            "ocr_question_count": 0,
+            "pdf_question_count": 0
+          },
+          "ocr_data": null,
+          "pdf_data": null,
+          "vision_analysis": null,
+          "provider_diagnostics": {
+            "winner_provider": "openrouter",
+            "provider_availability": {
+              "mini": {
+                "registered": true,
+                "key_count": 0,
+                "circuit_state": "local",
+                "eligible": true,
+                "reasons": []
+              },
+              "openrouter": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              },
+              "groq": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "open",
+                "open_for_s": 87.02875590324402,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "gemini": {
+                "registered": true,
+                "key_count": 3,
+                "circuit_state": "open",
+                "open_for_s": 89.36270213127136,
+                "eligible": false,
+                "reasons": [
+                  "circuit_open"
+                ]
+              },
+              "hf": {
+                "registered": true,
+                "key_count": 1,
+                "circuit_state": "closed",
+                "open_for_s": 0.0,
+                "eligible": true,
+                "reasons": []
+              }
+            },
+            "ranked_providers": [
+              {
+                "provider": "mini",
+                "score": -0.34632723552956346
+              },
+              {
+                "provider": "openrouter",
+                "score": -0.5901946851324801
+              },
+              {
+                "provider": "hf",
+                "score": -0.5925224072414006
+              }
+            ],
+            "provider_comparison_vision": []
+          },
+          "research_verification": {
+            "score": 0.0336,
+            "answer_type": {
+              "expected": "numeric",
+              "observed": "expression",
+              "match": false
+            },
+            "units": {
+              "expected": [
+                "a",
+                "v"
+              ],
+              "observed": [
+                "k"
+              ],
+              "match": false
+            },
+            "context_alignment": 0.0,
+            "cross_modal_consistency": {
+              "score": 0.0,
+              "ocr_vs_vision": 0.0,
+              "ocr_vs_reasoning": 0.0,
+              "vision_vs_reasoning": 0.0,
+              "issues": [
+                "ocr_vision_mismatch",
+                "ocr_reasoning_mismatch",
+                "vision_reasoning_mismatch"
+              ]
+            },
+            "reasoning_quality": 0.64,
+            "deterministic_verified": false,
+            "issues": [
+              "deterministic_not_verified",
+              "answer_type_mismatch:numeric->expression",
+              "unit_mismatch",
+              "low_context_alignment",
+              "cross_modal_mismatch"
+            ]
+          },
+          "calibration_metrics": {
+            "risk_score": 1.0,
+            "raw_risk_score": 1.0,
+            "confidence_score": 0.0,
+            "verified": false,
+            "entropy": 1.348910507620304,
+            "raw_entropy": 1.348910507620304,
+            "disagreement": 0.6073857501971667,
+            "winner_margin": 0.9999985424893378,
+            "single_provider_mode": false,
+            "cross_modal_penalty": 0.0,
+            "cross_modal_score": 0.0,
+            "bayesian": {
+              "prior_confidence": 0.0,
+              "posterior_confidence": 0.0,
+              "posterior_risk": 1.0,
+              "evidence_log_lr": -2.427308210281211,
+              "agreement": 0.3926142498028333,
+              "entropy": 1.0,
+              "deterministic": 0.0,
+              "calibration_ema": 0.020517871523962308,
+              "answer_type_match": 0.0,
+              "winner_margin": 0.9999985424893378,
+              "adaptive_ema_error": 0.041244084159476335
+            },
+            "adaptive": {
+              "ema_error": 0.04041920247628681,
+              "count": 1713.0,
+              "offsets": {
+                "agreement": 0.10497193243601868,
+                "answer_type_match": 0.10485603707134754,
+                "calibration_ema": -0.10128662560383685,
+                "deterministic": 0.1186104422738138,
+                "entropy": -0.02503121385928941,
+                "winner_margin": 0.10200265352813674
+              }
+            },
+            "drift": {
+              "updated_at": "2026-03-03T09:49:09.830101+00:00",
+              "count": 1753,
+              "ema_abs_error": 0.020517871523962308,
+              "last_expected": 0.0,
+              "last_observed": 0.0
+            }
+          },
+          "meta_verification": {
+            "attempted": true,
+            "provider": "openrouter",
+            "consistent": false,
+            "review_reasoning": "Reasoning: The potential difference V(0)-V(R) can be found by integrating the electric potential from the center to the surface of the sphere. The electric potential at a distance r from the center of a charged sphere is given by V(r) = k * (rho * V(4/3 * \u03c0 * r^3)). Since the charge density is rho = kr, we can substitute this into the equation for V(r) and integrate from 0 to R.",
+            "review_final_answer": "(3/2) * k^2 / R",
+            "suggested_correction": "(3/2) * k^2 / R",
+            "self_contradiction": {
+              "contradiction": false,
+              "signals": []
+            },
+            "circular_reasoning": false,
+            "flags": [],
+            "timed_out": false,
+            "override_allowed": true,
+            "applied_correction": true,
+            "original_final_answer": "k^2/R"
+          },
+          "entropy": 1.348910507620304,
+          "disagreement": 0.6073857501971667,
+          "latency_metrics": {
+            "solver_s": 14.298609625009703,
+            "meta_verification_s": 0.8853964579902822
+          },
+          "user_context": {
+            "user_id": "codex_pipeline_audit_user",
+            "chat_id": "codex_pipeline_audit_chat_3_1772531335526"
+          },
+          "display_answer": "(3/2) * k^2 / R"
+        },
+        "explanation": "Reasoning: To find the potential difference V(0)-V(R), we need to calculate the electric potential at the center (r=0) and at the surface (r=R) of the sphere. The electric potential due to a continuous charge distribution is given by V(r) = k * \u222b(\u03c1 / r^2) dr from 0 to r. For the center of the sphere, the potential is V(0) = k * \u222b(\u03c1 / r^2) dr from 0 to 0, which is 0 since the integral is over an infinitesimal interval. For the surface of the sphere, the potential is V(R) = k * \u222b(\u03c1 / r^2) dr from 0 to R. Since \u03c1 = kr, we can substitute this into the integral to get V(R) = k * \u222b(k / r^2) dr from 0 to R. Evaluating the integral, we get V(R) = -k^2/R. The potential difference V(0)-V(R) is then 0 - (-k^2/R) = k^2/R.",
+        "confidence": 0.0,
+        "concept": "math"
+      },
+      "summary": {
+        "ok": true,
+        "status": "ok",
+        "message": "",
+        "provider": "openrouter",
+        "winner_provider": "openrouter",
+        "answer_len": 15,
+        "raw_final_status": "Failed",
+        "raw_degraded_mode": false,
+        "raw_degraded_reason": "None",
+        "raw_quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ],
+        "raw_latency_metrics": {
+          "solver_s": 14.298609625009703,
+          "meta_verification_s": 0.8853964579902822
+        }
+      },
+      "routing_decision": {
+        "ts": "2026-03-03T09:48:55.532495+00:00",
+        "event_type": "routing_decision",
+        "question_hash": "621de1075eb73a7be5ffae273db75779c46e82e8",
+        "available": [
+          "mini",
+          "openrouter",
+          "hf"
+        ],
+        "provider_health": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 87.02875590324402,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 89.36270213127136,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "closed",
+            "open_for_s": 0.0,
+            "eligible": true,
+            "reasons": []
+          }
+        },
+        "ranked": [
+          {
+            "provider": "mini",
+            "score": -0.34632723552956346
+          },
+          {
+            "provider": "openrouter",
+            "score": -0.5901946851324801
+          },
+          {
+            "provider": "hf",
+            "score": -0.5925224072414006
+          }
+        ],
+        "router_selected": [
+          "openrouter",
+          "hf"
+        ],
+        "orchestrator_selected": [
+          "openrouter",
+          "hf"
+        ],
+        "rationale": "Statistical routing with subject/difficulty EMA + cluster weakness + token efficiency penalties; selected=['openrouter', 'hf'], high_score=0.050, gap=0.116, shadow_mini=True"
+      },
+      "final_status_event": {
+        "ts": "2026-03-03T09:49:09.485391+00:00",
+        "event_type": "final_status",
+        "question_hash": "621de1075eb73a7be5ffae273db75779c46e82e8",
+        "winner_provider": "openrouter",
+        "verified": false,
+        "risk": 1.0,
+        "plausible": true,
+        "plausibility_score": 0.7,
+        "disagreement": 0.6073857501971667,
+        "entropy": 1.348910507620304,
+        "escalate": true,
+        "final_status": "Failed",
+        "quality_reasons": [
+          "verification_failed_high_risk",
+          "cross_provider_disagreement",
+          "high_entropy"
+        ]
+      },
+      "provider_outputs": [
+        {
+          "provider": "openrouter",
+          "extracted_answer": "k^2/R",
+          "tokens_used": 440,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "hf",
+          "extracted_answer": "\\boxed{0}",
+          "tokens_used": 340,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "kr. Find potential difference V(0)-V(R).",
+          "tokens_used": 168,
+          "extraction_matched": true,
+          "verification": null,
+          "risk": null,
+          "entropy": null
+        },
+        {
+          "provider": "openrouter",
+          "extracted_answer": "k^2/R",
+          "tokens_used": 440,
+          "extraction_matched": true,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.348910507620304
+        },
+        {
+          "provider": "hf",
+          "extracted_answer": "\\boxed{0}",
+          "tokens_used": 340,
+          "extraction_matched": true,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.348910507620304
+        },
+        {
+          "provider": "mini",
+          "extracted_answer": "kr. Find potential difference V(0)-V(R).",
+          "tokens_used": 168,
+          "extraction_matched": false,
+          "verification": false,
+          "risk": 1.0,
+          "entropy": 1.348910507620304
+        }
+      ],
+      "extraction_failures": [],
+      "plausibility_checks": [
+        {
+          "ts": "2026-03-03T09:49:04.125560+00:00",
+          "event_type": "plausibility_check",
+          "provider": "openrouter",
+          "question": "JEE Advanced Physics (Hard): A solid insulating sphere of radius R has charge density rho=kr. Find potential difference V(0)-V(R).",
+          "answer": "k^2/R",
+          "report": {
+            "plausible": true,
+            "issues": [
+              "expected_numeric_type"
+            ],
+            "score": 0.7,
+            "expected_type": "numeric",
+            "echo_ratio": 0.014815
+          }
+        },
+        {
+          "ts": "2026-03-03T09:49:04.125827+00:00",
+          "event_type": "plausibility_check",
+          "provider": "hf",
+          "question": "JEE Advanced Physics (Hard): A solid insulating sphere of radius R has charge density rho=kr. Find potential difference V(0)-V(R).",
+          "answer": "\\boxed{0}",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "formatting_only",
+              "expected_numeric_type"
+            ],
+            "score": 0.4,
+            "expected_type": "numeric",
+            "echo_ratio": 0.043165
+          }
+        },
+        {
+          "ts": "2026-03-03T09:49:04.126023+00:00",
+          "event_type": "plausibility_check",
+          "provider": "mini",
+          "question": "JEE Advanced Physics (Hard): A solid insulating sphere of radius R has charge density rho=kr. Find potential difference V(0)-V(R).",
+          "answer": "kr. Find potential difference V(0)-V(R).",
+          "report": {
+            "plausible": false,
+            "issues": [
+              "echo_fragment",
+              "expected_numeric_type"
+            ],
+            "score": 0.35,
+            "expected_type": "numeric",
+            "echo_ratio": 1.0
+          }
+        }
+      ],
+      "failures": [
+        "final_status_failed"
+      ]
+    }
+  ],
+  "provider_probe": {
+    "availability": {
+      "mini": {
+        "registered": true,
+        "key_count": 0,
+        "circuit_state": "local",
+        "eligible": true,
+        "reasons": []
+      },
+      "openrouter": {
+        "registered": true,
+        "key_count": 3,
+        "circuit_state": "closed",
+        "open_for_s": 0.0,
+        "eligible": true,
+        "reasons": []
+      },
+      "groq": {
+        "registered": true,
+        "key_count": 1,
+        "circuit_state": "closed",
+        "open_for_s": 0.0,
+        "eligible": true,
+        "reasons": []
+      },
+      "gemini": {
+        "registered": true,
+        "key_count": 3,
+        "circuit_state": "closed",
+        "open_for_s": 0.0,
+        "eligible": true,
+        "reasons": []
+      },
+      "hf": {
+        "registered": true,
+        "key_count": 1,
+        "circuit_state": "closed",
+        "open_for_s": 0.0,
+        "eligible": true,
+        "reasons": []
+      }
+    },
+    "results": [
+      {
+        "provider": "openrouter",
+        "eligible": true,
+        "latency_s": 5.323,
+        "answer_len": 9,
+        "answer": "\\boxed{0}",
+        "error": "",
+        "failure_reason": ""
+      },
+      {
+        "provider": "groq",
+        "eligible": true,
+        "latency_s": 0.311,
+        "answer_len": 0,
+        "answer": "",
+        "error": "Client error '400 Bad Request' for url 'https://api.groq.com/openai/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
+        "failure_reason": "schema_validation"
+      },
+      {
+        "provider": "gemini",
+        "eligible": true,
+        "latency_s": 2.631,
+        "answer_len": 0,
+        "answer": "",
+        "error": "Client error '429 Too Many Requests' for url 'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=AIzaSyAQSlK6T25Mr_ijpDO0ZJSDWXp9bijNe3M'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429",
+        "failure_reason": "rate_limit"
+      },
+      {
+        "provider": "hf",
+        "eligible": true,
+        "latency_s": 1.433,
+        "answer_len": 28,
+        "answer": "y = (-b \u00b1 \u221a(b^2 - 4ac)) / 2a",
+        "error": "",
+        "failure_reason": ""
+      },
+      {
+        "provider": "mini",
+        "eligible": true,
+        "latency_s": 0.023,
+        "answer_len": 80,
+        "answer": "\\int_0^x (t^4+3t^2+1)/(t^2+1) dt. Find the minimum value of f(x)-x^3 for real x.",
+        "error": "",
+        "failure_reason": ""
+      },
+      {
+        "provider": "symbolic_guard",
+        "eligible": true,
+        "latency_s": 0.0,
+        "answer_len": 0,
+        "answer": "",
+        "error": "",
+        "failure_reason": ""
+      }
+    ]
+  },
+  "ai_generate_quiz": {
+    "http_status": 200,
+    "response": {
+      "ok": false,
+      "status": "GENERATION_FAILED",
+      "message": "Unable to generate stable quiz at requested settings"
+    }
+  },
+  "import_pipeline": {
+    "parse": {
+      "http_status": 200,
+      "response": {
+        "ok": true,
+        "status": "SUCCESS",
+        "questions": [
+          {
+            "question_id": "imp_q_1",
+            "type": "MCQ_SINGLE",
+            "question_text": "Find the coefficient of x^4 in (1+2x)^6.\\nA) 120\\nB) 240\\nC) 360\\nD) 480\\nAnswer: C\\n\\nQ2. If nCr = nC(r+1), find r in terms of n.\\nA) n/2\\nB) (n-1)/2\\nC) n-1\\nD) 1\\nAnswer: B\\n",
+            "options": [],
+            "correct_answer": {
+              "single": null,
+              "multiple": [],
+              "numerical": null,
+              "tolerance": null
+            },
+            "subject": "Mathematics",
+            "chapter": "Binomial Theorem",
+            "difficulty": "hard",
+            "ai_confidence": 0.0,
+            "validation_status": "invalid",
+            "validation_errors": [
+              "MCQ_SINGLE requires at least 2 options.",
+              "MCQ_SINGLE requires exactly one correct answer.",
+              "No options detected for non-numerical question."
+            ]
+          }
+        ],
+        "count": 1,
+        "summary": {
+          "valid": 0,
+          "review": 0,
+          "invalid": 1
+        },
+        "meta": {
+          "teacher_id": "codex_pipeline_audit_teacher",
+          "subject": "Mathematics",
+          "chapter": "Binomial Theorem",
+          "difficulty": "hard"
+        }
+      }
+    },
+    "save": {
+      "http_status": 200,
+      "response": {
+        "ok": false,
+        "status": "INVALID_IMPORT_QUESTIONS",
+        "message": "One or more import questions are invalid",
+        "invalid": [
+          {
+            "question_id": "imp_q_1",
+            "errors": [
+              "MCQ_SINGLE requires at least 2 options.",
+              "MCQ_SINGLE requires exactly one correct answer.",
+              "No options detected for non-numerical question."
+            ]
+          }
+        ]
+      }
+    },
+    "publish": {
+      "http_status": 200,
+      "response": {
+        "ok": false,
+        "status": "INVALID_IMPORT_QUESTIONS",
+        "message": "One or more import questions are invalid",
+        "invalid": [
+          {
+            "question_id": "imp_q_1",
+            "errors": [
+              "MCQ_SINGLE requires at least 2 options.",
+              "MCQ_SINGLE requires exactly one correct answer.",
+              "No options detected for non-numerical question."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "ocr_pipeline": {
+    "ok": true,
+    "status": "ok",
+    "detected_type": "mixed",
+    "ocr_available": true,
+    "vision_available": true,
+    "ocr_question_count": 1,
+    "final_status": "",
+    "winner_provider": "hf",
+    "answer_len": 1,
+    "image_probe_path": "/Users/ritamsaha/lalacore_omega/lalacore_rebuild/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+  },
+  "artifacts": {
+    "solver_debug_path": "/Users/ritamsaha/lalacore_omega/data/lc9/LC9_SOLVER_DEBUG.jsonl"
+  }
+}

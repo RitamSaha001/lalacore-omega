@@ -1,0 +1,281 @@
+[
+  {
+    "question_id": "imp_q_18",
+    "type": "MCQ_SINGLE",
+    "question_text": "Select the correct statements.",
+    "question_text_latex": "Select the correct statements.",
+    "options": [
+      {
+        "label": "A",
+        "text": "The function f defined by f(x) = { 22, for x < 1; 3*x + 2, for x \\geq 1 } is neither differentiable nor continuous at x=1."
+      },
+      {
+        "label": "B",
+        "text": "The function f(x) = x^2 |x| is twice differentiable at x=0."
+      },
+      {
+        "label": "C",
+        "text": "If f is continuous at x=5 and f(5)=2, then \\lim_{x \\to 5} f(x) = 2 exists."
+      },
+      {
+        "label": "D",
+        "text": "If \\lim_{x \\to a} f(x) + g(x) exists and \\lim_{x \\to a} f(x) - g(x) exists, then \\lim_{x \\to a} f(x) g(x) need not exist."
+      }
+    ],
+    "options_latex": {
+      "A": "The function f defined by f(x) = \\begin{cases} 22, & \\text{for } x < 1; \\\\ 3x + 2, & \\text{for } x \\geq 1 \\end{cases} is neither differentiable nor continuous at x=1.",
+      "B": "The function f(x) = x^2 |x| is twice differentiable at x=0.",
+      "C": "If f is continuous at x=5 and f(5)=2, then \\lim_{x \\to 5} f(x) = 2 exists.",
+      "D": "If \\lim_{x \\to a} (f(x) + g(x)) exists and \\lim_{x \\to a} (f(x) - g(x)) exists, then \\lim_{x \\to a} (f(x) g(x)) need not exist."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.4938,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "similarity_repaired",
+      "layer4_l1_token_repair",
+      "symbol_normalized",
+      "layer4_deterministic_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer7_option_layer7_multiplication_rules",
+      "layer7_option_rule_catalog",
+      "layer7_semantic_sanity"
+    ],
+    "repair_confidence": 0.5062,
+    "repair_status": "reject",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "missing_equation_structure"
+    ],
+    "structural_integrity_score": 0.5062,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": true,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.992,
+      "processed_at": "2026-03-07T13:34:46+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 0.75,
+      "symbolic_score": 0.75,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.5062,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:10+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 0,
+        "valid": 0
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.75
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.5062
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_28",
+    "type": "MCQ_MULTI",
+    "question_text": "Let f(x)= 1 , (0 1)*2 , (1 2)*4 , (2 4)*x^2 x^2 x^2 - ≤ ≤ + < < - ≤ ≤ . Then in 0≤x≤4 function y=f(f(x))*is",
+    "question_text_latex": "Let f(x) = 1, (0, 1) \times 2, (1, 2) \times 4, (2, 4) \times x^2. \\text{ Then in } 0 \\leq x \\leq 4, \\text{ the function } y = f(f(x)) \\text{ is}",
+    "options": [
+      {
+        "label": "A",
+        "text": "continuous at x=1"
+      },
+      {
+        "label": "B",
+        "text": "not differentiable at x=1"
+      },
+      {
+        "label": "C",
+        "text": "continuous and differentiable at x=2"
+      },
+      {
+        "label": "D",
+        "text": "continuous but not differentiable at x=3"
+      }
+    ],
+    "options_latex": {
+      "A": "continuous \\text{ at } x=1",
+      "B": "not differentiable \\text{ at } x=1",
+      "C": "continuous \\text{ and differentiable at } x=2",
+      "D": "continuous \\text{ but not differentiable at } x=3"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.9862,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "layer4_ai_rejected_low_similarity",
+      "layer4_post_ai_verify",
+      "layer4_l2_ast_grammar",
+      "layer7_inequality_rules",
+      "layer7_multiplication_rules",
+      "layer7_semantic_sanity",
+      "layer7_symbolic_verification"
+    ],
+    "repair_confidence": 0.0138,
+    "repair_status": "unrecoverable",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [
+      "expression_parse_failure",
+      "truncated_question",
+      "symbolic_verification_failed"
+    ],
+    "structural_integrity_score": 0.0138,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:58+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 0.76,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 0.894,
+      "processed_at": "2026-03-07T13:35:28+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 0.1667,
+      "structure_score": 1.0,
+      "math_score": 0.55,
+      "symbolic_score": 0.1667,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.0138,
+      "hard_reject": true,
+      "updated_at": "2026-03-07T14:04:10+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": true
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 0.1667,
+        "fragments": 6,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 0.1667
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.0138
+      }
+    }
+  }
+]

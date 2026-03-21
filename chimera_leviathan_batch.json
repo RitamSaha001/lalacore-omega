@@ -1,0 +1,25 @@
+{
+  "raw_questions": [
+"A hydrogen-like ion in its 3rd excited state undergoes a transition to the 1st excited state, emitting a photon. This photon strikes a perfectly reflecting solar sail of mass m and area A initially at rest in deep space. Derive the exact velocity imparted to the sail, expressing your answer in terms of the Rydberg constant R, Planck's constant h, the speed of light c, and the atomic number Z.",
+"Let A be a 5x5 matrix with characteristic polynomial P(x) = x^5 - 4x^4 + 3x^3 + 2x^2 - x + 1. Find the exact trace of the matrix (A^3 - 2A^2 + A^-1) using the Cayley-Hamilton theorem and Newton's sums.",
+"A non-ideal gas follows the equation of state P(V-nb) = nRT \\exp(-a/RTV). Derive the exact analytical expression for the Joule-Thomson coefficient \\mu_{JT} and explicitly find the inversion temperature T_i as a function of the van der Waals constants a and b.",
+"A radioactive nucleus A (decay constant \\lambda) decays into a daughter nucleus B, which simultaneously decays into a stable nucleus C (decay constant 2\\lambda). If a sample initially contains pure A, find the exact time at which the rate of production of C is maximized. Show all calculus steps.",
+"Find the total number of surjective functions f: \\{1, 2, ..., 10\\} \\to \\{1, 2, 3, 4\\} such that f(1) \\neq f(2) and f(3) = 1. Express the answer using the Principle of Inclusion-Exclusion and evaluate the final integer.",
+"Evaluate the definite integral \\int_{0}^{\\pi/2} \\frac{\\cos^2(x)}{\\cos^2(x) + 4\\sin^2(x)} \\ln(\\sin x) dx using Feynman's parameterization technique.",
+"Solve the recurrence relation a_n = 5a_{n-1} - 6a_{n-2} + 2^n + n, with initial conditions a_0 = 1 and a_1 = 2, using the method of generating functions.",
+"A black body at temperature T_1 emits radiation with peak emission at wavelength \\lambda_1. The temperature is increased to T_2, making the peak wavelength \\lambda_1 / 2. Derive the exact ratio of the total power radiated at T_2 to that at T_1.",
+"A particle of mass m moves in a 1D potential V(x) = kx^4. Using the Bohr-Sommerfeld quantization rule \\oint p dx = nh, derive the dependence of the quantized energy levels E_n on n.",
+"Let f(x) be a polynomial of degree 4 with leading coefficient 1, satisfying f(1)=10, f(2)=20, f(3)=30 and f(12)+f(-8)=19840. Find f(0).",
+
+"A uniform solid sphere of mass M and radius R is spinning with angular velocity \\omega_0 about a horizontal axis. It is gently placed on a horizontal surface where the coefficient of friction is \\mu = \\mu_0 (1 - x/L). Derive the total distance traveled before pure rolling commences.",
+"Evaluate the limit \\lim_{n \\to \\infty} \\frac{1}{n^3} \\sum_{i=1}^{n} \\sum_{j=1}^{n} \\frac{i^2 j}{i^2 + j^2}.",
+"Find the total number of ways to select 5 distinct numbers from {1,...,100} such that their sum is divisible by 5 using roots of unity.",
+"Solve x^2 y'' - 3xy' + 4y = x^2 \\ln(x). Find the particular solution with y(1)=0 and y'(1)=0.",
+"Evaluate \\int_{0}^{\\infty} \\frac{\\ln(x)}{x^2 + 2x + 2} dx using contour integration.",
+"Find the number of ways to distribute 20 identical chocolates to 5 children such that no child gets more than 6 chocolates.",
+"Evaluate \\int_{0}^{1} \\frac{\\ln(1-x)}{x} dx.",
+"Find the exact determinant of an n x n matrix with diagonal elements 'a' and off-diagonal elements 'b'.",
+"Find all real functions f(x) satisfying f(x^2 + y) = f(x) + f(y^2).",
+"A particle moves on a cycloid x=a(\\theta - \\sin\\theta), y=a(1+\\cos\\theta). Derive the exact time period and prove isochronous behavior."
+  ]
+}

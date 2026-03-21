@@ -1,0 +1,1921 @@
+{
+  "source": "backend.generateAiQuiz",
+  "attempt_log": [
+    "attempt 1: backend status=SUCCESS raw=10 parsed=10",
+    "attempt 1: fallback raw=0 parsed=0",
+    "attempt 2: backend status=SUCCESS raw=10 parsed=10",
+    "attempt 2: fallback raw=0 parsed=0",
+    "attempt 3: backend status=SUCCESS raw=10 parsed=10",
+    "attempt 3: fallback raw=0 parsed=0",
+    "attempt 4: backend status=SUCCESS raw=10 parsed=10",
+    "attempt 4: fallback raw=0 parsed=0"
+  ],
+  "parsed_count": 10,
+  "distribution": {
+    "MCQ": 10,
+    "MULTI": 0,
+    "NUMERICAL": 0
+  },
+  "editable_contract": {
+    "pass": 10,
+    "total": 10
+  },
+  "circle_relevance": {
+    "tags_text": 10,
+    "text_only": 0
+  },
+  "quality_good_estimate": {
+    "pass": 0,
+    "total": 10
+  },
+  "accepted_strict_contract": false,
+  "issues": [],
+  "questions": [
+    {
+      "type": "MCQ",
+      "question": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+      "tags": [
+        "Circle Equation",
+        "Circle",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$64$",
+        "$4$",
+        "$68$",
+        "$10$"
+      ],
+      "correct": [
+        "$68$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+      "tags": [
+        "Tangent and Normal",
+        "Circle (Coordinate Geometry)",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$45$",
+        "$36$",
+        "$9$",
+        "$39$"
+      ],
+      "correct": [
+        "$45$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+      "tags": [
+        "Chord of Contact",
+        "Circle",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$45$",
+        "$40$",
+        "$36$",
+        "$9$"
+      ],
+      "correct": [
+        "$45$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+      "tags": [
+        "Director Circle",
+        "Circle (Coordinate Geometry)",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$39$",
+        "$36$",
+        "$45$",
+        "$9$"
+      ],
+      "correct": [
+        "$45$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+      "tags": [
+        "Family of Circles",
+        "Circle",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$68$",
+        "$10$",
+        "$4$",
+        "$64$"
+      ],
+      "correct": [
+        "$68$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+      "tags": [
+        "Common Chord",
+        "Circle (Coordinate Geometry)",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$4$",
+        "$49$",
+        "$53$",
+        "$9$"
+      ],
+      "correct": [
+        "$53$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+      "tags": [
+        "Pair of Tangents",
+        "Circle",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$45$",
+        "$46$",
+        "$36$",
+        "$9$"
+      ],
+      "correct": [
+        "$45$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+      "tags": [
+        "Circle Equation",
+        "Circle (Coordinate Geometry)",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$50$",
+        "$51$",
+        "$10$",
+        "$25$"
+      ],
+      "correct": [
+        "$50$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+      "tags": [
+        "Tangent and Normal",
+        "Circle",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$1$",
+        "$16$",
+        "$17$",
+        "$5$"
+      ],
+      "correct": [
+        "$17$"
+      ]
+    },
+    {
+      "type": "MCQ",
+      "question": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+      "tags": [
+        "Chord of Contact",
+        "Circle (Coordinate Geometry)",
+        "Coordinate Geometry"
+      ],
+      "options": [
+        "$4$",
+        "$36$",
+        "$8$",
+        "$40$"
+      ],
+      "correct": [
+        "$40$"
+      ]
+    }
+  ],
+  "response_head": {
+    "ok": true,
+    "status": "SUCCESS",
+    "quiz_id": "aiq_1772536866342",
+    "id": "aiq_1772536866342",
+    "url": "http://10.0.2.2:8000/app/quiz/aiq_1772536866342.csv",
+    "quiz_url": "http://10.0.2.2:8000/app/quiz/aiq_1772536866342.csv",
+    "questions_json": [
+      {
+        "question_id": "q_1",
+        "question_text": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+        "options": [
+          "$64$",
+          "$4$",
+          "$68$",
+          "$10$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Circle Equation",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$. Step 4: Therefore, the required answer is $68$."
+      },
+      {
+        "question_id": "q_2",
+        "question_text": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$36$",
+          "$9$",
+          "$39$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Tangent and Normal",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_3",
+        "question_text": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$40$",
+          "$36$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Chord of Contact",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid hidden condition. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_4",
+        "question_text": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+        "options": [
+          "$39$",
+          "$36$",
+          "$45$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Director Circle",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid domain restriction. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_5",
+        "question_text": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+        "options": [
+          "$68$",
+          "$10$",
+          "$4$",
+          "$64$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Family of Circles",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$. Step 4: Therefore, the required answer is $68$."
+      },
+      {
+        "question_id": "q_6",
+        "question_text": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+        "options": [
+          "$4$",
+          "$49$",
+          "$53$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Common Chord",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=53$. Step 4: Therefore, the required answer is $53$."
+      },
+      {
+        "question_id": "q_7",
+        "question_text": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$46$",
+          "$36$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Pair of Tangents",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid hidden condition. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_8",
+        "question_text": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+        "options": [
+          "$50$",
+          "$51$",
+          "$10$",
+          "$25$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Circle Equation",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid domain restriction. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=50$. Step 4: Therefore, the required answer is $50$."
+      },
+      {
+        "question_id": "q_9",
+        "question_text": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+        "options": [
+          "$1$",
+          "$16$",
+          "$17$",
+          "$5$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Tangent and Normal",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=17$. Step 4: Therefore, the required answer is $17$."
+      },
+      {
+        "question_id": "q_10",
+        "question_text": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+        "options": [
+          "$4$",
+          "$36$",
+          "$8$",
+          "$40$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Chord of Contact",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "D",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=40$. Step 4: Therefore, the required answer is $40$."
+      }
+    ],
+    "questions": [
+      {
+        "question_id": "q_1",
+        "question_text": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+        "options": [
+          "$64$",
+          "$4$",
+          "$68$",
+          "$10$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Circle Equation",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$. Step 4: Therefore, the required answer is $68$."
+      },
+      {
+        "question_id": "q_2",
+        "question_text": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$36$",
+          "$9$",
+          "$39$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Tangent and Normal",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_3",
+        "question_text": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$40$",
+          "$36$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Chord of Contact",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid hidden condition. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_4",
+        "question_text": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+        "options": [
+          "$39$",
+          "$36$",
+          "$45$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Director Circle",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid domain restriction. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_5",
+        "question_text": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+        "options": [
+          "$68$",
+          "$10$",
+          "$4$",
+          "$64$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Family of Circles",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$. Step 4: Therefore, the required answer is $68$."
+      },
+      {
+        "question_id": "q_6",
+        "question_text": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+        "options": [
+          "$4$",
+          "$49$",
+          "$53$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Common Chord",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=53$. Step 4: Therefore, the required answer is $53$."
+      },
+      {
+        "question_id": "q_7",
+        "question_text": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+        "options": [
+          "$45$",
+          "$46$",
+          "$36$",
+          "$9$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Pair of Tangents",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid hidden condition. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$. Step 4: Therefore, the required answer is $45$."
+      },
+      {
+        "question_id": "q_8",
+        "question_text": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+        "options": [
+          "$50$",
+          "$51$",
+          "$10$",
+          "$25$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Circle Equation",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "A",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid domain restriction. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=50$. Step 4: Therefore, the required answer is $50$."
+      },
+      {
+        "question_id": "q_9",
+        "question_text": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+        "options": [
+          "$1$",
+          "$16$",
+          "$17$",
+          "$5$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Tangent and Normal",
+          "Circle",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "C",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid unit mismatch. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=17$. Step 4: Therefore, the required answer is $17$."
+      },
+      {
+        "question_id": "q_10",
+        "question_text": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+        "options": [
+          "$4$",
+          "$36$",
+          "$8$",
+          "$40$"
+        ],
+        "difficulty_estimate": 5,
+        "concept_tags": [
+          "Chord of Contact",
+          "Circle (Coordinate Geometry)",
+          "Coordinate Geometry"
+        ],
+        "question_type": "MCQ",
+        "marks_correct": 4.0,
+        "marks_incorrect": -1.0,
+        "marks_unattempted": 0.0,
+        "partial_marking": false,
+        "numerical_tolerance": 0.001,
+        "correct_option": "D",
+        "solution_explanation": "Step 1: Identify the target quantity and all constraints from the question. Step 2: Set up the governing relation: Trap check: avoid sign convention error. Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=40$. Step 4: Therefore, the required answer is $40$."
+      }
+    ],
+    "quiz_metadata": {
+      "title": "Teacher Hard Quiz • Circle (10Q)",
+      "mode": "TEACHER",
+      "duration_minutes": 50,
+      "total_marks": 40,
+      "shuffle_questions": true,
+      "difficulty_mix": "Mixed"
+    },
+    "aqie_questions": [
+      {
+        "id": 1,
+        "type": "MCQ",
+        "statement": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+        "latex_statement": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+        "options": {
+          "A": "$64$",
+          "B": "$4$",
+          "C": "$68$",
+          "D": "$10$"
+        },
+        "correct_answer": "C",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $68$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 2,
+        "type": "MCQ",
+        "statement": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+        "latex_statement": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+        "options": {
+          "A": "$45$",
+          "B": "$36$",
+          "C": "$9$",
+          "D": "$39$"
+        },
+        "correct_answer": "A",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $45$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 3,
+        "type": "MCQ",
+        "statement": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+        "latex_statement": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+        "options": {
+          "A": "$45$",
+          "B": "$40$",
+          "C": "$36$",
+          "D": "$9$"
+        },
+        "correct_answer": "A",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid hidden condition"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $45$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 4,
+        "type": "MCQ",
+        "statement": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+        "latex_statement": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+        "options": {
+          "A": "$39$",
+          "B": "$36$",
+          "C": "$45$",
+          "D": "$9$"
+        },
+        "correct_answer": "C",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid domain restriction"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $45$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 5,
+        "type": "MCQ",
+        "statement": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+        "latex_statement": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+        "options": {
+          "A": "$68$",
+          "B": "$10$",
+          "C": "$4$",
+          "D": "$64$"
+        },
+        "correct_answer": "A",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $68$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 6,
+        "type": "MCQ",
+        "statement": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+        "latex_statement": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+        "options": {
+          "A": "$4$",
+          "B": "$49$",
+          "C": "$53$",
+          "D": "$9$"
+        },
+        "correct_answer": "C",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=53$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $53$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 7,
+        "type": "MCQ",
+        "statement": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+        "latex_statement": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+        "options": {
+          "A": "$45$",
+          "B": "$46$",
+          "C": "$36$",
+          "D": "$9$"
+        },
+        "correct_answer": "A",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid hidden condition"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $45$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 8,
+        "type": "MCQ",
+        "statement": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+        "latex_statement": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+        "options": {
+          "A": "$50$",
+          "B": "$51$",
+          "C": "$10$",
+          "D": "$25$"
+        },
+        "correct_answer": "A",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid domain restriction"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=50$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $50$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 9,
+        "type": "MCQ",
+        "statement": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+        "latex_statement": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+        "options": {
+          "A": "$1$",
+          "B": "$16$",
+          "C": "$17$",
+          "D": "$5$"
+        },
+        "correct_answer": "C",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=17$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $17$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      },
+      {
+        "id": 10,
+        "type": "MCQ",
+        "statement": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+        "latex_statement": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+        "options": {
+          "A": "$4$",
+          "B": "$36$",
+          "C": "$8$",
+          "D": "$40$"
+        },
+        "correct_answer": "D",
+        "solution": {
+          "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+          "formal_derivation": [
+            {
+              "step": "Step 1",
+              "equation": "",
+              "justification": "Step 1: Identify the target quantity and all constraints from the question"
+            },
+            {
+              "step": "Step 2",
+              "equation": "",
+              "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+            },
+            {
+              "step": "Step 3",
+              "equation": "",
+              "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=40$"
+            },
+            {
+              "step": "Step 4",
+              "equation": "",
+              "justification": "Step 4: Therefore, the required answer is $40$."
+            }
+          ],
+          "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+          "shortcut": "Use elimination or symmetry where possible before full expansion.",
+          "diagrams": {
+            "mermaid": "",
+            "matplotlib_code": "",
+            "ascii": ""
+          }
+        },
+        "verification": {
+          "numeric_pass": true,
+          "symbolic_pass": true,
+          "dimension_pass": true
+        },
+        "confidence_score": 0.78,
+        "difficulty": "Advanced",
+        "adaptive_score": 0.0
+      }
+    ],
+    "ui_spec": {
+      "design_language": "Minimal, glassmorphic, Apple-inspired",
+      "layout": {
+        "card_corner_radius": 24,
+        "spacing_system": "8pt grid",
+        "typography": "SF Pro style hierarchy",
+        "shadows": "soft, layered"
+      },
+      "question_card": {
+        "front": {
+          "shows_statement": true,
+          "shows_options": true,
+          "difficulty_dot": true,
+          "confidence_badge": true
+        },
+        "back": {
+          "expandable_solution_tabs": [
+            "Intuition",
+            "Formal",
+            "Shortcut",
+            "Diagram"
+          ]
+        }
+      },
+      "student_exam_navigation": {
+        "timer": true,
+        "progress_bar": true,
+        "question_palette": true
+      },
+      "animation_spec": {
+        "card_flip": "spring 250ms",
+        "animated_reveal": "staggered fade 120ms",
+        "feedback": "subtle haptic pulse"
+      }
+    },
+    "student_adaptive_data": {
+      "mastery_status": {},
+      "recommendations": [],
+      "performance_trends": {}
+    },
+    "lc_aqie": {
+      "quiz_metadata": {
+        "title": "Teacher Hard Quiz • Circle (10Q)",
+        "mode": "TEACHER",
+        "duration_minutes": 50,
+        "total_marks": 40,
+        "shuffle_questions": true,
+        "difficulty_mix": "Mixed"
+      },
+      "questions": [
+        {
+          "id": 1,
+          "type": "MCQ",
+          "statement": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+          "latex_statement": "If $A(1,4)$ and $B(9,6)$, find $AB^2$.",
+          "options": {
+            "A": "$64$",
+            "B": "$4$",
+            "C": "$68$",
+            "D": "$10$"
+          },
+          "correct_answer": "C",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $68$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 2,
+          "type": "MCQ",
+          "statement": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+          "latex_statement": "If $A(1,3)$ and $B(4,9)$, find $AB^2$.",
+          "options": {
+            "A": "$45$",
+            "B": "$36$",
+            "C": "$9$",
+            "D": "$39$"
+          },
+          "correct_answer": "A",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $45$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 3,
+          "type": "MCQ",
+          "statement": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+          "latex_statement": "If $A(2,1)$ and $B(5,7)$, find $AB^2$.",
+          "options": {
+            "A": "$45$",
+            "B": "$40$",
+            "C": "$36$",
+            "D": "$9$"
+          },
+          "correct_answer": "A",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid hidden condition"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $45$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 4,
+          "type": "MCQ",
+          "statement": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+          "latex_statement": "If $A(-1,-1)$ and $B(5,2)$, find $AB^2$.",
+          "options": {
+            "A": "$39$",
+            "B": "$36$",
+            "C": "$45$",
+            "D": "$9$"
+          },
+          "correct_answer": "C",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid domain restriction"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $45$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 5,
+          "type": "MCQ",
+          "statement": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+          "latex_statement": "If $A(-3,-1)$ and $B(5,1)$, find $AB^2$.",
+          "options": {
+            "A": "$68$",
+            "B": "$10$",
+            "C": "$4$",
+            "D": "$64$"
+          },
+          "correct_answer": "A",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=68$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $68$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 6,
+          "type": "MCQ",
+          "statement": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+          "latex_statement": "If $A(-2,4)$ and $B(5,6)$, find $AB^2$.",
+          "options": {
+            "A": "$4$",
+            "B": "$49$",
+            "C": "$53$",
+            "D": "$9$"
+          },
+          "correct_answer": "C",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=53$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $53$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 7,
+          "type": "MCQ",
+          "statement": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+          "latex_statement": "If $A(2,-3)$ and $B(5,3)$, find $AB^2$.",
+          "options": {
+            "A": "$45$",
+            "B": "$46$",
+            "C": "$36$",
+            "D": "$9$"
+          },
+          "correct_answer": "A",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid hidden condition"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=45$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $45$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 8,
+          "type": "MCQ",
+          "statement": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+          "latex_statement": "If $A(0,-2)$ and $B(5,3)$, find $AB^2$.",
+          "options": {
+            "A": "$50$",
+            "B": "$51$",
+            "C": "$10$",
+            "D": "$25$"
+          },
+          "correct_answer": "A",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid domain restriction"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=50$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $50$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 9,
+          "type": "MCQ",
+          "statement": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+          "latex_statement": "If $A(-4,-4)$ and $B(0,-3)$, find $AB^2$.",
+          "options": {
+            "A": "$1$",
+            "B": "$16$",
+            "C": "$17$",
+            "D": "$5$"
+          },
+          "correct_answer": "C",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid unit mismatch"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=17$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $17$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        },
+        {
+          "id": 10,
+          "type": "MCQ",
+          "statement": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+          "latex_statement": "If $A(3,5)$ and $B(9,7)$, find $AB^2$.",
+          "options": {
+            "A": "$4$",
+            "B": "$36$",
+            "C": "$8$",
+            "D": "$40$"
+          },
+          "correct_answer": "D",
+          "solution": {
+            "core_idea": "Step 1: Identify the target quantity and all constraints from the question",
+            "formal_derivation": [
+              {
+                "step": "Step 1",
+                "equation": "",
+                "justification": "Step 1: Identify the target quantity and all constraints from the question"
+              },
+              {
+                "step": "Step 2",
+                "equation": "",
+                "justification": "Step 2: Set up the governing relation: Trap check: avoid sign convention error"
+              },
+              {
+                "step": "Step 3",
+                "equation": "",
+                "justification": "Step 3: Simplify systematically: $AB^2=(x_2-x_1)^2+(y_2-y_1)^2=40$"
+              },
+              {
+                "step": "Step 4",
+                "equation": "",
+                "justification": "Step 4: Therefore, the required answer is $40$."
+              }
+            ],
+            "intuition": "Identify the governing relation first, then execute algebra/arithmetic in stable order.",
+            "shortcut": "Use elimination or symmetry where possible before full expansion.",
+            "diagrams": {
+              "mermaid": "",
+              "matplotlib_code": "",
+              "ascii": ""
+            }
+          },
+          "verification": {
+            "numeric_pass": true,
+            "symbolic_pass": true,
+            "dimension_pass": true
+          },
+          "confidence_score": 0.78,
+          "difficulty": "Advanced",
+          "adaptive_score": 0.0
+        }
+      ],
+      "ui_spec": {
+        "design_language": "Minimal, glassmorphic, Apple-inspired",
+        "layout": {
+          "card_corner_radius": 24,
+          "spacing_system": "8pt grid",
+          "typography": "SF Pro style hierarchy",
+          "shadows": "soft, layered"
+        },
+        "question_card": {
+          "front": {
+            "shows_statement": true,
+            "shows_options": true,
+            "difficulty_dot": true,
+            "confidence_badge": true
+          },
+          "back": {
+            "expandable_solution_tabs": [
+              "Intuition",
+              "Formal",
+              "Shortcut",
+              "Diagram"
+            ]
+          }
+        },
+        "student_exam_navigation": {
+          "timer": true,
+          "progress_bar": true,
+          "question_palette": true
+        },
+        "animation_spec": {
+          "card_flip": "spring 250ms",
+          "animated_reveal": "staggered fade 120ms",
+          "feedback": "subtle haptic pulse"
+        }
+      },
+      "student_adaptive_data": {
+        "mastery_status": {},
+        "recommendations": [],
+        "performance_trends": {}
+      }
+    },
+    "metadata": {
+      "subject": "Mathematics",
+      "chapters": [
+        "Circle",
+        "Circle (Coordinate Geometry)"
+      ],
+      "difficulty": 5,
+      "engine_mode": "ELITE_MODE",
+      "winner_provider": "lalacore_beta",
+      "arena": {
+        "enabled": true,
+        "provider_count": 3,
+        "selection": "hardest",
+        "winner_distribution": {
+          "lalacore_gamma": 4,
+          "lalacore_beta": 6
+        },
+        "mean_entropy": 0.975115,
+        "mean_disagreement": 4.323391,
+        "dominant_provider": "lalacore_beta"
+      },
+      "question_count": 10,
+      "trap_intensity": "high",
+      "weakness_mode": true,
+      "cross_concept": true,
+      "self_practice_mode": false,
+      "authoring_mode": true,
+      "verification_profile": {
+        "provider_count": 3,
+        "validation_passes": 3,
+        "checks": [
+          "arena_disagreement_detection",
+          "deterministic_verification_engine",
+          "symbolic_equivalence_check",
+          "regenerate_on_instability",
+          "difficulty_recalibration"
+        ]
+      }
+    },
+    "winner_provider": "lalacore_beta",
+    "arena": {
+      "enabled": true,
+      "provider_count": 3,
+      "selection": "hardest",
+      "winner_distribution": {
+        "lalacore_gamma": 4,
+        "lalacore_beta": 6
+      },
+      "mean_entropy": 0.975115,
+      "mean_disagreement": 4.323391,
+      "dominant_provider": "lalacore_beta"
+    }
+  }
+}

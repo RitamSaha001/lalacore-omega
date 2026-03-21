@@ -1,0 +1,3368 @@
+[
+  {
+    "question_id": "imp_q_57",
+    "type": "MCQ_SINGLE",
+    "question_text": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+    "question_text_latex": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+    "options": [
+      {
+        "label": "A",
+        "text": "a hyperbola if a = b = 1"
+      },
+      {
+        "label": "B",
+        "text": "a pair of straight line if a = 1 and b = 2"
+      },
+      {
+        "label": "C",
+        "text": "a pair of straight lines if a = b = 2"
+      },
+      {
+        "label": "D",
+        "text": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+      }
+    ],
+    "options_latex": {
+      "A": "a hyperbola if a = b = 1",
+      "B": "a pair of straight line if a = 1 and b = 2",
+      "C": "a pair of straight lines if a = b = 2",
+      "D": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772708790412",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708790412",
+    "published_at": 1772708790412,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer8_set_notation_repair:set_notation_repair_6",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra",
+      "Coordinate Geometry"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+      "clean_question_latex": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+      "options": {
+        "A": "a hyperbola if a = b = 1",
+        "B": "a pair of straight line if a = 1 and b = 2",
+        "C": "a pair of straight lines if a = b = 2",
+        "D": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+      },
+      "options_latex": {
+        "A": "a hyperbola if a = b = 1",
+        "B": "a pair of straight line if a = 1 and b = 2",
+        "C": "a pair of straight lines if a = b = 2",
+        "D": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer8_set_notation_repair:set_notation_repair_6",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer8_set_notation_repair": [
+          "set_notation_repair_6"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+        "clean_question_latex": "In the above question if = 60° then the locus of intersection of locus of P and ax + y + z = b will be",
+        "options": {
+          "A": "a hyperbola if a = b = 1",
+          "B": "a pair of straight line if a = 1 and b = 2",
+          "C": "a pair of straight lines if a = b = 2",
+          "D": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+        },
+        "options_latex": {
+          "A": "a hyperbola if a = b = 1",
+          "B": "a pair of straight line if a = 1 and b = 2",
+          "C": "a pair of straight lines if a = b = 2",
+          "D": "none of these TD03-0606 JEE (Main + Advanced) : Mathematics [ 122 ] www.allen.in Paragraph for Question No. 27 to 28 In 3*D geometry, a tetrahedron is a four-faced polyhedron with four vertices. It is one of the simplest and most important shapes in 3*D geometry, and it has many practical applications in fields such as engineering, physics, chemistry and computer graphics . To solve problems related to a tetrahedron, we need to use concepts such as shortest distance formula, cross product, and the formula for the volume of a tetrahedron. By applying these concepts, we can gain a better understanding of 3*D geometry and solve problems related to the tetrahedron."
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer8_set_notation_repair:set_notation_repair_6",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_24",
+    "type": "NUMERICAL",
+    "question_text": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+    "question_text_latex": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "16",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772717580416",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772717580416",
+    "published_at": 1772717580416,
+    "solution_explanation": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+    "source_solution_stub": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+    "has_solution": true,
+    "solution_enriched_at": 1772733853873,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+      "clean_question_latex": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "16",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+        "clean_question_latex": "Let be the projection vector of , on the vector . If , then the area of the parallelogram formed by the vectors and is ________",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "16",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_103",
+    "type": "NUMERICAL",
+    "question_text": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+    "question_text_latex": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "216",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718127540",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718127539",
+    "published_at": 1772718127539,
+    "solution_explanation": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is (1) (2) (3) (4)",
+    "source_solution_stub": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is (1) (2) (3) (4)",
+    "has_solution": true,
+    "solution_enriched_at": 1772734204466,
+    "repair_actions": [],
+    "repair_confidence": 0.91,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+      "clean_question_latex": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "216",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.91,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:36+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.91,
+      "validation_issues": [
+        "truncated_question"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+        "clean_question_latex": "The vector is rotated through a right angle, passing through the -axis in its way and the resulting vector is . Then the projection of on is",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "216",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.91,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_101",
+    "type": "MCQ_SINGLE",
+    "question_text": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+    "question_text_latex": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+    "options": [
+      {
+        "label": "A",
+        "text": "(2)"
+      },
+      {
+        "label": "C",
+        "text": "(4)"
+      }
+    ],
+    "options_latex": {
+      "A": "(2)",
+      "C": "(4)"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718152376",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718152376",
+    "published_at": 1772718152376,
+    "solution_explanation": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to (1) (2) (3) (4)",
+    "source_solution_stub": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to (1) (2) (3) (4)",
+    "has_solution": true,
+    "solution_enriched_at": 1772734254696,
+    "repair_actions": [
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra",
+      "Three Dimensional Geometry"
+    ],
+    "topic": "sequences and series",
+    "detected_issues": [
+      "mcq_options_incomplete"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+      "clean_question_latex": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+      "options": {
+        "A": "(2)",
+        "C": "(4)"
+      },
+      "options_latex": {
+        "A": "(2)",
+        "C": "(4)"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "sequences and series",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:36+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "mcq_options_incomplete"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+        "clean_question_latex": "If the vectors and are coplanar and the projection of on the vector is units, then the sum of all possible values of is equal to",
+        "options": {
+          "A": "(2)",
+          "C": "(4)"
+        },
+        "options_latex": {
+          "A": "(2)",
+          "C": "(4)"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "sequences and series",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_103",
+    "type": "NUMERICAL",
+    "question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+    "question_text_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3501",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "missing_operand:->",
+      "missing_operand:-",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718199817",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718199816",
+    "published_at": 1772718199816,
+    "solution_explanation": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "source_solution_stub": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "has_solution": true,
+    "solution_enriched_at": 1772734373094,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_8",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "sequences and series",
+    "detected_issues": [
+      "missing_operand:-"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+      "clean_question_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3501",
+        "tolerance": null
+      },
+      "topic": "sequences and series",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_8",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_8"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "missing_operand:-"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+        "clean_question_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3501",
+          "tolerance": null
+        },
+        "topic": "sequences and series",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_8",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_116",
+    "type": "NUMERICAL",
+    "question_text": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3501",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718199817",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718199816",
+    "published_at": 1772718199816,
+    "solution_explanation": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "source_solution_stub": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "has_solution": true,
+    "solution_enriched_at": 1772734373094,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3501",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.85,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.85,
+      "validation_issues": [
+        "expression_parse_failure"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(3501)90. (11)2023*(01 Feb Shift 1)Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3501",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.85,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_100",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let and let be a vector such that and . Then the projection of on the vector is",
+    "question_text_latex": "Let and let be a vector such that and . Then the projection of on the vector is",
+    "options": [
+      {
+        "label": "A",
+        "text": "(2)"
+      },
+      {
+        "label": "C",
+        "text": "(4)"
+      }
+    ],
+    "options_latex": {
+      "A": "(2)",
+      "C": "(4)"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.95,
+    "id": "bankq_1772718321541",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718321540",
+    "published_at": 1772718321540,
+    "solution_explanation": "Let and let be a vector such that and . Then the projection of on the vector is: (1) (2) (3) (4)",
+    "source_solution_stub": "Let and let be a vector such that and . Then the projection of on the vector is: (1) (2) (3) (4)",
+    "has_solution": true,
+    "solution_enriched_at": 1772734933380,
+    "repair_actions": [
+      "layer10_structural_repair:structural_trailing_operator_removed",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "dangling_operator",
+      "mcq_options_incomplete",
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let and let be a vector such that and . Then the projection of on the vector is",
+      "clean_question_latex": "Let and let be a vector such that and . Then the projection of on the vector is",
+      "options": {
+        "A": "(2)",
+        "C": "(4)"
+      },
+      "options_latex": {
+        "A": "(2)",
+        "C": "(4)"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_trailing_operator_removed",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:39+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_trailing_operator_removed",
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": false,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "dangling_operator",
+        "mcq_options_incomplete",
+        "truncated_question"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let and let be a vector such that and . Then the projection of on the vector is",
+        "clean_question_latex": "Let and let be a vector such that and . Then the projection of on the vector is",
+        "options": {
+          "A": "(2)",
+          "C": "(4)"
+        },
+        "options_latex": {
+          "A": "(2)",
+          "C": "(4)"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_trailing_operator_removed",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_119",
+    "type": "NUMERICAL",
+    "question_text": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+    "question_text_latex": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "486",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718451098",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718451098",
+    "published_at": 1772718451098,
+    "solution_explanation": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735155124,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+      "clean_question_latex": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "486",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:41+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+        "clean_question_latex": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "486",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_133",
+    "type": "NUMERICAL",
+    "question_text": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "486",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718451098",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718451098",
+    "published_at": 1772718451098,
+    "solution_explanation": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735155124,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "486",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.85,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:41+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.85,
+      "validation_issues": [
+        "expression_parse_failure"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(486)90. (0)2021*(17 Mar Shift 2)Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "486",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.85,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_125",
+    "type": "NUMERICAL",
+    "question_text": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+    "question_text_latex": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "5",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718511668",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718511668",
+    "published_at": 1772718511668,
+    "solution_explanation": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735340429,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "sequences and series",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+      "clean_question_latex": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5",
+        "tolerance": null
+      },
+      "topic": "sequences and series",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:42+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+        "clean_question_latex": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5",
+          "tolerance": null
+        },
+        "topic": "sequences and series",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_139",
+    "type": "NUMERICAL",
+    "question_text": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "5",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718511668",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718511668",
+    "published_at": 1772718511668,
+    "solution_explanation": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735340429,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.85,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:42+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.85,
+      "validation_issues": [
+        "expression_parse_failure"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(5)90. (96)2021*(26 Aug Shift 2)Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.85,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_118",
+    "type": "NUMERICAL",
+    "question_text": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+    "question_text_latex": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718536108",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718536108",
+    "published_at": 1772718536108,
+    "solution_explanation": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735370839,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+      "clean_question_latex": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "2",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+        "clean_question_latex": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "2",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_132",
+    "type": "NUMERICAL",
+    "question_text": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718536108",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718536108",
+    "published_at": 1772718536108,
+    "solution_explanation": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "solution_enriched_at": 1772735370839,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "2",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.85,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.85,
+      "validation_issues": [
+        "expression_parse_failure"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(2)90. (3)2021*(27 Jul Shift 1)Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "2",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.85,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_101",
+    "type": "NUMERICAL",
+    "question_text": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+    "question_text_latex": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1494",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "missing_operand:->",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718576609",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718576609",
+    "published_at": 1772718576609,
+    "solution_explanation": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "source_solution_stub": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "has_solution": true,
+    "solution_enriched_at": 1772735404233,
+    "repair_actions": [],
+    "repair_confidence": 0.93,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+      "clean_question_latex": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1494",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.93,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.93,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+        "clean_question_latex": "Let ->a = 2 ^ i - ^ j + 2 ^ k and ->b = ^ i + 2 ^ j - ^ k . Let a vector ->v be in the plane containing ->a and ->b . If ->v is perpendicular to the vector 3 ^ i + 2 ^ j - ^ k and its projection on ->a is 19 units, then \u00002->v | 2 is equal to _____.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "1494",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.93,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_114",
+    "type": "NUMERICAL",
+    "question_text": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1494",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_parse_failure"
+    ],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772718576609",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772718576609",
+    "published_at": 1772718576609,
+    "solution_explanation": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "source_solution_stub": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "has_solution": true,
+    "solution_enriched_at": 1772735404233,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 0.85,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [
+      "expression_parse_failure"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": true,
+    "verification": {
+      "mathematical_consistency": false,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": true,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1494",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.85,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.85,
+      "validation_issues": [
+        "expression_parse_failure"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(1494)90. (781)2021*(01 Sep Shift 2)Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "1494",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.85,
+        "requires_human_review": true
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_56",
+    "type": "NUMERICAL",
+    "question_text": "Vector Algebra",
+    "question_text_latex": "Vector Algebra",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "28",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [],
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772719398076",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772719398076",
+    "published_at": 1772719398076,
+    "repair_actions": [],
+    "repair_confidence": 0.97,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Vector Algebra",
+      "clean_question_latex": "Vector Algebra",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "28",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.97,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:53+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.97,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Vector Algebra",
+        "clean_question_latex": "Vector Algebra",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "28",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.97,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_103",
+    "type": "NUMERICAL",
+    "question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+    "question_text_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3501",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_8",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "source_solution_stub": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793283134",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793283134",
+    "published_at": 1772793283134,
+    "topic": "sequences and series",
+    "detected_issues": [
+      "missing_operand:-"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+      "clean_question_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3501",
+        "tolerance": null
+      },
+      "topic": "sequences and series",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_8",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:59+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_8"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "missing_operand:-"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ i^2 = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+        "clean_question_latex": "Let -> v = 𝛼 ^ i + 2 ^ j - 3 ^ k, \u0000 \u0000 w = 2𝛼 ^ i + ^ j - ^ k, and -> u be a vector such that -> u = 𝛼 > 0. If the minimum value of the scalar triple product -> u -> v \u0000 \u0000 w is -𝛼sqrt3401, and -> u . ^ $i^2$ = m*n where m and n are coprime natural numbers, then m + n is equal to _____ . 2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo Join the Most Relevant Test Series for with Most Detailed & Advanced Analysis here: https://links.mathongo.com/mWN",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3501",
+          "tolerance": null
+        },
+        "topic": "sequences and series",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_8",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_116",
+    "type": "NUMERICAL",
+    "question_text": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3501",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "source_solution_stub": "Let → 𝑣 = 𝛼 ^ 𝑖 + 2 ^ 𝑗 - 3 ^ 𝑘, \u0000 \u0000 𝑤 = 2𝛼 ^ 𝑖 + ^ 𝑗 - ^ 𝑘, and → 𝑢 be a vector such that → 𝑢 = 𝛼 > 0. If the minimum value of the scalar triple product → 𝑢 (3501) 90. (11)",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793283134",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793283134",
+    "published_at": 1772793283134,
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3501",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:59+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(3501)90. (11)2023*(01 Feb Shift 1) Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3501",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_133",
+    "type": "NUMERICAL",
+    "question_text": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "486",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let be a vector in the plane containing vectors and If the vector is perpendicular to and its projection on is then the value of is equal to _______. (486) 90. (0) JEE Main 2021 (17 Mar Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793690297",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793690297",
+    "published_at": 1772793690297,
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "486",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:23:03+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(486)90. (0)2021*(17 Mar Shift 2) Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "486",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_139",
+    "type": "NUMERICAL",
+    "question_text": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "5",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "If the projection of the vector on the sum of the two vectors and is , then is equal to _______. (5) 90. (96) JEE Main 2021 (26 Aug Shift 2) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793785597",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793785597",
+    "published_at": 1772793785597,
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:23:05+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(5)90. (96)2021*(26 Aug Shift 2) Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_132",
+    "type": "NUMERICAL",
+    "question_text": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "2",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "source_solution_stub": "Let and be three vectors such that and If the length of projection vector of the vector on the vector is then the value of is equal to _____. (2) 90. (3) JEE Main 2021 (27 Jul Shift 1) Question Paper JEE Main Previous Year Paper MathonGo",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793843203",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793843203",
+    "published_at": 1772793843203,
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "2",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:23:05+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(2)90. (3)2021*(27 Jul Shift 1) Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "2",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  },
+  {
+    "question_id": "imp_q_114",
+    "type": "NUMERICAL",
+    "question_text": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+    "question_text_latex": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "1494",
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Vector Algebra",
+    "chapter_tags": [
+      "Vector Algebra"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7",
+      "layer10_structural_repair:structural_artifact_removed"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "safe",
+    "validation_status": "review",
+    "validation_errors": [],
+    "solution_explanation": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "source_solution_stub": "Let →𝑎 = 2 ^ 𝑖 - ^ 𝑗 + 2 ^ 𝑘 and →𝑏 = ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 . Let a vector →𝑣 be in the plane containing →𝑎 and →𝑏 . If →𝑣 is perpendicular to the vector 3 ^ 𝑖 + 2 ^ 𝑗 - ^ 𝑘 and its projection on →𝑎 is 19 units, then \u00002→𝑣 | 2 is equal to _____. (1494) 90. (781) JEE Main 2021 (01 Sep Shift 2) Question Paper",
+    "has_solution": true,
+    "publish_risk_score": 0.9,
+    "id": "bankq_1772793881275",
+    "source": "teacher_import",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "imppub_1772793881275",
+    "published_at": 1772793881275,
+    "topic": "vector calculus",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": false,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": null,
+      "suggested_correct_answer": null
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+      "clean_question_latex": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "1494",
+        "tolerance": null
+      },
+      "topic": "vector calculus",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7",
+        "layer10_structural_repair:structural_artifact_removed"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:23:06+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+        "clean_question_latex": "(1494)90. (781)2021*(01 Sep Shift 2) Question Paper Previous Year Paper MathonGo",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "1494",
+          "tolerance": null
+        },
+        "topic": "vector calculus",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7",
+          "layer10_structural_repair:structural_artifact_removed"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    }
+  }
+]

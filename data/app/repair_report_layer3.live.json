@@ -1,0 +1,57 @@
+{
+  "started_at": "2026-03-07T07:28:56+00:00",
+  "finished_at": "2026-03-07T08:05:50+00:00",
+  "input": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank.json",
+  "snapshot": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank.layer3_snapshot.live.json",
+  "output": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank_layer3_verified.live.json",
+  "best_output": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank_layer3_best.live.json",
+  "progress_file": "/Users/ritamsaha/lalacore_omega/data/app/repair_report_layer3.progress.live.json",
+  "rows_seen": 19342,
+  "best_rows": 15318,
+  "doubtful_rows": 19342,
+  "web_verify_enabled": false,
+  "web_checked_rows": 0,
+  "web_upgraded_rows": 0,
+  "fast_passthrough_rows": 0,
+  "status_counts": {
+    "review": 1420,
+    "reject": 2805,
+    "safe": 14798,
+    "unrecoverable": 319
+  },
+  "avg_repair_confidence": 0.9351,
+  "avg_structural_integrity_score": 0.893,
+  "avg_publish_risk_score": 0.107,
+  "top_detected_issues": {
+    "dangling_operator": 1771,
+    "expression_parse_failure": 702,
+    "unbalanced_parenthesis": 288,
+    "equation_rhs_missing": 71,
+    "missing_operand:-": 43,
+    "missing_operand:+": 42,
+    "unbalanced_brackets": 22,
+    "piecewise_case_incomplete": 12,
+    "missing_operand:*": 10,
+    "dangling_function": 5,
+    "answer_mismatch": 5,
+    "missing_operand:/": 2
+  },
+  "top_repair_actions": {
+    "graph_missing_multiplication_fix": 2294,
+    "similarity_repaired": 1215,
+    "equation_reconstructed": 62,
+    "noise_removed": 14
+  },
+  "config": {
+    "low_confidence_threshold": 0.85,
+    "integrity_safe_threshold": 0.8,
+    "web_max_rows": 2,
+    "web_min_similarity_upgrade": 0.84,
+    "web_timeout_s": 2.8,
+    "web_integrity_threshold": 0.72,
+    "web_verify_cap": 900,
+    "progress_every": 500,
+    "fast_safe_confidence": 0.95,
+    "fast_safe_integrity": 0.92
+  }
+}

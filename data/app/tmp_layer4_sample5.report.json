@@ -1,0 +1,52 @@
+{
+  "started_at": "2026-03-07T13:34:26+00:00",
+  "finished_at": "2026-03-07T13:35:28+00:00",
+  "input": "data/app/tmp_layer4_sample5.json",
+  "output": "data/app/tmp_layer4_sample5.final.json",
+  "dropped_output": "data/app/tmp_layer4_sample5.dropped.json",
+  "rows_seen": 5,
+  "rows_kept": 3,
+  "rows_dropped": 2,
+  "salvage_candidates": 5,
+  "deterministic_repaired": 3,
+  "ai_attempted": 5,
+  "ai_calls_total": 5,
+  "ai_applied": 4,
+  "ai_skipped_budget": 0,
+  "ai_tokens_estimated": 2229,
+  "ai_consecutive_failures": 0,
+  "ai_disabled": false,
+  "ai_disabled_reason": "",
+  "status_counts": {
+    "safe": 2,
+    "reject": 2,
+    "review": 1
+  },
+  "avg_repair_confidence": 0.9438,
+  "avg_structural_integrity_score": 0.8098,
+  "top_repair_actions": {
+    "layer4_post_ai_verify": 5,
+    "layer4_ai_salvage_applied": 4,
+    "similarity_repaired": 3,
+    "layer4_l1_token_repair": 3,
+    "layer4_deterministic_repair": 3,
+    "layer4_l2_ast_grammar": 3,
+    "symbol_normalized": 2,
+    "layer4_ai_rejected_low_similarity": 1
+  },
+  "config": {
+    "min_confidence": 0.9,
+    "min_integrity": 0.8,
+    "max_ai_rows": 0,
+    "ai_review_all": true,
+    "require_ai_check_all": true,
+    "token_budget": 0,
+    "avg_response_tokens": 220,
+    "min_question_similarity": 0.78,
+    "ai_failure_breaker": 25,
+    "ai_max_retries": 1,
+    "ai_retry_delay_s": 1.0,
+    "ai_timeout_s": 12.0,
+    "delete_unusable": true
+  }
+}

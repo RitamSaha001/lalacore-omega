@@ -1,0 +1,15 @@
+{
+  "clusters": {
+    "mixed|multimodal_unverified|general|easy": {
+      "count": 2,
+      "failure_type": "multimodal_unverified",
+      "modality": "mixed"
+    },
+    "mixed|multimodal_unverified|math|hard": {
+      "count": 9,
+      "failure_type": "multimodal_unverified",
+      "modality": "mixed"
+    }
+  },
+  "updated_at": "2026-03-03T10:36:37.641984+00:00"
+}

@@ -1,0 +1,1487 @@
+{
+  "generated_at": "2026-02-26T12:22:18.296431+00:00",
+  "total_questions": 10,
+  "expected_covered": 10,
+  "correct_on_expected": 10,
+  "accuracy_on_expected": 1.0,
+  "verified_true": 10,
+  "overconfidence_count": 0,
+  "single_provider_count": 0,
+  "persona_integrity_rate": 1.0,
+  "risk_mean": 0.18007589021956286,
+  "entropy_mean": 0.37999999999999995,
+  "wrong_questions": [],
+  "ingest_process_result": {
+    "classified_count": 10,
+    "enqueue": {
+      "requested": 10,
+      "added": 0,
+      "duplicate": 10,
+      "errors": 0,
+      "entries": [
+        {
+          "question": "Find the constant term in (2x^2 - 3/x)^6.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 315,
+            "item_hash": "026be61c3cb746e012a468468115c0b56abe9cd7",
+            "question": "Find the constant term in (2x^2 - 3/x)^6.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Completed",
+            "attempts": 1,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.050981+00:00",
+            "updated_ts": "2026-02-26T12:21:51.511389+00:00",
+            "processed_ts": "2026-02-26T12:21:51.511391+00:00",
+            "last_error": null,
+            "result_summary": {
+              "verified": true,
+              "risk": 0.025,
+              "winner_provider": "mini",
+              "winner_margin": 1.0,
+              "entropy": 0.0,
+              "disagreement": 0.0,
+              "final_answer": "4860",
+              "degraded_mode": false
+            }
+          },
+          "classification": {
+            "confidence": 0.579777,
+            "metadata": {
+              "difficulty_score": 6.255286,
+              "estimated_entropy": 0.420223,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (x^3 + 2/x)^9.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 316,
+            "item_hash": "2e893a221345cec3403096524acc81597e136092",
+            "question": "Find the constant term in (x^3 + 2/x)^9.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.054814+00:00",
+            "updated_ts": "2026-02-26T12:20:46.054817+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.578924,
+            "metadata": {
+              "difficulty_score": 6.303286,
+              "estimated_entropy": 0.421076,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (3x - 1/x^2)^8.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 317,
+            "item_hash": "92924b4bca17f6fab90f250bad2e12f4aca6dce9",
+            "question": "Find the constant term in (3x - 1/x^2)^8.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.060379+00:00",
+            "updated_ts": "2026-02-26T12:20:46.060382+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.579777,
+            "metadata": {
+              "difficulty_score": 6.255286,
+              "estimated_entropy": 0.420223,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (x^4 - 2/x)^7.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 318,
+            "item_hash": "2040d66295dd6dc16e8f998af933c4b87f4b68cc",
+            "question": "Find the constant term in (x^4 - 2/x)^7.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.064228+00:00",
+            "updated_ts": "2026-02-26T12:20:46.064230+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.578924,
+            "metadata": {
+              "difficulty_score": 6.303286,
+              "estimated_entropy": 0.421076,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (2x^3 + 1/x^2)^10.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 319,
+            "item_hash": "db9eb7713baf05d7a052619fc796550ed6a3a88b",
+            "question": "Find the constant term in (2x^3 + 1/x^2)^10.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.067849+00:00",
+            "updated_ts": "2026-02-26T12:20:46.067851+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.575226,
+            "metadata": {
+              "difficulty_score": 6.511286,
+              "estimated_entropy": 0.424774,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (x^2 - 3/x)^9.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 320,
+            "item_hash": "65a5b398c320485d89e165899421fea4f42846d2",
+            "question": "Find the constant term in (x^2 - 3/x)^9.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.071387+00:00",
+            "updated_ts": "2026-02-26T12:20:46.071389+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.578924,
+            "metadata": {
+              "difficulty_score": 6.303286,
+              "estimated_entropy": 0.421076,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (4x^2 + 1/x)^8.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 321,
+            "item_hash": "a625577cbf7c197e78cbddc088825861cd0a2bae",
+            "question": "Find the constant term in (4x^2 + 1/x)^8.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.075795+00:00",
+            "updated_ts": "2026-02-26T12:20:46.075802+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.579777,
+            "metadata": {
+              "difficulty_score": 6.255286,
+              "estimated_entropy": 0.420223,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (x^5 - 1/x^2)^7.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 322,
+            "item_hash": "6b70c9d8ca33fd86920ea8e2415e9958771aeec0",
+            "question": "Find the constant term in (x^5 - 1/x^2)^7.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.079790+00:00",
+            "updated_ts": "2026-02-26T12:20:46.079791+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.574373,
+            "metadata": {
+              "difficulty_score": 6.559286,
+              "estimated_entropy": 0.425627,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (3x^3 + 2/x)^8.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 323,
+            "item_hash": "6ba71c40ee90993f38b83d6c104400eb21117f55",
+            "question": "Find the constant term in (3x^3 + 2/x)^8.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.083362+00:00",
+            "updated_ts": "2026-02-26T12:20:46.083363+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.579777,
+            "metadata": {
+              "difficulty_score": 6.255286,
+              "estimated_entropy": 0.420223,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        },
+        {
+          "question": "Find the constant term in (x^2 + 4/x)^10.",
+          "status": "duplicate",
+          "queue_item": {
+            "id": 324,
+            "item_hash": "f72445abf45855e515d8ad4a9bce2bf9cb62a6fb",
+            "question": "Find the constant term in (x^2 + 4/x)^10.",
+            "subject": "mathematics",
+            "difficulty": "medium",
+            "concept_cluster": [
+              "sets_relations_and_functions",
+              "power_set",
+              "sets_relations_and_functions_core",
+              "equivalence_relation",
+              "mapping_consistency",
+              "set_partitioning",
+              "inclusion_exclusion"
+            ],
+            "source_tag": "dropbox_manual",
+            "status": "Pending",
+            "attempts": 0,
+            "max_attempts": 3,
+            "created_ts": "2026-02-26T12:20:46.087091+00:00",
+            "updated_ts": "2026-02-26T12:20:46.087092+00:00",
+            "processed_ts": null,
+            "last_error": null,
+            "result_summary": {}
+          },
+          "classification": {
+            "confidence": 0.578924,
+            "metadata": {
+              "difficulty_score": 6.303286,
+              "estimated_entropy": 0.421076,
+              "unit": "Sets, Relations and Functions",
+              "subtopic": "power_set",
+              "structural_patterns": [
+                "mapping_consistency",
+                "set_partitioning",
+                "inclusion_exclusion",
+                "transformation_based_reasoning",
+                "substitution_strategy",
+                "invariant_method",
+                "constraint_decomposition",
+                "case_partitioning"
+              ],
+              "trap_signals": [
+                "index_shift_error",
+                "relation_vs_function_confusion",
+                "domain_overlook",
+                "many_to_one_misread",
+                "sign_error",
+                "domain_violation",
+                "invalid_assumption",
+                "premature_approximation"
+              ]
+            }
+          }
+        }
+      ],
+      "queue_items": [
+        {
+          "id": 315,
+          "item_hash": "026be61c3cb746e012a468468115c0b56abe9cd7",
+          "question": "Find the constant term in (2x^2 - 3/x)^6.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.050981+00:00",
+          "updated_ts": "2026-02-26T12:21:51.511389+00:00",
+          "processed_ts": "2026-02-26T12:21:51.511391+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "4860",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 316,
+          "item_hash": "2e893a221345cec3403096524acc81597e136092",
+          "question": "Find the constant term in (x^3 + 2/x)^9.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.054814+00:00",
+          "updated_ts": "2026-02-26T12:20:46.054817+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 317,
+          "item_hash": "92924b4bca17f6fab90f250bad2e12f4aca6dce9",
+          "question": "Find the constant term in (3x - 1/x^2)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.060379+00:00",
+          "updated_ts": "2026-02-26T12:20:46.060382+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 318,
+          "item_hash": "2040d66295dd6dc16e8f998af933c4b87f4b68cc",
+          "question": "Find the constant term in (x^4 - 2/x)^7.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.064228+00:00",
+          "updated_ts": "2026-02-26T12:20:46.064230+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 319,
+          "item_hash": "db9eb7713baf05d7a052619fc796550ed6a3a88b",
+          "question": "Find the constant term in (2x^3 + 1/x^2)^10.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.067849+00:00",
+          "updated_ts": "2026-02-26T12:20:46.067851+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 320,
+          "item_hash": "65a5b398c320485d89e165899421fea4f42846d2",
+          "question": "Find the constant term in (x^2 - 3/x)^9.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.071387+00:00",
+          "updated_ts": "2026-02-26T12:20:46.071389+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 321,
+          "item_hash": "a625577cbf7c197e78cbddc088825861cd0a2bae",
+          "question": "Find the constant term in (4x^2 + 1/x)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.075795+00:00",
+          "updated_ts": "2026-02-26T12:20:46.075802+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 322,
+          "item_hash": "6b70c9d8ca33fd86920ea8e2415e9958771aeec0",
+          "question": "Find the constant term in (x^5 - 1/x^2)^7.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.079790+00:00",
+          "updated_ts": "2026-02-26T12:20:46.079791+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 323,
+          "item_hash": "6ba71c40ee90993f38b83d6c104400eb21117f55",
+          "question": "Find the constant term in (3x^3 + 2/x)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.083362+00:00",
+          "updated_ts": "2026-02-26T12:20:46.083363+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        },
+        {
+          "id": 324,
+          "item_hash": "f72445abf45855e515d8ad4a9bce2bf9cb62a6fb",
+          "question": "Find the constant term in (x^2 + 4/x)^10.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Pending",
+          "attempts": 0,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.087091+00:00",
+          "updated_ts": "2026-02-26T12:20:46.087092+00:00",
+          "processed_ts": null,
+          "last_error": null,
+          "result_summary": {}
+        }
+      ]
+    },
+    "status": {
+      "total": 324,
+      "counts": {
+        "Pending": 0,
+        "Processing": 0,
+        "Completed": 148,
+        "Failed": 176
+      },
+      "recent": [
+        {
+          "id": 305,
+          "item_hash": "797d97f16d46a9aaf34a6d074ee989c1b124b88f",
+          "question": "Evaluate \u222b (sin^(-1)(x))' dx from 0 to 1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.281543+00:00",
+          "updated_ts": "2026-02-26T06:20:49.043304+00:00",
+          "processed_ts": "2026-02-26T06:20:49.043301+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 306,
+          "item_hash": "9cf7d0fec5dac4ace051b9e7ea58af1271ab0b2c",
+          "question": "Evaluate \u222b (tan^(-1)(x))' dx from 0 to 1.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.284746+00:00",
+          "updated_ts": "2026-02-26T06:20:49.064765+00:00",
+          "processed_ts": "2026-02-26T06:20:49.064763+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 307,
+          "item_hash": "3df0c3965efb26b2e1c9e82a9b39a02a259b6e6a",
+          "question": "Evaluate \u222b (cos^(-1)(x))' dx from 0 to 1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.288231+00:00",
+          "updated_ts": "2026-02-26T06:20:49.088033+00:00",
+          "processed_ts": "2026-02-26T06:20:49.088031+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 308,
+          "item_hash": "12b0a57f1d8cd3f374d172a6934bdcbda7aa3c2d",
+          "question": "Evaluate \u222b x\u00b7(sin^(-1)(x))' dx from 0 to 1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.291496+00:00",
+          "updated_ts": "2026-02-26T06:20:49.108124+00:00",
+          "processed_ts": "2026-02-26T06:20:49.108123+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 309,
+          "item_hash": "65b34561486973d7edd745543a418ec13703ae16",
+          "question": "Evaluate \u222b x\u00b7(tan^(-1)(x))' dx from 0 to 1.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.295233+00:00",
+          "updated_ts": "2026-02-26T06:20:49.129660+00:00",
+          "processed_ts": "2026-02-26T06:20:49.129657+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 310,
+          "item_hash": "ab55458b1d0a0c20a0d62dc3a14c320643849c77",
+          "question": "Evaluate \u222b (sin^(-1)(x))^2 dx from 0 to 1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.298597+00:00",
+          "updated_ts": "2026-02-26T06:20:49.158291+00:00",
+          "processed_ts": "2026-02-26T06:20:49.158288+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 311,
+          "item_hash": "d4d9a36fd58425a47d25524e5c41ee792d599941",
+          "question": "Evaluate \u222b (tan^(-1)(x))^2 dx from 0 to 1.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.302102+00:00",
+          "updated_ts": "2026-02-26T06:20:49.181660+00:00",
+          "processed_ts": "2026-02-26T06:20:49.181658+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 312,
+          "item_hash": "f34d59c1114b4232b7b69ace60f4aa7cdce9739b",
+          "question": "Evaluate \u222b (cos^(-1)(x))^2 dx from 0 to 1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.305868+00:00",
+          "updated_ts": "2026-02-26T06:20:49.202538+00:00",
+          "processed_ts": "2026-02-26T06:20:49.202536+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 313,
+          "item_hash": "d0f154d244a7620ef1fc05a433ce7f2ace76cbf8",
+          "question": "Evaluate d/dx [sin^(-1)(x^2)] at x=1/2.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.309362+00:00",
+          "updated_ts": "2026-02-26T06:20:49.226545+00:00",
+          "processed_ts": "2026-02-26T06:20:49.226541+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 314,
+          "item_hash": "12d5e224b6b3f1a913cfb43d7bc949d69931970b",
+          "question": "Evaluate d/dx [tan^(-1)(x^2)] at x=1.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "inverse_trig_diffint_100_run1",
+          "status": "Failed",
+          "attempts": 3,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T06:20:47.313850+00:00",
+          "updated_ts": "2026-02-26T06:20:49.248677+00:00",
+          "processed_ts": "2026-02-26T06:20:49.248675+00:00",
+          "last_error": "quality_gate:plausibility_failed,verification_failed_high_risk",
+          "result_summary": {}
+        },
+        {
+          "id": 315,
+          "item_hash": "026be61c3cb746e012a468468115c0b56abe9cd7",
+          "question": "Find the constant term in (2x^2 - 3/x)^6.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.050981+00:00",
+          "updated_ts": "2026-02-26T12:21:51.511389+00:00",
+          "processed_ts": "2026-02-26T12:21:51.511391+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "4860",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 316,
+          "item_hash": "2e893a221345cec3403096524acc81597e136092",
+          "question": "Find the constant term in (x^3 + 2/x)^9.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.054814+00:00",
+          "updated_ts": "2026-02-26T12:22:17.972018+00:00",
+          "processed_ts": "2026-02-26T12:22:17.972020+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "0",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 317,
+          "item_hash": "92924b4bca17f6fab90f250bad2e12f4aca6dce9",
+          "question": "Find the constant term in (3x - 1/x^2)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.060379+00:00",
+          "updated_ts": "2026-02-26T12:22:17.992934+00:00",
+          "processed_ts": "2026-02-26T12:22:17.992942+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "0",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 318,
+          "item_hash": "2040d66295dd6dc16e8f998af933c4b87f4b68cc",
+          "question": "Find the constant term in (x^4 - 2/x)^7.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.064228+00:00",
+          "updated_ts": "2026-02-26T12:22:18.008922+00:00",
+          "processed_ts": "2026-02-26T12:22:18.008930+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "0",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 319,
+          "item_hash": "db9eb7713baf05d7a052619fc796550ed6a3a88b",
+          "question": "Find the constant term in (2x^3 + 1/x^2)^10.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.067849+00:00",
+          "updated_ts": "2026-02-26T12:22:18.027477+00:00",
+          "processed_ts": "2026-02-26T12:22:18.027481+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "3360",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 320,
+          "item_hash": "65a5b398c320485d89e165899421fea4f42846d2",
+          "question": "Find the constant term in (x^2 - 3/x)^9.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.071387+00:00",
+          "updated_ts": "2026-02-26T12:22:18.044937+00:00",
+          "processed_ts": "2026-02-26T12:22:18.044939+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "61236",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 321,
+          "item_hash": "a625577cbf7c197e78cbddc088825861cd0a2bae",
+          "question": "Find the constant term in (4x^2 + 1/x)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.075795+00:00",
+          "updated_ts": "2026-02-26T12:22:18.061449+00:00",
+          "processed_ts": "2026-02-26T12:22:18.061452+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "0",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 322,
+          "item_hash": "6b70c9d8ca33fd86920ea8e2415e9958771aeec0",
+          "question": "Find the constant term in (x^5 - 1/x^2)^7.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.079790+00:00",
+          "updated_ts": "2026-02-26T12:22:18.077381+00:00",
+          "processed_ts": "2026-02-26T12:22:18.077384+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "-21",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 323,
+          "item_hash": "6ba71c40ee90993f38b83d6c104400eb21117f55",
+          "question": "Find the constant term in (3x^3 + 2/x)^8.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.083362+00:00",
+          "updated_ts": "2026-02-26T12:22:18.094081+00:00",
+          "processed_ts": "2026-02-26T12:22:18.094083+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "16128",
+            "degraded_mode": false
+          }
+        },
+        {
+          "id": 324,
+          "item_hash": "f72445abf45855e515d8ad4a9bce2bf9cb62a6fb",
+          "question": "Find the constant term in (x^2 + 4/x)^10.",
+          "subject": "mathematics",
+          "difficulty": "medium",
+          "concept_cluster": [
+            "sets_relations_and_functions",
+            "power_set",
+            "sets_relations_and_functions_core",
+            "equivalence_relation",
+            "mapping_consistency",
+            "set_partitioning",
+            "inclusion_exclusion"
+          ],
+          "source_tag": "dropbox_manual",
+          "status": "Completed",
+          "attempts": 1,
+          "max_attempts": 3,
+          "created_ts": "2026-02-26T12:20:46.087091+00:00",
+          "updated_ts": "2026-02-26T12:22:18.110516+00:00",
+          "processed_ts": "2026-02-26T12:22:18.110521+00:00",
+          "last_error": null,
+          "result_summary": {
+            "verified": true,
+            "risk": 0.025,
+            "winner_provider": "mini",
+            "winner_margin": 1.0,
+            "entropy": 0.0,
+            "disagreement": 0.0,
+            "final_answer": "0",
+            "degraded_mode": false
+          }
+        }
+      ],
+      "daily_cap": 510,
+      "processed_today": 147
+    },
+    "process": {
+      "processed": 9,
+      "completed": 9,
+      "failed": 0,
+      "duration_s": 0.209392,
+      "budget": 10,
+      "daily_cap": 510,
+      "remaining_daily": 363
+    }
+  }
+}

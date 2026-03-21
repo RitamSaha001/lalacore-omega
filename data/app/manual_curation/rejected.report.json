@@ -1,0 +1,81 @@
+{
+  "updated_at": "2026-03-08T11:30:47+05:30",
+  "chapters": [
+    {
+      "chapter": "Complex Numbers and Quadratic Equations",
+      "slug": "complex_numbers_and_quadratic_equations",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/complex_numbers_and_quadratic_equations.rejected.json",
+      "rejected_count": 53,
+      "reason_counts": {
+        "needs_exact_source_recovery": 27,
+        "answer_table_fragment": 12,
+        "wrong_subject_contamination": 9,
+        "artifact_fragment": 2,
+        "short_or_empty_stem": 2,
+        "duplicate_of_accepted_row": 1
+      }
+    },
+    {
+      "chapter": "Binomial Theorem",
+      "slug": "binomial_theorem",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/binomial_theorem.rejected.json",
+      "rejected_count": 227,
+      "reason_counts": {
+        "wrong_subject_contamination": 85,
+        "needs_exact_source_recovery": 51,
+        "answer_table_fragment": 47,
+        "incomplete_stem": 28,
+        "short_or_empty_stem": 8,
+        "duplicate_of_accepted_row": 5,
+        "artifact_fragment": 3
+      }
+    },
+    {
+      "chapter": "Permutations and Combinations",
+      "slug": "permutations_and_combinations",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/permutations_and_combinations.rejected.json",
+      "rejected_count": 233,
+      "reason_counts": {
+        "wrong_subject_contamination": 140,
+        "needs_exact_source_recovery": 64,
+        "answer_table_fragment": 18,
+        "incomplete_stem": 7,
+        "short_or_empty_stem": 4
+      }
+    },
+    {
+      "chapter": "Matrices and Determinants",
+      "slug": "matrices_and_determinants",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/matrices_and_determinants.rejected.json",
+      "rejected_count": 98,
+      "reason_counts": {
+        "needs_exact_source_recovery": 83,
+        "answer_table_fragment": 11,
+        "short_or_empty_stem": 2,
+        "wrong_subject_contamination": 2
+      }
+    },
+    {
+      "chapter": "Differential Equations",
+      "slug": "differential_equations",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/differential_equations.rejected.json",
+      "rejected_count": 102,
+      "reason_counts": {
+        "needs_exact_source_recovery": 99,
+        "answer_table_fragment": 2,
+        "incomplete_stem": 1
+      }
+    },
+    {
+      "chapter": "Vector Algebra",
+      "slug": "vector_algebra",
+      "rejected_file": "/Users/ritamsaha/lalacore_omega/data/app/manual_curation/chapters/vector_algebra.rejected.json",
+      "rejected_count": 18,
+      "reason_counts": {
+        "needs_exact_source_recovery": 9,
+        "answer_table_fragment": 8,
+        "short_or_empty_stem": 1
+      }
+    }
+  ]
+}

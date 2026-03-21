@@ -1,0 +1,28 @@
+{
+  "stage": "layer4_ai_salvage",
+  "status": "running",
+  "updated_at": "2026-03-07T14:37:40+00:00",
+  "done": 317,
+  "total": 19342,
+  "progress_pct": 1.64,
+  "rows_per_s": 0.09,
+  "eta_s": 223160,
+  "salvage_candidates": 19342,
+  "ai_budget": 19342,
+  "ai_attempted": 317,
+  "ai_calls_total": 317,
+  "ai_applied": 165,
+  "ai_skipped_budget": 0,
+  "ai_tokens_estimated": 127765,
+  "ai_consecutive_failures": 0,
+  "ai_disabled": false,
+  "ai_disabled_reason": "",
+  "kept": 193,
+  "dropped": 124,
+  "status_counts": {
+    "safe": 93,
+    "reject": 76,
+    "review": 100,
+    "unrecoverable": 48
+  }
+}

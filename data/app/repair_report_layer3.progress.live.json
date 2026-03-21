@@ -1,0 +1,21 @@
+{
+  "stage": "layer3_verify",
+  "status": "running",
+  "updated_at": "2026-03-07T08:41:27+00:00",
+  "progress_pct": 46.53,
+  "done": 9000,
+  "total": 19342,
+  "rows_per_s": 9.12,
+  "eta_s": 1133,
+  "safe_count": 6969,
+  "doubtful_count": 9000,
+  "web_checked_count": 0,
+  "web_upgraded_count": 0,
+  "fast_passthrough_count": 0,
+  "status_counts": {
+    "review": 583,
+    "reject": 1458,
+    "safe": 6777,
+    "unrecoverable": 182
+  }
+}

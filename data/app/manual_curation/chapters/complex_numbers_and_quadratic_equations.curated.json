@@ -1,0 +1,993 @@
+[
+  {
+    "question_id": "manual_complex_001",
+    "type": "MCQ_MULTI",
+    "question_text": "Let s, t and r be non-zero complex numbers, and let L be the set of all solutions z = x + iy (x, y in R, i = sqrt(-1)) of the equation sz + t zbar + r = 0, where zbar = x - iy. Which of the following statements are true?",
+    "question_text_latex": "Let $s$, $t$ and $r$ be non-zero complex numbers, and let $L$ be the set of all solutions $z=x+iy$ ($x,y\\in\\mathbb{R}$, $i=\\sqrt{-1}$) of the equation $sz+t\\bar z+r=0$, where $\\bar z=x-iy$. Which of the following statements are true?",
+    "options": [
+      {
+        "label": "A",
+        "text": "If L has exactly one element, then |s| != |t|."
+      },
+      {
+        "label": "B",
+        "text": "If |s| = |t|, then L has infinitely many elements."
+      },
+      {
+        "label": "C",
+        "text": "The number of elements in L intersection {z : |z - 1 + i| = 5} is at most 2."
+      },
+      {
+        "label": "D",
+        "text": "If L has more than one element, then L has infinitely many elements."
+      }
+    ],
+    "options_latex": {
+      "A": "If $L$ has exactly one element, then $|s|\\ne |t|$.",
+      "B": "If $|s|=|t|$, then $L$ has infinitely many elements.",
+      "C": "The number of elements in $L\\cap\\{z:\\,|z-1+i|=5\\}$ is at most $2$.",
+      "D": "If $L$ has more than one element, then $L$ has infinitely many elements."
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [
+        "A",
+        "C",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Complex Numbers and Quadratic Equations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_complex_001",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_complex_001",
+    "published_at": 1772708793808,
+    "repair_actions": [
+      "layer1_symbol_normalization:symbol_translation_normalized",
+      "layer2_mathbb_repair:mathbb_set_repair_7",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Complex Numbers and Quadratic Equations",
+      "Sets, Relations and Functions"
+    ],
+    "topic": "piecewise functions",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": [
+        "A",
+        "C",
+        "D"
+      ],
+      "suggested_correct_answer": {
+        "multiple": [
+          "A",
+          "C",
+          "D"
+        ]
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let s, t, r be the non -zero complex numbers and L be the set of solutions z = x + iy (x, y in \\mathbb{R}, i = sqrt-1)of the equation sz + tz̄ + r = 0, where z̄ = x - iy. Then, which of the following statement(s)is (are)TRUE ? [JEE (Advanced)2018]",
+      "clean_question_latex": "Let s, t, r be the non -zero complex numbers and L be the set of solutions z = x + iy (x, y in \\mathbb{R}, i = sqrt-1)of the equation sz + tz̄ + r = 0, where z̄ = x - iy. Then, which of the following statement(s)is (are)TRUE ? [JEE (Advanced)2018]",
+      "options": {
+        "A": "If L has exactly one element, then |s| != |t|",
+        "B": "If |s| = |t|, then L has infinitely many elements",
+        "C": "The number of elements in L intersection {z : | z - 1 + i| = 5} is at most 2",
+        "D": "If L has more than one element, then L has infinitely many elements CN04-0103 JEE (Main + Advanced) : Mathematics [ 272 ] www.allen.in"
+      },
+      "options_latex": {
+        "A": "If L has exactly one element, then |s| != |t|",
+        "B": "If |s| = |t|, then L has infinitely many elements",
+        "C": "The number of elements in L intersection {z : | z - 1 + i| = 5} is at most 2",
+        "D": "If L has more than one element, then L has infinitely many elements CN04-0103 JEE (Main + Advanced) : Mathematics [ 272 ] www.allen.in"
+      },
+      "correct_answer": {
+        "single": "C",
+        "multiple": [
+          "C"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "piecewise functions",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer1_symbol_normalization:symbol_translation_normalized",
+        "layer2_mathbb_repair:mathbb_set_repair_7",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer1_symbol_normalization": [
+          "symbol_translation_normalized"
+        ],
+        "layer2_mathbb_repair": [
+          "mathbb_set_repair_7"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let s, t, r be the non -zero complex numbers and L be the set of solutions z = x + iy (x, y in \\mathbb{R}, i = sqrt-1)of the equation sz + tz̄ + r = 0, where z̄ = x - iy. Then, which of the following statement(s)is (are)TRUE ? [JEE (Advanced)2018]",
+        "clean_question_latex": "Let s, t, r be the non -zero complex numbers and L be the set of solutions z = x + iy (x, y in \\mathbb{R}, i = sqrt-1)of the equation sz + tz̄ + r = 0, where z̄ = x - iy. Then, which of the following statement(s)is (are)TRUE ? [JEE (Advanced)2018]",
+        "options": {
+          "A": "If L has exactly one element, then |s| != |t|",
+          "B": "If |s| = |t|, then L has infinitely many elements",
+          "C": "The number of elements in L intersection {z : | z - 1 + i| = 5} is at most 2",
+          "D": "If L has more than one element, then L has infinitely many elements CN04-0103 JEE (Main + Advanced) : Mathematics [ 272 ] www.allen.in"
+        },
+        "options_latex": {
+          "A": "If L has exactly one element, then |s| != |t|",
+          "B": "If |s| = |t|, then L has infinitely many elements",
+          "C": "The number of elements in L intersection {z : | z - 1 + i| = 5} is at most 2",
+          "D": "If L has more than one element, then L has infinitely many elements CN04-0103 JEE (Main + Advanced) : Mathematics [ 272 ] www.allen.in"
+        },
+        "correct_answer": {
+          "single": "C",
+          "multiple": [
+            "C"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "piecewise functions",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer1_symbol_normalization:symbol_translation_normalized",
+          "layer2_mathbb_repair:mathbb_set_repair_7",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_112",
+    "legacy_row_id": "bankq_1772708793808",
+    "legacy_publish_id": "imppub_1772708793808",
+    "has_solution": true,
+    "solution_enriched_at": 1772946183000,
+    "manual_curation": {
+      "chapter_slug": "complex_numbers_and_quadratic_equations",
+      "curated_at": "2026-03-08T10:33:03+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "statement complete; options complete; answer corrected by direct linear-algebra verification",
+      "corrections": [
+        "removed trailing book artifact from option D",
+        "corrected question type from MCQ_SINGLE to MCQ_MULTI",
+        "corrected answer key from C to A,C,D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "Write s = a + ib, t = c + id, r = e + if and z = x + iy.\nThen sz + t zbar + r = 0 gives the real linear system\n(a + c)x + (-b + d)y = -e and (b + d)x + (a - c)y = -f.\nIts determinant is\n(a + c)(a - c) - (-b + d)(b + d) = a^2 + b^2 - c^2 - d^2 = |s|^2 - |t|^2.\nHence a unique solution is possible only when |s| != |t|, so A is true.\nIf |s| = |t|, the determinant is 0 and the system may be inconsistent or dependent, so B is false.\nThe solution set L is therefore either empty, a single point, or a straight line.\nA line or a point can meet the circle |z - 1 + i| = 5 in at most 2 points, so C is true.\nFinally, a linear system cannot have exactly two or any other finite number greater than 1 of solutions;\nif it has more than one solution, it has infinitely many. Thus D is true.",
+    "manual_solution_latex": "Let $s=a+ib$, $t=c+id$, $r=e+if$ and $z=x+iy$.\n    Then $sz+t\bar z+r=0$ becomes\n    \\[(a+c)x+(-b+d)y=-e,\\qquad (b+d)x+(a-c)y=-f.\\]\n    The determinant is\n    \\[(a+c)(a-c)-(-b+d)(b+d)=a^2+b^2-c^2-d^2=|s|^2-|t|^2.\\]\n    So a unique solution implies $|s|\ne|t|$; hence A is true.\n    If $|s|=|t|$, the system may be inconsistent, so B is false.\n    The set $L$ is either empty, a point, or a line; therefore $L\\cap\\{z:|z-1+i|=5\\}$ has at most 2 elements, so C is true.\n    More than one solution for a linear system implies infinitely many solutions, so D is true."
+  },
+  {
+    "question_id": "manual_complex_002",
+    "type": "NUMERICAL",
+    "question_text": "Let the complex numbers alpha and 1/conjugate(alpha) lie on the circles |z - z_0|^2 = 4 and |z - z_0|^2 = 16 respectively, where z_0 = 1 + i. Then the value of 100|alpha|^2 is ____.",
+    "question_text_latex": "Let the complex numbers $\\alpha$ and $\\dfrac{1}{\\overline{\\alpha}}$ lie on the circles $|z-z_0|^2=4$ and $|z-z_0|^2=16$ respectively, where $z_0=1+i$. Then the value of $100|\\alpha|^2$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "20",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Complex Numbers and Quadratic Equations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_complex_002",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_complex_002",
+    "published_at": 1772717654781,
+    "solution_explanation": "Let z_0 = 1 + i.\nFrom |alpha - z_0|^2 = 4, we get\n|alpha|^2 - alpha conjugate(z_0) - conjugate(alpha) z_0 + |z_0|^2 = 4.\nSince |z_0|^2 = 2, this gives |alpha|^2 - A = 2, where A = alpha conjugate(z_0) + conjugate(alpha) z_0.\nFrom |1/conjugate(alpha) - z_0|^2 = 16, multiplying by |alpha|^2 gives\n|1 - z_0 conjugate(alpha)|^2 = 16|alpha|^2, so 1 - A + 2|alpha|^2 = 16|alpha|^2.\nHence 1 - A = 14|alpha|^2.\nSubtracting the two relations gives 3 = 15|alpha|^2.\nTherefore |alpha|^2 = 1/5 and 100|alpha|^2 = 20.",
+    "source_solution_stub": "Let the complex numbers α and 1 ¯α lie on the circles z - z02 = 4 and z - z02 = 16 respectively, where z0 = 1 + i. Then, the value of 100 | α| 2 is__________. (20) 82. (0) 83. (32) 84. (100) 85. (2521) 86. (10) 87. (2) 88. (304)",
+    "has_solution": true,
+    "solution_enriched_at": 1772733967300,
+    "repair_actions": [],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Complex Numbers and Quadratic Equations"
+    ],
+    "topic": "algebraic equations",
+    "detected_issues": [
+      "ast_validation_partial"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "20",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "numerical": "20"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let the complex numbers α and 1 ¯α lie on the circles z - z02 = 4 and z - z02 = 16 respectively, where z0 = 1 + i. Then, the value of 100 | α| 2 is__________.",
+      "clean_question_latex": "Let the complex numbers α and 1 ¯α lie on the circles z - z02 = 4 and z - z02 = 16 respectively, where z0 = 1 + i. Then, the value of 100 | α| 2 is__________.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "20",
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 0.91,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:34+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 0.91,
+      "validation_issues": [
+        "ast_validation_partial"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let the complex numbers α and 1 ¯α lie on the circles z - z02 = 4 and z - z02 = 16 respectively, where z0 = 1 + i. Then, the value of 100 | α| 2 is__________.",
+        "clean_question_latex": "Let the complex numbers α and 1 ¯α lie on the circles z - z02 = 4 and z - z02 = 16 respectively, where z0 = 1 + i. Then, the value of 100 | α| 2 is__________.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "20",
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 0.91,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_92",
+    "legacy_row_id": "bankq_1772717654781",
+    "legacy_publish_id": "imppub_1772717654781",
+    "manual_curation": {
+      "chapter_slug": "complex_numbers_and_quadratic_equations",
+      "curated_at": "2026-03-08T10:33:03+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "exact statement recovered and answer re-derived algebraically",
+      "corrections": [
+        "restored 1/conjugate(alpha)",
+        "restored circle equations as |z-z_0|^2 = 4 and |z-z_0|^2 = 16"
+      ],
+      "evidence": [
+        "manual derivation",
+        "exact-statement lookup"
+      ]
+    },
+    "manual_solution_latex": "Let $A=\u0007lpha\\overline{z_0}+\\overline{\u0007lpha}z_0$ with $z_0=1+i$, so $|z_0|^2=2$.\nFrom $|\u0007lpha-z_0|^2=4$ we get\n\\[|\u0007lpha|^2-A+2=4\\quad\\Rightarrow\\quad |\u0007lpha|^2-A=2.\\]\nAlso, from $\\left|\\dfrac{1}{\\overline{\u0007lpha}}-z_0\right|^2=16$, multiplying by $|\u0007lpha|^2$ gives\n\\[|1-z_0\\overline{\u0007lpha}|^2=16|\u0007lpha|^2\\Rightarrow 1-A+2|\u0007lpha|^2=16|\u0007lpha|^2,\\]\nhence\n\\[1-A=14|\u0007lpha|^2.\\]\nSubtracting the first relation from this yields\n\\[3=15|\u0007lpha|^2\\Rightarrow |\u0007lpha|^2=\frac15.\\]\nTherefore\n\\[100|\u0007lpha|^2=20.\\]"
+  },
+  {
+    "question_id": "manual_complex_003",
+    "type": "NUMERICAL",
+    "question_text": "If, for the complex numbers z satisfying |z - 2 - 2i| <= 1, the maximum value of |3iz + 6| is attained at a + ib, then a + b is equal to ____.",
+    "question_text_latex": "If, for the complex numbers $z$ satisfying $|z-2-2i|\\le 1$, the maximum value of $|3iz+6|$ is attained at $a+ib$, then $a+b$ is equal to $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "5",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Complex Numbers and Quadratic Equations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_complex_003",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_complex_003",
+    "published_at": 1772718576609,
+    "solution_explanation": "We have |3iz + 6| = 3|iz - 2i| = 3|z - 2i|.\nSo we only need the point in the disk |z - (2 + 2i)| <= 1 that is farthest from the point 2i.\nThe center of the disk is 2 + 2i and its radius is 1.\nThe farthest point from 2i lies on the boundary in the direction away from 2i, namely at z = 3 + 2i.\nThus a = 3, b = 2 and a + b = 5.",
+    "source_solution_stub": "If for the complex numbers 𝑧 satisfying \u0000𝑧 - 2 - 2𝑖 | ≤ 1, the maximum value of |3𝑖𝑧 + 6| is attained at 𝑎 + 𝑖𝑏, then 𝑎 + 𝑏 is equal to _____ . (5) 82. (77) 83. (924) 84. (6) 85. (1250) 86. (7) 87. (26) 88. (2)",
+    "has_solution": true,
+    "solution_enriched_at": 1772735404233,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_4",
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Complex Numbers and Quadratic Equations"
+    ],
+    "topic": "algebraic equations",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "5",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "numerical": "5"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If for the complex numbers z satisfying \u0000z - 2 - 2*i | <= 1, the maximum value of |3*iz + 6| is attained at a + ib, then a + b is equal to _____ .",
+      "clean_question_latex": "If for the complex numbers z satisfying \u0000z - 2 - 2*i | <= 1, the maximum value of |3*iz + 6| is attained at a + ib, then a + b is equal to _____ .",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "5",
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_4",
+        "graph_missing_multiplication_fix"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:43+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If for the complex numbers z satisfying \u0000z - 2 - 2*i | <= 1, the maximum value of |3*iz + 6| is attained at a + ib, then a + b is equal to _____ .",
+        "clean_question_latex": "If for the complex numbers z satisfying \u0000z - 2 - 2*i | <= 1, the maximum value of |3*iz + 6| is attained at a + ib, then a + b is equal to _____ .",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "5",
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_4",
+          "graph_missing_multiplication_fix"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_92",
+    "legacy_row_id": "bankq_1772718576609",
+    "legacy_publish_id": "imppub_1772718576609",
+    "manual_curation": {
+      "chapter_slug": "complex_numbers_and_quadratic_equations",
+      "curated_at": "2026-03-08T10:33:03+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "single missing modulus bar restored; answer re-derived by geometry on Argand plane",
+      "corrections": [
+        "removed null character at start of inequality",
+        "restored missing leading modulus bar in |z - 2 - 2i| <= 1"
+      ],
+      "evidence": [
+        "manual derivation",
+        "exact-statement lookup"
+      ]
+    },
+    "manual_solution_latex": "Observe that\n\\[|3iz+6|=3|iz-2i|=3|z-2i|.\\]\nSo we maximize the distance from the fixed point $2i$ over the disk $|z-(2+2i)|\\le 1$.\nThe center is $2+2i$, its distance from $2i$ is $2$, and the farthest boundary point in that direction is\n\\[z=(2+2i)+1=3+2i.\\]\nHence $a=3$, $b=2$, and\n\\[a+b=5.\\]"
+  },
+  {
+    "question_id": "manual_complex_004",
+    "type": "MCQ_SINGLE",
+    "question_text": "If z != 1 and z^2/(z - 1) is real, then the point represented by the complex number z lies",
+    "question_text_latex": "If $z\\ne 1$ and $\\dfrac{z^2}{z-1}$ is real, then the point represented by the complex number $z$ lies",
+    "options": [
+      {
+        "label": "A",
+        "text": "either on the real axis or on a circle passing through the origin"
+      },
+      {
+        "label": "B",
+        "text": "on a circle with centre at the origin"
+      },
+      {
+        "label": "C",
+        "text": "either on the real axis or on a circle not passing through the origin"
+      },
+      {
+        "label": "D",
+        "text": "on the imaginary axis"
+      }
+    ],
+    "options_latex": {
+      "A": "either on the real axis or on a circle passing through the origin",
+      "B": "on a circle with centre at the origin",
+      "C": "either on the real axis or on a circle not passing through the origin",
+      "D": "on the imaginary axis"
+    },
+    "correct_answer": {
+      "single": "A",
+      "multiple": [
+        "A"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Complex Numbers and Quadratic Equations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "Options are too similar; review required."
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_complex_004",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_complex_004",
+    "published_at": 1772719215780,
+    "repair_actions": [
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "solution_explanation": "Let z = x + iy.\nSince z^2/(z - 1) is real, its imaginary part is zero.\nSimplifying the imaginary part gives y(x^2 - 2x + y^2) = 0.\nTherefore either y = 0, which is the real axis, or x^2 - 2x + y^2 = 0,\nthat is, (x - 1)^2 + y^2 = 1, which is a circle centered at (1, 0) and passing through the origin.\nHence option A is correct.",
+    "source_solution_stub": "If and is real, then the point represented by the complex number lies (1) either on the real axis or on a circle passing through the origin (2) on a circle with centre at the origin (3) either on the real axis or on a circle not passing through the origin (4) on the imaginary axis",
+    "has_solution": true,
+    "solution_enriched_at": 1772788190256,
+    "chapter_tags": [
+      "Complex Numbers and Quadratic Equations",
+      "Coordinate Geometry"
+    ],
+    "topic": "algebraic equations",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "A",
+      "suggested_correct_answer": {
+        "single": "A"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If and is real, then the point represented by the complex number lies",
+      "clean_question_latex": "If and is real, then the point represented by the complex number lies",
+      "options": {
+        "A": "either on the real axis or on a circle passing through the origin",
+        "B": "on a circle with centre at the origin",
+        "C": "either on the real axis or on a circle not passing through the origin",
+        "D": "on the imaginary axis"
+      },
+      "options_latex": {
+        "A": "either on the real axis or on a circle passing through the origin",
+        "B": "on a circle with centre at the origin",
+        "C": "either on the real axis or on a circle not passing through the origin",
+        "D": "on the imaginary axis"
+      },
+      "correct_answer": {
+        "single": "A",
+        "multiple": [
+          "A"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:51+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If and is real, then the point represented by the complex number lies",
+        "clean_question_latex": "If and is real, then the point represented by the complex number lies",
+        "options": {
+          "A": "either on the real axis or on a circle passing through the origin",
+          "B": "on a circle with centre at the origin",
+          "C": "either on the real axis or on a circle not passing through the origin",
+          "D": "on the imaginary axis"
+        },
+        "options_latex": {
+          "A": "either on the real axis or on a circle passing through the origin",
+          "B": "on a circle with centre at the origin",
+          "C": "either on the real axis or on a circle not passing through the origin",
+          "D": "on the imaginary axis"
+        },
+        "correct_answer": {
+          "single": "A",
+          "multiple": [
+            "A"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_88",
+    "legacy_row_id": "bankq_1772719215780",
+    "legacy_publish_id": "imppub_1772719215780",
+    "manual_curation": {
+      "chapter_slug": "complex_numbers_and_quadratic_equations",
+      "curated_at": "2026-03-08T10:33:03+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "exact missing expression restored from source and re-derived by coordinate geometry",
+      "corrections": [
+        "restored missing condition z != 1",
+        "restored missing expression z^2/(z - 1)"
+      ],
+      "evidence": [
+        "manual derivation",
+        "exact-statement lookup"
+      ]
+    },
+    "manual_solution_latex": "Let $z=x+iy$. The condition that $\\dfrac{z^2}{z-1}$ is real means\n\\[\\Im\\left(\frac{z^2}{z-1}\right)=0.\\]\nA direct simplification gives\n\\[y(x^2-2x+y^2)=0.\\]\nHence either $y=0$ (the real axis), or\n\\[x^2-2x+y^2=0\\iff (x-1)^2+y^2=1,\\]\nwhich is a circle passing through the origin.\nTherefore the locus is described by option A."
+  },
+  {
+    "question_id": "manual_complex_005",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let the complex number z = x + iy be such that (2z - 3i)/(2z + i) is purely imaginary. If x + y^2 = 0, then y^4 + y^2 - y is equal to",
+    "question_text_latex": "Let the complex number $z=x+iy$ be such that $\\dfrac{2z-3i}{2z+i}$ is purely imaginary. If $x+y^2=0$, then $y^4+y^2-y$ is equal to",
+    "options": [
+      {
+        "label": "A",
+        "text": "2/3"
+      },
+      {
+        "label": "B",
+        "text": "3/2"
+      },
+      {
+        "label": "C",
+        "text": "3/4"
+      },
+      {
+        "label": "D",
+        "text": "4/3"
+      }
+    ],
+    "options_latex": {
+      "A": "$\\frac{2}{3}$",
+      "B": "$\\frac{3}{2}$",
+      "C": "$\\frac{3}{4}$",
+      "D": "$\\frac{4}{3}$"
+    },
+    "correct_answer": {
+      "single": "C",
+      "multiple": [
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Complex Numbers and Quadratic Equations",
+    "chapter_tags": [
+      "Complex Numbers and Quadratic Equations"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_6",
+      "layer6_multiplication_repair:multiplication_repair_7"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [],
+    "solution_explanation": "Since (2z - 3i)/(2z + i) is purely imaginary, its real part is zero.\nWith z = x + iy, this gives\n(4x^2 + 4y^2 - 4y - 3)/(4x^2 + 4y^2 + 4y + 1) = 0,\nso 4x^2 + 4y^2 - 4y - 3 = 0.\nUsing x = -y^2, we get 4y^4 + 4y^2 - 4y - 3 = 0.\nTherefore y^4 + y^2 - y = 3/4, so the correct option is C.",
+    "source_solution_stub": "Let the complex number 𝑧 = 𝑥 + 𝑖𝑦 be such that 2𝑧 - 3𝑖 2𝑧 + 𝑖 is purely imaginary. If 𝑥 + 𝑦2 = 0, then 𝑦4 + 𝑦2 - 𝑦 is equal to (1) 2 3 (2) 3 2 (3) 3 4 (4) 4 3",
+    "has_solution": true,
+    "publish_risk_score": 0.0,
+    "id": "manual_complex_005",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_complex_005",
+    "published_at": 1772793322626,
+    "topic": "algebraic equations",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "C",
+      "suggested_correct_answer": {
+        "single": "C"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let the complex number z = x + iy be such that 2*z - 3*i^2*z + i is purely imaginary. If x + y^2 = 0, then y^4 + y^2 - y is equal to (1)2 3*(2)3 2*(3)3 4*(4)4 3",
+      "clean_question_latex": "Let the complex number z = x + iy be such that 2*z - 3*$i^2$*z + i is purely imaginary. If x + $y^2$ = 0, then $y^4$ + $y^2$ - y is equal to (1)2 3*(2)3 2*(3)3 4*(4)4 3",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3",
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_6",
+        "layer6_multiplication_repair:multiplication_repair_7"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:23:00+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_6",
+          "multiplication_repair_7"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let the complex number z = x + iy be such that 2*z - 3*i^2*z + i is purely imaginary. If x + y^2 = 0, then y^4 + y^2 - y is equal to (1)2 3*(2)3 2*(3)3 4*(4)4 3",
+        "clean_question_latex": "Let the complex number z = x + iy be such that 2*z - 3*$i^2$*z + i is purely imaginary. If x + $y^2$ = 0, then $y^4$ + $y^2$ - y is equal to (1)2 3*(2)3 2*(3)3 4*(4)4 3",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3",
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_6",
+          "layer6_multiplication_repair:multiplication_repair_7"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_65",
+    "legacy_row_id": "bankq_1772793322626",
+    "legacy_publish_id": "imppub_1772793322626",
+    "solution_enriched_at": 1772946183000,
+    "manual_curation": {
+      "chapter_slug": "complex_numbers_and_quadratic_equations",
+      "curated_at": "2026-03-08T10:33:03+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "missing fraction bar and options restored; answer re-derived exactly",
+      "corrections": [
+        "restored fraction (2z - 3i)/(2z + i)",
+        "restored four MCQ options",
+        "corrected type from NUMERICAL to MCQ_SINGLE",
+        "corrected answer key from option-number artifact to option C"
+      ],
+      "evidence": [
+        "manual derivation",
+        "exact-statement lookup"
+      ]
+    },
+    "manual_solution_latex": "Let $z=x+iy$. Since $\\dfrac{2z-3i}{2z+i}$ is purely imaginary, its real part must vanish:\n\\[\\Re\\left(\frac{2z-3i}{2z+i}\right)=0\n\\iff \frac{4x^2+4y^2-4y-3}{4x^2+4y^2+4y+1}=0.\\]\nHence\n\\[4x^2+4y^2-4y-3=0.\\]\nUsing $x=-y^2$ from $x+y^2=0$, we obtain\n\\[4y^4+4y^2-4y-3=0.\\]\nTherefore\n\\[y^4+y^2-y=\frac34,\\]\nso the correct option is $\boxed{\text{C}}$."
+  }
+]

@@ -1,0 +1,1040 @@
+[
+  {
+    "question_id": "manual_matrix_001",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let A and B be two symmetric matrices of order 3. Statement-1: A(BA) and (AB)A are symmetric matrices. Statement-2: AB is a symmetric matrix if matrix multiplication of A with B is commutative.",
+    "question_text_latex": "Let $A$ and $B$ be two symmetric matrices of order $3$. Statement-1: $A(BA)$ and $(AB)A$ are symmetric matrices. Statement-2: $AB$ is a symmetric matrix if matrix multiplication of $A$ with $B$ is commutative.",
+    "options": [
+      {
+        "label": "A",
+        "text": "Statement-1 is true, Statement-2 is false."
+      },
+      {
+        "label": "B",
+        "text": "Statement-1 is false, Statement-2 is true."
+      },
+      {
+        "label": "C",
+        "text": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1."
+      },
+      {
+        "label": "D",
+        "text": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1."
+      }
+    ],
+    "options_latex": {
+      "A": "Statement-1 is true, Statement-2 is false.",
+      "B": "Statement-1 is false, Statement-2 is true.",
+      "C": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1.",
+      "D": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_matrix_001",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_matrix_001",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_5",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "graph_missing_multiplication_fix"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "topic": "matrices",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "D",
+      "suggested_correct_answer": {
+        "single": "D"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let A and B be two symmetric matrices of order 3. Statement-1 : A(BA)and (AB)A are symmetric matrices. Statement-2 : AB is symmetric matrix if matrix multiplication of A with B is commutative.",
+      "clean_question_latex": "Let A and B be two symmetric matrices of order 3. Statement-1 : A(BA)and (AB)A are symmetric matrices. Statement-2 : AB is symmetric matrix if matrix multiplication of A with B is commutative.",
+      "options": {
+        "A": "Statement-1 is true, Statement-2 is false.",
+        "B": "Statement-1 is false, Statement-2 is true",
+        "C": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1",
+        "D": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1. MT07-0346 Matrices www.allen.in [ 77 ]"
+      },
+      "options_latex": {
+        "A": "Statement-1 is true, Statement-2 is false.",
+        "B": "Statement-1 is false, Statement-2 is true",
+        "C": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1",
+        "D": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1. MT07-0346 Matrices www.allen.in [ 77 ]"
+      },
+      "correct_answer": {
+        "single": "B",
+        "multiple": [
+          "B"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "matrices",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_5",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "graph_missing_multiplication_fix"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_5"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let A and B be two symmetric matrices of order 3. Statement-1 : A(BA)and (AB)A are symmetric matrices. Statement-2 : AB is symmetric matrix if matrix multiplication of A with B is commutative.",
+        "clean_question_latex": "Let A and B be two symmetric matrices of order 3. Statement-1 : A(BA)and (AB)A are symmetric matrices. Statement-2 : AB is symmetric matrix if matrix multiplication of A with B is commutative.",
+        "options": {
+          "A": "Statement-1 is true, Statement-2 is false.",
+          "B": "Statement-1 is false, Statement-2 is true",
+          "C": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1",
+          "D": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1. MT07-0346 Matrices www.allen.in [ 77 ]"
+        },
+        "options_latex": {
+          "A": "Statement-1 is true, Statement-2 is false.",
+          "B": "Statement-1 is false, Statement-2 is true",
+          "C": "Statement-1 is true, Statement-2 is true; Statement-2 is a correct explanation for Statement-1",
+          "D": "Statement-1 is true, Statement-2 is true; Statement-2 is not a correct explanation for Statement-1. MT07-0346 Matrices www.allen.in [ 77 ]"
+        },
+        "correct_answer": {
+          "single": "B",
+          "multiple": [
+            "B"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "matrices",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_5",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "graph_missing_multiplication_fix"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_28",
+    "legacy_row_id": "bankq_1772708771808",
+    "legacy_publish_id": "imppub_1772708771808",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "matrices_and_determinants",
+      "curated_at": "2026-03-08T11:18:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "statement and options complete; answer key corrected by direct proof",
+      "corrections": [
+        "removed trailing artifact from option D",
+        "corrected answer key from B to D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "Since A and B are symmetric, we have A^T = A and B^T = B.\nTherefore (ABA)^T = A^T B^T A^T = ABA, so A(BA) = ABA and (AB)A = ABA are both symmetric.\nHence Statement-1 is true.\nIf AB = BA, then (AB)^T = B^T A^T = BA = AB, so AB is symmetric.\nHence Statement-2 is also true.\nBut Statement-2 is not needed to prove Statement-1, because ABA is symmetric even without AB = BA.\nTherefore the correct option is D.",
+    "manual_solution_latex": "Since $A^T=A$ and $B^T=B$,\n\\[(ABA)^T=A^TB^TA^T=ABA.\\]\nHence $A(BA)=ABA$ and $(AB)A=ABA$ are symmetric, so Statement-1 is true.\nIf $AB=BA$, then\n\\[(AB)^T=B^TA^T=BA=AB,\\]\nso $AB$ is symmetric and Statement-2 is true.\nHowever, Statement-2 is not required to prove Statement-1.\nTherefore the correct option is $\\boxed{D}$."
+  },
+  {
+    "question_id": "manual_matrix_002",
+    "type": "MCQ_MULTI",
+    "question_text": "If D1 and D2 are two 3 x 3 diagonal matrices where none of the diagonal elements is zero, then which of the following statements are true?",
+    "question_text_latex": "If $D_1$ and $D_2$ are two $3\\times 3$ diagonal matrices where none of the diagonal elements is zero, then which of the following statements are true?",
+    "options": [
+      {
+        "label": "A",
+        "text": "D1 D2 is a diagonal matrix."
+      },
+      {
+        "label": "B",
+        "text": "D1 D2 = D2 D1."
+      },
+      {
+        "label": "C",
+        "text": "D1^2 + D2^2 is a diagonal matrix."
+      },
+      {
+        "label": "D",
+        "text": "D1^2 + D2^2 = (D1 + D2)^2."
+      }
+    ],
+    "options_latex": {
+      "A": "$D_1D_2$ is a diagonal matrix.",
+      "B": "$D_1D_2=D_2D_1$.",
+      "C": "$D_1^2+D_2^2$ is a diagonal matrix.",
+      "D": "$D_1^2+D_2^2=(D_1+D_2)^2$."
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [
+        "A",
+        "B",
+        "C"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "Question appears truncated; review required.",
+      "expression_fragmented",
+      "dangling_operator"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_matrix_002",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_matrix_002",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_trailing_operator_removed",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "topic": "matrices",
+    "detected_issues": [
+      "dangling_operator",
+      "mcq_options_incomplete",
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": [
+        "A",
+        "B",
+        "C"
+      ],
+      "suggested_correct_answer": {
+        "multiple": [
+          "A",
+          "B",
+          "C"
+        ]
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If D1 and D^2 are two 3 3 diagonal matrices where none of the diagonal element is zero, then",
+      "clean_question_latex": "If D1 and $D^2$ are two 3 3 diagonal matrices where none of the diagonal element is zero, then",
+      "options": {
+        "A": "D1D2 is a diagonal matrix (B) D1D2 = D2D1",
+        "C": "D1 2 + D^2 2 is a diagonal matrix (D) D1 2 + D^2 2 = (D1 + D^2)2 MT01-0342"
+      },
+      "options_latex": {
+        "A": "D1D2 is a diagonal matrix (B) D1D2 = D2D1",
+        "C": "D1 2 + $D^2$ 2 is a diagonal matrix (D) D1 2 + $D^2$ 2 = (D1 + $D^2$)2 MT01-0342"
+      },
+      "correct_answer": {
+        "single": "C",
+        "multiple": [
+          "C"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "matrices",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_trailing_operator_removed",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": false,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": true,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": true
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_trailing_operator_removed",
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": false,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "dangling_operator",
+        "mcq_options_incomplete",
+        "truncated_question"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If D1 and D^2 are two 3 3 diagonal matrices where none of the diagonal element is zero, then",
+        "clean_question_latex": "If D1 and $D^2$ are two 3 3 diagonal matrices where none of the diagonal element is zero, then",
+        "options": {
+          "A": "D1D2 is a diagonal matrix (B) D1D2 = D2D1",
+          "C": "D1 2 + D^2 2 is a diagonal matrix (D) D1 2 + D^2 2 = (D1 + D^2)2 MT01-0342"
+        },
+        "options_latex": {
+          "A": "D1D2 is a diagonal matrix (B) D1D2 = D2D1",
+          "C": "D1 2 + $D^2$ 2 is a diagonal matrix (D) D1 2 + $D^2$ 2 = (D1 + $D^2$)2 MT01-0342"
+        },
+        "correct_answer": {
+          "single": "C",
+          "multiple": [
+            "C"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "matrices",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_trailing_operator_removed",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": false,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": true,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": true
+      }
+    },
+    "legacy_question_id": "imp_q_32",
+    "legacy_row_id": "bankq_1772708771808",
+    "legacy_publish_id": "imppub_1772708771808",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "matrices_and_determinants",
+      "curated_at": "2026-03-08T11:18:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "options restorable unambiguously from merged text; answer key corrected by direct matrix facts",
+      "corrections": [
+        "split merged options into A/B/C/D",
+        "corrected question type from MCQ_SINGLE to MCQ_MULTI",
+        "corrected answer key from C to A,B,C"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "The product of two diagonal matrices is diagonal, so A is true.\nDiagonal matrices commute entrywise, so D1 D2 = D2 D1 and B is true.\nAlso D1^2 and D2^2 are diagonal, so their sum is diagonal; hence C is true.\nBut (D1 + D2)^2 = D1^2 + D1D2 + D2D1 + D2^2, which in general is not equal to D1^2 + D2^2.\nTherefore D is false, and the correct set is A, B, C.",
+    "manual_solution_latex": "The product of diagonal matrices is diagonal, so $D_1D_2$ is diagonal and A is true.\nAlso diagonal matrices commute, hence $D_1D_2=D_2D_1$, so B is true.\nSince $D_1^2$ and $D_2^2$ are diagonal, $D_1^2+D_2^2$ is diagonal, so C is true.\nBut\n\\[(D_1+D_2)^2=D_1^2+D_1D_2+D_2D_1+D_2^2,\\]\nwhich is generally not equal to $D_1^2+D_2^2$.\nTherefore D is false, and the correct options are $\\boxed{A,B,C}$."
+  },
+  {
+    "question_id": "manual_matrix_003",
+    "type": "MCQ_MULTI",
+    "question_text": "If A and B are two 3 x 3 matrices such that their product AB is a null matrix, then which of the following statements are true?",
+    "question_text_latex": "If $A$ and $B$ are two $3\\times 3$ matrices such that their product $AB$ is a null matrix, then which of the following statements are true?",
+    "options": [
+      {
+        "label": "A",
+        "text": "If det(A) != 0, then B must be a null matrix."
+      },
+      {
+        "label": "B",
+        "text": "If det(B) != 0, then A must be a null matrix."
+      },
+      {
+        "label": "C",
+        "text": "If neither A nor B is a null matrix, then at least one of the two matrices must be singular."
+      },
+      {
+        "label": "D",
+        "text": "If neither det(A) nor det(B) is zero, then the given situation is impossible."
+      }
+    ],
+    "options_latex": {
+      "A": "If det(A) != 0, then B must be a null matrix.",
+      "B": "If det(B) != 0, then A must be a null matrix.",
+      "C": "If neither A nor B is a null matrix, then at least one of the two matrices must be singular.",
+      "D": "If neither det(A) nor det(B) is zero, then the given situation is impossible."
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "Options are too similar; review required.",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_matrix_003",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_matrix_003",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_options",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "topic": "matrices",
+    "detected_issues": [
+      "truncated_question"
+    ],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "suggested_correct_answer": {
+        "multiple": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ]
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If A and B are two 3 3 matrices such that their product AB is a null matrix then",
+      "clean_question_latex": "If A and B are two 3 3 matrices such that their product AB is a null matrix then",
+      "options": {
+        "A": "det. A != 0*B must be a null matrix.",
+        "B": "det. B != 0*A must be a null matrix.",
+        "C": "If none of A and B are null matrices then atleast one of the two matrices must be singular.",
+        "D": "If neither det. A nor det. B is zero then the given statement is not possible. MT05-0117"
+      },
+      "options_latex": {
+        "A": "det. A != 0*B must be a null matrix.",
+        "B": "det. B != 0*A must be a null matrix.",
+        "C": "If none of A and B are null matrices then atleast one of the two matrices must be singular.",
+        "D": "If neither det. A nor det. B is zero then the given statement is not possible. MT05-0117"
+      },
+      "correct_answer": {
+        "single": "B",
+        "multiple": [
+          "B"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "matrices",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_options",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_options"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [
+        "truncated_question"
+      ],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If A and B are two 3 3 matrices such that their product AB is a null matrix then",
+        "clean_question_latex": "If A and B are two 3 3 matrices such that their product AB is a null matrix then",
+        "options": {
+          "A": "det. A != 0*B must be a null matrix.",
+          "B": "det. B != 0*A must be a null matrix.",
+          "C": "If none of A and B are null matrices then atleast one of the two matrices must be singular.",
+          "D": "If neither det. A nor det. B is zero then the given statement is not possible. MT05-0117"
+        },
+        "options_latex": {
+          "A": "det. A != 0*B must be a null matrix.",
+          "B": "det. B != 0*A must be a null matrix.",
+          "C": "If none of A and B are null matrices then atleast one of the two matrices must be singular.",
+          "D": "If neither det. A nor det. B is zero then the given statement is not possible. MT05-0117"
+        },
+        "correct_answer": {
+          "single": "B",
+          "multiple": [
+            "B"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "matrices",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_options",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_34",
+    "legacy_row_id": "bankq_1772708771808",
+    "legacy_publish_id": "imppub_1772708771808",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "matrices_and_determinants",
+      "curated_at": "2026-03-08T11:18:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "options complete and answer set follows exactly from invertibility",
+      "corrections": [
+        "corrected question type from MCQ_SINGLE to MCQ_MULTI",
+        "corrected answer key from B to A,B,C,D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "If det(A) is non-zero, then A is invertible. From AB = O, multiplying by A^{-1} on the left gives B = O.\nSo A is true.\nSimilarly, if det(B) is non-zero, then B is invertible and multiplying on the right by B^{-1} gives A = O.\nSo B is true.\nIf neither A nor B is the null matrix and AB = O, then both cannot be invertible; hence at least one must be singular.\nSo C is true.\nTherefore if both det(A) and det(B) are non-zero, AB cannot be the null matrix. So D is also true.",
+    "manual_solution_latex": "If $\\det(A)\\ne 0$, then $A$ is invertible. From $AB=O$, multiplying by $A^{-1}$ on the left gives $B=O$.\nHence A is true.\nSimilarly, if $\\det(B)\\ne 0$, then $B$ is invertible and $AB=O$ implies $A=O$.\nHence B is true.\nIf neither matrix is the null matrix, then both cannot be invertible when $AB=O$; therefore at least one must be singular.\nSo C is true.\nThus if both determinants were non-zero, the situation $AB=O$ would be impossible, and D is true.\nTherefore the correct options are $\\boxed{A,B,C,D}$."
+  },
+  {
+    "question_id": "manual_matrix_004",
+    "type": "NUMERICAL",
+    "question_text": "If p, q, r are real numbers satisfying the matrix equation [p q r] [[3,4,1],[3,2,3],[2,0,2]] = [3,0,1], then |2p + q - r| equals ____.",
+    "question_text_latex": "If $p$, $q$, $r$ are real numbers satisfying the matrix equation $[p\\ q\\ r]\\begin{bmatrix}3&4&1\\\\3&2&3\\\\2&0&2\\end{bmatrix}=[3\\ 0\\ 1]$, then $|2p+q-r|$ equals $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "3",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_matrix_004",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_matrix_004",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_4",
+      "layer6_multiplication_repair:multiplication_repair_8"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "topic": "algebraic equations",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "3",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "numerical": "3"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If p, q, r are 3 real number satisfying the matrix equation, [ p*q r] 3 4 1 3 2 3 2 0 2 = [3 0 1], then |2*p + q - r| equals :- MT01-0419",
+      "clean_question_latex": "If p, q, r are 3 real number satisfying the matrix equation, [ p*q r] 3 4 1 3 2 3 2 0 2 = [3 0 1], then |2*p + q - r| equals :- MT01-0419",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "3",
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_4",
+        "layer6_multiplication_repair:multiplication_repair_8"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4",
+          "multiplication_repair_8"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If p, q, r are 3 real number satisfying the matrix equation, [ p*q r] 3 4 1 3 2 3 2 0 2 = [3 0 1], then |2*p + q - r| equals :- MT01-0419",
+        "clean_question_latex": "If p, q, r are 3 real number satisfying the matrix equation, [ p*q r] 3 4 1 3 2 3 2 0 2 = [3 0 1], then |2*p + q - r| equals :- MT01-0419",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "3",
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_4",
+          "layer6_multiplication_repair:multiplication_repair_8"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_62",
+    "legacy_row_id": "bankq_1772708771808",
+    "legacy_publish_id": "imppub_1772708771808",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "matrices_and_determinants",
+      "curated_at": "2026-03-08T11:18:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "matrix equation restorable exactly and solved directly",
+      "corrections": [
+        "restored row-vector and 3x3 matrix notation"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "From [p q r] M = [3 0 1], we get the system\n3p + 3q + 2r = 3,\n4p + 2q = 0,\np + 3q + 2r = 1.\nSolving gives p = 1, q = -2, r = 3.\nTherefore |2p + q - r| = |2 - 2 - 3| = 3.",
+    "manual_solution_latex": "The matrix equation\n\\[[p\\ q\\ r]\\begin{bmatrix}3&4&1\\\\3&2&3\\\\2&0&2\\end{bmatrix}=[3\\ 0\\ 1]\\]\ngives the system\n\\[3p+3q+2r=3,\\qquad 4p+2q=0,\\qquad p+3q+2r=1.\\]\nSolving, we obtain $p=1$, $q=-2$, $r=3$.\nHence\n\\[|2p+q-r|=|2-2-3|=3.\\]"
+  },
+  {
+    "question_id": "manual_matrix_005",
+    "type": "NUMERICAL",
+    "question_text": "Let P = [a_ij] be a 3 x 3 matrix and let Q = [b_ij], where b_ij = 2^(i+j) a_ij for 1 <= i,j <= 3. If det(P) = 2, then the number of positive divisors of det(Q) is ____.",
+    "question_text_latex": "Let $P=[a_{ij}]$ be a $3\\times 3$ matrix and let $Q=[b_{ij}]$, where $b_{ij}=2^{i+j}a_{ij}$ for $1\\le i,j\\le 3$. If $\\det(P)=2$, then the number of positive divisors of $\\det(Q)$ is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "14",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Matrices and Determinants",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "unknown_token:[",
+      "unknown_token:]",
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_matrix_005",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_matrix_005",
+    "published_at": 1772708771808,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_4"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Matrices and Determinants"
+    ],
+    "topic": "matrices",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "14",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "numerical": "14"
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let P = [aij] be a^3 3 matrix and let Q = [bij], where bij = 2*i+j aij for 1 < i, j < 3. If the determinant of P is 2, then the number of positive divisors of determinant of the matrix Q is - MT07-0368",
+      "clean_question_latex": "Let P = [aij] be $a^3$ 3 matrix and let Q = [bij], where bij = 2*i+j aij for 1 < i, j < 3. If the determinant of P is 2, then the number of positive divisors of determinant of the matrix Q is - MT07-0368",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "14",
+        "tolerance": null
+      },
+      "topic": "matrices",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_4"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let P = [aij] be a^3 3 matrix and let Q = [bij], where bij = 2*i+j aij for 1 < i, j < 3. If the determinant of P is 2, then the number of positive divisors of determinant of the matrix Q is - MT07-0368",
+        "clean_question_latex": "Let P = [aij] be $a^3$ 3 matrix and let Q = [bij], where bij = 2*i+j aij for 1 < i, j < 3. If the determinant of P is 2, then the number of positive divisors of determinant of the matrix Q is - MT07-0368",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "14",
+          "tolerance": null
+        },
+        "topic": "matrices",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_4"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_66",
+    "legacy_row_id": "bankq_1772708771808",
+    "legacy_publish_id": "imppub_1772708771808",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "matrices_and_determinants",
+      "curated_at": "2026-03-08T11:18:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "determinant-scaling statement survives exactly and verifies cleanly",
+      "corrections": [
+        "restored b_ij = 2^(i+j) a_ij",
+        "restored 1 <= i,j <= 3"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "Since b_ij = 2^(i+j) a_ij, the i-th row of Q has an extra factor 2^i and the j-th column has an extra factor 2^j.\nThus det(Q) = 2^(1+2+3) 2^(1+2+3) det(P) = 2^12 * 2 = 2^13 = 8192.\nThe number of positive divisors of 2^13 is 13 + 1 = 14.",
+    "manual_solution_latex": "Because $b_{ij}=2^{i+j}a_{ij}$, each row $i$ contributes a factor $2^i$ and each column $j$ contributes a factor $2^j$.\nHence\n\\[\\det(Q)=2^{1+2+3}\\,2^{1+2+3}\\det(P)=2^{12}\\cdot 2=2^{13}=8192.\\]\nTherefore the number of positive divisors of $\\det(Q)$ is\n\\[13+1=14.\\]"
+  }
+]

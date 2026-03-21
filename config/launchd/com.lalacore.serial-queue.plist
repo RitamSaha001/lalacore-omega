@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.lalacore.serial-queue</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/ritamsaha/lalacore_omega/run_serial_queue_worker.sh</string>
+  </array>
+
+  <!-- Run one question every 90s to minimize provider burst traffic -->
+  <key>StartInterval</key>
+  <integer>90</integer>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/ritamsaha/lalacore_omega/queue_worker.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/ritamsaha/lalacore_omega/queue_worker_error.log</string>
+</dict>
+</plist>
+

@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-02-26T11:18:00.662115Z",
+  "tests": {
+    "full_unittest_passed": true,
+    "full_unittest_count": 127
+  },
+  "binomial_10": {
+    "correct": 10,
+    "total": 10,
+    "verified_true": 10
+  },
+  "adversarial_50": {
+    "accuracy": 1.0,
+    "correct": 50,
+    "total_questions": 50,
+    "overconfidence_count": 0,
+    "single_provider_frequency": 0.98,
+    "risk_mean": 0.1769833078853247
+  },
+  "shadow_diversity": {
+    "log_counts": {
+      "arena_shadow_disagreements": 302,
+      "deterministic_vs_provider_gap": 53,
+      "reasoning_divergence_clusters": 355,
+      "rare_cluster_cross_provider": 0
+    },
+    "dataset_total": 1782,
+    "dataset_source_distribution": {
+      "mini_shadow_logs": 466,
+      "deterministic_vs_provider_gap": 9,
+      "arena_shadow_disagreement": 118,
+      "reasoning_divergence_cluster": 1,
+      "solver_debug": 583,
+      "mini_shadow_logs_synthetic_disagreement": 8,
+      "deterministic_vs_provider_gap_synthetic_disagreement": 9,
+      "arena_shadow_disagreement_synthetic_disagreement": 6,
+      "solver_debug_synthetic_disagreement": 582
+    },
+    "verified_rate_sample": 0.9166666666666666
+  },
+  "provider_connectivity": {
+    "external_reachability": "dns_blocked_in_current_host",
+    "note": "openrouter/gemini probe showed network failure after rotating all keys"
+  }
+}

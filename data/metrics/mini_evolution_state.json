@@ -1,0 +1,1257 @@
+{
+  "cluster_reinforcement": {
+    "algebra": {
+      "updated_ts": "2026-03-13T13:14:30.897438+00:00",
+      "weight": 2.8
+    },
+    "area_under_curve_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:58.965696+00:00",
+      "weight": 1.16
+    },
+    "arithmetic": {
+      "updated_ts": "2026-02-26T02:25:04.746233+00:00",
+      "weight": 1.3199999999999998
+    },
+    "arrangement_under_restriction": {
+      "updated_ts": "2026-02-26T03:31:59.122351+00:00",
+      "weight": 1.16
+    },
+    "asymptotic_comparison": {
+      "updated_ts": "2026-02-26T03:31:59.093208+00:00",
+      "weight": 1.3199999999999998
+    },
+    "bijection": {
+      "updated_ts": "2026-02-26T03:31:59.145503+00:00",
+      "weight": 1.4799999999999998
+    },
+    "binomial_theorem_and_sequence_series": {
+      "updated_ts": "2026-02-26T03:31:59.076889+00:00",
+      "weight": 1.4799999999999998
+    },
+    "binomial_theorem_and_sequence_series_core": {
+      "updated_ts": "2026-02-26T03:31:59.076898+00:00",
+      "weight": 1.4799999999999998
+    },
+    "boundary_analysis": {
+      "updated_ts": "2026-02-26T03:31:58.965715+00:00",
+      "weight": 1.16
+    },
+    "chemistry": {
+      "updated_ts": "2026-03-13T13:14:30.897446+00:00",
+      "weight": 2.8
+    },
+    "circular_arrangements": {
+      "updated_ts": "2026-02-26T03:31:59.122344+00:00",
+      "weight": 1.16
+    },
+    "coefficient_comparison": {
+      "updated_ts": "2026-02-26T03:31:59.076893+00:00",
+      "weight": 1.4799999999999998
+    },
+    "complementary_counting": {
+      "updated_ts": "2026-02-26T03:31:59.122349+00:00",
+      "weight": 1.16
+    },
+    "complex_numbers_and_quadratic_equations": {
+      "updated_ts": "2026-02-26T03:31:59.100599+00:00",
+      "weight": 1.16
+    },
+    "complex_numbers_and_quadratic_equations_core": {
+      "updated_ts": "2026-02-26T03:31:59.100605+00:00",
+      "weight": 2.28
+    },
+    "definite_integral_constraint_variants": {
+      "updated_ts": "2026-02-26T03:31:59.043245+00:00",
+      "weight": 1.16
+    },
+    "definite_integral_standard_forms": {
+      "updated_ts": "2026-02-26T03:31:59.043243+00:00",
+      "weight": 1.16
+    },
+    "determinant_properties_standard_forms": {
+      "updated_ts": "2026-02-26T03:31:59.137209+00:00",
+      "weight": 1.16
+    },
+    "determinant_transformation": {
+      "updated_ts": "2026-02-26T03:31:59.137206+00:00",
+      "weight": 1.3199999999999998
+    },
+    "differential_equation_multi_step_variants": {
+      "updated_ts": "2026-02-26T03:31:58.965690+00:00",
+      "weight": 1.16
+    },
+    "domain_range": {
+      "updated_ts": "2026-02-26T03:31:59.051234+00:00",
+      "weight": 1.16
+    },
+    "energy_graphs": {
+      "updated_ts": "2026-02-26T03:31:59.069494+00:00",
+      "weight": 1.3199999999999998
+    },
+    "energy_method_substitution": {
+      "updated_ts": "2026-02-26T03:31:59.069507+00:00",
+      "weight": 1.3199999999999998
+    },
+    "equation": {
+      "updated_ts": "2026-03-13T13:14:30.897434+00:00",
+      "weight": 2.8
+    },
+    "equilibrium": {
+      "updated_ts": "2026-03-13T13:14:30.897449+00:00",
+      "weight": 2.8
+    },
+    "equivalence_relation": {
+      "updated_ts": "2026-02-26T03:31:59.153459+00:00",
+      "weight": 1.6399999999999997
+    },
+    "exclusion_principle": {
+      "updated_ts": "2026-02-26T03:31:59.122347+00:00",
+      "weight": 1.16
+    },
+    "extremal_argument": {
+      "updated_ts": "2026-02-26T03:31:59.137216+00:00",
+      "weight": 1.3199999999999998
+    },
+    "force_balance": {
+      "updated_ts": "2026-02-26T03:31:59.084861+00:00",
+      "weight": 1.16
+    },
+    "friction_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:59.084851+00:00",
+      "weight": 1.16
+    },
+    "functions_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:59.145493+00:00",
+      "weight": 1.3199999999999998
+    },
+    "geometric_locus_construction": {
+      "updated_ts": "2026-02-26T03:31:59.100610+00:00",
+      "weight": 1.16
+    },
+    "identical_object_distribution": {
+      "updated_ts": "2026-02-26T03:31:59.122338+00:00",
+      "weight": 1.16
+    },
+    "inclined_plane_systems": {
+      "updated_ts": "2026-02-26T03:31:59.084853+00:00",
+      "weight": 1.16
+    },
+    "inclusion_exclusion": {
+      "updated_ts": "2026-02-26T03:31:59.153466+00:00",
+      "weight": 2.7600000000000002
+    },
+    "integral_calculus_and_differential_equations": {
+      "updated_ts": "2026-02-26T03:31:59.129782+00:00",
+      "weight": 1.6399999999999997
+    },
+    "integral_calculus_and_differential_equations_core": {
+      "updated_ts": "2026-02-26T03:31:59.129788+00:00",
+      "weight": 1.6399999999999997
+    },
+    "integration_by_parts": {
+      "updated_ts": "2026-02-26T03:31:59.129785+00:00",
+      "weight": 1.6399999999999997
+    },
+    "invariant_method": {
+      "updated_ts": "2026-02-26T03:31:59.129795+00:00",
+      "weight": 1.7999999999999996
+    },
+    "inverse_matrix_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:59.015706+00:00",
+      "weight": 1.16
+    },
+    "jee": {
+      "updated_ts": "2026-03-13T13:14:30.897452+00:00",
+      "weight": 2.8
+    },
+    "kinematics": {
+      "updated_ts": "2026-03-13T13:14:30.897455+00:00",
+      "weight": 2.8
+    },
+    "kinematics_core": {
+      "updated_ts": "2026-02-26T03:31:58.965709+00:00",
+      "weight": 1.16
+    },
+    "laws_of_motion_and_friction": {
+      "updated_ts": "2026-02-26T03:31:59.084843+00:00",
+      "weight": 1.16
+    },
+    "laws_of_motion_and_friction_core": {
+      "updated_ts": "2026-02-26T03:31:59.084849+00:00",
+      "weight": 1.16
+    },
+    "lhopital_rule": {
+      "updated_ts": "2026-02-26T03:31:59.093205+00:00",
+      "weight": 1.3199999999999998
+    },
+    "limiting_friction": {
+      "updated_ts": "2026-02-26T03:31:59.084846+00:00",
+      "weight": 1.16
+    },
+    "limits_continuity_and_differentiability": {
+      "updated_ts": "2026-02-26T03:31:59.093202+00:00",
+      "weight": 1.3199999999999998
+    },
+    "limits_continuity_and_differentiability_core": {
+      "updated_ts": "2026-02-26T03:31:59.093211+00:00",
+      "weight": 1.4799999999999998
+    },
+    "locus_in_complex_plane": {
+      "updated_ts": "2026-02-26T03:31:59.100608+00:00",
+      "weight": 1.16
+    },
+    "magnetism_and_electromagnetic_induction_core": {
+      "updated_ts": "2026-02-26T03:31:59.002861+00:00",
+      "weight": 2.1199999999999997
+    },
+    "mapping_consistency": {
+      "updated_ts": "2026-02-26T03:31:59.153461+00:00",
+      "weight": 2.7600000000000002
+    },
+    "math": {
+      "updated_ts": "2026-03-13T13:14:30.897430+00:00",
+      "weight": 2.8
+    },
+    "matrices_and_determinants": {
+      "updated_ts": "2026-02-26T03:31:59.137199+00:00",
+      "weight": 1.3199999999999998
+    },
+    "matrices_and_determinants_core": {
+      "updated_ts": "2026-02-26T03:31:59.137204+00:00",
+      "weight": 1.3199999999999998
+    },
+    "matrix_operations_fundamentals": {
+      "updated_ts": "2026-02-26T03:31:59.137202+00:00",
+      "weight": 1.3199999999999998
+    },
+    "matrix_operations_inverse_problems": {
+      "updated_ts": "2026-02-26T03:31:59.015709+00:00",
+      "weight": 1.16
+    },
+    "middle_term_logic": {
+      "updated_ts": "2026-02-26T03:31:59.076903+00:00",
+      "weight": 1.3199999999999998
+    },
+    "optics_and_modern_physics_core": {
+      "updated_ts": "2026-02-26T03:31:58.965701+00:00",
+      "weight": 1.16
+    },
+    "partial_fraction": {
+      "updated_ts": "2026-02-26T03:31:59.129790+00:00",
+      "weight": 1.3199999999999998
+    },
+    "permutations_and_combinations": {
+      "updated_ts": "2026-02-26T03:31:59.122335+00:00",
+      "weight": 1.16
+    },
+    "permutations_and_combinations_core": {
+      "updated_ts": "2026-02-26T03:31:59.122341+00:00",
+      "weight": 2.28
+    },
+    "physics": {
+      "updated_ts": "2026-03-13T13:14:30.897458+00:00",
+      "weight": 2.8
+    },
+    "potential_energy_constraint_variants": {
+      "updated_ts": "2026-02-26T03:31:59.069502+00:00",
+      "weight": 1.16
+    },
+    "potential_energy_standard_forms": {
+      "updated_ts": "2026-02-26T03:31:59.069499+00:00",
+      "weight": 1.16
+    },
+    "potential_landscape_analysis": {
+      "updated_ts": "2026-02-26T03:31:59.069509+00:00",
+      "weight": 1.3199999999999998
+    },
+    "power_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:59.060951+00:00",
+      "weight": 1.16
+    },
+    "power_set": {
+      "updated_ts": "2026-02-26T03:31:59.153453+00:00",
+      "weight": 2.7600000000000002
+    },
+    "probability_and_statistics_core": {
+      "updated_ts": "2026-02-26T03:31:59.002859+00:00",
+      "weight": 2.1199999999999997
+    },
+    "pulley_constraints": {
+      "updated_ts": "2026-02-26T03:31:59.084856+00:00",
+      "weight": 1.16
+    },
+    "quadratic": {
+      "updated_ts": "2026-03-13T13:14:30.897441+00:00",
+      "weight": 2.8
+    },
+    "rank_consistency": {
+      "updated_ts": "2026-02-26T03:31:59.137211+00:00",
+      "weight": 1.3199999999999998
+    },
+    "redox_reactions_and_electrochemistry_core": {
+      "updated_ts": "2026-02-26T03:31:58.965704+00:00",
+      "weight": 1.16
+    },
+    "roots": {
+      "updated_ts": "2026-03-13T13:14:30.897444+00:00",
+      "weight": 2.8
+    },
+    "roots_of_quadratic_boundary_cases": {
+      "updated_ts": "2026-02-26T03:31:59.100602+00:00",
+      "weight": 1.16
+    },
+    "row_operation_invariance": {
+      "updated_ts": "2026-02-26T03:31:59.137214+00:00",
+      "weight": 1.3199999999999998
+    },
+    "series_expansion_transform": {
+      "updated_ts": "2026-02-26T03:31:59.093215+00:00",
+      "weight": 1.9599999999999995
+    },
+    "set_partitioning": {
+      "updated_ts": "2026-02-26T03:31:59.153464+00:00",
+      "weight": 2.7600000000000002
+    },
+    "sets_relations_and_functions": {
+      "updated_ts": "2026-02-26T03:31:59.153450+00:00",
+      "weight": 2.7600000000000002
+    },
+    "sets_relations_and_functions_core": {
+      "updated_ts": "2026-02-26T03:31:59.153456+00:00",
+      "weight": 2.7600000000000002
+    },
+    "spring_block_system": {
+      "updated_ts": "2026-02-26T03:31:59.060961+00:00",
+      "weight": 1.16
+    },
+    "substitution_integral": {
+      "updated_ts": "2026-02-26T03:31:59.043238+00:00",
+      "weight": 1.16
+    },
+    "substitution_strategy": {
+      "updated_ts": "2026-02-26T03:31:59.129793+00:00",
+      "weight": 1.6399999999999997
+    },
+    "sum_of_terms": {
+      "updated_ts": "2026-02-26T03:31:59.076900+00:00",
+      "weight": 1.4799999999999998
+    },
+    "symmetry_exploitation": {
+      "updated_ts": "2026-02-26T03:31:59.100613+00:00",
+      "weight": 1.9599999999999995
+    },
+    "taylor_series_expansion": {
+      "updated_ts": "2026-02-26T03:31:59.093213+00:00",
+      "weight": 1.3199999999999998
+    },
+    "term_index_alignment": {
+      "updated_ts": "2026-02-26T03:31:59.076907+00:00",
+      "weight": 1.4799999999999998
+    },
+    "transformation_based_reasoning": {
+      "updated_ts": "2026-02-26T03:31:59.137218+00:00",
+      "weight": 2.1199999999999997
+    },
+    "trap": {
+      "updated_ts": "2026-03-13T13:14:30.897461+00:00",
+      "weight": 2.8
+    },
+    "units": {
+      "updated_ts": "2026-03-13T13:14:30.897463+00:00",
+      "weight": 2.8
+    },
+    "variable_force_work": {
+      "updated_ts": "2026-02-26T03:31:59.069504+00:00",
+      "weight": 1.3199999999999998
+    },
+    "verification": {
+      "updated_ts": "2026-03-13T13:14:30.897466+00:00",
+      "weight": 2.8
+    },
+    "work_energy_and_power": {
+      "updated_ts": "2026-02-26T03:31:59.069491+00:00",
+      "weight": 1.3199999999999998
+    },
+    "work_energy_and_power_core": {
+      "updated_ts": "2026-02-26T03:31:59.069497+00:00",
+      "weight": 1.3199999999999998
+    }
+  },
+  "cluster_stats": {
+    "algebra": {
+      "ema_reliability": 2.9275494703737592e-40,
+      "last_success_ts": "2026-03-03T09:09:10.903462+00:00",
+      "replay_coverage": 4540,
+      "total": 2300
+    },
+    "area_under_curve_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "arithmetic": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "arrangement_under_restriction": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "asymptotic_comparison": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "bijection": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "binomial_theorem_and_sequence_series": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "binomial_theorem_and_sequence_series_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "boundary_analysis": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "chemistry": {
+      "ema_reliability": 2.817524451389142e-34,
+      "last_success_ts": "2026-03-03T09:09:10.903476+00:00",
+      "replay_coverage": 4540,
+      "total": 1979
+    },
+    "circular_arrangements": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "coefficient_comparison": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "complementary_counting": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "complex_numbers_and_quadratic_equations": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "complex_numbers_and_quadratic_equations_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 8,
+      "total": 0
+    },
+    "definite_integral_constraint_variants": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "definite_integral_standard_forms": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "determinant_properties_standard_forms": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "determinant_transformation": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "differential_equation_multi_step_variants": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "domain_range": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "energy_graphs": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "energy_method_substitution": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "equation": {
+      "ema_reliability": 2.9275494703737592e-40,
+      "last_success_ts": "2026-03-03T09:09:10.903459+00:00",
+      "replay_coverage": 4540,
+      "total": 2300
+    },
+    "equilibrium": {
+      "ema_reliability": 5.338931305261434e-34,
+      "last_success_ts": "2026-03-03T09:09:10.903479+00:00",
+      "replay_coverage": 4540,
+      "total": 1974
+    },
+    "equivalence_relation": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 4,
+      "total": 0
+    },
+    "exclusion_principle": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "extremal_argument": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "force_balance": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "friction_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "functions_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "geometric_locus_construction": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "identical_object_distribution": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "inclined_plane_systems": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "inclusion_exclusion": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "integral_calculus_and_differential_equations": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 4,
+      "total": 0
+    },
+    "integral_calculus_and_differential_equations_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 4,
+      "total": 0
+    },
+    "integration_by_parts": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 4,
+      "total": 0
+    },
+    "invariant_method": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 5,
+      "total": 0
+    },
+    "inverse_matrix_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "jee": {
+      "ema_reliability": 1.1576716754832613e-50,
+      "last_success_ts": "2026-03-03T09:09:10.903486+00:00",
+      "replay_coverage": 4540,
+      "total": 2785
+    },
+    "kinematics": {
+      "ema_reliability": 0.016303360757326562,
+      "last_success_ts": "2026-02-26T06:08:19.378318+00:00",
+      "replay_coverage": 4540,
+      "total": 34
+    },
+    "kinematics_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "laws_of_motion_and_friction": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "laws_of_motion_and_friction_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "lhopital_rule": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "limiting_friction": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "limits_continuity_and_differentiability": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "limits_continuity_and_differentiability_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "locus_in_complex_plane": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "magnetism_and_electromagnetic_induction_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 7,
+      "total": 0
+    },
+    "mapping_consistency": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "math": {
+      "ema_reliability": 8.915679413922155e-51,
+      "last_success_ts": "2026-03-03T09:09:10.903454+00:00",
+      "replay_coverage": 4540,
+      "total": 2788
+    },
+    "matrices_and_determinants": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "matrices_and_determinants_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "matrix_operations_fundamentals": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "matrix_operations_inverse_problems": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "middle_term_logic": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "optics_and_modern_physics_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "partial_fraction": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "permutations_and_combinations": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "permutations_and_combinations_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 8,
+      "total": 0
+    },
+    "physics": {
+      "ema_reliability": 0.007571347364016344,
+      "last_success_ts": "2026-02-26T06:08:19.378315+00:00",
+      "replay_coverage": 4540,
+      "total": 40
+    },
+    "potential_energy_constraint_variants": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "potential_energy_standard_forms": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "potential_landscape_analysis": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "power_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "power_set": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "probability_and_statistics_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 7,
+      "total": 0
+    },
+    "pulley_constraints": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "quadratic": {
+      "ema_reliability": 5.287812234354931e-44,
+      "last_success_ts": "2026-03-03T09:09:10.903468+00:00",
+      "replay_coverage": 4540,
+      "total": 2498
+    },
+    "rank_consistency": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "redox_reactions_and_electrochemistry_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "roots": {
+      "ema_reliability": 7.759397648553322e-44,
+      "last_success_ts": "2026-03-03T09:09:10.903472+00:00",
+      "replay_coverage": 4540,
+      "total": 2481
+    },
+    "roots_of_quadratic_boundary_cases": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "row_operation_invariance": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "series_expansion_transform": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 6,
+      "total": 0
+    },
+    "set_partitioning": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "sets_relations_and_functions": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "sets_relations_and_functions_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 11,
+      "total": 0
+    },
+    "spring_block_system": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "substitution_integral": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 1,
+      "total": 0
+    },
+    "substitution_strategy": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 4,
+      "total": 0
+    },
+    "sum_of_terms": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "symmetry_exploitation": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 6,
+      "total": 0
+    },
+    "taylor_series_expansion": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "term_index_alignment": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 3,
+      "total": 0
+    },
+    "transformation_based_reasoning": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 7,
+      "total": 0
+    },
+    "trap": {
+      "ema_reliability": 4.94623583470222e-35,
+      "last_success_ts": "2026-03-03T09:00:56.374206+00:00",
+      "replay_coverage": 4540,
+      "total": 1584
+    },
+    "units": {
+      "ema_reliability": 0.09352881611825353,
+      "last_success_ts": "2026-02-26T05:55:37.108360+00:00",
+      "replay_coverage": 4540,
+      "total": 15
+    },
+    "variable_force_work": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "verification": {
+      "ema_reliability": 2.293415554740114e-34,
+      "last_success_ts": "2026-03-03T09:00:56.374207+00:00",
+      "replay_coverage": 4540,
+      "total": 1558
+    },
+    "work_energy_and_power": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    },
+    "work_energy_and_power_core": {
+      "ema_reliability": 0.5,
+      "last_success_ts": null,
+      "replay_coverage": 2,
+      "total": 0
+    }
+  },
+  "curriculum": {
+    "chemistry:easy": {
+      "levels": {
+        "1": {
+          "ema_reliability": 0.46,
+          "total": 1
+        },
+        "2": {
+          "ema_reliability": 0.46,
+          "total": 1
+        },
+        "3": {
+          "ema_reliability": 0.44,
+          "total": 1
+        },
+        "4": {
+          "ema_reliability": 0.5,
+          "total": 0
+        },
+        "5": {
+          "ema_reliability": 0.5,
+          "total": 0
+        }
+      },
+      "unlocked_level": 1
+    },
+    "general:easy": {
+      "levels": {
+        "1": {
+          "ema_reliability": 4.586102696560467e-11,
+          "total": 602
+        },
+        "2": {
+          "ema_reliability": 4.586102696560467e-11,
+          "total": 602
+        },
+        "3": {
+          "ema_reliability": 1.2364661835789235e-15,
+          "total": 602
+        },
+        "4": {
+          "ema_reliability": 0.09434666458139837,
+          "total": 20
+        },
+        "5": {
+          "ema_reliability": 0.038781396819094795,
+          "total": 20
+        }
+      },
+      "unlocked_level": 1
+    },
+    "math:easy": {
+      "levels": {
+        "1": {
+          "ema_reliability": 0.013271013616602045,
+          "total": 1213
+        },
+        "2": {
+          "ema_reliability": 0.013271013616602045,
+          "total": 1213
+        },
+        "3": {
+          "ema_reliability": 0.005040852586910166,
+          "total": 1214
+        },
+        "4": {
+          "ema_reliability": 0.21719422711181616,
+          "total": 10
+        },
+        "5": {
+          "ema_reliability": 0.13925048800470105,
+          "total": 10
+        }
+      },
+      "unlocked_level": 4
+    },
+    "math:hard": {
+      "levels": {
+        "1": {
+          "ema_reliability": 4.685418303678982e-29,
+          "total": 774
+        },
+        "2": {
+          "ema_reliability": 4.685418303678982e-29,
+          "total": 774
+        },
+        "3": {
+          "ema_reliability": 4.685418303678982e-29,
+          "total": 774
+        },
+        "4": {
+          "ema_reliability": 3.3713648295763663e-41,
+          "total": 774
+        },
+        "5": {
+          "ema_reliability": 4.4561260389768315e-09,
+          "total": 145
+        }
+      },
+      "unlocked_level": 1
+    },
+    "math:medium": {
+      "levels": {
+        "1": {
+          "ema_reliability": 0.019465668844538035,
+          "total": 193
+        },
+        "2": {
+          "ema_reliability": 0.019465668844538035,
+          "total": 193
+        },
+        "3": {
+          "ema_reliability": 0.003317723403396022,
+          "total": 193
+        },
+        "4": {
+          "ema_reliability": 0.32954076160000007,
+          "total": 5
+        },
+        "5": {
+          "ema_reliability": 0.2638659584,
+          "total": 5
+        }
+      },
+      "unlocked_level": 4
+    },
+    "physics:easy": {
+      "levels": {
+        "1": {
+          "ema_reliability": 0.4232,
+          "total": 2
+        },
+        "2": {
+          "ema_reliability": 0.4232,
+          "total": 2
+        },
+        "3": {
+          "ema_reliability": 0.3872,
+          "total": 2
+        },
+        "4": {
+          "ema_reliability": 0.5,
+          "total": 0
+        },
+        "5": {
+          "ema_reliability": 0.5,
+          "total": 0
+        }
+      },
+      "unlocked_level": 1
+    },
+    "physics:hard": {
+      "levels": {
+        "1": {
+          "ema_reliability": 0.32954076160000007,
+          "total": 5
+        },
+        "2": {
+          "ema_reliability": 0.32954076160000007,
+          "total": 5
+        },
+        "3": {
+          "ema_reliability": 0.32954076160000007,
+          "total": 5
+        },
+        "4": {
+          "ema_reliability": 0.2638659584,
+          "total": 5
+        },
+        "5": {
+          "ema_reliability": 0.5,
+          "total": 0
+        }
+      },
+      "unlocked_level": 1
+    }
+  },
+  "difficulty": {
+    "easy": {
+      "brier": 0.04151979955036169,
+      "ema_calibration_error": 0.25555727193341576,
+      "ema_reliability": 3.4893316537973865e-05,
+      "instability_ema": 0.6303583892456485,
+      "total": 1820,
+      "verified": 437
+    },
+    "hard": {
+      "brier": 0.03595270596686767,
+      "ema_calibration_error": 0.24938921488020893,
+      "ema_reliability": 1.132100175109963e-36,
+      "instability_ema": 0.590545786725904,
+      "total": 779,
+      "verified": 0
+    },
+    "medium": {
+      "brier": 0.04033775138416727,
+      "ema_calibration_error": 0.23998125120876246,
+      "ema_reliability": 0.007470175953947652,
+      "instability_ema": 0.6144003189188297,
+      "total": 193,
+      "verified": 85
+    }
+  },
+  "gates": {
+    "min_cluster_replay_coverage": 3
+  },
+  "global": {
+    "brier_long": 0.03580908000839876,
+    "brier_short": 0.032804602054612664,
+    "calibration_pressure": 0.4000000000000003,
+    "confidence_multiplier": 1.0000000000000013,
+    "drift_score": 0.003004477953786097,
+    "ema_calibration_error": 0.25333196586389356,
+    "ema_reliability": 9.414940945448507e-34,
+    "instability_ema": 0.6501698219633947,
+    "replay_intensity": 0.9000000000000002,
+    "total": 2798
+  },
+  "promotion_state": {
+    "cooldown_hours": 24.0,
+    "last_promotion_ts": "2026-02-26T06:08:19.559861+00:00",
+    "promotion_count": 1,
+    "rollback_count": 0,
+    "rollback_hours": 48.0,
+    "rollback_until_ts": null
+  },
+  "promotion_thresholds": {
+    "easy": 0.672767409256991,
+    "hard": 0.852767409256991,
+    "medium": 0.7527674092569909
+  },
+  "subject_calibration": {
+    "chemistry": {
+      "intercept": -0.04,
+      "slope": -0.027865448544363836,
+      "total": 1
+    },
+    "general": {
+      "intercept": -0.49999999995413896,
+      "slope": -0.194158537701444,
+      "total": 602
+    },
+    "math": {
+      "intercept": -0.49999999999999967,
+      "slope": -0.18479549446771137,
+      "total": 2181
+    },
+    "physics": {
+      "intercept": -0.22107669938176003,
+      "slope": -0.13153402790310603,
+      "total": 7
+    }
+  },
+  "subject_difficulty": {
+    "chemistry:easy": {
+      "brier": 0.4577648322257859,
+      "ema_calibration_error": 0.47171584972218095,
+      "ema_reliability": 0.45,
+      "instability_ema": 0.07405043383733224,
+      "total": 1,
+      "verified": 0
+    },
+    "general:easy": {
+      "brier": 0.03773581639085288,
+      "ema_calibration_error": 0.26404673292648745,
+      "ema_reliability": 1.6480814558412086e-13,
+      "instability_ema": 0.6582854154409955,
+      "total": 602,
+      "verified": 33
+    },
+    "math:easy": {
+      "brier": 0.04801247206711859,
+      "ema_calibration_error": 0.22483159586881257,
+      "ema_reliability": 0.007582840476595208,
+      "instability_ema": 0.5443464333749363,
+      "total": 1215,
+      "verified": 404
+    },
+    "math:hard": {
+      "brier": 0.03595270596686767,
+      "ema_calibration_error": 0.24938921488020893,
+      "ema_reliability": 1.917221587342653e-36,
+      "instability_ema": 0.590545786725904,
+      "total": 774,
+      "verified": 0
+    },
+    "math:medium": {
+      "brier": 0.04033775138416727,
+      "ema_calibration_error": 0.23998125120876246,
+      "ema_reliability": 0.007470175953947652,
+      "instability_ema": 0.6144003189188297,
+      "total": 193,
+      "verified": 85
+    },
+    "physics:easy": {
+      "brier": 0.41810222483222736,
+      "ema_calibration_error": 0.4504122540807548,
+      "ema_reliability": 0.405,
+      "instability_ema": 0.14795126834692943,
+      "total": 2,
+      "verified": 0
+    },
+    "physics:hard": {
+      "brier": 0.3207501899738547,
+      "ema_calibration_error": 0.38826044087010564,
+      "ema_reliability": 0.2952450000000001,
+      "instability_ema": 0.2665374868640575,
+      "total": 5,
+      "verified": 0
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "started_at": "2026-03-06T14:26:45+00:00",
+  "finished_at": "2026-03-06T14:33:03+00:00",
+  "input": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank.json",
+  "snapshot": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank.layer2_snapshot.live.json",
+  "output": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank_layer2_finalized.live.json",
+  "best_output": "/Users/ritamsaha/lalacore_omega/data/app/import_question_bank_layer2_best.live.json",
+  "safe_threshold": 0.9,
+  "rows_seen": 19099,
+  "best_rows": 14608,
+  "status_counts": {
+    "reject": 3008,
+    "safe": 14608,
+    "review": 1356,
+    "unrecoverable": 127
+  },
+  "avg_repair_confidence": 0.9319,
+  "avg_structural_integrity_score": 0.9033,
+  "avg_publish_risk_score": 0.1002,
+  "top_detected_issues": {
+    "dangling_operator": 1733,
+    "invalid_token_sequences": 789,
+    "unbalanced_parenthesis": 276,
+    "missing_function_definition": 68,
+    "missing_operand:+": 40,
+    "missing_operand:-": 40,
+    "corrupted_piecewise": 11,
+    "missing_operand:*": 7,
+    "dangling_function": 5,
+    "answer_mismatch": 5,
+    "missing_operand:/": 2
+  }
+}

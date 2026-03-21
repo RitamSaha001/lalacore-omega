@@ -1,0 +1,11 @@
+{
+  "stage": "jee_bank_x_build",
+  "status": "done",
+  "updated_at": "2026-03-08T03:23:20+00:00",
+  "done": 19342,
+  "total": 19342,
+  "progress_pct": 100.0,
+  "rows_written": 19342,
+  "output": "data/app/JEE_BANK_X.json",
+  "report": "data/app/JEE_BANK_X.report.json"
+}

@@ -1,0 +1,28 @@
+{
+  "providers": {
+    "heuristic_vision": {
+      "auth": 0,
+      "consecutive_failures": 0,
+      "consecutive_infra_failures": 0,
+      "empty_response": 0,
+      "failures": 0,
+      "generic": 0,
+      "half_open_success": 0,
+      "health_score": 1.0,
+      "invalid_response": 0,
+      "network": 0,
+      "open_probe_counter": 0,
+      "open_until": 0.0,
+      "probe_counter": 0,
+      "rate_limit": 0,
+      "recent_infra_failures": [],
+      "requests": 67,
+      "schema_validation": 0,
+      "state": "closed",
+      "success": 67,
+      "timeout": 0,
+      "too_short": 0,
+      "unresolved_answer": 0
+    }
+  }
+}

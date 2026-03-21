@@ -1,0 +1,36 @@
+{
+  "otpdebug@example.com": {
+    "otp": "974443",
+    "expires_at": 1772166770,
+    "attempts": 0,
+    "purpose": "forgot_password"
+  },
+  "ai.integration.1772301791177@example.com": {
+    "otp": "604217",
+    "expires_at": 1772302391,
+    "sent_at": 1772301791,
+    "attempts": 0,
+    "purpose": "forgot_password"
+  },
+  "otp.live.1772301860692@example.com": {
+    "otp": "262347",
+    "expires_at": 1772302460,
+    "sent_at": 1772301860,
+    "attempts": 0,
+    "purpose": "forgot_password"
+  },
+  "otp.live.1772301935020@example.com": {
+    "otp": "597056",
+    "expires_at": 1772302535,
+    "sent_at": 1772301935,
+    "attempts": 0,
+    "purpose": "forgot_password"
+  },
+  "otp.live.1772301992507@example.com": {
+    "otp": "823696",
+    "expires_at": 1772302592,
+    "sent_at": 1772301992,
+    "attempts": 0,
+    "purpose": "forgot_password"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "stage": "jee_bank_x_build",
+  "started_at": "2026-03-08T03:22:27+00:00",
+  "finished_at": "2026-03-08T03:22:27+00:00",
+  "input": "data/app/tmp_layer4_sample5.final.json",
+  "output": "data/app/JEE_BANK_X.sample.json",
+  "rows_seen": 3,
+  "rows_written": 3,
+  "status_counts": {
+    "safe": 3
+  },
+  "question_type_counts": {
+    "MCQ_SINGLE": 2,
+    "MCQ_MULTI": 1
+  },
+  "avg_repair_confidence": 1.0,
+  "top_repair_actions": {
+    "layer10_structural_repair:structural_option_labels_normalized": 3,
+    "layer6_multiplication_repair:multiplication_repair_options": 2,
+    "layer6_multiplication_repair:multiplication_repair_5": 1
+  }
+}

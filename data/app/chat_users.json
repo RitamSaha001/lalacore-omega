@@ -1,0 +1,16 @@
+{
+  "TEACHER": {
+    "user_id": "TEACHER",
+    "chat_id": "TEACHER",
+    "name": "Teacher (Direct)",
+    "role": "teacher",
+    "updated_at": 1772298083306
+  },
+  "student_1": {
+    "user_id": "student_1",
+    "chat_id": "student_1",
+    "name": "student_1",
+    "role": "student",
+    "updated_at": 1772298083306
+  }
+}

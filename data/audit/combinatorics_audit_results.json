@@ -1,0 +1,3072 @@
+[
+  {
+    "question": "How many subsets of {1\u20137} contain both 1 and 7?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2650859739340907,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.01206132017337972,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.09305374450805014,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.09119266961788913,
+          "count": 37.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.803886+00:00",
+          "count": 41,
+          "ema_abs_error": 0.01206132017337972,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.57446622848511,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.57473516464233,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.57497811317444,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.57524013519287,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.29121975290834157
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.268369873439491,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.010252122147372762,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.09119266961788913,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.08936881622553135,
+          "count": 38.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.824172+00:00",
+          "count": 42,
+          "ema_abs_error": 0.010252122147372762,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.54607009887695,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.54633903503418,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.54658198356628,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.54684400558472,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.31875285041125884
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many subsets of {1\u20137} contain neither 1 nor 7?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2711611880190805,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.008714303825266848,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.08936881622553135,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.08758143990102071,
+          "count": 39.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.842060+00:00",
+          "count": 43,
+          "ema_abs_error": 0.008714303825266848,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.52617335319519,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.52644228935242,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.52668523788452,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.52694725990295,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.3419758606323381
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2735338054117316,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.00740715825147682,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.08758143990102071,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.0858298111030003,
+          "count": 40.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.857679+00:00",
+          "count": 44,
+          "ema_abs_error": 0.00740715825147682,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.50793600082397,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.5082049369812,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.5084478855133,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.50870990753174,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.36323257031797035
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many permutations of 1\u20136 where 1 appears before 2?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2755505301954857,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0062960845137552965,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.0858298111030003,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.08411321488094028,
+          "count": 41.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.873156+00:00",
+          "count": 45,
+          "ema_abs_error": 0.0062960845137552965,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.49263000488281,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.49289894104004,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.49314188957214,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.49340391159058,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.38120077662808505
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.277264746261676,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.005351671836692002,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.08411321488094028,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.08243095058332148,
+          "count": 42.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.890700+00:00",
+          "count": 46,
+          "ema_abs_error": 0.005351671836692002,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.47634506225586,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.47661399841309,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.47685694694519,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.47711896896362,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.397623178234799
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many permutations of 1\u20136 where 1 appears before 2 and 3?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.278721829917938,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.004548921061188201,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.08243095058332148,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.08078233157165504,
+          "count": 43.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.907088+00:00",
+          "count": 47,
+          "ema_abs_error": 0.004548921061188201,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.45975708961487,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.4600260257721,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.4602689743042,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.46053099632263,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4119891375159243
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2799603510257604,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.003866582902009971,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.08078233157165504,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07916668494022194,
+          "count": 44.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.922119+00:00",
+          "count": 48,
+          "ema_abs_error": 0.003866582902009971,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.44336104393005,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.44362998008728,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.44387292861938,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.44413495063782,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4246116178423132
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Chemical Equilibrium: Apply ICE tables and activity approximations carefully under constraints.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many 4-digit numbers from 1\u20139 with no repetition and sum odd?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2810130939674105,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.003286595466708475,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07916668494022194,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.0775833512414175,
+          "count": 45.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.937147+00:00",
+          "count": 49,
+          "ema_abs_error": 0.003286595466708475,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.42832207679749,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.42859101295471,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.42883396148682,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.42909598350525,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.39341241703077634
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.281907925467812,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.002793606146702204,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.0775833512414175,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07603168421658915,
+          "count": 46.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.952014+00:00",
+          "count": 50,
+          "ema_abs_error": 0.002793606146702204,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.41366314888,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.41393208503723,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.41417503356934,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.41443705558777,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.40866377807029386
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many 4-digit numbers from 1\u20139 with no repetition and sum even?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2826685322431537,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0023745652246968734,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07603168421658915,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07451105053225737,
+          "count": 47.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.967063+00:00",
+          "count": 51,
+          "ema_abs_error": 0.0023745652246968734,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.39899015426636,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.39925909042358,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.39950203895569,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.39976406097412,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.42162910689754696
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.283315048002194,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.002018380440992342,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07451105053225737,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07302082952161222,
+          "count": 48.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:50.982281+00:00",
+          "count": 52,
+          "ema_abs_error": 0.002018380440992342,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.38387608528137,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.3841450214386,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.3843879699707,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.38464999198914,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.43268570028447195
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many arrangements of 6 books if 3 specific books stay together?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.283864586397378,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0017156233748434908,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07302082952161222,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07156041293117997,
+          "count": 49.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.000584+00:00",
+          "count": 53,
+          "ema_abs_error": 0.0017156233748434908,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.3687641620636,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.36903309822083,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.36927604675293,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.36953806877136,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4439778907890908
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.284331694033285,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.001458279868616967,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07156041293117997,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.07012920467255637,
+          "count": 50.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.018472+00:00",
+          "count": 54,
+          "ema_abs_error": 0.001458279868616967,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.34943222999573,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.34970116615295,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.34994411468506,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.35020613670349,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.45108869628979903
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many arrangements of 6 books if 3 specific books are separated?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2847287355238057,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.001239537888324422,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.07012920467255637,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06872662057910524,
+          "count": 51.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.040758+00:00",
+          "count": 55,
+          "ema_abs_error": 0.001239537888324422,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.33057999610901,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.33084893226624,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.33109188079834,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.33135390281677,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.45562052301575207
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.285066220790748,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0010536072050757587,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.06872662057910524,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06735208816752314,
+          "count": 52.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.061814+00:00",
+          "count": 56,
+          "ema_abs_error": 0.0010536072050757587,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.30842399597168,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.3086929321289,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.30893588066101,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.30919790267944,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.46127940354602537
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Memory replay: Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many 5-digit numbers from 1\u20137 without repetition greater than 50000?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.027397
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2853530832676494,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0008955661243143949,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.06735208816752314,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06600504640417268,
+          "count": 53.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.080967+00:00",
+          "count": 57,
+          "ema_abs_error": 0.0008955661243143949,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.28881311416626,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.28908205032349,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.28932499885559,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.28958702087402,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.44737373571863503
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.027397
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2855969163730157,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0007612312056672356,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.06600504640417268,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06468494547608923,
+          "count": 54.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.100613+00:00",
+          "count": 58,
+          "ema_abs_error": 0.0007612312056672356,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.26921606063843,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.26948499679565,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.26972794532776,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.26998996734619,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4543267773038808
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Quadratic Equations: Use factoring, completing square, or formula. Verify extraneous roots.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  },
+  {
+    "question": "How many 3-digit numbers from 1\u20139 with exactly one even digit?",
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "0",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.2858041745125766,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0006470465248171503,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.06468494547608923,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06339124656656744,
+          "count": 55.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.120422+00:00",
+          "count": 59,
+          "ema_abs_error": 0.0006470465248171503,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.25015115737915,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.25042009353638,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.25066304206848,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.25092506408691,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.4602781372644373
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "0",
+      "display_answer": "Sit with me for a second.\n\n0\n\nYou don't need to spiral. I've got your back here.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verification": {
+        "verified": false,
+        "confidence_score": 0.0,
+        "stage_results": {},
+        "stage_timings": {},
+        "risk_score": 1.0,
+        "escalate": true,
+        "reason": "No expected answer found",
+        "failure_reason": "missing_ground_truth,plausibility:too_short,cross_modal_mismatch",
+        "trap_probability": 0.0,
+        "plausibility": {
+          "plausible": false,
+          "issues": [
+            "too_short"
+          ],
+          "score": 0.65,
+          "expected_type": "numeric",
+          "echo_ratio": 0.0
+        },
+        "plausibility_score": 0.65,
+        "plausibility_failed": true,
+        "entropy": 0.0,
+        "raw_risk_score": 1.0
+      },
+      "calibration_metrics": {
+        "risk_score": 1.0,
+        "raw_risk_score": 1.0,
+        "confidence_score": 0.0,
+        "verified": false,
+        "entropy": 0.38,
+        "raw_entropy": 0.0,
+        "disagreement": 0.0,
+        "winner_margin": 1.0,
+        "single_provider_mode": true,
+        "cross_modal_penalty": 0.24,
+        "cross_modal_score": 0.0,
+        "bayesian": {
+          "prior_confidence": 0.0,
+          "posterior_confidence": 0.0,
+          "posterior_risk": 1.0,
+          "evidence_log_lr": 2.285980343931203,
+          "agreement": 1.0,
+          "entropy": 0.38,
+          "deterministic": 0.0,
+          "calibration_ema": 0.0005499895460945777,
+          "answer_type_match": 1.0,
+          "winner_margin": 1.0,
+          "adaptive_ema_error": 0.06339124656656744,
+          "single_provider_multiplier": 0.82
+        },
+        "adaptive": {
+          "ema_error": 0.06212342163523609,
+          "count": 56.0,
+          "offsets": {
+            "agreement": 0.0077787035381900495,
+            "answer_type_match": 0.0077787035381900495,
+            "calibration_ema": -0.007556679311538765,
+            "deterministic": 0.0077787035381900495,
+            "entropy": -0.0018668888491656117,
+            "winner_margin": 0.0071952011298939125
+          }
+        },
+        "drift": {
+          "updated_at": "2026-02-26T09:23:51.138790+00:00",
+          "count": 60,
+          "ema_abs_error": 0.0005499895460945777,
+          "last_expected": 0.0,
+          "last_observed": 0.0
+        }
+      },
+      "provider_diagnostics": {
+        "winner_provider": "mini",
+        "provider_availability": {
+          "mini": {
+            "registered": true,
+            "key_count": 0,
+            "circuit_state": "local",
+            "eligible": true,
+            "reasons": []
+          },
+          "openrouter": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.23021912574768,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "groq": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.23048806190491,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "gemini": {
+            "registered": true,
+            "key_count": 3,
+            "circuit_state": "open",
+            "open_for_s": 69.23073101043701,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          },
+          "hf": {
+            "registered": true,
+            "key_count": 1,
+            "circuit_state": "open",
+            "open_for_s": 69.23099303245544,
+            "eligible": false,
+            "reasons": [
+              "circuit_open"
+            ]
+          }
+        },
+        "ranked_providers": [
+          {
+            "provider": "mini",
+            "score": -0.46585509055233765
+          }
+        ],
+        "provider_comparison_vision": []
+      },
+      "reasoning": "Applied retrieval-guided heuristic reasoning. Key hint: Linear Equations: Solve by isolating variables and preserving equality across operations.",
+      "meta_verification": {
+        "attempted": true,
+        "provider": "mini",
+        "consistent": true,
+        "review_reasoning": "Applied retrieval-guided heuristic reasoning.",
+        "review_final_answer": "0",
+        "suggested_correction": null,
+        "self_contradiction": {
+          "contradiction": false,
+          "signals": []
+        },
+        "circular_reasoning": false,
+        "flags": [],
+        "timed_out": false,
+        "override_allowed": true
+      }
+    }
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "started_at": "2026-03-07T14:04:10+00:00",
+  "finished_at": "2026-03-07T14:04:10+00:00",
+  "input": "data/app/tmp_layer4_sample5.final.json",
+  "output": "data/app/tmp_layer7_sample5.final.json",
+  "dropped_output": "data/app/tmp_layer7_sample5.dropped.json",
+  "rows_seen": 3,
+  "rows_kept": 1,
+  "rows_dropped": 2,
+  "similarity_recovered": 0,
+  "status_counts": {
+    "reject": 1,
+    "safe": 1,
+    "unrecoverable": 1
+  },
+  "avg_repair_confidence": 0.4733,
+  "avg_structural_integrity_score": 0.4733,
+  "top_repair_actions": {
+    "layer4_post_ai_verify": 3,
+    "layer4_l1_token_repair": 2,
+    "layer4_ai_salvage_applied": 2,
+    "layer7_option_rule_catalog": 2,
+    "layer7_semantic_sanity": 2,
+    "similarity_repaired": 1,
+    "symbol_normalized": 1,
+    "layer4_deterministic_repair": 1,
+    "layer7_option_layer7_multiplication_rules": 1,
+    "layer7_option_layer7_set_rules": 1,
+    "layer7_option_layer7_floor_frac_normalize": 1,
+    "layer7_option_layer7_numeric_rules": 1,
+    "layer7_option_layer7_artifact_rules": 1,
+    "layer4_ai_rejected_low_similarity": 1,
+    "layer4_l2_ast_grammar": 1,
+    "layer7_inequality_rules": 1,
+    "layer7_multiplication_rules": 1,
+    "layer7_symbolic_verification": 1
+  }
+}

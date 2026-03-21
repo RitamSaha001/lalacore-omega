@@ -1,0 +1,5 @@
+{"block_id": "math_linear_equation", "title": "Linear Equations", "text": "Solve by isolating variables and preserving equality across operations.", "tags": ["math", "equation", "algebra"]}
+{"block_id": "math_quadratic", "title": "Quadratic Equations", "text": "Use factoring, completing square, or formula. Verify extraneous roots.", "tags": ["math", "quadratic", "roots"]}
+{"block_id": "physics_kinematics", "title": "Kinematics", "text": "Check dimensions and sign conventions when applying motion equations.", "tags": ["physics", "kinematics", "units"]}
+{"block_id": "chem_equilibrium", "title": "Chemical Equilibrium", "text": "Apply ICE tables and activity approximations carefully under constraints.", "tags": ["chemistry", "equilibrium", "jee"]}
+{"block_id": "jee_traps", "title": "JEE Trap Memory", "text": "Common traps include ignoring domain restrictions and unit mismatch.", "tags": ["jee", "trap", "verification"]}

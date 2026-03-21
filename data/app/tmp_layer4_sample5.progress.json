@@ -1,0 +1,20 @@
+{
+  "stage": "layer4_ai_salvage",
+  "status": "done",
+  "updated_at": "2026-03-07T13:35:28+00:00",
+  "done": 5,
+  "total": 5,
+  "progress_pct": 100.0,
+  "kept": 3,
+  "dropped": 2,
+  "ai_attempted": 5,
+  "ai_calls_total": 5,
+  "ai_applied": 4,
+  "ai_skipped_budget": 0,
+  "ai_tokens_estimated": 2229,
+  "ai_consecutive_failures": 0,
+  "ai_disabled": false,
+  "ai_disabled_reason": "",
+  "output": "data/app/tmp_layer4_sample5.final.json",
+  "report": "data/app/tmp_layer4_sample5.report.json"
+}

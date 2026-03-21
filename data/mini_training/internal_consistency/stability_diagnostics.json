@@ -1,0 +1,16 @@
+{
+  "answer_variance": 1.0,
+  "confidence_variance": 0.3846348918130023,
+  "disagreement_self_rate": 0.8,
+  "dominant_answer": "1",
+  "entropy_shift": 0.35440090293338705,
+  "instability_clusters": [
+    "general"
+  ],
+  "reasoning_divergence": 0.0,
+  "runs": 5,
+  "self_disagreement_rate": 0.8,
+  "stability_score": 0.5513997742666532,
+  "variance_blocked": true,
+  "variance_threshold": 0.05
+}

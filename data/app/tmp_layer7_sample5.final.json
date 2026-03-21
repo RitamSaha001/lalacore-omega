@@ -1,0 +1,137 @@
+[
+  {
+    "question_id": "imp_q_22",
+    "type": "MCQ_SINGLE",
+    "question_text": "Which of the following statements is/are correct?",
+    "question_text_latex": "Which of the following statements is/are correct?",
+    "options": [
+      {
+        "label": "A",
+        "text": "There exists a function f : [0,1] \\to \\mathbb{\\mathbb{\\mathbbfrac(R)}} which is discontinuous at every point in [0,1] and |f(x)| is continuous at every point in [0,1]"
+      },
+      {
+        "label": "B",
+        "text": "Let F(x) = f(x) \\cdot g(x). If f(x) is differentiable at x = a, f(a) = 0 and g(x) is continuous at x = a, then F(x) is always differentiable at x = a."
+      },
+      {
+        "label": "C",
+        "text": "If f'(\\mathbb{\\mathbbfrac(R)}) a = 2 and f'(1) a = 3, then f(x) is non-differentiable at x = a but will be always continuous at x = a."
+      },
+      {
+        "label": "D",
+        "text": "If f(a) and f(b) possess opposite signs, then there must exist at least one of the equation f(x) = 0 in (a,b) provided f is continuous on [a,b]."
+      }
+    ],
+    "options_latex": {
+      "A": "There exists a function f : [0,1] \\to \\mathbb{R} \\text{ which is discontinuous at every point in } [0,1] \\text{ and } |f(x)| \\text{ is continuous at every point in } [0,1]",
+      "B": "Let F(x) = f(x) \\cdot g(x). \\text{ If } f(x) \\text{ is differentiable at } x = a, f(a) = 0 \\text{ and } g(x) \\text{ is continuous at } x = a, \\text{ then } F(x) \\text{ is always differentiable at } x = a.",
+      "C": "If f'(R) a = 2 \\text{ and } f'(L) a = 3, \\text{ then } f(x) \\text{ is non-differentiable at } x = a \\text{ but will be always continuous at } x = a.",
+      "D": "If f(a) \\text{ and } f(b) \\text{ possess opposite signs, then there must exist at least one solution of the equation } f(x) = 0 \\text{ in } (a,b) \\text{ provided } f \\text{ is continuous on } [a,b]."
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "global_answer_key",
+    "subject": "Mathematics",
+    "chapter": "Limits, Continuity and Differentiability",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "review",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.1,
+    "id": "bankq_1772708761997",
+    "source": "teacher_import",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "imppub_1772708761997",
+    "published_at": 1772708761997,
+    "repair_actions": [
+      "layer4_l1_token_repair",
+      "layer4_ai_salvage_applied",
+      "layer4_post_ai_verify",
+      "layer7_option_layer7_set_rules",
+      "layer7_option_layer7_floor_frac_normalize",
+      "layer7_option_layer7_numeric_rules",
+      "layer7_option_layer7_artifact_rules",
+      "layer7_option_rule_catalog"
+    ],
+    "repair_confidence": 0.9,
+    "repair_status": "safe",
+    "chapter_tags": [
+      "Limits, Continuity and Differentiability",
+      "Sets, Relations and Functions"
+    ],
+    "detected_issues": [],
+    "structural_integrity_score": 0.9,
+    "layer3_verification": {
+      "doubtful_row": true,
+      "web_reverify": {
+        "enabled": false,
+        "used": false,
+        "best_similarity": 0.0,
+        "upgraded": false
+      },
+      "stage": "layer3_contextual_repair",
+      "processed_at": "2026-03-07T07:28:57+00:00"
+    },
+    "layer4_salvage": {
+      "applied": false,
+      "ai_attempted": true,
+      "ai_source": "direct_openrouter",
+      "l2_ast_syntax_score": 1.0,
+      "l3_structure_score": 1.0,
+      "l5_math_validity_score": 1.0,
+      "l6_engine_confidence": 1.0,
+      "processed_at": "2026-03-07T13:35:07+00:00"
+    },
+    "layer7_postvalidate": {
+      "applied": true,
+      "ast_score": 1.0,
+      "structure_score": 1.0,
+      "math_score": 1.0,
+      "symbolic_score": 1.0,
+      "ai_score": 0.9,
+      "token_quality": 1.0,
+      "confidence_multiplicative": 0.9,
+      "hard_reject": false,
+      "updated_at": "2026-03-07T14:04:10+00:00"
+    },
+    "layer_results": {
+      "layer1_text_normalization": {
+        "applied": false
+      },
+      "layer2_ocr_corruption_repair": {
+        "issues": []
+      },
+      "layer3_math_tokenizer": {
+        "applied": true
+      },
+      "layer4_ast_parser": {
+        "ast_score": 1.0,
+        "fragments": 1,
+        "valid": 1
+      },
+      "layer5_structural_validator": {
+        "structure_score": 1.0
+      },
+      "layer6_symbolic_verification": {
+        "symbolic_score": 1.0
+      },
+      "layer7_similarity_recovery": {
+        "recovered": false
+      },
+      "layer8_ai_reconstruction": {
+        "layer4_ai_used": true
+      },
+      "layer9_confidence_engine": {
+        "confidence_multiplicative": 0.9
+      }
+    }
+  }
+]

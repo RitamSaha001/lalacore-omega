@@ -1,0 +1,834 @@
+[
+  {
+    "question_id": "manual_pnc_001",
+    "type": "NUMERICAL",
+    "question_text": "The number of permutations of the digits 1, 2, 3, ..., 7, without repetition, which neither contain the string 153 nor the string 2467, is ____.",
+    "question_text_latex": "The number of permutations of the digits $1,2,3,\\ldots,7$, without repetition, which neither contain the string $153$ nor the string $2467$, is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "4898",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Permutations and Combinations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [],
+    "publish_risk_score": 0.0,
+    "id": "manual_pnc_001",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_pnc_001",
+    "published_at": 1772948718731,
+    "solution_explanation": "There are 7! permutations of the digits 1 through 7. If the string 153 occurs, treat it as one block; then the number of permutations is 5!. If the string 2467 occurs, treat it as one block; then the number is 4!. If both occur, we have two blocks, so the count is 2!. By inclusion-exclusion, the required number is 7! - 5! - 4! + 2! = 5040 - 120 - 24 + 2 = 4898.",
+    "source_solution_stub": "The number of permutations, of the digits 1, 2, 3, … , 7 without repetition, which neither contain the string 153 nor the string 2467, is _______ .",
+    "has_solution": true,
+    "solution_enriched_at": 1772948718731,
+    "repair_actions": [
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Permutations and Combinations"
+    ],
+    "topic": "permutations and combinations",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "4898",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "4898",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The number of permutations of the digits 1, 2, 3, ..., 7, without repetition, which neither contain the string 153 nor the string 2467, is ____.",
+      "clean_question_latex": "The number of permutations of the digits $1,2,3,\\ldots,7$, without repetition, which neither contain the string $153$ nor the string $2467$, is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "4898",
+        "tolerance": null
+      },
+      "topic": "permutations and combinations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "4898",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "4898",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:37+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {},
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The number of permutations of the digits 1, 2, 3, ..., 7, without repetition, which neither contain the string 153 nor the string 2467, is ____.",
+        "clean_question_latex": "The number of permutations of the digits $1,2,3,\\ldots,7$, without repetition, which neither contain the string $153$ nor the string $2467$, is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "4898",
+          "tolerance": null
+        },
+        "topic": "permutations and combinations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "4898",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "4898",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_88",
+    "legacy_row_id": "bankq_1772718251810",
+    "legacy_publish_id": "imppub_1772718251810",
+    "manual_solution_latex": "There are $7!$ permutations of the digits $1,2,3,\\ldots,7$.\nIf the block $153$ occurs, it is treated as one object, so the number of such permutations is $5!$.\nIf the block $2467$ occurs, it is treated as one object, so the number of such permutations is $4!$.\nIf both blocks occur, we have two objects, hence the count is $2!$.\nTherefore, by inclusion-exclusion,\n\\[7!-5!-4!+2!=5040-120-24+2=4898.\\]",
+    "manual_curation": {
+      "chapter_slug": "permutations_and_combinations",
+      "curated_at": "2026-03-08T11:15:18+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the full permutation statement survives exactly in the JSON and the stored numerical answer is confirmed by inclusion-exclusion",
+      "corrections": [
+        "normalized the ellipsis 1, 2, 3, ..., 7",
+        "standardized the string-avoidance phrasing"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_pnc_002",
+    "type": "MCQ_SINGLE",
+    "question_text": "Let S = {1, 2, 3, ..., 9}. For k = 1, 2, ..., 5, let N_k be the number of subsets of S, each containing five elements, out of which exactly k are odd. Then N_1 + N_2 + N_3 + N_4 + N_5 equals",
+    "question_text_latex": "Let $S=\\{1,2,3,\\ldots,9\\}$. For $k=1,2,\\ldots,5$, let $N_k$ be the number of subsets of $S$, each containing five elements, out of which exactly $k$ are odd. Then $N_1+N_2+N_3+N_4+N_5$ equals",
+    "options": [
+      {
+        "label": "A",
+        "text": "210"
+      },
+      {
+        "label": "B",
+        "text": "252"
+      },
+      {
+        "label": "C",
+        "text": "125"
+      },
+      {
+        "label": "D",
+        "text": "126"
+      }
+    ],
+    "options_latex": {
+      "A": "210",
+      "B": "252",
+      "C": "125",
+      "D": "126"
+    },
+    "correct_answer": {
+      "single": "D",
+      "multiple": [
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Permutations and Combinations",
+    "chapter_tags": [
+      "Permutations and Combinations"
+    ],
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [],
+    "solution_explanation": "The set S has 9 elements, of which 5 are odd and 4 are even. Any 5-element subset must contain at least one odd element because there are only 4 even elements available. Therefore every 5-element subset contributes to exactly one of N1, N2, N3, N4, N5. Hence N1 + N2 + N3 + N4 + N5 is simply the total number of 5-element subsets of S, namely C(9,5)=126.",
+    "source_solution_stub": "Permutations and Combinations Topic 1 : Factorials and Permutations Topic : 2 Combinations and Dearrangement Theorem Permutations and Combinations Let S = {1, 2, 3, ..., 9}. For k = 1, 2, ..., 5, let N k be the number of subsets of S, each containing five elements out of which exactly k are odd. Then N1 + N2 + N3 + N4 + N5 = [Adv. 2017] (a) 210 (b) 252 (c) 125 (d) 126 www.jeebooks.in www.jeebooks.in In a certain town",
+    "has_solution": true,
+    "publish_risk_score": 0.0,
+    "id": "manual_pnc_002",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_pnc_002",
+    "published_at": 1772948718731,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_8",
+      "layer10_structural_repair:structural_option_labels_normalized",
+      "manual_editorial_curation"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "topic": "permutations and combinations",
+    "detected_issues": [
+      "unbalanced_parenthesis"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": "D",
+      "suggested_correct_answer": {
+        "single": "D",
+        "multiple": [
+          "D"
+        ],
+        "numerical": null,
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "Let S = {1, 2, 3, ..., 9}. For k = 1, 2, ..., 5, let N_k be the number of subsets of S, each containing five elements, out of which exactly k are odd. Then N_1 + N_2 + N_3 + N_4 + N_5 equals",
+      "clean_question_latex": "Let $S=\\{1,2,3,\\ldots,9\\}$. For $k=1,2,\\ldots,5$, let $N_k$ be the number of subsets of $S$, each containing five elements, out of which exactly $k$ are odd. Then $N_1+N_2+N_3+N_4+N_5$ equals",
+      "options": {
+        "A": "210",
+        "B": "252",
+        "C": "125",
+        "D": "126"
+      },
+      "options_latex": {
+        "A": "210",
+        "B": "252",
+        "C": "125",
+        "D": "126"
+      },
+      "correct_answer": {
+        "single": "D",
+        "multiple": [
+          "D"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "permutations and combinations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_8",
+        "layer10_structural_repair:structural_option_labels_normalized",
+        "manual_editorial_curation"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": "D",
+        "suggested_correct_answer": {
+          "single": "D",
+          "multiple": [
+            "D"
+          ],
+          "numerical": null,
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:53+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_8"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "Let S = {1, 2, 3, ..., 9}. For k = 1, 2, ..., 5, let N_k be the number of subsets of S, each containing five elements, out of which exactly k are odd. Then N_1 + N_2 + N_3 + N_4 + N_5 equals",
+        "clean_question_latex": "Let $S=\\{1,2,3,\\ldots,9\\}$. For $k=1,2,\\ldots,5$, let $N_k$ be the number of subsets of $S$, each containing five elements, out of which exactly $k$ are odd. Then $N_1+N_2+N_3+N_4+N_5$ equals",
+        "options": {
+          "A": "210",
+          "B": "252",
+          "C": "125",
+          "D": "126"
+        },
+        "options_latex": {
+          "A": "210",
+          "B": "252",
+          "C": "125",
+          "D": "126"
+        },
+        "correct_answer": {
+          "single": "D",
+          "multiple": [
+            "D"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "permutations and combinations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_8",
+          "layer10_structural_repair:structural_option_labels_normalized",
+          "manual_editorial_curation"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": "D",
+          "suggested_correct_answer": {
+            "single": "D",
+            "multiple": [
+              "D"
+            ],
+            "numerical": null,
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_73",
+    "legacy_row_id": "bankq_1772733061288",
+    "legacy_publish_id": "imppub_1772733061287",
+    "manual_solution_latex": "The set $S$ has $9$ elements, namely $5$ odd and $4$ even.\nA $5$-element subset cannot contain $0$ odd elements, because only $4$ even elements are available.\nHence every $5$-element subset is counted in exactly one of $N_1,N_2,N_3,N_4,N_5$.\nTherefore\n\\[N_1+N_2+N_3+N_4+N_5=\binom{9}{5}=126.\\]\nSo the correct option is $\boxed{D}$.",
+    "solution_enriched_at": 1772948718731,
+    "manual_curation": {
+      "chapter_slug": "permutations_and_combinations",
+      "curated_at": "2026-03-08T11:15:18+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "the complete JEE Advanced subset-counting question survives, and the bank answer key is corrected after direct counting",
+      "corrections": [
+        "normalized N_k notation",
+        "removed the trailing book artifact from option D",
+        "corrected the answer key from A to D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_pnc_003",
+    "type": "NUMERICAL",
+    "question_text": "If the number of seven-digit numbers such that the sum of their digits is even is m·n·10^n, where m, n ∈ {1,2,3,...,9}, then m + n is equal to ____.",
+    "question_text_latex": "If the number of seven-digit numbers such that the sum of their digits is even is $m\\cdot n\\cdot 10^n$, where $m,n\\in\\{1,2,3,\\ldots,9\\}$, then $m+n$ is equal to $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "14",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Permutations and Combinations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_pnc_003",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_pnc_003",
+    "published_at": 1772949647566,
+    "repair_actions": [
+      "layer1_symbol_normalization:symbol_translation_normalized",
+      "layer6_multiplication_repair:multiplication_repair_4",
+      "layer6_multiplication_repair:multiplication_repair_8",
+      "layer10_structural_repair:structural_artifact_removed",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Permutations and Combinations"
+    ],
+    "topic": "permutations and combinations",
+    "detected_issues": [
+      "unbalanced_parenthesis"
+    ],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "14",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "14",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "If the number of seven-digit numbers such that the sum of their digits is even is m·n·10^n, where m, n ∈ {1,2,3,...,9}, then m + n is equal to ____.",
+      "clean_question_latex": "If the number of seven-digit numbers such that the sum of their digits is even is $m\\cdot n\\cdot 10^n$, where $m,n\\in\\{1,2,3,\\ldots,9\\}$, then $m+n$ is equal to $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "14",
+        "tolerance": null
+      },
+      "topic": "permutations and combinations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer1_symbol_normalization:symbol_translation_normalized",
+        "layer6_multiplication_repair:multiplication_repair_4",
+        "layer6_multiplication_repair:multiplication_repair_8",
+        "layer10_structural_repair:structural_artifact_removed",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "14",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "14",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:53+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer1_symbol_normalization": [
+          "symbol_translation_normalized"
+        ],
+        "layer6_multiplication_repair": [
+          "multiplication_repair_4",
+          "multiplication_repair_8"
+        ],
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "If the number of seven-digit numbers such that the sum of their digits is even is m·n·10^n, where m, n ∈ {1,2,3,...,9}, then m + n is equal to ____.",
+        "clean_question_latex": "If the number of seven-digit numbers such that the sum of their digits is even is $m\\cdot n\\cdot 10^n$, where $m,n\\in\\{1,2,3,\\ldots,9\\}$, then $m+n$ is equal to $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "14",
+          "tolerance": null
+        },
+        "topic": "permutations and combinations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer1_symbol_normalization:symbol_translation_normalized",
+          "layer6_multiplication_repair:multiplication_repair_4",
+          "layer6_multiplication_repair:multiplication_repair_8",
+          "layer10_structural_repair:structural_artifact_removed",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "14",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "14",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_98",
+    "legacy_row_id": "bankq_1772719398076",
+    "legacy_publish_id": "imppub_1772719398076",
+    "solution_explanation": "Among the 9·10^6 seven-digit numbers, exactly half have even digit sum. For any fixed first six digits, the last digit has five choices that make the total sum even. Hence the count is (9·10^6)/2 = 45·10^5 = 5·9·10^5. Thus {m,n} = {5,9}, so m+n = 14.",
+    "manual_solution_latex": "There are $9\\cdot 10^6$ seven-digit numbers in total.\nFor any fixed first six digits, exactly $5$ choices of the last digit make the total digit sum even.\nHence the required count is\n\\[\\frac{9\\cdot 10^6}{2}=45\\cdot 10^5=5\\cdot 9\\cdot 10^5.\\]\nSo we may take $m=5$ and $n=9$ (or vice versa), and therefore\n\\[m+n=14.\\]",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "manual_web_sources": [
+      {
+        "label": "Sarthaks solution page",
+        "url": "https://www.sarthaks.com/3692470/if-the-number-seven-digit-numbers-such-that-the-sum-their-digits-even-then-equal"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "permutations_and_combinations",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the damaged row was matched to an exact web statement and the corrected numerical answer follows from a clean parity count",
+      "corrections": [
+        "restored the product form m·n·10^n",
+        "corrected the corrupted stored answer from 0 to 14"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  },
+  {
+    "question_id": "manual_pnc_004",
+    "type": "NUMERICAL",
+    "question_text": "The number of ways 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ____.",
+    "question_text_latex": "The number of ways $5$ boys and $4$ girls can sit in a row so that either all the boys sit together or no two boys sit together, is $\\underline{\\qquad}$.",
+    "options": [],
+    "options_latex": {},
+    "correct_answer": {
+      "single": null,
+      "multiple": [],
+      "numerical": "17280",
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Permutations and Combinations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "source_verified_recovery"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_pnc_004",
+    "source": "manual_editorial_curation",
+    "teacher_id": "mathongo_offline_sync",
+    "publish_id": "manual_pnc_004",
+    "published_at": 1772949647566,
+    "repair_actions": [
+      "layer10_structural_repair:structural_artifact_removed",
+      "manual_editorial_curation",
+      "source_verified_recovery"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Permutations and Combinations"
+    ],
+    "topic": "permutations and combinations",
+    "detected_issues": [],
+    "solver_notes": [
+      "manual_editorial_derivation",
+      "source_verified_recovery"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": "17280",
+      "computed_option_label": null,
+      "suggested_correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "17280",
+        "tolerance": null
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "The number of ways 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ____.",
+      "clean_question_latex": "The number of ways $5$ boys and $4$ girls can sit in a row so that either all the boys sit together or no two boys sit together, is $\\underline{\\qquad}$.",
+      "options": {},
+      "options_latex": {},
+      "correct_answer": {
+        "single": null,
+        "multiple": [],
+        "numerical": "17280",
+        "tolerance": null
+      },
+      "topic": "permutations and combinations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer10_structural_repair:structural_artifact_removed",
+        "manual_editorial_curation",
+        "source_verified_recovery"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": true,
+        "ambiguity_detected": false,
+        "computed_answer": "17280",
+        "computed_option_label": null,
+        "suggested_correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "17280",
+          "tolerance": null
+        }
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:53+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer10_structural_repair": [
+          "structural_artifact_removed"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "NUMERICAL",
+      "repair_status": "accepted_manual",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "manual_editorial_derivation",
+        "source_verified_recovery"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "The number of ways 5 boys and 4 girls can sit in a row so that either all the boys sit together or no two boys sit together, is ____.",
+        "clean_question_latex": "The number of ways $5$ boys and $4$ girls can sit in a row so that either all the boys sit together or no two boys sit together, is $\\underline{\\qquad}$.",
+        "options": {},
+        "options_latex": {},
+        "correct_answer": {
+          "single": null,
+          "multiple": [],
+          "numerical": "17280",
+          "tolerance": null
+        },
+        "topic": "permutations and combinations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer10_structural_repair:structural_artifact_removed",
+          "manual_editorial_curation",
+          "source_verified_recovery"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": true,
+          "ambiguity_detected": false,
+          "computed_answer": "17280",
+          "computed_option_label": null,
+          "suggested_correct_answer": {
+            "single": null,
+            "multiple": [],
+            "numerical": "17280",
+            "tolerance": null
+          }
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_103",
+    "legacy_row_id": "bankq_1772719448537",
+    "legacy_publish_id": "imppub_1772719448537",
+    "solution_explanation": "If all 5 boys sit together, treat them as one block with the 4 girls, giving 5! arrangements of the 5 entities and 5! internal arrangements of the boys: 5!·5! = 14400. If no two boys sit together, first arrange the 4 girls in 4! ways; this creates 5 slots, and the 5 boys must occupy all 5 of them in 5! ways. That gives 4!·5! = 2880. The two cases are disjoint, so the total is 14400 + 2880 = 17280.",
+    "manual_solution_latex": "Case 1: all $5$ boys sit together.\nTreat the boys as one block. Then we have $5$ entities in a row, so the number of arrangements is\n\\[5!\\cdot 5!=14400.\\]\nCase 2: no two boys sit together.\nArrange the $4$ girls first in $4!$ ways. This creates $5$ slots, and the $5$ boys must occupy all $5$ slots in $5!$ ways. Hence the number of arrangements is\n\\[4!\\cdot 5!=2880.\\]\nThese two cases are disjoint, so the total number of arrangements is\n\\[14400+2880=17280.\\]",
+    "has_solution": true,
+    "solution_enriched_at": 1772949647566,
+    "manual_web_sources": [
+      {
+        "label": "Sarthaks solution page",
+        "url": "https://www.sarthaks.com/3692967/the-number-of-ways-5-boys-and-4-girls-can-sit-in-a-row-so-that-either-all-the-boys-sit-together-or-no-two-boys-sit-together-is"
+      },
+      {
+        "label": "Aakash solution PDF",
+        "url": "https://dcx0p3on5z8dw.cloudfront.net/Aakash/s3fs-public/pdf_management_files/target_solutions/2025_11_English.pdf"
+      }
+    ],
+    "manual_curation": {
+      "chapter_slug": "permutations_and_combinations",
+      "curated_at": "2026-03-08T11:30:47+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_when_question_can_be_restored_from_local_row_plus_web_confirmed_source_without_speculative_mathematics",
+      "reason_accepted": "the local row was badly contaminated by neighboring options, but the exact question was recovered from web sources and counted directly",
+      "corrections": [
+        "removed trailing contamination from the raw row",
+        "corrected the corrupted stored answer from 0 to 17280"
+      ],
+      "evidence": [
+        "manual derivation",
+        "web-confirmed match"
+      ]
+    }
+  }
+]

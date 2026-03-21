@@ -1,0 +1,431 @@
+{
+  "provider_registry": {
+    "initialized": true,
+    "providers": {
+      "openrouter": {
+        "registered": true,
+        "key_count": 3
+      },
+      "groq": {
+        "registered": true,
+        "key_count": 1
+      },
+      "gemini": {
+        "registered": true,
+        "key_count": 3
+      },
+      "hf": {
+        "registered": true,
+        "key_count": 1
+      },
+      "huggingface": {
+        "registered": true,
+        "key_count": 1
+      }
+    }
+  },
+  "solve_sample": [
+    {
+      "question": "What is 6*7?",
+      "final_answer": "42",
+      "winner_provider": "mini",
+      "verified": false,
+      "risk": 1.0,
+      "entropy": 0.6425076846960827,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 2,
+          "collect_extra": false,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^7 in (1 + x)^14 + (1 - x)^14.",
+      "final_answer": "0",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.6398726202136846,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": true,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 3,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many subsets of {1-8} contain exactly 2 elements from {1,2,3}?",
+      "final_answer": "96",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.64834762701764,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 2,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many permutations of 1-6 have 1 appearing before both 2 and 3?",
+      "final_answer": "240",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.7458877741977556,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^10 in (1 + x)^20.",
+      "final_answer": "184756",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007809994734802,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^4 in (1 + x)^8 (1 - x)^8.",
+      "final_answer": "28",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007813585804366,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many 4-digit numbers using digits 0-9 without repetition have odd digit sum?",
+      "final_answer": "2160",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007815385244097,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many arrangements of 6 distinct books A-F in a row keep A,B,C together?",
+      "final_answer": "144",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007815660439286,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": true,
+          "trigger_count": 2,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many integers from 1-200 are divisible by at least one of 2,3,5?",
+      "final_answer": "146",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007814639582742,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Given 1 appears before 2 in a random permutation of 1-7, what is the probability that 1 appears before both 2 and 3?",
+      "final_answer": "2/3",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007812517275412,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": true,
+          "trigger_count": 2,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many 5-digit numbers from digits 1-7 without repetition are greater than 50000?",
+      "final_answer": "1080",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.1800780945936722,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "For a random 4-digit number using digits 0-9 without repetition conditioned to be divisible by 3, what is the probability it is divisible by 9?",
+      "final_answer": "1/3",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18007805607129646,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "winner_distribution": {
+    "mini": 12
+  },
+  "verified_rate": 0.9166666666666666,
+  "risk_mean": 0.2096354140413146,
+  "entropy_mean": 0.4763846421770968,
+  "shadow_log_counts": {
+    "arena_shadow_disagreements": 302,
+    "deterministic_vs_provider_gap": 53,
+    "reasoning_divergence_clusters": 355,
+    "rare_cluster_cross_provider": 0
+  },
+  "dataset_stats": {
+    "ts": "2026-02-26T11:17:21.990119+00:00",
+    "total_raw": 1177,
+    "total_filtered": 1782,
+    "hard_negatives": 1722,
+    "disagreement_cases": 1210,
+    "synthetic_disagreement_rows": 605,
+    "trap_cases": 351,
+    "parse_errors": 0,
+    "sources": {
+      "solver_debug_rows": 5245,
+      "automation_hook_rows": 921,
+      "mini_shadow_rows": 930,
+      "arena_shadow_rows": 302,
+      "provider_gap_rows": 53,
+      "reasoning_divergence_rows": 355,
+      "rare_cross_provider_rows": 0
+    }
+  },
+  "dataset_source_distribution": {
+    "mini_shadow_logs": 466,
+    "deterministic_vs_provider_gap": 9,
+    "arena_shadow_disagreement": 118,
+    "reasoning_divergence_cluster": 1,
+    "solver_debug": 583,
+    "mini_shadow_logs_synthetic_disagreement": 8,
+    "deterministic_vs_provider_gap_synthetic_disagreement": 9,
+    "arena_shadow_disagreement_synthetic_disagreement": 6,
+    "solver_debug_synthetic_disagreement": 582
+  }
+}

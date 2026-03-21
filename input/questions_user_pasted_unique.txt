@@ -1,0 +1,405 @@
+How many 3-digit numbers can be formed using digits 1,2,3,4 without repetition?
+How many 3-digit even numbers can be formed using digits 1,2,3,4 without repetition?
+How many 4-letter words can be formed from A,B,C,D if repetition is allowed?
+How many 4-letter words from A,B,C,D contain at least one A?
+How many permutations of 1,2,3,4 have 1 and 2 together?
+How many 5-digit numbers using digits 0–9 have no digit repeated?
+How many 5-digit numbers using digits 0–9 have at least one repeated digit?
+In how many ways can 5 people sit in a row if A and B are not together?
+In how many ways can 5 people sit in a circle?
+In how many circular arrangements of 5 people are A and B together?
+In how many ways can 5 identical balls be distributed among 3 distinct boxes?
+In how many ways can 5 identical balls be distributed among 3 distinct boxes if each box gets at least one?
+In how many ways can 4 identical balls be distributed among 2 boxes?
+In how many ways can 6 identical balls be distributed among 3 boxes with each box getting at most 3 balls?
+In how many ways can 3 identical balls and 2 identical balls of another type be arranged in a row?
+How many ways can a committee of 3 be formed from 4 men and 3 women?
+How many committees of 3 can be formed with at least one woman?
+How many committees of 3 can be formed with exactly one woman?
+How many ways to choose 2 numbers from {1,2,3,4,5} such that their sum is even?
+How many subsets of {1,2,3,4} have even sum?
+How many arrangements of the word LEVEL are possible?
+How many arrangements of BANANA are possible?
+How many arrangements of the letters of MISS contain all S together?
+How many arrangements of digits 1,2,3,4 have exactly one digit in its correct position?
+How many permutations of 1,2,3,4 have no digit in its correct position?
+How many 4-digit numbers greater than 3000 can be formed using digits 1,2,3,4 without repetition?
+How many 3-digit numbers using digits 1–5 have strictly increasing digits?
+How many 3-digit numbers using digits 1–5 have strictly decreasing digits?
+How many 3-digit numbers from digits 1–5 have sum divisible by 3?
+How many arrangements of 5 books are possible if 2 specific books must not be adjacent?
+How many 4-digit numbers using digits 1–5 without repetition?
+How many 4-digit even numbers using digits 1–5 without repetition?
+How many 5-digit numbers using digits 0–5 without repetition?
+How many 5-digit numbers using digits 0–5 with no leading zero?
+How many permutations of 1,2,3,4,5 have 1 fixed?
+How many permutations of 1,2,3,4,5 have 1 not fixed?
+How many permutations of 1–5 have 1 and 2 together?
+How many permutations of 1–5 have 1 and 2 not together?
+How many permutations of 1–4 have exactly two elements fixed?
+How many permutations of 1–4 have no element fixed?
+How many circular arrangements of 6 people?
+How many circular arrangements of 6 people if two specific sit together?
+How many circular arrangements of 6 people if two specific do not sit together?
+How many necklaces using 4 black and 2 white beads?
+How many ways can 5 people sit around a round table if one seat is fixed?
+How many ways to seat 4 couples in a circle if each couple sits together?
+How many circular permutations of 5 distinct objects?
+How many circular permutations of 5 objects if two are identical?
+How many arrangements of 6 people around table if rotation considered same?
+How many ways to arrange 5 distinct books in a circle?
+In how many ways can 6 identical balls be distributed among 3 boxes?
+In how many ways can 6 identical balls be distributed among 3 boxes if each gets at least one?
+In how many ways can 7 identical balls be distributed among 4 boxes?
+In how many ways can 5 identical balls be distributed among 3 boxes if one box empty?
+In how many ways can 8 identical balls be distributed among 3 boxes with at most 4 in each?
+In how many ways can 5 identical balls be distributed among 2 boxes?
+In how many ways can 6 identical balls be distributed among 2 boxes if at least one ball in each?
+In how many ways can 4 identical balls be distributed among 4 boxes?
+In how many ways can 3 identical balls be distributed among 3 boxes?
+In how many ways can 5 identical balls be distributed among 4 boxes with at least one empty?
+How many committees of 4 from 6 men and 4 women?
+How many committees of 4 with at least 2 women?
+How many committees of 4 with exactly 2 women?
+How many committees of 3 from 5 men and 3 women if at least one man?
+How many ways to choose 3 numbers from 1–6 with even sum?
+How many subsets of {1,2,3,4,5} have odd sum?
+How many subsets of {1,2,3,4} have at least 2 elements?
+How many ways to choose 2 even numbers from 1–10?
+How many ways to choose 3 numbers from 1–7 divisible by 3?
+How many 3-member teams from 5 people if one specific person must be included?
+How many arrangements of SUCCESS?
+How many arrangements of MATHEMATICS?
+How many arrangements of APPLE?
+How many arrangements of BALLOON?
+How many arrangements of LETTER if both T together?
+How many arrangements of LEVEL if vowels together?
+How many arrangements of BANANA if no two A together?
+How many arrangements of MISSISSIPPI?
+How many arrangements of ABCDE if A before B?
+How many arrangements of ABCDE if A and B not adjacent?
+How many 3-digit numbers from 1–6 strictly increasing?
+How many 3-digit numbers from 1–6 strictly decreasing?
+How many 4-digit numbers from 1–7 strictly increasing?
+How many 3-digit numbers from 1–9 have digits in arithmetic progression?
+How many 3-digit numbers have sum divisible by 3 (digits 1–5)?
+How many 4-digit numbers from 1–6 have distinct digits?
+How many 3-digit numbers using 1–5 have exactly two equal digits?
+How many 3-digit numbers using 1–4 have at least one repeated digit?
+How many 4-digit numbers from 0–5 without repetition?
+How many 4-digit numbers from 0–5 greater than 3000?
+How many 5-digit numbers with no digit repeated (0–9)?
+How many 5-digit numbers have at least one repeated digit (0–9)?
+How many permutations of 6 elements have at least one fixed point?
+How many permutations of 6 elements have no fixed point?
+How many arrangements of 5 people if two do not sit together?
+How many arrangements of 5 people if two must sit together?
+How many 4-digit numbers from 1–6 without repetition and sum even?
+How many 4-digit numbers from 1–6 without repetition and sum odd?
+How many 3-element subsets of {1–6} contain number 1?
+How many 3-element subsets of {1–6} do not contain number 1?
+How many 3-digit numbers from 1–6 divisible by 5?
+How many 3-digit numbers from 1–6 divisible by 3?
+How many 4-digit numbers from 1–7 divisible by 2?
+How many 3-digit numbers from 0–5 divisible by 4?
+How many 3-digit numbers from 1–6 divisible by 6?
+How many 4-digit numbers from 1–8 with digit sum 10?
+How many 3-digit numbers from 1–9 with digit sum 9?
+How many subsets of {1–6} have sum divisible by 3?
+How many 4-digit numbers from 1–7 with distinct digits and even sum?
+How many permutations of 1–5 with sum of first two positions even?
+How many ways to seat 5 boys and 3 girls in a row if no two girls together?
+How many ways to seat 5 boys and 3 girls in a row if at least two girls together?
+How many ways to arrange 4 red and 3 blue balls in a row?
+How many ways to arrange 4 red and 3 blue balls if no two red together?
+How many 3-digit numbers from 1–7 with at least one 7?
+How many 3-digit numbers from 1–7 with no 7?
+How many 4-digit numbers from 1–6 if digits strictly increasing?
+How many 4-digit numbers from 1–6 if digits non-decreasing?
+How many ways to choose 2 odd and 1 even number from 1–8?
+How many ways to choose 3 numbers from 1–10 such that maximum is 10?
+How many subsets of {1–7} contain both 1 and 7?
+How many subsets of {1–7} contain neither 1 nor 7?
+How many permutations of 1–6 where 1 appears before 2?
+How many permutations of 1–6 where 1 appears before 2 and 3?
+How many 4-digit numbers from 1–9 with no repetition and sum odd?
+How many 4-digit numbers from 1–9 with no repetition and sum even?
+How many arrangements of 6 books if 3 specific books stay together?
+How many arrangements of 6 books if 3 specific books are separated?
+How many 5-digit numbers from 1–7 without repetition greater than 50000?
+How many 3-digit numbers from 1–9 with exactly one even digit?
+How many permutations of 5 elements have exactly one fixed point?
+How many permutations of 6 elements have exactly two fixed points?
+How many permutations of 7 elements have no fixed point?
+How many permutations of 5 elements have exactly three elements in correct position?
+How many permutations of 6 elements where 1 and 2 are both displaced?
+How many permutations of 6 elements where at least one of 1 or 2 is fixed?
+How many permutations of 6 elements where 1,2,3 are not in original position?
+How many permutations of 5 elements where exactly two elements are adjacent as a pair?
+How many permutations of 5 elements where no two consecutive integers are adjacent?
+How many integers from 1–100 are divisible by 2 or 3?
+How many integers from 1–100 are divisible by 2 or 3 or 5?
+How many 4-digit numbers have at least one digit repeated?
+How many 5-digit numbers have at least one digit 7?
+How many permutations of 1–6 where at least one of 1,2,3 is fixed?
+How many subsets of {1–10} contain at least one multiple of 3?
+How many numbers from 1–200 are not divisible by 3 or 5?
+How many 4-digit numbers contain at least one zero?
+How many 5-digit numbers contain at least two identical digits?
+How many ways to seat 6 people so that at least two specific sit together?
+In how many ways can 10 identical balls be distributed among 4 boxes?
+In how many ways can 10 identical balls be distributed among 4 boxes if each gets at least 2?
+In how many ways can 7 identical balls be distributed among 3 boxes if first box gets at least 3?
+In how many ways can 9 identical balls be distributed among 4 boxes if no box empty?
+In how many ways can 6 identical balls be distributed among 3 boxes if exactly one box empty?
+In how many ways can 5 identical balls be distributed among 3 boxes if exactly one box gets 3 balls?
+In how many ways can 8 identical balls be distributed among 4 boxes if no box has more than 3 balls?
+In how many ways can 10 identical balls be distributed among 3 boxes if each gets at least 1 and at most 6?
+In how many ways can 12 identical balls be distributed among 4 boxes if at least one box gets 5?
+How many arrangements of 6 people in a row if A and B are separated by exactly one person?
+How many arrangements of 7 people if A and B sit together and C not next to them?
+How many circular arrangements of 7 people if no two specific sit together?
+How many arrangements of MISSISSIPPI have all I together?
+How many arrangements of MISSISSIPPI have no two I together?
+How many arrangements of BANANA if exactly two A together?
+How many permutations of 1–6 where 1 appears before 2 and 2 before 3?
+How many permutations of 1–6 where 1,2,3 appear consecutively in any order?
+How many permutations of 1–7 where 1 and 2 are separated by exactly two positions?
+How many arrangements of 8 books if 3 specific books are in increasing order?
+How many 4-member committees from 5 men and 5 women with at least 2 women?
+How many 5-member committees from 6 men and 4 women with at most 3 women?
+How many 3-element subsets of {1–8} contain exactly one even number?
+How many subsets of {1–8} contain at least 2 even numbers?
+How many 3-digit numbers from 1–7 with digits in geometric progression?
+How many 4-digit numbers from 1–8 have digits in arithmetic progression?
+How many 4-digit numbers from 1–6 have exactly two even digits?
+How many 5-digit numbers from 1–9 have exactly three odd digits?
+How many ways to choose 4 numbers from 1–10 so that sum is divisible by 2?
+How many 3-element subsets of {1–9} have product even?
+How many 4-digit numbers from 1–9 without repetition divisible by 4?
+How many 5-digit numbers from 1–9 without repetition divisible by 3?
+How many permutations of 1–7 where sum of first three is even?
+How many permutations of 1–6 where first position is odd and last even?
+How many 4-digit numbers from 1–8 with distinct digits and sum divisible by 3?
+How many subsets of {1–10} have sum divisible by 3?
+How many 3-digit numbers from 1–9 with digits in strictly increasing order and sum even?
+How many permutations of 1–6 where exactly three elements are greater than their positions?
+How many permutations of 1–5 where at least two elements are fixed?
+How many 5-digit numbers from 0–9 with exactly two zeros?
+How many ways to seat 4 couples in a row if no couple sits together?
+How many permutations of 1–6 where no element moves more than one position?
+How many permutations of 1–6 where 1,2,3 are not consecutive?
+How many arrangements of 5 red and 3 blue balls if no two blue together?
+How many arrangements of 4 red, 3 blue and 2 green balls?
+How many permutations of letters of MATHEMATICS?
+How many permutations of 1–8 where exactly four elements are in correct half (1–4 first half)?
+How many subsets of {1–12} contain exactly three multiples of 3?
+How many ways to choose 3 numbers from 1–12 such that maximum is 12 and minimum is 1?
+How many 6-digit numbers from 1–9 have at least one digit repeated?
+How many permutations of 1–7 have no three consecutive numbers adjacent?
+How many 4-digit numbers from 1–8 have digits in strictly decreasing order?
+How many subsets of {1–10} contain neither 1 nor 10?
+How many subsets of {1–10} contain exactly one of 1 or 10?
+How many permutations of 1–6 where 1 and 2 are not adjacent and 3 fixed?
+How many circular arrangements of 6 people if two pairs must sit together?
+How many 5-digit numbers from 1–9 with distinct digits and greater than 50000?
+How many permutations of 1–6 where 1 and 2 are separated by at least two positions?
+How many subsets of {1–8} have exactly 4 elements and sum even?
+In how many ways can 12 identical balls be distributed among 3 boxes if each gets at least 2 and at most 6?
+In how many ways can 9 identical balls be distributed among 4 boxes if exactly two boxes are empty?
+In how many ways can 10 identical balls be distributed among 3 boxes if no box gets more than 5?
+In how many ways can 8 identical balls be distributed among 4 boxes if first box gets at least 3?
+In how many ways can 7 identical balls be distributed among 3 boxes if second box gets at most 2?
+How many arrangements of 6 books if exactly two specific books are adjacent?
+How many permutations of 1–7 where exactly three elements are fixed?
+How many 4-digit numbers from 1–9 have digits in harmonic progression?
+How many ways to choose 5 numbers from 1–10 such that exactly two are even?
+How many permutations of 1–6 where 1,2,3 appear in increasing order but not necessarily consecutive?
+How many permutations of 1–7 where 1 appears before both 2 and 3?
+How many subsets of {1–10} have sum greater than 20?
+How many 4-digit numbers from 1–9 with no repetition and exactly one even digit?
+How many 5-digit numbers from 1–9 with exactly two even digits?
+How many arrangements of the word COMMITTEE?
+How many circular arrangements of 7 people if two specific never sit opposite?
+How many 3-digit numbers from 1–8 have digits in arithmetic progression and sum odd?
+How many permutations of 1–6 where exactly one pair of consecutive numbers are adjacent?
+How many ways to divide 8 distinct objects into two groups of 4?
+How many permutations of 1–6 where 1 is not adjacent to either 2 or 3?
+How many arrangements of the word LETTER?
+How many arrangements of the word BALLOON?
+How many arrangements of the word SUCCESS?
+How many arrangements of the word MISSISSIPPI?
+How many arrangements of the word MATHEMATICS?
+How many arrangements of the word APPARATUS?
+How many arrangements of the word ENGINEERING?
+How many arrangements of the word PROBABILITY?
+How many arrangements of the word STATISTICS?
+How many arrangements of BANANA with all A together?
+How many arrangements of LETTER with all vowels together?
+How many arrangements of MISSISSIPPI with all I together?
+How many arrangements of SUCCESS with all S together?
+How many arrangements of MATHEMATICS with all vowels together?
+How many arrangements of APPLE with vowels together?
+How many arrangements of COMMITTEE with vowels together?
+How many arrangements of PROBABILITY with vowels together?
+How many arrangements of BALLOON with vowels together?
+How many arrangements of ENGINEERING with vowels together?
+How many arrangements of LETTER with no two vowels adjacent?
+How many arrangements of BANANA with no two A adjacent?
+How many arrangements of MISSISSIPPI with no two I adjacent?
+How many arrangements of SUCCESS with no two S adjacent?
+How many arrangements of APPLE with no two P adjacent?
+How many arrangements of COMMITTEE with no two M adjacent?
+How many arrangements of BALLOON with no two L adjacent?
+How many arrangements of STATISTICS with no two S adjacent?
+How many arrangements of MATHEMATICS with no two vowels adjacent?
+How many arrangements of PROBABILITY with no two vowels adjacent?
+How many arrangements of BANANA where exactly two A are together?
+How many arrangements of LETTER where exactly two T together?
+How many arrangements of SUCCESS where exactly two C together?
+How many arrangements of APPLE where exactly two P together?
+How many arrangements of BALLOON where exactly two L together?
+How many arrangements of MISSISSIPPI where exactly two S together?
+How many arrangements of COMMITTEE where exactly two E together?
+How many arrangements of MATHEMATICS where exactly two M together?
+How many arrangements of PROBABILITY where exactly two B together?
+How many arrangements of STATISTICS where exactly two T together?
+How many arrangements of LETTER where vowels and consonants alternate?
+How many arrangements of BANANA where vowels and consonants alternate?
+How many arrangements of APPLE where vowels and consonants alternate?
+How many arrangements of BALLOON where vowels and consonants alternate?
+How many arrangements of SUCCESS where vowels and consonants alternate?
+How many arrangements of PROBABILITY where vowels and consonants alternate?
+How many arrangements of MATHEMATICS where vowels and consonants alternate?
+How many arrangements of STATISTICS where vowels and consonants alternate?
+How many arrangements of COMMITTEE where vowels and consonants alternate?
+How many arrangements of MISSISSIPPI where vowels and consonants alternate?
+How many arrangements of LETTER where first and last letter are vowels?
+How many arrangements of BANANA where first letter is B?
+How many arrangements of SUCCESS where last letter is S?
+How many arrangements of APPLE where first letter is vowel?
+How many arrangements of BALLOON where last letter is consonant?
+How many arrangements of COMMITTEE where first letter is C?
+How many arrangements of MISSISSIPPI where first letter is M?
+How many arrangements of MATHEMATICS where first letter is consonant?
+How many arrangements of PROBABILITY where first letter is P?
+How many arrangements of STATISTICS where last letter is S?
+How many arrangements of ABCDE where A before B?
+How many arrangements of ABCDE where A before B and B before C?
+How many arrangements of ABCDEF where A before B and C before D?
+How many arrangements of ABCDEFG where A,B,C in increasing order?
+How many arrangements of ABCDE where A and E fixed at ends?
+How many arrangements of ABCDE where A before C before E?
+How many arrangements of ABCDEF where A before B before C before D?
+How many arrangements of ABCDE where B before D?
+How many arrangements of ABCDEFG where A before G?
+How many arrangements of ABCDEF where C before D and E before F?
+How many palindromes can be formed from LETTER?
+How many palindromes from BANANA?
+How many palindromes from MISSISSIPPI?
+How many palindromes from LEVEL?
+How many palindromes from RADAR?
+How many palindromes from COMMITTEE?
+How many palindromes from BALLOON?
+How many palindromes from MATHEMATICS?
+How many palindromes from SUCCESS?
+How many palindromes from PROBABILITY?
+How many arrangements of LETTER where L and R separated?
+How many arrangements of BANANA where B not adjacent to any A?
+How many arrangements of SUCCESS where C not adjacent to E?
+How many arrangements of APPLE where P not adjacent to L?
+How many arrangements of BALLOON where L not adjacent to O?
+How many arrangements of COMMITTEE where C not adjacent to M?
+How many arrangements of MISSISSIPPI where M not adjacent to I?
+How many arrangements of MATHEMATICS where M not adjacent to T?
+How many arrangements of PROBABILITY where P not adjacent to R?
+How many arrangements of STATISTICS where S not adjacent to T?
+How many arrangements of BANANA where no two A adjacent and B fixed?
+How many arrangements of LETTER where vowels together and T not at end?
+How many arrangements of SUCCESS where exactly two S together and C separate?
+How many arrangements of APPLE where vowels together and P separated?
+How many arrangements of BALLOON where no two L adjacent and vowels together?
+How many arrangements of COMMITTEE where M together and E separated?
+How many arrangements of MISSISSIPPI where I together and S separated?
+How many arrangements of MATHEMATICS where vowels separated and M together?
+How many arrangements of PROBABILITY where vowels together and P fixed first?
+How many arrangements of STATISTICS where exactly two T together and S separated?
+Expand (x + 1)^2.
+Expand (x + 2)^3.
+Expand (2x + 1)^3.
+Expand (x - 3)^4.
+Find the coefficient of x^2 in (x + 1)^5.
+Find the coefficient of x^3 in (x + 2)^6.
+Find the constant term in (x + 3)^4.
+Find the middle term in (x + 1)^8.
+Find the 4th term in the expansion of (x + 2)^7.
+Find the general term of (x + 1)^n.
+Find the coefficient of x^5 in (2x + 3)^7.
+Find the term independent of x in (x^2 + 1/x)^6.
+Find the coefficient of x^4 in (x - 1)^8.
+Find the 6th term in (3x - 2)^8.
+Find the coefficient of x^3 in (1 + 2x)^9.
+Find the constant term in (2x - 1/x)^6.
+Find the middle term in (1 - x)^10.
+Find the coefficient of x^7 in (x + 2)^9.
+Find the term containing x^5 in (x + 1/x)^10.
+Find the sum of coefficients in (2x - 3)^8.
+Find the coefficient of x^4 in (x^2 + 1/x)^8.
+Find the term independent of x in (x^3 + 1/x^2)^5.
+Find the coefficient of x^6 in (2x - 1/x)^9.
+Find the 5th term in (1 + 3x)^12.
+Find the greatest term in the expansion of (3 + 2)^10.
+Find the coefficient of x^3 in (x + 1)^8 + (x - 1)^8.
+Find the coefficient of x^4 in (x + 2)^6 - (x - 2)^6.
+Find the value of n if the coefficient of x^3 in (1 + x)^n is 120.
+Find the term independent of x in (x + 1/x)^12.
+Find the ratio of the 5th and 6th terms in (1 + x)^10.
+Find the coefficient of x^7 in (1 + 2x)^10.
+Find the term independent of x in (2x^2 - 3/x)^6.
+Find the coefficient of x^5 in (x - 2/x)^8.
+Find the value of r such that the coefficient of x^r in (1 + x)^10 is maximum.
+Find the middle term in (1 + 2x)^9.
+Find the 8th term in (3x - 2)^12.
+Find the coefficient of x^6 in (x^2 + 2x)^8.
+Find the constant term in (x^3 - 2/x)^7.
+Find the term independent of x in (2x + 1/x^2)^9.
+Find the coefficient of x^4 in (x + 1)^6 (x - 1)^6.
+Prove that the coefficient of x^3 in (1 + x)^7 equals the coefficient of x^4.
+Find the coefficient of x^5 in (1 + x)^8 (1 - x)^4.
+Find the constant term in (x + 2)^5 (x - 2)^5.
+Find the coefficient of x^6 in (1 + x)^12 + (1 - x)^12.
+Find the coefficient of x^5 in (x + 1)^9 - (x - 1)^9.
+Find the coefficient of x^4 in (2 + x)^8.
+Find the term independent of x in (x^2 + 3/x)^6.
+Find the coefficient of x^2 in (1 + x)^5 (1 - x)^3.
+Find the sum of even coefficients in (1 + x)^10.
+Find the sum of odd coefficients in (1 + x)^9.
+If (1 + x)^n = 1 + 10x + 45x^2 + ..., find n.
+Find the coefficient of x^3 in (1 + 2x)^6 (1 - x)^4.
+Find the term independent of x in (x + 1/x)^15.
+Find the greatest term in the expansion of (5 + 2)^20.
+Find the coefficient of x^5 in (x + 2/x)^10.
+Find the value of n if the middle term of (1 + x)^n is 252x^4.
+Find the coefficient of x^7 in (2x - 3)^10.
+Find the coefficient of x^4 in (x^2 + 1)^8.
+Find the constant term in (2x^2 - 1/x)^8.
+Find the term independent of x in (x^3 + 2/x)^9.
+Show that the middle term of (1 + x)^2n is T_{n+1}.
+Find the coefficient of x^4 in (1 + x)^6 + (1 - x)^6.
+Find the coefficient of x^5 in (1 + x)^10 - (1 - x)^10.
+Find the sum of binomial coefficients in (1 + x)^12.
+Find the alternating sum of binomial coefficients in (1 + x)^9.
+Find the coefficient of x^3 in (2 + x)^7.
+Find the term independent of x in (x^4 + 1/x^2)^6.
+Find the coefficient of x^8 in (x + 3)^10.
+Find the coefficient of x^5 in (x - 2)^9.
+Find the middle term in (1 - 2x)^8.
+Find the coefficient of x^6 in (1 + x)^15.
+Find the term independent of x in (x^2 - 1/x)^10.
+Find the coefficient of x^4 in (1 + 3x)^9.
+Find the value of n if the coefficient of x^2 in (1 + x)^n is 28.
+Find the coefficient of x^5 in (2x + 1)^8.
+Find the constant term in (x^5 + 1/x^2)^7.
+Find the term independent of x in (3x^2 - 2/x)^8.
+Find the coefficient of x^4 in (x + 1)^7 (x - 1)^5.
+Find the coefficient of x^5 in (1 + x)^7 (1 - x)^3.

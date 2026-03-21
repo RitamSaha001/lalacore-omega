@@ -1,0 +1,13 @@
+{
+  "prm": "data/zaggle/prm_dataset.jsonl",
+  "dpo": "data/zaggle/dpo_pairs.jsonl",
+  "rlaif": "data/zaggle/rlaif_feedback.jsonl",
+  "lc9_weekly": "data/zaggle/LC9_MINI_WEEKLY_DATASET.jsonl",
+  "lc9_synthetic": "data/lc9/LC9_SYNTHETIC_EXPANSION.jsonl",
+  "lc9_error_memory": "data/lc9/LC9_ERROR_MEMORY.jsonl",
+  "samples": {
+    "prm": 20,
+    "dpo": 0,
+    "rlaif": 20
+  }
+}

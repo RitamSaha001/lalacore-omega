@@ -1,0 +1,85 @@
+{
+  "weekly": {
+    "2026-W09": {
+      "debate_sessions": 0,
+      "providers": {
+        "mini": {
+          "avg_tokens": 159.3571812802582,
+          "sessions": 1859,
+          "total_tokens": 296245.0
+        },
+        "symbolic_guard": {
+          "avg_tokens": 57.0,
+          "sessions": 2,
+          "total_tokens": 114.0
+        }
+      },
+      "sessions": 1859,
+      "total_tokens": 296359.0
+    },
+    "2026-W10": {
+      "debate_sessions": 220,
+      "providers": {
+        "gemini": {
+          "avg_tokens": 1560.3119658119658,
+          "sessions": 234,
+          "total_tokens": 365113.0
+        },
+        "groq": {
+          "avg_tokens": 1412.1754161331626,
+          "sessions": 781,
+          "total_tokens": 1102909.0
+        },
+        "hf": {
+          "avg_tokens": 869.8434650455927,
+          "sessions": 658,
+          "total_tokens": 572357.0
+        },
+        "mini": {
+          "avg_tokens": 568.7746031746032,
+          "sessions": 945,
+          "total_tokens": 537492.0
+        },
+        "openrouter": {
+          "avg_tokens": 1118.5553662691652,
+          "sessions": 587,
+          "total_tokens": 656592.0
+        }
+      },
+      "sessions": 945,
+      "total_tokens": 3234463.0
+    },
+    "2026-W11": {
+      "debate_sessions": 12,
+      "providers": {
+        "gemini": {
+          "avg_tokens": 984.6666666666666,
+          "sessions": 12,
+          "total_tokens": 11816.0
+        },
+        "groq": {
+          "avg_tokens": 725.5833333333334,
+          "sessions": 12,
+          "total_tokens": 8707.0
+        },
+        "hf": {
+          "avg_tokens": 733.5,
+          "sessions": 2,
+          "total_tokens": 1467.0
+        },
+        "mini": {
+          "avg_tokens": 465.4166666666667,
+          "sessions": 12,
+          "total_tokens": 5585.0
+        },
+        "openrouter": {
+          "avg_tokens": 696.75,
+          "sessions": 12,
+          "total_tokens": 8361.0
+        }
+      },
+      "sessions": 12,
+      "total_tokens": 35936.0
+    }
+  }
+}

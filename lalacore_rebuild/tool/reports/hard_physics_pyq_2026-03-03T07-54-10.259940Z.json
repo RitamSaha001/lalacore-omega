@@ -1,0 +1,51 @@
+{
+  "run_id": "2026-03-03T07-54-10.259940Z",
+  "question_tag": "jee_advanced_2023_physics_thermo_cycle_ratio",
+  "official_answer": 2.0,
+  "ai_response": {
+    "ok": true,
+    "provider": "local-fallback",
+    "model": "rule-based-chat-v1",
+    "answer": "This topic can be understood by defining it first, then applying a clear step-by-step method.",
+    "explanation": "Use this approach:\n1. Write the core definition in one line.\n2. List the key parts/formulas involved.\n3. Solve one representative example step by step.\n4. End with common mistakes and a quick self-check."
+  },
+  "evaluation": {
+    "numeric_token_found": "1",
+    "numeric_value": 1.0,
+    "exact_match_with_official": false
+  },
+  "engine_summary": {
+    "status": null,
+    "winner_provider": null,
+    "routing_decision": null,
+    "verification": {},
+    "confidence_score": null,
+    "risk_score": null,
+    "entropy": null,
+    "disagreement": null,
+    "latency_metrics": null,
+    "provider_availability": null,
+    "ranked_providers": null,
+    "judge_results": [],
+    "provider_diagnostics": {}
+  },
+  "raw": {
+    "source": "local_rescue_chat",
+    "fallback_reason": "degraded_backend_response",
+    "upstream": {
+      "ok": true,
+      "answer": "I cannot fully solve this right now, but here is what I can infer:\n\nJEE Advanced 2023 Physics PYQ (Thermodynamics, hard):\n\nIn process I, one mole of ideal gas undergoes a reversible cycle with:\n1) isothermal expansion at T_H = 1000 K from V_1 to V_2,\n2) cooling at constant volume to T_L = 300 K,\n3) isothermal compression at T_L from V_2 to V_1,\n4) heating at constant volume back to T_H.\n\nIn process II, one mole of ideal gas works in a reversible Carnot cycle between the same temperatures T_H and T_L.\n\nIf work per cycle is W_I for process I and W_II for process II, find exact ratio W_I/W_II.\nReturn only the final ratio and short derivation.",
+      "provider": "none",
+      "model": "none",
+      "raw": {
+        "ok": true,
+        "provider": "none",
+        "model": "none",
+        "answer": "I cannot fully solve this right now, but here is what I can infer:\n\nJEE Advanced 2023 Physics PYQ (Thermodynamics, hard):\n\nIn process I, one mole of ideal gas undergoes a reversible cycle with:\n1) isothermal expansion at T_H = 1000 K from V_1 to V_2,\n2) cooling at constant volume to T_L = 300 K,\n3) isothermal compression at T_L from V_2 to V_1,\n4) heating at constant volume back to T_H.\n\nIn process II, one mole of ideal gas works in a reversible Carnot cycle between the same temperatures T_H and T_L.\n\nIf work per cycle is W_I for process I and W_II for process II, find exact ratio W_I/W_II.\nReturn only the final ratio and short derivation.",
+        "meta": {
+          "degraded": true
+        }
+      }
+    }
+  }
+}

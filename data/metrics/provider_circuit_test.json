@@ -1,0 +1,30 @@
+{
+  "providers": {
+    "openrouter": {
+      "auth": 0,
+      "consecutive_failures": 38,
+      "consecutive_infra_failures": 7,
+      "empty_response": 0,
+      "failures": 38,
+      "generic": 0,
+      "half_open_success": 0,
+      "health_score": 0.3,
+      "invalid_response": 0,
+      "network": 38,
+      "open_probe_counter": 0,
+      "open_until": 1772954664.5029702,
+      "probe_counter": 0,
+      "rate_limit": 0,
+      "recent_infra_failures": [
+        1772954604.5029702
+      ],
+      "requests": 38,
+      "schema_validation": 0,
+      "state": "open",
+      "success": 0,
+      "timeout": 0,
+      "too_short": 0,
+      "unresolved_answer": 0
+    }
+  }
+}

@@ -1,0 +1,426 @@
+{
+  "provider_registry": {
+    "initialized": true,
+    "providers": {
+      "openrouter": {
+        "registered": true,
+        "key_count": 3
+      },
+      "groq": {
+        "registered": true,
+        "key_count": 1
+      },
+      "gemini": {
+        "registered": true,
+        "key_count": 3
+      },
+      "hf": {
+        "registered": true,
+        "key_count": 1
+      },
+      "huggingface": {
+        "registered": true,
+        "key_count": 1
+      }
+    }
+  },
+  "solve_sample": [
+    {
+      "question": "What is 6*7?",
+      "final_answer": "42",
+      "winner_provider": "mini",
+      "verified": false,
+      "risk": 1.0,
+      "entropy": 0.6425076846960827,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 2,
+          "collect_extra": false,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^7 in (1 + x)^14 + (1 - x)^14.",
+      "final_answer": "0",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.6398726202136846,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": true,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 3,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many subsets of {1-7} contain both 1 and 7?",
+      "final_answer": "32",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.6322334074536808,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": true,
+          "deterministic_confidence_low": true,
+          "exploration_sample": true,
+          "trigger_count": 3,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many permutations of 1-6 where 1 appears before 2 and 3?",
+      "final_answer": "240",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.025,
+      "entropy": 0.7461586720305731,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^10 in (1 + x)^20.",
+      "final_answer": "184756",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18008797326618442,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^4 in (1 + x)^8 (1 - x)^8.",
+      "final_answer": "28",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.1800880062189576,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many 4-digit numbers from 1-9 with no repetition and sum odd?",
+      "final_answer": "1440",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18008802011100178,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "In how many ways can 10 identical balls be distributed among 4 boxes?",
+      "final_answer": "0",
+      "winner_provider": "mini",
+      "verified": false,
+      "risk": 1.0,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": false,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the constant term in (x^2 + 1/x)^12.",
+      "final_answer": "0",
+      "winner_provider": "mini",
+      "verified": false,
+      "risk": 1.0,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": false,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many arrangements of 6 books if 3 specific books stay together?",
+      "final_answer": "144",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18008720307530401,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "Find the coefficient of x^3 in (1 + x)^9 + (1 - x)^9.",
+      "final_answer": "0",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18008730848732735,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": true,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 2,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    },
+    {
+      "question": "How many 5-digit numbers from 1-7 without repetition greater than 50000?",
+      "final_answer": "1080",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.18008738417671322,
+      "entropy": 0.38,
+      "answer_resolution": {
+        "provider_independent": true,
+        "switched": false,
+        "reason": "keep_current",
+        "resolved_provider": "mini"
+      },
+      "shadow_diversity": {
+        "enabled": true,
+        "attempted_extra": [],
+        "collected_extra": 0,
+        "policy": {
+          "difficulty_medium_plus": false,
+          "multi_concept": false,
+          "rare_cluster": false,
+          "entropy_band": false,
+          "deterministic_confidence_low": true,
+          "exploration_sample": false,
+          "trigger_count": 1,
+          "collect_extra": true,
+          "enabled": true
+        }
+      }
+    }
+  ],
+  "winner_distribution": {
+    "mini": 12
+  },
+  "verified_rate": 0.75,
+  "risk_mean": 0.3462938246112906,
+  "entropy_mean": 0.47506436536616836,
+  "shadow_log_counts": {
+    "arena_shadow_disagreements": 38,
+    "deterministic_vs_provider_gap": 34,
+    "reasoning_divergence_clusters": 72,
+    "rare_cluster_cross_provider": 0
+  },
+  "dataset_stats": {
+    "ts": "2026-02-26T11:10:16.898966+00:00",
+    "total_raw": 928,
+    "total_filtered": 38,
+    "hard_negatives": 932,
+    "disagreement_cases": 516,
+    "synthetic_disagreement_rows": 12,
+    "trap_cases": 315,
+    "parse_errors": 0,
+    "sources": {
+      "solver_debug_rows": 3622,
+      "automation_hook_rows": 657,
+      "mini_shadow_rows": 666,
+      "arena_shadow_rows": 38,
+      "provider_gap_rows": 34,
+      "reasoning_divergence_rows": 72,
+      "rare_cross_provider_rows": 0
+    }
+  },
+  "dataset_source_distribution": {
+    "mini_shadow_logs": 7,
+    "arena_shadow_disagreement": 19,
+    "mini_shadow_logs_synthetic_disagreement": 7,
+    "arena_shadow_disagreement_synthetic_disagreement": 5
+  }
+}

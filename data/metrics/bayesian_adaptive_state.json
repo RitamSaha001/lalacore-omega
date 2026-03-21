@@ -1,0 +1,12 @@
+{
+  "count": 4000,
+  "ema_error": 0.033098510846443004,
+  "offsets": {
+    "agreement": 0.10518940751602665,
+    "answer_type_match": 0.10528792009611618,
+    "calibration_ema": -0.09908170915185947,
+    "deterministic": 0.126225691696478,
+    "entropy": -0.02939438228475108,
+    "winner_margin": 0.10684356076613412
+  }
+}

@@ -1,0 +1,23 @@
+[Unit]
+Description=LalaCore Question Bank Refinement Pipeline
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/lalacore_omega
+Environment=PYTHONPATH=.
+Environment=TOKEN_BUDGET=0
+Environment=MAX_AI_ROWS=0
+Environment=REQUIRE_AI_ALL=1
+Environment=AI_MAX_RETRIES=3
+Environment=AI_RETRY_DELAY_S=3
+Environment=AI_TIMEOUT_S=20
+ExecStart=/bin/bash -lc '/opt/lalacore_omega/tools/run_refine_pipeline.sh /opt/lalacore_omega/data/app/import_question_bank.json'
+Restart=always
+RestartSec=20
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

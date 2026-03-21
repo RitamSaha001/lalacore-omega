@@ -1,0 +1,31 @@
+{
+  "stats": {
+    "ts": "2026-02-26T11:10:41.837810+00:00",
+    "total_raw": 928,
+    "total_filtered": 1432,
+    "hard_negatives": 1424,
+    "disagreement_cases": 1008,
+    "synthetic_disagreement_rows": 504,
+    "trap_cases": 315,
+    "parse_errors": 0,
+    "sources": {
+      "solver_debug_rows": 3622,
+      "automation_hook_rows": 657,
+      "mini_shadow_rows": 666,
+      "arena_shadow_rows": 38,
+      "provider_gap_rows": 34,
+      "reasoning_divergence_rows": 72,
+      "rare_cross_provider_rows": 0
+    }
+  },
+  "source_distribution": {
+    "mini_shadow_logs": 417,
+    "deterministic_vs_provider_gap": 7,
+    "arena_shadow_disagreement": 19,
+    "solver_debug": 485,
+    "mini_shadow_logs_synthetic_disagreement": 7,
+    "deterministic_vs_provider_gap_synthetic_disagreement": 7,
+    "arena_shadow_disagreement_synthetic_disagreement": 5,
+    "solver_debug_synthetic_disagreement": 485
+  }
+}

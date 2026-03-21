@@ -1,0 +1,234 @@
+[
+  {
+    "question_id": "manual_de_001",
+    "type": "MCQ_MULTI",
+    "question_text": "A curve y = f(x) has the property that the perpendicular distance of the origin from the normal at any point P of the curve is equal to the distance of the point P from the x-axis. Then which of the following statements about the differential equation of the curve are true?",
+    "question_text_latex": "A curve $y=f(x)$ has the property that the perpendicular distance of the origin from the normal at any point $P$ of the curve is equal to the distance of the point $P$ from the $x$-axis. Then which of the following statements about the differential equation of the curve are true?",
+    "options": [
+      {
+        "label": "A",
+        "text": "It is homogeneous."
+      },
+      {
+        "label": "B",
+        "text": "It can be converted into a linear differential equation with a suitable substitution."
+      },
+      {
+        "label": "C",
+        "text": "It can correspond to the family of circles touching the x-axis at the origin."
+      },
+      {
+        "label": "D",
+        "text": "It can correspond to the family of circles touching the y-axis at the origin."
+      }
+    ],
+    "options_latex": {
+      "A": "It is homogeneous.",
+      "B": "It can be converted into a linear differential equation with a suitable substitution.",
+      "C": "It can correspond to the family of circles touching the x-axis at the origin.",
+      "D": "It can correspond to the family of circles touching the y-axis at the origin."
+    },
+    "correct_answer": {
+      "single": null,
+      "multiple": [
+        "A",
+        "B",
+        "D"
+      ],
+      "numerical": null,
+      "tolerance": null
+    },
+    "answer_fill_source": "manual_editorial_curation",
+    "subject": "Mathematics",
+    "chapter": "Differential Equations",
+    "difficulty": "JEE Advanced",
+    "ai_confidence": 0.0,
+    "validation_status": "accepted_manual_curation",
+    "validation_errors": [
+      "expression_fragmented"
+    ],
+    "publish_risk_score": 0.0,
+    "id": "manual_de_001",
+    "source": "manual_editorial_curation",
+    "teacher_id": "bulk_all14_legacy",
+    "publish_id": "manual_de_001",
+    "published_at": 1772708797037,
+    "repair_actions": [
+      "layer6_multiplication_repair:multiplication_repair_5",
+      "layer10_structural_repair:structural_option_labels_normalized"
+    ],
+    "repair_confidence": 1.0,
+    "repair_status": "accepted_manual",
+    "chapter_tags": [
+      "Differential Equations",
+      "Application of Derivatives"
+    ],
+    "topic": "algebraic equations",
+    "detected_issues": [],
+    "solver_notes": [
+      "solver_rule_not_applicable"
+    ],
+    "requires_human_review": false,
+    "verification": {
+      "mathematical_consistency": true,
+      "answer_key_verified": true,
+      "answer_key_check_performed": true,
+      "ambiguity_detected": false,
+      "computed_answer": null,
+      "computed_option_label": [
+        "A",
+        "B",
+        "D"
+      ],
+      "suggested_correct_answer": {
+        "multiple": [
+          "A",
+          "B",
+          "D"
+        ]
+      }
+    },
+    "math_repair_engine_x": {
+      "clean_question_text": "A curve y = f(x)has the property that the perpendicular distance of the origin from the normal at any point P of the curve is equal to the distance of the point P from the x-axis. Then the differential equation of the curve",
+      "clean_question_latex": "A curve y = f(x)has the property that the perpendicular distance of the origin from the normal at any point P of the curve is equal to the distance of the point P from the x-axis. Then the differential equation of the curve",
+      "options": {
+        "A": "is homogeneous.",
+        "B": "can be converted into linear differential equation with some suitable substitution.",
+        "C": "can correspond to the family of circles touching the x-axis at the origin.",
+        "D": "can correspond to the family of circles touching the y-axis at the origin. DE01-0264"
+      },
+      "options_latex": {
+        "A": "is homogeneous.",
+        "B": "can be converted into linear differential equation with some suitable substitution.",
+        "C": "can correspond to the family of circles touching the x-axis at the origin.",
+        "D": "can correspond to the family of circles touching the y-axis at the origin. DE01-0264"
+      },
+      "correct_answer": {
+        "single": "D",
+        "multiple": [
+          "D"
+        ],
+        "numerical": null,
+        "tolerance": null
+      },
+      "topic": "algebraic equations",
+      "difficulty": "JEE Advanced",
+      "detected_repairs": [
+        "layer6_multiplication_repair:multiplication_repair_5",
+        "layer10_structural_repair:structural_option_labels_normalized"
+      ],
+      "verification": {
+        "mathematical_consistency": true,
+        "answer_key_verified": true,
+        "answer_key_check_performed": false,
+        "ambiguity_detected": false,
+        "computed_answer": null,
+        "computed_option_label": null,
+        "suggested_correct_answer": null
+      },
+      "confidence": 1.0,
+      "requires_human_review": false
+    },
+    "jee_bank_x": {
+      "version": "X",
+      "built_at": "2026-03-08T03:22:33+00:00",
+      "input_source": "data/app/import_question_bank.json",
+      "layer_order": [
+        "layer1_symbol_normalization",
+        "layer2_mathbb_repair",
+        "layer3_fraction_repair",
+        "layer4_matrix_repair",
+        "layer5_limit_repair",
+        "layer6_multiplication_repair",
+        "layer7_sum_product_repair",
+        "layer8_set_notation_repair",
+        "layer9_linear_algebra_repair",
+        "layer10_structural_repair"
+      ],
+      "layer_details": {
+        "layer6_multiplication_repair": [
+          "multiplication_repair_5"
+        ],
+        "layer10_structural_repair": [
+          "structural_option_labels_normalized"
+        ]
+      },
+      "validation": {
+        "latex_syntax_ok": true,
+        "ast_ok": true,
+        "no_dangling_tokens": true,
+        "question_structure_ok": true
+      },
+      "detected_question_type": "MCQ_SINGLE",
+      "repair_status": "safe",
+      "repair_confidence": 1.0,
+      "validation_issues": [],
+      "solver_notes": [
+        "solver_rule_not_applicable"
+      ],
+      "math_repair_engine_x": {
+        "clean_question_text": "A curve y = f(x)has the property that the perpendicular distance of the origin from the normal at any point P of the curve is equal to the distance of the point P from the x-axis. Then the differential equation of the curve",
+        "clean_question_latex": "A curve y = f(x)has the property that the perpendicular distance of the origin from the normal at any point P of the curve is equal to the distance of the point P from the x-axis. Then the differential equation of the curve",
+        "options": {
+          "A": "is homogeneous.",
+          "B": "can be converted into linear differential equation with some suitable substitution.",
+          "C": "can correspond to the family of circles touching the x-axis at the origin.",
+          "D": "can correspond to the family of circles touching the y-axis at the origin. DE01-0264"
+        },
+        "options_latex": {
+          "A": "is homogeneous.",
+          "B": "can be converted into linear differential equation with some suitable substitution.",
+          "C": "can correspond to the family of circles touching the x-axis at the origin.",
+          "D": "can correspond to the family of circles touching the y-axis at the origin. DE01-0264"
+        },
+        "correct_answer": {
+          "single": "D",
+          "multiple": [
+            "D"
+          ],
+          "numerical": null,
+          "tolerance": null
+        },
+        "topic": "algebraic equations",
+        "difficulty": "JEE Advanced",
+        "detected_repairs": [
+          "layer6_multiplication_repair:multiplication_repair_5",
+          "layer10_structural_repair:structural_option_labels_normalized"
+        ],
+        "verification": {
+          "mathematical_consistency": true,
+          "answer_key_verified": true,
+          "answer_key_check_performed": false,
+          "ambiguity_detected": false,
+          "computed_answer": null,
+          "computed_option_label": null,
+          "suggested_correct_answer": null
+        },
+        "confidence": 1.0,
+        "requires_human_review": false
+      }
+    },
+    "legacy_question_id": "imp_q_30",
+    "legacy_row_id": "bankq_1772708797038",
+    "legacy_publish_id": "imppub_1772708797037",
+    "has_solution": true,
+    "manual_curation": {
+      "chapter_slug": "differential_equations",
+      "curated_at": "2026-03-08T11:32:00+05:30",
+      "curator": "codex",
+      "preserved_original_meaning": true,
+      "policy": "accept_only_when_question_can_be_restored_without_inventing_new_mathematics",
+      "reason_accepted": "complete statement and options survive; answer key corrected by derivation of the ODE and its solution family",
+      "corrections": [
+        "corrected question type from MCQ_SINGLE to MCQ_MULTI",
+        "removed trailing artifact from option D",
+        "corrected answer key from D to A,B,D"
+      ],
+      "evidence": [
+        "manual derivation"
+      ]
+    },
+    "solution_explanation": "Let P = (x, y) and let the slope of the tangent be m = dy/dx. Then the normal at P is\nY - y = -(1/m)(X - x), or equivalently X + mY - (x + my) = 0.\nThe perpendicular distance of the origin from this normal is |x + my|/sqrt(1 + m^2).\nThis is given to be equal to the distance of P from the x-axis, namely |y|.\nSquaring gives (x + my)^2 = y^2(1 + m^2), which simplifies to x^2 + 2xmy = y^2.\nHence m = (y^2 - x^2)/(2xy).\nThis differential equation is homogeneous, so A is true.\nIf we put z = y^2, then dz/dx = 2y dy/dx and the equation becomes dz/dx = z/x - x,\nwhich is linear in z. So B is true.\nSolving gives x^2 + y^2 = 2cx, which is the family of circles touching the y-axis at the origin.\nTherefore D is true and C is false.",
+    "manual_solution_latex": "Let $P=(x,y)$ and let $m=\\dfrac{dy}{dx}$ be the slope of the tangent.\nThe normal at $P$ is\n\\[Y-y=-\\frac1m(X-x),\\]\nor\n\\[X+mY-(x+my)=0.\\]\nIts perpendicular distance from the origin is\n\\[\\frac{|x+my|}{\\sqrt{1+m^2}}.\\]\nThis equals the distance of $P$ from the $x$-axis, namely $|y|$.\nSquaring,\n\\[(x+my)^2=y^2(1+m^2),\\]\nwhich simplifies to\n\\[x^2+2xmy=y^2.\\]\nTherefore\n\\[m=\\frac{dy}{dx}=\\frac{y^2-x^2}{2xy}.\\]\nThis is homogeneous, so A is true.\nNow put $z=y^2$. Then\n\\[\\frac{dz}{dx}=2y\\frac{dy}{dx}=\\frac{z}{x}-x,\\]\na linear differential equation, so B is true.\nSolving it gives\n\\[x^2+y^2=2cx,\\]\nthe family of circles touching the $y$-axis at the origin.\nHence D is true and C is false.\nTherefore the correct options are $\\boxed{A,B,D}$."
+  }
+]

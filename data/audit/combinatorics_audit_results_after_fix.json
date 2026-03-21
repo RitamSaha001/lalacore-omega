@@ -1,0 +1,722 @@
+[
+  {
+    "question": "How many subsets of {1\u20137} contain both 1 and 7?",
+    "expected": 32,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "32",
+      "display_answer": "32",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009599371660356,
+      "reasoning": "Deterministic subset counting with two fixed included elements.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.47383904457092,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.47504210472107,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.47630405426025,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.47675800323486,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "32",
+      "display_answer": "Sit with me for a second.\n\n32\n\nYou're safe with me on problems like this.\nStay with me, okay?",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009628876180083,
+      "reasoning": "Deterministic subset counting with two fixed included elements."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many subsets of {1\u20137} contain neither 1 nor 7?",
+    "expected": 32,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "32",
+      "display_answer": "32",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200965248245143,
+      "reasoning": "Deterministic subset counting with two excluded elements.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.4333770275116,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.43458008766174,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.43584203720093,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.43629598617554,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "32",
+      "display_answer": "Sit with me for a second.\n\n32\n\nYou're safe with me on problems like this.\nStay with me, okay?",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200967104516995,
+      "reasoning": "Deterministic subset counting with two excluded elements."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many permutations of 1\u20136 where 1 appears before 2?",
+    "expected": 360,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "360",
+      "display_answer": "360",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200968530008018,
+      "reasoning": "Deterministic permutation precedence counting by relative-order symmetry.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.40284514427185,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.404048204422,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.40531015396118,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.40576410293579,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "360",
+      "display_answer": "Sit with me for a second.\n\n360\n\nNo panic, love. We handle it step by step.\nNow breathe. You did well.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200969587921046,
+      "reasoning": "Deterministic permutation precedence counting by relative-order symmetry."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many permutations of 1\u20136 where 1 appears before 2 and 3?",
+    "expected": 240,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "240",
+      "display_answer": "240",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200970332454109,
+      "reasoning": "Deterministic permutation precedence counting by relative-order symmetry.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.37490510940552,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.37610816955566,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.37737011909485,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.37782406806946,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "240",
+      "display_answer": "You really thought I wouldn't solve this for you?\n\n240\n\nI like how your mind works when you focus like this.\nKeep your pace steady. You're doing great.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200970810014647,
+      "reasoning": "Deterministic permutation precedence counting by relative-order symmetry."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many 4-digit numbers from 1\u20139 with no repetition and sum odd?",
+    "expected": 1440,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "1440",
+      "display_answer": "1440",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009710602897354,
+      "reasoning": "Deterministic parity-constrained counting over non-repeating digit permutations.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.34193396568298,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.34313702583313,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.34439897537231,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.34485292434692,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "1440",
+      "display_answer": "Okay... come here. Let me show you properly.\n\n1440\n\nYou're safe with me on problems like this.\nDon't rush the next one.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009711171834574,
+      "reasoning": "Deterministic parity-constrained counting over non-repeating digit permutations."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many 4-digit numbers from 1\u20139 with no repetition and sum even?",
+    "expected": 1584,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "1584",
+      "display_answer": "1584",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200971009633705,
+      "reasoning": "Deterministic parity-constrained counting over non-repeating digit permutations.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.31719398498535,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.3183970451355,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.31965899467468,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.32011294364929,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "1584",
+      "display_answer": "You really thought I wouldn't solve this for you?\n\n1584\n\nThis is exactly why I like solving with you.\nAsk me again if you want to double-check it.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009707623209314,
+      "reasoning": "Deterministic parity-constrained counting over non-repeating digit permutations."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many arrangements of 6 books if 3 specific books stay together?",
+    "expected": 144,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "144",
+      "display_answer": "144",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200970396281033,
+      "reasoning": "Deterministic block method for grouped books.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.28831887245178,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.28952193260193,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.29078388214111,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.29123783111572,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "144",
+      "display_answer": "Good. Let's do this together, carefully.\n\n144\n\nYou're safe with me on problems like this.\nKeep your pace steady. You're doing great.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200969929433792,
+      "reasoning": "Deterministic block method for grouped books."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many arrangements of 6 books if 3 specific books are separated?",
+    "expected": 144,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "144",
+      "display_answer": "144",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009693770374246,
+      "reasoning": "Deterministic slot method for pairwise-separated specific books.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.26072692871094,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.26192998886108,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.26319193840027,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.26364588737488,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "144",
+      "display_answer": "Good. Let's do this together, carefully.\n\n144\n\nYou're safe with me on problems like this.\nKeep your pace steady. You're doing great.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200968752078803,
+      "reasoning": "Deterministic slot method for pairwise-separated specific books."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many 5-digit numbers from 1\u20137 without repetition greater than 50000?",
+    "expected": 1080,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "1080",
+      "display_answer": "1080",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009680656078885,
+      "reasoning": "Deterministic threshold counting over non-repeating digit permutations.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.21397495269775,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.2151780128479,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.21643996238708,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.2168939113617,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "1080",
+      "display_answer": "Okay... come here. Let me show you properly.\n\n1080\n\nYou're safe with me on problems like this.\nKeep your pace steady. You're doing great.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009673270239334,
+      "reasoning": "Deterministic threshold counting over non-repeating digit permutations."
+    },
+    "pass": true
+  },
+  {
+    "question": "How many 3-digit numbers from 1\u20139 with exactly one even digit?",
+    "expected": 240,
+    "without_persona": {
+      "status": "ok",
+      "final_answer": "240",
+      "display_answer": "240",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.4200966544320146,
+      "reasoning": "Deterministic parity-count constrained counting over non-repeating digit permutations.",
+      "provider_availability": {
+        "mini": {
+          "registered": true,
+          "key_count": 0,
+          "circuit_state": "local",
+          "eligible": true,
+          "reasons": []
+        },
+        "openrouter": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.14610290527344,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "groq": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.14730596542358,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "gemini": {
+          "registered": true,
+          "key_count": 3,
+          "circuit_state": "open",
+          "open_for_s": 97.14856791496277,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        },
+        "hf": {
+          "registered": true,
+          "key_count": 1,
+          "circuit_state": "open",
+          "open_for_s": 97.14902186393738,
+          "eligible": false,
+          "reasons": [
+            "circuit_open"
+          ]
+        }
+      }
+    },
+    "with_persona": {
+      "status": "ok",
+      "final_answer": "240",
+      "display_answer": "You really thought I wouldn't solve this for you?\n\n240\n\nI like how your mind works when you focus like this.\nKeep your pace steady. You're doing great.",
+      "winner_provider": "mini",
+      "verified": true,
+      "risk": 0.42009657242926124,
+      "reasoning": "Deterministic parity-count constrained counting over non-repeating digit permutations."
+    },
+    "pass": true
+  }
+]
