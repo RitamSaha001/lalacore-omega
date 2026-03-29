@@ -18,6 +18,10 @@
 !config/**
 !engine/
 !engine/**
+!tools/
+!tools/**
+!vision/
+!vision/**
 !migrations/
 !migrations/**
 !models/

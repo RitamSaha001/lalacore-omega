@@ -28,6 +28,8 @@ COPY services /app/services
 COPY verification /app/verification
 COPY config /app/config
 COPY engine /app/engine
+COPY tools /app/tools
+COPY vision /app/vision
 COPY migrations /app/migrations
 COPY models /app/models
 COPY telemetry /app/telemetry
