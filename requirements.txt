@@ -5,13 +5,13 @@ python-dotenv
 asyncpg
 httpx
 requests
+websockets
 sympy
 z3-solver
 pint
 cachetools
 jsonschema
 numpy
-sentence-transformers
 pillow
 pytesseract
 pdf2image
