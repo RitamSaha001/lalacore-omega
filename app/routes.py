@@ -6,6 +6,7 @@ import uuid
 import hashlib
 import re
 from datetime import datetime, timezone
+from urllib.parse import urlparse, urlunparse
 
 from fastapi import APIRouter, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
@@ -31,6 +32,42 @@ _ATLAS_MAINTENANCE = AtlasMaintenanceService(app_data=_APP_DATA)
 _APP_UPDATE_RELEASE_NOTIFIER = AppUpdateReleaseNotifierService()
 _QUESTION_NORMALIZER = QuestionNormalizer()
 _QUESTION_SEARCH_ENGINE = QuestionSearchEngine()
+
+
+def _request_public_base_url(request: Request) -> str:
+    explicit = str(os.getenv("APP_PUBLIC_BASE_URL", "") or "").strip().rstrip("/")
+    forwarded_proto = (
+        str(request.headers.get("x-forwarded-proto") or "").split(",", 1)[0].strip()
+    )
+    forwarded_host = (
+        str(request.headers.get("x-forwarded-host") or request.headers.get("host") or "")
+        .split(",", 1)[0]
+        .strip()
+    )
+    parsed = urlparse(str(request.base_url).rstrip("/"))
+    scheme = forwarded_proto or parsed.scheme or ""
+    netloc = forwarded_host or parsed.netloc or ""
+
+    if explicit:
+        explicit_parsed = urlparse(explicit)
+        if netloc == explicit_parsed.netloc and explicit_parsed.scheme:
+            scheme = explicit_parsed.scheme
+        elif (
+            not netloc
+            or netloc.endswith(".railway.internal")
+            or netloc.startswith(("127.0.0.1", "localhost", "10.0.2.2"))
+        ):
+            return explicit
+
+    if netloc:
+        if scheme == "http" and (
+            netloc.endswith(".railway.app") or netloc.endswith(".up.railway.app")
+        ):
+            scheme = "https"
+        public_scheme = scheme or ("https" if explicit else "http")
+        return urlunparse((public_scheme, netloc, "", "", "", "")).rstrip("/")
+
+    return explicit or str(request.base_url).rstrip("/")
 
 
 # ==============================
@@ -2675,7 +2712,7 @@ def _teacher_atlas_plan_from_result(
 @router.post("/app/action")
 async def app_action(request: Request, req: dict[str, Any]):
     payload = dict(req)
-    payload["_request_base_url"] = str(request.base_url).rstrip("/")
+    payload["_request_base_url"] = _request_public_base_url(request)
     action = str(payload.get("action") or "").strip()
     if not action:
         raise HTTPException(status_code=400, detail="Missing action")
@@ -2690,7 +2727,7 @@ async def app_action_get(request: Request):
     payload: dict[str, Any] = {
         key: value for key, value in request.query_params.multi_items()
     }
-    payload["_request_base_url"] = str(request.base_url).rstrip("/")
+    payload["_request_base_url"] = _request_public_base_url(request)
     action = str(payload.get("action") or "").strip()
     if not action:
         raise HTTPException(status_code=400, detail="Missing action")
