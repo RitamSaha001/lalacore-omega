@@ -28,6 +28,15 @@ _CALCULUS_GRAPH_HINTS = (
     "stationary point",
 )
 
+_CONIC_HINTS = (
+    "hyperbola",
+    "ellipse",
+    "parabola",
+    "circle",
+    "conic",
+    "conics",
+)
+
 _COORDINATE_HINTS = (
     "x=",
     "y=",
@@ -159,10 +168,13 @@ class DesmosGraphBuilder:
             re.search(r"\bx\b", text) and re.search(r"\by\b", text)
         )
         calculus_hint = any(k in text for k in _CALCULUS_GRAPH_HINTS)
+        conic_hint = any(k in text for k in _CONIC_HINTS)
 
         if keyword_hit:
             return has_coordinate_context or calculus_hint or profile_subject in {"math", "calculus", "coordinate geometry"}
         if profile_subject in {"math", "calculus", "coordinate geometry"} and graph_like and has_coordinate_context:
+            return True
+        if conic_hint and has_coordinate_context and profile_subject in {"math", "coordinate geometry", "general"}:
             return True
         if calculus_hint and has_coordinate_context:
             return True
@@ -180,6 +192,14 @@ class DesmosGraphBuilder:
             for part in parts:
                 expr = self._normalize_expr(part)
                 if not expr:
+                    continue
+                regex_matches = [
+                    self._normalize_expr(match)
+                    for match in _EQUATION_EXTRACTOR.findall(expr)
+                ]
+                regex_matches = [match for match in regex_matches if match]
+                if regex_matches:
+                    candidates.extend(regex_matches)
                     continue
                 if not re.search(r"(=|<=|>=|<|>)", expr):
                     continue
@@ -212,7 +232,13 @@ class DesmosGraphBuilder:
         text = re.sub(r"\s+", " ", text)
         text = text.replace(" = ", "=").replace(" <= ", "<=").replace(" >= ", ">=").replace(" < ", "<").replace(" > ", ">")
         text = re.sub(
-            r"\s+\b(on|for|where|when|mark|find|same)\b.*$",
+            r"^(?:(?:jee|advanced|level|question|plot|graph|sketch|draw|for|the|hyperbola|ellipse|parabola|circle|conic|same)\b[:\s]*)+",
+            "",
+            text,
+            flags=re.IGNORECASE,
+        )
+        text = re.sub(
+            r"\s+\b(on|where|when|mark|find|same)\b.*$",
             "",
             text,
             flags=re.IGNORECASE,

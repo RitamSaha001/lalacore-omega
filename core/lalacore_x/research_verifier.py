@@ -176,6 +176,30 @@ class ResearchMetaVerifier:
             return "boolean"
         if any(token in q for token in ("simplify", "expression", "in terms of", "prove")):
             return "expression"
+        if any(
+            token in q
+            for token in (
+                "how many",
+                "number of",
+                "count",
+                "probability",
+                "arrangement",
+                "arrangements",
+                "permutation",
+                "permutations",
+                "combination",
+                "combinations",
+                "subset",
+                "subsets",
+                "onto function",
+                "onto functions",
+                "surjective function",
+                "surjective functions",
+                "injective function",
+                "injective functions",
+            )
+        ):
+            return "numeric"
         if bool(profile.get("numeric", False)) or any(token in q for token in ("value", "evaluate", "compute", "number")):
             return "numeric"
         return "unknown"

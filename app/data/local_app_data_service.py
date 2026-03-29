@@ -16,6 +16,7 @@ import shutil
 import subprocess
 import tempfile
 import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, quote_plus, unquote, urlparse
@@ -36,24 +37,34 @@ from latex_sanitizer import (
     sanitize_question_payload,
     validate_question_structure,
 )
+from services.atlas_incident_email_service import AtlasIncidentEmailService
+from services.atlas_memory_service import AtlasMemoryService
+from app.storage.sqlite_json_store import SQLiteJsonBlobStore
+from core.analytics_insight_engine import (
+    analyze_exam_entry,
+    class_summary_entry,
+    student_intelligence_entry,
+    student_profile_entry,
+)
+from core.material_generation_engine import material_generation_entry
 
 
 class LocalAppDataService:
-    """Local file-backed fallback for quiz/material/file actions."""
+    """SQLite-backed app-data authority with JSON migration for legacy state."""
 
     _IMPORT_QUESTION_START_RE = re.compile(
-        r"^\s*(?:q(?:uestion)?\s*)?\d+\s*[\).:\-]\s*",
+        r"^\s*(?:[qg](?:uestion)?\s*)?\d+\s*[\).:\-]\s*",
         re.IGNORECASE,
     )
     _IMPORT_QUESTION_NUMBER_RE = re.compile(
-        r"^\s*(?:q(?:uestion)?\s*)?(\d{1,4})\s*[\).:\-]",
+        r"^\s*(?:[qg](?:uestion)?\s*)?(\d{1,4})\s*[\).:\-]",
         re.IGNORECASE,
     )
     _IMPORT_OPTION_START_RE = re.compile(
-        r"^\s*(?:\(?([A-Za-z]|[1-9])\)?[\).:\-])\s*(.+)$"
+        r"^\s*(?:\(?([A-Za-z@]|[0-9])\)?[\).:\-]?)\s+(.+)$"
     )
     _IMPORT_ANSWER_LINE_RE = re.compile(
-        r"^\s*(?:ans(?:wer)?|correct(?:\s*answer)?)\s*[:\-]\s*(.+)$",
+        r"^\s*(?:ans(?:wer)?|a(?:newer|neewr|nser)|correct(?:\s*answer)?)\s*[:.\-]\s*(.+)$",
         re.IGNORECASE,
     )
     _IMPORT_SOLUTION_LINE_RE = re.compile(
@@ -76,10 +87,15 @@ class LocalAppDataService:
         import_drafts_file: str | Path | None = None,
         import_question_bank_file: str | Path | None = None,
         jee_bank_x_file: str | Path | None = None,
+        auth_users_file: str | Path | None = None,
+        auth_storage_db_file: str | Path | None = None,
+        storage_db_file: str | Path | None = None,
     ) -> None:
         root = Path(__file__).resolve().parents[2]
         app_dir = root / "data" / "app"
+        auth_dir = root / "data" / "auth"
         app_dir.mkdir(parents=True, exist_ok=True)
+        auth_dir.mkdir(parents=True, exist_ok=True)
         self._quizzes_dir = app_dir / "quizzes"
         self._uploads_dir = app_dir / "uploads"
         self._quizzes_dir.mkdir(parents=True, exist_ok=True)
@@ -130,6 +146,51 @@ class LocalAppDataService:
         self._chat_users_file = app_dir / "chat_users.json"
         self._chat_threads_file = app_dir / "chat_threads.json"
         self._doubts_file = app_dir / "doubts.json"
+        self._auth_users_file = (
+            Path(auth_users_file) if auth_users_file else auth_dir / "users.json"
+        )
+        self._auth_storage = SQLiteJsonBlobStore(
+            Path(auth_storage_db_file)
+            if auth_storage_db_file
+            else self._auth_users_file.parent / "auth_store.sqlite3"
+        )
+        default_storage_root = (
+            self._assessments_file.parent
+            if any(
+                value is not None
+                for value in (
+                    assessments_file,
+                    materials_file,
+                    live_class_schedule_file,
+                    uploads_file,
+                    ai_quizzes_file,
+                    results_file,
+                    teacher_review_file,
+                    import_drafts_file,
+                    import_question_bank_file,
+                    jee_bank_x_file,
+                )
+            )
+            else app_dir
+        )
+        self._storage = SQLiteJsonBlobStore(
+            Path(storage_db_file)
+            if storage_db_file
+            else default_storage_root / "app_data.sqlite3"
+        )
+        self._storage_keys: dict[Path, str] = {
+            self._assessments_file.resolve(): "app_assessments",
+            self._materials_file.resolve(): "app_materials",
+            self._live_class_schedule_file.resolve(): "app_live_class_schedule",
+            self._uploads_file.resolve(): "app_uploads",
+            self._ai_quizzes_file.resolve(): "app_ai_generated_quizzes",
+            self._results_file.resolve(): "app_results",
+            self._teacher_review_file.resolve(): "app_teacher_review_queue",
+            self._import_drafts_file.resolve(): "app_import_drafts",
+            self._chat_users_file.resolve(): "app_chat_users",
+            self._chat_threads_file.resolve(): "app_chat_threads",
+            self._doubts_file.resolve(): "app_doubts",
+        }
 
         self._lock = asyncio.Lock()
         self._loaded = False
@@ -153,7 +214,183 @@ class LocalAppDataService:
         self._import_chapter_infer_cache: dict[str, str] = {}
         self._import_chapter_cache_max_entries = 12_000
         self._question_repair_engine = QuestionRepairEngine()
+        self._atlas_memory = AtlasMemoryService(root=app_dir)
+        self._atlas_incident_email = AtlasIncidentEmailService()
         self._live_class_schedule_event_queues: set[asyncio.Queue[dict[str, Any]]] = set()
+        self._material_ai_cache: dict[str, dict[str, Any]] = {}
+        self._material_ai_status: dict[str, dict[str, Any]] = {}
+
+    def build_atlas_student_memory(
+        self,
+        *,
+        account_id: str,
+        fallback_profile: dict[str, Any] | None = None,
+        recent_context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        return self._atlas_memory.get_student_memory(
+            account_id=account_id,
+            fallback_profile=fallback_profile,
+            recent_context=recent_context,
+        )
+
+    def atlas_tool_stats_summary(self, *, limit: int = 18) -> dict[str, Any]:
+        return self._atlas_memory.get_tool_stats_summary(limit=limit)
+
+    def record_atlas_tool_execution(
+        self,
+        *,
+        account_id: str,
+        tool_name: str,
+        category: str,
+        success: bool,
+        latency_ms: int,
+        context: dict[str, Any] | None = None,
+        args: dict[str, Any] | None = None,
+        observation: str = "",
+    ) -> dict[str, Any]:
+        return self._atlas_memory.record_tool_execution(
+            account_id=account_id,
+            tool_name=tool_name,
+            category=category,
+            success=success,
+            latency_ms=latency_ms,
+            context=context,
+            args=args,
+            observation=observation,
+        )
+
+    def atlas_passive_events(
+        self,
+        *,
+        account_id: str,
+        context: dict[str, Any] | None = None,
+    ) -> list[dict[str, Any]]:
+        return self._atlas_memory.generate_passive_events(
+            account_id=account_id,
+            context=context,
+        )
+
+    async def atlas_health_snapshot(
+        self,
+        *,
+        role: str = "student",
+        account_id: str = "",
+        context: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        await self._ensure_loaded()
+        account_id = self._str(account_id)
+        context = dict(context or {})
+        role = self._str(role).lower() or "student"
+        attempted_ids = {
+            self._safe_id(
+                row.get("quiz_id") or row.get("id") or row.get("assessment_id")
+            )
+            for row in self._results
+            if (
+                not account_id
+                or self._str(
+                    row.get("account_id") or row.get("student_id") or row.get("user_id")
+                )
+                == account_id
+            )
+        }
+        pending_homeworks = 0
+        pending_exams = 0
+        for row in self._assessments:
+            quiz_id = self._safe_id(row.get("id") or row.get("quiz_id"))
+            if quiz_id and quiz_id in attempted_ids:
+                continue
+            row_role = self._str(row.get("role") or row.get("viewer_role")).lower()
+            if role == "student" and row_role == "teacher":
+                continue
+            quiz_type = self._str(row.get("type")).lower()
+            if quiz_type == "homework":
+                pending_homeworks += 1
+            elif quiz_type == "exam" or "ai" in quiz_type:
+                pending_exams += 1
+        recent_material_ai = sorted(
+            (dict(value) for value in self._material_ai_status.values()),
+            key=lambda row: self._to_int(row.get("updated_at"), 0),
+            reverse=True,
+        )[:6]
+        failed_material_ai = [
+            row
+            for row in recent_material_ai
+            if self._str(row.get("status")).lower() == "failed"
+        ]
+        schedule_counts: dict[str, int] = {}
+        for row in self._live_class_schedule:
+            status = self._str(row.get("status")).lower() or "unknown"
+            schedule_counts[status] = schedule_counts.get(status, 0) + 1
+        unread_threads = 0
+        for raw in self._chat_threads.values():
+            thread = dict(raw) if isinstance(raw, dict) else {}
+            unread_threads += self._to_int(thread.get("unread_count"), 0)
+        open_doubts = 0
+        resolved_doubts = 0
+        for row in self._doubts:
+            status = self._str(row.get("status") or row.get("state")).lower()
+            if "resolved" in status:
+                resolved_doubts += 1
+            else:
+                open_doubts += 1
+        return {
+            "captured_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "role": role,
+            "account_id": account_id,
+            "storage_counts": {
+                "assessments": len(self._assessments),
+                "materials": len(self._materials),
+                "results": len(self._results),
+                "scheduled_classes": len(self._live_class_schedule),
+                "uploads": len(self._uploads),
+                "chat_threads": len(self._chat_threads),
+                "doubts": len(self._doubts),
+                "teacher_review_queue": len(self._teacher_review_queue),
+            },
+            "pending_counts": {
+                "homeworks": self._to_int(
+                    context.get("pending_homework_count"),
+                    pending_homeworks,
+                ),
+                "exams": self._to_int(
+                    context.get("pending_exam_count"),
+                    pending_exams,
+                ),
+            },
+            "schedule_status_counts": schedule_counts,
+            "material_ai_status": {
+                "recent": recent_material_ai,
+                "failed_count": len(failed_material_ai),
+            },
+            "web_diagnostics": dict(self._last_pyq_web_diagnostics),
+            "atlas_tool_stats": self.atlas_tool_stats_summary(limit=10),
+            "cache_health": {
+                "web_search_entries": len(self._web_search_cache),
+                "web_page_evidence_entries": len(self._web_page_evidence_cache),
+                "material_ai_cache_entries": len(self._material_ai_cache),
+                "material_ai_status_entries": len(self._material_ai_status),
+                "chapter_infer_cache_entries": len(self._import_chapter_infer_cache),
+                "cache_ttl_s": self._web_cache_ttl_s,
+                "cache_max_entries": self._web_cache_max_entries,
+            },
+            "runtime_health": {
+                "storage_db_path": str(self._storage.path),
+                "storage_db_exists": self._storage.path.exists(),
+                "process_id": os.getpid(),
+                "cwd": os.getcwd(),
+                "loaded": self._loaded,
+            },
+            "messaging_health": {
+                "unread_threads": unread_threads,
+                "open_doubts": open_doubts,
+                "resolved_doubts": resolved_doubts,
+            },
+            "smtp_health": {
+                "configured": self._atlas_incident_email.smtp_configured(),
+            },
+            "context_excerpt": self._atlas_compact_value(context),
+        }
 
     async def handle_action(self, payload: dict[str, Any]) -> dict[str, Any]:
         await self._ensure_loaded()
@@ -164,10 +401,14 @@ class LocalAppDataService:
             "create_assessment",
             "add_quiz",
             "save_quiz",
+            "publish_quiz",
+            "publish_assessment",
             "create_exam",
             "add_exam",
+            "publish_exam",
             "create_homework",
             "add_homework",
+            "publish_homework",
         }:
             return await self._create_quiz(payload)
 
@@ -189,6 +430,38 @@ class LocalAppDataService:
             "chat_ai",
         }:
             return await self._ai_chat_or_solve(payload)
+
+        if action in {"material_generate", "ai_material_generate"}:
+            return await self._material_generate(payload)
+
+        if action in {"material_query", "ai_material_query"}:
+            return await self._material_query(payload)
+
+        if action in {"material_status", "material_generate_status"}:
+            return await self._material_status(payload)
+
+        if action in {"ai_class_summary", "ai_teacher_class_summary", "class_summary"}:
+            return await self._class_summary(payload)
+
+        if action in {"ai_student_profile", "student_profile_ai"}:
+            return await self._student_profile(payload)
+
+        if action in {"student_intelligence", "ai_student_intelligence"}:
+            return await self._student_intelligence(payload)
+
+        if action in {"analyze_exam", "ai_analyze_exam"}:
+            return await self._analyze_exam(payload)
+
+        if action in {
+            "atlas_report_issue",
+            "report_system_issue",
+            "report_app_issue",
+            "support_diagnostic",
+        }:
+            return await self._atlas_report_issue(payload)
+
+        if action in {"health_check", "ping", "noop"}:
+            return await self._atlas_health_probe(payload)
 
         if action in {"get_ai_quiz", "read_ai_quiz", "fetch_ai_quiz"}:
             return await self._get_ai_quiz(payload)
@@ -213,6 +486,8 @@ class LocalAppDataService:
             "upload_material",
             "add_study_material",
             "create_study_material",
+            "publish_material",
+            "publish_study_material",
         }:
             return await self._add_material(payload)
 
@@ -441,6 +716,12 @@ class LocalAppDataService:
             self._loaded = True
 
     def _read_list(self, path: Path) -> list[dict[str, Any]]:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            cached = self._storage.read_json(storage_key)
+            normalized = self._normalize_list_blob(cached)
+            if cached is not None:
+                return normalized
         try:
             if not path.exists():
                 parts_dir = path.parent / f"{path.name}.parts"
@@ -456,18 +737,28 @@ class LocalAppDataService:
                         combined.extend(
                             dict(x) for x in decoded if isinstance(x, dict)
                         )
+                if storage_key and combined:
+                    self._storage.write_json(storage_key, combined)
                 return combined
             text = path.read_text(encoding="utf-8").strip()
             if not text:
                 return []
             decoded = json.loads(text)
-            if isinstance(decoded, list):
-                return [dict(x) for x in decoded if isinstance(x, dict)]
+            normalized = self._normalize_list_blob(decoded)
+            if storage_key and normalized:
+                self._storage.write_json(storage_key, normalized)
+            return normalized
         except Exception:
             pass
         return []
 
     def _read_map(self, path: Path) -> dict[str, dict[str, Any]]:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            cached = self._storage.read_json(storage_key)
+            normalized = self._normalize_map_blob(cached)
+            if cached is not None:
+                return normalized
         try:
             if not path.exists():
                 return {}
@@ -475,12 +766,10 @@ class LocalAppDataService:
             if not text:
                 return {}
             decoded = json.loads(text)
-            if isinstance(decoded, dict):
-                out: dict[str, dict[str, Any]] = {}
-                for k, v in decoded.items():
-                    if isinstance(v, dict):
-                        out[str(k)] = dict(v)
-                return out
+            normalized = self._normalize_map_blob(decoded)
+            if storage_key and normalized:
+                self._storage.write_json(storage_key, normalized)
+            return normalized
         except Exception:
             pass
         return {}
@@ -580,12 +869,34 @@ class LocalAppDataService:
         )
 
     def _write_list(self, path: Path, data: list[dict[str, Any]]) -> None:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            self._storage.write_json(storage_key, data)
+            return
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
 
     def _write_map(self, path: Path, data: dict[str, dict[str, Any]]) -> None:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            self._storage.write_json(storage_key, data)
+            return
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
+
+    def _normalize_list_blob(self, decoded: Any) -> list[dict[str, Any]]:
+        if not isinstance(decoded, list):
+            return []
+        return [dict(x) for x in decoded if isinstance(x, dict)]
+
+    def _normalize_map_blob(self, decoded: Any) -> dict[str, dict[str, Any]]:
+        if not isinstance(decoded, dict):
+            return {}
+        out: dict[str, dict[str, Any]] = {}
+        for k, v in decoded.items():
+            if isinstance(v, dict):
+                out[str(k)] = dict(v)
+        return out
 
     def _str(self, value: Any) -> str:
         return str(value or "").strip()
@@ -609,10 +920,35 @@ class LocalAppDataService:
     def _new_id(self, prefix: str) -> str:
         return f"{prefix}_{self._now_ms()}"
 
-    def _base_url(self) -> str:
-        return self._str(os.getenv("APP_PUBLIC_BASE_URL", "http://10.0.2.2:8000")).rstrip(
-            "/"
+    def _request_base_url(self, payload: dict[str, Any] | None = None) -> str:
+        if not isinstance(payload, dict):
+            return ""
+        raw = self._str(
+            payload.get("_request_base_url") or payload.get("request_base_url")
         )
+        if not raw:
+            return ""
+        parsed = urlparse(raw)
+        if not parsed.scheme or not parsed.netloc:
+            return ""
+        return raw.rstrip("/")
+
+    def _base_url(self, payload: dict[str, Any] | None = None) -> str:
+        request_base = self._request_base_url(payload)
+        if request_base:
+            return request_base
+        explicit = self._str(os.getenv("APP_PUBLIC_BASE_URL"))
+        if explicit:
+            return explicit.rstrip("/")
+        host = self._str(os.getenv("APP_PUBLIC_HOST", "10.0.2.2")) or "10.0.2.2"
+        scheme = self._str(os.getenv("APP_PUBLIC_SCHEME", "http")) or "http"
+        port = self._str(
+            os.getenv("APP_PUBLIC_PORT")
+            or os.getenv("LC9_HTTP_PORT")
+            or os.getenv("PORT")
+            or "8000"
+        )
+        return f"{scheme}://{host}:{port}".rstrip("/")
 
     def _upsert_by_id(
         self, items: list[dict[str, Any]], item_id: str, item: dict[str, Any]
@@ -679,6 +1015,142 @@ class LocalAppDataService:
             return int(float(self._str(value)))
         except Exception:
             return fallback
+
+    def _normalize_float_map(self, raw: Any) -> dict[str, float]:
+        if not isinstance(raw, dict):
+            return {}
+        out: dict[str, float] = {}
+        for key, value in raw.items():
+            token = self._str(key)
+            if not token:
+                continue
+            out[token] = round(self._to_float(value, 0.0), 6)
+        return out
+
+    def _normalize_user_answers(self, raw: Any) -> dict[str, Any]:
+        if not isinstance(raw, dict):
+            return {}
+        out: dict[str, Any] = {}
+        for key, value in raw.items():
+            token = self._str(key)
+            if not token:
+                continue
+            if isinstance(value, list):
+                out[token] = [self._str(item) for item in value if self._str(item)]
+            elif isinstance(value, dict):
+                out[token] = {
+                    self._str(inner_key): inner_value
+                    for inner_key, inner_value in value.items()
+                    if self._str(inner_key)
+                }
+            else:
+                out[token] = value
+        return out
+
+    def _normalized_result_row(
+        self,
+        payload: dict[str, Any],
+        *,
+        result_id: str = "",
+    ) -> dict[str, Any]:
+        submitted_at = self._str(
+            payload.get("submitted_at")
+            or payload.get("savedAt")
+            or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        )
+        ts = self._to_int(payload.get("ts") or payload.get("savedAt"), self._now_ms())
+        quiz_id = self._str(
+            payload.get("quiz_id") or payload.get("quizId") or payload.get("assessment_id")
+        )
+        quiz_title = self._str(
+            payload.get("quiz_title")
+            or payload.get("quizTitle")
+            or payload.get("topic")
+            or payload.get("title")
+        )
+        student_name = self._str(
+            payload.get("student_name")
+            or payload.get("studentName")
+            or payload.get("name")
+            or payload.get("student")
+        )
+        student_id = self._str(
+            payload.get("student_id")
+            or payload.get("studentId")
+            or payload.get("account_id")
+            or payload.get("accountId")
+            or payload.get("user_id")
+        )
+        max_score = self._to_float(
+            payload.get("max_score")
+            or payload.get("maxScore")
+            or payload.get("total"),
+            100.0,
+        )
+        max_score = max(max_score, 1.0)
+        total_time = self._to_int(
+            payload.get("total_time")
+            or payload.get("totalTime")
+            or payload.get("time")
+            or payload.get("total_time_seconds"),
+            0,
+        )
+        section_accuracy = self._normalize_float_map(
+            payload.get("section_accuracy") or payload.get("sectionAccuracy")
+        )
+        user_answers = self._normalize_user_answers(
+            payload.get("user_answers")
+            or payload.get("userAnswers")
+            or payload.get("answers")
+        )
+        row = {
+            "id": result_id or self._safe_id(payload.get("id")) or self._new_id("res"),
+            "quiz_id": quiz_id,
+            "quizId": quiz_id,
+            "topic": quiz_title,
+            "quiz_title": quiz_title,
+            "quizTitle": quiz_title,
+            "title": quiz_title,
+            "name": student_name,
+            "student_name": student_name,
+            "studentName": student_name,
+            "student": student_name,
+            "student_id": student_id,
+            "studentId": student_id,
+            "account_id": self._str(payload.get("account_id") or student_id),
+            "accountId": self._str(payload.get("accountId") or payload.get("account_id") or student_id),
+            "user_id": self._str(payload.get("user_id") or payload.get("account_id") or student_id),
+            "score": self._to_float(payload.get("score"), 0.0),
+            "total": max_score,
+            "max_score": max_score,
+            "maxScore": max_score,
+            "correct": self._to_int(payload.get("correct"), 0),
+            "wrong": self._to_int(payload.get("wrong"), 0),
+            "skipped": self._to_int(payload.get("skipped"), 0),
+            "total_time": total_time,
+            "totalTime": total_time,
+            "time": total_time,
+            "submitted_at": submitted_at,
+            "savedAt": ts,
+            "ts": ts,
+            "type": self._str(payload.get("type") or payload.get("quiz_type") or "Exam"),
+        }
+        if section_accuracy:
+            row["section_accuracy"] = section_accuracy
+            row["sectionAccuracy"] = section_accuracy
+        if user_answers:
+            row["user_answers"] = user_answers
+            row["userAnswers"] = user_answers
+        for key in (
+            "duration_minutes",
+            "quiz_type",
+            "assessment_title",
+            "subject",
+            "source_surface",
+        ):
+            if key in payload and payload.get(key) not in (None, "", [], {}):
+                row[key] = payload.get(key)
+        return row
 
     def _to_float(self, value: Any, fallback: float) -> float:
         if isinstance(value, bool):
@@ -1592,6 +2064,10 @@ class LocalAppDataService:
         token = self._str(raw).upper()
         if not token:
             return ""
+        if token == "@":
+            return "B"
+        if token in {"O", "0"}:
+            return "D"
         if re.fullmatch(r"[A-Z]", token):
             return token
         if re.fullmatch(r"[1-9]", token):
@@ -1804,6 +2280,13 @@ class LocalAppDataService:
 
     def _normalize_import_line(self, raw: str) -> str:
         normalized = self._normalize_symbol_font_artifacts(self._str(raw))
+        normalized = re.sub(r"^\s*[Gg](\d+\s*[\).:\-]\s*)", r"Q\1", normalized)
+        normalized = re.sub(
+            r"^\s*(?:a(?:newer|neewr|nser))\b",
+            "Answer",
+            normalized,
+            flags=re.IGNORECASE,
+        )
         return re.sub(r"[ ]{2,}", " ", normalized.replace("\t", " ")).strip()
 
     def _symbol_font_mapping(self) -> dict[str, str]:
@@ -3423,13 +3906,8 @@ class LocalAppDataService:
                     merged_text = extracted_pdf_text
                     text_quality = "pdf_text_extract"
             if not merged_text:
-                fallback_text = blob.decode("utf-8", errors="ignore")
-                if self._looks_like_binary_pdf_text(fallback_text):
-                    fallback_text = ""
-                    text_quality = "no_text_extracted"
-                else:
-                    text_quality = "pdf_fallback_text"
-                merged_text = fallback_text
+                merged_text = ""
+                text_quality = "no_text_extracted"
             per_page_ocr_confidence: list[dict[str, Any]] = []
             for page in (pdf_report.get("pages") or []):
                 if not isinstance(page, dict):
@@ -3460,16 +3938,14 @@ class LocalAppDataService:
                 "text_length": len(merged_text),
             }
         except Exception as exc:
-            fallback = blob.decode("utf-8", errors="ignore")
-            if self._looks_like_binary_pdf_text(fallback):
-                fallback = ""
-            return fallback, {
-                "input_source": "pdf_fallback_text",
+            return "", {
+                "input_source": "pdf_no_text_extracted",
                 "file_path": str(path),
                 "file_size": len(blob),
                 "pdf_error": f"{exc.__class__.__name__}:{self._str(exc)[:140]}",
-                "symbol_repair_count": self._count_symbol_font_artifacts(fallback),
-                "text_length": len(fallback),
+                "symbol_repair_count": 0,
+                "text_quality": "no_text_extracted",
+                "text_length": 0,
             }
 
     def _parse_import_raw_text(
@@ -4273,9 +4749,16 @@ class LocalAppDataService:
                 "rows": [],
             }
         max_rows = max(1, min(30, self._to_int(payload.get("max_rows"), 8)))
-        rows, diagnostics = self._search_rows_with_provider_fallback(
-            query=query,
+        timeout_s = max(0.8, min(8.0, self._to_float(payload.get("timeout_s"), 3.4)))
+        search_scope = self._str(
+            payload.get("search_scope") or payload.get("source_scope") or "pyq"
+        ).strip().lower() or "pyq"
+        rows, diagnostics = await asyncio.to_thread(
+            self._search_rows_with_provider_fallback,
+            query,
             max_rows=max_rows,
+            search_scope=search_scope,
+            total_timeout_s=timeout_s,
         )
         return {
             "ok": True,
@@ -4285,6 +4768,8 @@ class LocalAppDataService:
             "count": len(rows),
             "diagnostics": diagnostics,
             "cache_ttl_s": self._web_cache_ttl_s,
+            "search_scope": search_scope,
+            "timeout_s": timeout_s,
         }
 
     async def _lc9_list_import_chapters(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -5383,7 +5868,7 @@ class LocalAppDataService:
                 out.append(query)
         return out[:12]
 
-    def _link_allowed_for_pyq(self, url: str) -> bool:
+    def _link_allowed_for_pyq(self, url: str, *, search_scope: str = "pyq") -> bool:
         link = self._str(url).lower()
         if not link.startswith(("http://", "https://")):
             return False
@@ -5407,6 +5892,7 @@ class LocalAppDataService:
         )
         if any(host.endswith(bad) for bad in blocked_hosts):
             return False
+        scope = self._str(search_scope).strip().lower() or "pyq"
         trusted_hosts = (
             "jeeadv.ac.in",
             "nta.ac.in",
@@ -5424,6 +5910,48 @@ class LocalAppDataService:
             return True
         content_bag = f"{host}{path}"
         pyq_tokens = ("jee", "iit", "advanced", "mains", "pyq", "question", "solution")
+        if scope in {"general_ai", "general", "ai_chat", "evidence"}:
+            evidence_hosts = (
+                "stackexchange.com",
+                "math.stackexchange.com",
+                "physics.stackexchange.com",
+                "physicsforums.com",
+                "vedantu.com",
+                "toppr.com",
+                "byjus.com",
+                "selfstudys.com",
+                "mathsisfun.com",
+                "khanacademy.org",
+                "cuemath.com",
+                "brilliant.org",
+                "tutorialspoint.com",
+            )
+            if any(host == ok or host.endswith(f".{ok}") for ok in evidence_hosts):
+                return True
+            general_tokens = (
+                "math",
+                "physics",
+                "chemistry",
+                "question",
+                "solution",
+                "formula",
+                "theorem",
+                "proof",
+                "hyperbola",
+                "ellipse",
+                "parabola",
+                "calculus",
+                "integral",
+                "derivative",
+                "matrix",
+                "determinant",
+            )
+            if host.endswith((".gov.in", ".ac.in", ".edu", ".edu.in")) and any(
+                token in content_bag for token in general_tokens
+            ):
+                return True
+            if path.endswith(".pdf") and any(token in content_bag for token in general_tokens):
+                return True
         if host.endswith((".gov.in", ".ac.in", ".edu", ".edu.in")) and any(
             token in content_bag for token in pyq_tokens
         ):
@@ -5541,13 +6069,15 @@ class LocalAppDataService:
         user_agent = self._str(headers.get("User-Agent")) or (
             "Mozilla/5.0 (LalaCore/1.0; +https://lalacore.local)"
         )
+        hard_timeout_s = max(0.9, float(timeout_s))
+        connect_timeout_s = max(0.5, min(2.0, hard_timeout_s))
         cmd = [
             curl_bin,
             "-sSL",
             "--max-time",
-            str(max(3, int(math.ceil(timeout_s)))),
+            f"{hard_timeout_s:.2f}",
             "--connect-timeout",
-            "4",
+            f"{connect_timeout_s:.2f}",
             "-A",
             user_agent,
         ]
@@ -5562,7 +6092,7 @@ class LocalAppDataService:
             cmd,
             capture_output=True,
             check=False,
-            timeout=max(4.0, timeout_s + 2.0),
+            timeout=max(1.4, hard_timeout_s + 0.7),
         )
         if res.returncode != 0:
             stderr = self._str(res.stderr.decode("utf-8", errors="ignore")).strip()
@@ -5665,7 +6195,7 @@ class LocalAppDataService:
         return self._str(link).strip()
 
     def _extract_search_rows_from_rss(
-        self, *, raw_xml: str, max_rows: int
+        self, *, raw_xml: str, max_rows: int, search_scope: str = "pyq"
     ) -> list[dict[str, str]]:
         rows: list[dict[str, str]] = []
         seen: set[str] = set()
@@ -5675,7 +6205,7 @@ class LocalAppDataService:
             title_match = re.search(r"(?is)<title>(.*?)</title>", item)
             desc_match = re.search(r"(?is)<description>(.*?)</description>", item)
             link = self._unwrap_search_result_link(link_match.group(1) if link_match else "")
-            if not link or not self._link_allowed_for_pyq(link):
+            if not link or not self._link_allowed_for_pyq(link, search_scope=search_scope):
                 continue
             key = link.lower()
             if key in seen:
@@ -5696,12 +6226,115 @@ class LocalAppDataService:
                 break
         return rows
 
+    def _infer_stackexchange_site(self, query: str) -> str:
+        low = self._str(query).lower()
+        physics_tokens = (
+            "velocity",
+            "acceleration",
+            "projectile",
+            "electrostatic",
+            "current",
+            "magnetic",
+            "wavelength",
+            "optics",
+            "thermodynamics",
+            "kinematics",
+        )
+        chemistry_tokens = (
+            "mole",
+            "stoichiometry",
+            "orbital",
+            "benzene",
+            "alkane",
+            "redox",
+            "equilibrium",
+            "ph",
+            "enthalpy",
+            "organic",
+        )
+        if any(token in low for token in physics_tokens):
+            return "physics"
+        if any(token in low for token in chemistry_tokens):
+            return "chemistry"
+        return "math"
+
+    def _stackprinter_service_for_site(self, site: str) -> str:
+        site_name = self._str(site).strip().lower()
+        if site_name == "physics":
+            return "physics.stackexchange"
+        if site_name == "chemistry":
+            return "chemistry.stackexchange"
+        return "math.stackexchange"
+
+    def _extract_search_rows_from_stackexchange_json(
+        self,
+        *,
+        raw_json: str,
+        max_rows: int,
+        site: str,
+        search_scope: str = "general_ai",
+    ) -> list[dict[str, str]]:
+        rows: list[dict[str, str]] = []
+        seen: set[str] = set()
+        try:
+            payload = json.loads(self._str(raw_json) or "{}")
+        except Exception:
+            return rows
+        items = payload.get("items") if isinstance(payload, dict) else []
+        if not isinstance(items, list):
+            return rows
+        service = self._stackprinter_service_for_site(site)
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            link = self._str(item.get("link")).strip()
+            if not link or not self._link_allowed_for_pyq(link, search_scope=search_scope):
+                continue
+            key = link.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            title = self._normalize_web_text(self._str(item.get("title")))[:220]
+            tags = [
+                self._str(tag).strip()
+                for tag in (item.get("tags") or [])
+                if self._str(tag).strip()
+            ][:4]
+            answer_count = self._to_int(item.get("answer_count"), 0)
+            score = self._to_int(item.get("score"), 0)
+            question_id = self._to_int(item.get("question_id"), 0)
+            snippet_bits = []
+            if tags:
+                snippet_bits.append("tags: " + ", ".join(tags))
+            if answer_count > 0:
+                snippet_bits.append(f"answers: {answer_count}")
+            snippet_bits.append(f"score: {score}")
+            fetch_url = ""
+            if question_id > 0:
+                fetch_url = (
+                    "https://stackprinter.appspot.com/export"
+                    f"?question={question_id}&service={service}&language=en"
+                    "&hideAnswers=false&width=640"
+                )
+            rows.append(
+                {
+                    "title": title,
+                    "url": link[:350],
+                    "snippet": " | ".join(snippet_bits)[:360],
+                    "fetch_url": fetch_url[:350],
+                }
+            )
+            if len(rows) >= max(1, max_rows):
+                break
+        return rows
+
     def _extract_search_rows_from_html(
         self,
         *,
         raw_html: str,
         provider: str,
         max_rows: int,
+        search_scope: str = "pyq",
     ) -> list[dict[str, str]]:
         rows: list[dict[str, str]] = []
         seen: set[str] = set()
@@ -5711,7 +6344,7 @@ class LocalAppDataService:
             if not link:
                 return
             clean_link = self._str(link).strip()
-            if not self._link_allowed_for_pyq(clean_link):
+            if not self._link_allowed_for_pyq(clean_link, search_scope=search_scope):
                 return
             key = clean_link.lower()
             if key in seen:
@@ -5801,9 +6434,17 @@ class LocalAppDataService:
         query: str,
         provider: str,
         max_rows: int,
+        search_scope: str = "pyq",
+        timeout_s: float = 6.0,
     ) -> tuple[list[dict[str, str]], dict[str, Any]]:
         encoded_query = quote_plus(query)
+        stackexchange_site = self._infer_stackexchange_site(query)
         provider_urls = {
+            "stackexchange_api": (
+                "https://api.stackexchange.com/2.3/search/advanced"
+                f"?order=desc&sort=relevance&q={encoded_query}&site={stackexchange_site}"
+                f"&pagesize={max(6, max_rows)}&filter=default"
+            ),
             "duckduckgo_html": f"https://duckduckgo.com/html/?q={encoded_query}&kl=us-en",
             "duckduckgo_lite": f"https://lite.duckduckgo.com/lite/?q={encoded_query}&kl=us-en",
             "bing_html": f"https://www.bing.com/search?q={encoded_query}&setlang=en-US",
@@ -5819,7 +6460,8 @@ class LocalAppDataService:
                 "error": "unknown_provider",
             }
         cache_key = (
-            f"{provider}|{self._str(query).strip().lower()}|{max(1, max_rows)}"
+            f"{provider}|{self._str(search_scope).strip().lower()}|"
+            f"{self._str(query).strip().lower()}|{max(1, max_rows)}"
         )
         cached = self._web_cache_get(self._web_search_cache, cache_key)
         if isinstance(cached, dict):
@@ -5831,15 +6473,31 @@ class LocalAppDataService:
         max_bytes = 260_000
         if provider == "brave_html":
             max_bytes = 1_400_000
-        raw, fetch_diag = self._fetch_web_text(url=url, timeout_s=6.0, max_bytes=max_bytes)
+        raw, fetch_diag = self._fetch_web_text(
+            url=url,
+            timeout_s=max(0.8, float(timeout_s)),
+            max_bytes=max_bytes,
+        )
         rows = (
             (
-                self._extract_search_rows_from_rss(raw_xml=raw, max_rows=max_rows)
+                self._extract_search_rows_from_stackexchange_json(
+                    raw_json=raw,
+                    max_rows=max_rows,
+                    site=stackexchange_site,
+                    search_scope=search_scope,
+                )
+                if provider == "stackexchange_api"
+                else self._extract_search_rows_from_rss(
+                    raw_xml=raw,
+                    max_rows=max_rows,
+                    search_scope=search_scope,
+                )
                 if provider == "bing_rss"
                 else self._extract_search_rows_from_html(
                     raw_html=raw,
                     provider=provider,
                     max_rows=max_rows,
+                    search_scope=search_scope,
                 )
             )
             if raw
@@ -5854,6 +6512,7 @@ class LocalAppDataService:
             "error": "",
             "error_detail": self._str(fetch_diag.get("error")),
             "block_reason": self._str(fetch_diag.get("block_reason")),
+            "search_scope": search_scope,
         }
         if diag["error_detail"]:
             diag["error"] = self._canonical_web_error_reason(diag["error_detail"])
@@ -5861,31 +6520,74 @@ class LocalAppDataService:
             diag["error"] = "empty_response"
         if not rows and not diag["error"] and diag["block_reason"]:
             diag["error"] = self._canonical_web_error_reason(diag["block_reason"])
-        self._web_cache_put(
-            self._web_search_cache,
-            cache_key,
-            {"rows": rows, "diag": diag},
-        )
+        if rows:
+            self._web_cache_put(
+                self._web_search_cache,
+                cache_key,
+                {"rows": rows, "diag": diag},
+            )
         return rows, diag
 
     def _search_rows_with_provider_fallback(
-        self, query: str, *, max_rows: int
+        self,
+        query: str,
+        *,
+        max_rows: int,
+        search_scope: str = "pyq",
+        total_timeout_s: float = 6.0,
     ) -> tuple[list[dict[str, str]], dict[str, Any]]:
-        providers = (
-            "bing_rss",
-            "duckduckgo_html",
-            "duckduckgo_lite",
-            "bing_html",
-            "brave_html",
-        )
+        scope = self._str(search_scope).strip().lower() or "pyq"
+        if scope in {"general_ai", "general", "ai_chat", "evidence"}:
+            providers = (
+                "stackexchange_api",
+                "bing_rss",
+                "duckduckgo_lite",
+                "duckduckgo_html",
+                "bing_html",
+                "brave_html",
+            )
+        else:
+            providers = (
+                "bing_rss",
+                "duckduckgo_lite",
+                "duckduckgo_html",
+                "bing_html",
+                "brave_html",
+            )
         merged_rows: list[dict[str, str]] = []
         seen_links: set[str] = set()
         attempts: list[dict[str, Any]] = []
-        for provider in providers:
+        started_at = time.time()
+        deadline = started_at + max(0.8, float(total_timeout_s))
+        for idx, provider in enumerate(providers):
+            remaining_s = deadline - time.time()
+            if remaining_s <= 0.12:
+                break
+            providers_left = max(1, len(providers) - idx)
+            base_timeout_s = remaining_s / providers_left + 0.35
+            provider_floor_s = 0.9
+            provider_cap_s = 2.8
+            if provider == "stackexchange_api":
+                provider_floor_s = 1.6
+                provider_cap_s = 4.2
+                if scope in {"general_ai", "general", "ai_chat", "evidence"}:
+                    base_timeout_s = max(base_timeout_s, remaining_s * 0.48)
+            elif provider in {"duckduckgo_lite", "bing_rss"}:
+                provider_floor_s = 1.0
+                provider_cap_s = 3.0
+            elif provider in {"duckduckgo_html", "bing_html", "brave_html"}:
+                provider_floor_s = 1.1
+                provider_cap_s = 3.4
+            provider_timeout_s = max(
+                provider_floor_s,
+                min(provider_cap_s, base_timeout_s),
+            )
             rows, diag = self._search_rows_from_provider(
                 query=query,
                 provider=provider,
                 max_rows=max_rows,
+                search_scope=search_scope,
+                timeout_s=provider_timeout_s,
             )
             attempts.append(diag)
             for row in rows:
@@ -5915,6 +6617,9 @@ class LocalAppDataService:
             "providers": attempts,
             "result_count": len(merged_rows),
             "error_reason": error_reason,
+            "search_scope": search_scope,
+            "elapsed_s": round(max(0.0, time.time() - started_at), 4),
+            "timeout_s": float(max(0.8, total_timeout_s)),
         }
 
     def _duckduckgo_search_rows(self, query: str, *, max_rows: int) -> list[dict[str, str]]:
@@ -6860,6 +7565,10 @@ class LocalAppDataService:
         query_suffix: str = "JEE Main Advanced PYQ hard",
         limit: int = 6,
         difficulty: int = 3,
+        search_timeout_s: float = 6.0,
+        page_timeout_s: float = 3.5,
+        query_budget_override: int | None = None,
+        page_check_budget: int | None = None,
     ) -> list[dict[str, Any]]:
         scope_tokens = self._pyq_scope_tokens(
             subject=subject,
@@ -6888,9 +7597,13 @@ class LocalAppDataService:
             return []
 
         max_candidates = max(8, limit * 4)
+        compact_web_budget = limit <= 4
+        default_query_budget = 4 if compact_web_budget else (8 if difficulty >= 5 else 6)
         query_budget = min(
             len(deduped_queries),
-            8 if difficulty >= 5 else 6,
+            max(1, int(query_budget_override))
+            if query_budget_override is not None
+            else default_query_budget,
         )
         candidates: list[dict[str, Any]] = []
         seen_links: set[str] = set()
@@ -6899,6 +7612,7 @@ class LocalAppDataService:
             rows, query_diag = self._search_rows_with_provider_fallback(
                 query,
                 max_rows=max_candidates,
+                total_timeout_s=max(0.8, float(search_timeout_s)),
             )
             query_diagnostics.append(query_diag)
             for row in rows:
@@ -6984,7 +7698,16 @@ class LocalAppDataService:
             reverse=True,
         )
 
-        page_checks = max(2, min(8, limit + 2))
+        default_page_checks = max(2, min(4 if compact_web_budget else 8, limit + 2))
+        page_checks = max(
+            1,
+            min(
+                len(candidates),
+                page_check_budget
+                if page_check_budget is not None
+                else default_page_checks,
+            ),
+        )
         enriched: list[dict[str, Any]] = []
         for row in candidates[:page_checks]:
             enriched_row = dict(row)
@@ -6997,6 +7720,7 @@ class LocalAppDataService:
                 evidence = self._extract_pyq_page_evidence(
                     self._str(row.get("url")),
                     scope_tokens=scope_tokens,
+                    timeout_s=max(0.8, float(page_timeout_s)),
                 )
             if evidence:
                 for key, value in evidence.items():
@@ -10029,6 +10753,32 @@ class LocalAppDataService:
             return ["A", "B", "C", "D"]
         return [self._label_for_option_index(i) for i in range(len(options))]
 
+    def _normalize_answer_comparison_text(self, raw: Any) -> str:
+        value = sanitize_latex(self._str(raw))
+        if not value:
+            return ""
+        value = html.unescape(value)
+        value = re.sub(
+            r"\\(?:d|t)?frac\s*\{([^{}]+)\}\s*\{([^{}]+)\}",
+            r"\1/\2",
+            value,
+        )
+        value = re.sub(
+            r"\\(?:d|t)?frac([A-Za-z0-9.+\-]+)([A-Za-z0-9.+\-]+)",
+            r"\1/\2",
+            value,
+        )
+        value = re.sub(r"\$+", "", value)
+        value = (
+            value.replace(r"\(", "")
+            .replace(r"\)", "")
+            .replace(r"\[", "")
+            .replace(r"\]", "")
+        )
+        value = re.sub(r"[{}]", "", value)
+        value = re.sub(r"\s+", "", value)
+        return value.lower()
+
     def _normalize_answer_token_to_label(self, raw: Any, options: list[str]) -> str:
         value = self._str(raw)
         if not value:
@@ -10046,6 +10796,11 @@ class LocalAppDataService:
         for idx, opt in enumerate(options):
             if self._str(opt).lower() == value.lower():
                 return labels[idx]
+        normalized_value = self._normalize_answer_comparison_text(value)
+        if normalized_value:
+            for idx, opt in enumerate(options):
+                if self._normalize_answer_comparison_text(opt) == normalized_value:
+                    return labels[idx]
         return ""
 
     def _normalize_answer_tokens_to_labels(
@@ -10168,13 +10923,6 @@ class LocalAppDataService:
             "marks_correct": self._to_float(
                 q.get("marks_correct") or q.get("posMark") or q.get("positive"), 4.0
             ),
-            "marks_incorrect": self._to_float(
-                q.get("marks_incorrect")
-                or q.get("negMark")
-                or q.get("negative")
-                or -1.0,
-                -1.0,
-            ),
             "marks_unattempted": self._to_float(q.get("marks_unattempted"), 0.0),
             "partial_marking": self._to_bool(q.get("partial_marking")),
             "numerical_tolerance": self._to_float(q.get("numerical_tolerance"), 0.001),
@@ -10182,6 +10930,19 @@ class LocalAppDataService:
             "source_stub": self._str(q.get("source_stub")),
             "source_url": self._str(q.get("source_url")),
         }
+        raw_incorrect = self._to_float(
+            q.get("marks_incorrect")
+            if q.get("marks_incorrect") is not None
+            else (
+                q.get("negMark")
+                if q.get("negMark") is not None
+                else q.get("negative")
+            ),
+            -1.0,
+        )
+        prepared["marks_incorrect"] = (
+            -raw_incorrect if raw_incorrect > 0 else raw_incorrect
+        )
         return sanitize_question_payload(prepared, student_mode=False)
 
     def _sanitize_quiz_row_text(self, row: dict[str, Any]) -> dict[str, Any]:
@@ -10295,9 +11056,16 @@ class LocalAppDataService:
         chapters: str,
         question_count: int,
         ai_generated: bool,
+        is_unlimited_time: bool = False,
+        ui_spec: dict[str, Any] | None = None,
+        student_adaptive_data: dict[str, Any] | None = None,
+        metadata: dict[str, Any] | None = None,
+        questions: list[dict[str, Any]] | None = None,
+        public_base_url: str = "",
     ) -> dict[str, Any]:
         now_ms = self._now_ms()
-        quiz_url = f"{self._base_url()}/app/quiz/{quiz_id}.csv"
+        base_url = (public_base_url or self._base_url()).rstrip("/")
+        quiz_url = f"{base_url}/app/quiz/{quiz_id}.csv"
         return {
             "id": quiz_id,
             "title": title,
@@ -10309,6 +11077,11 @@ class LocalAppDataService:
             "chapters": chapters,
             "question_count": question_count,
             "ai_generated": ai_generated,
+            "is_unlimited_time": is_unlimited_time,
+            "ui_spec": dict(ui_spec or {}),
+            "student_adaptive_data": dict(student_adaptive_data or {}),
+            "metadata": dict(metadata or {}),
+            "questions_json": json.dumps(questions or [], ensure_ascii=True),
             "created_at": now_ms,
             "updated_at": now_ms,
         }
@@ -10360,14 +11133,30 @@ class LocalAppDataService:
             or payload.get("chapter")
             or payload.get("chapter_name")
         )
+        ui_spec = payload.get("ui_spec") if isinstance(payload.get("ui_spec"), dict) else {}
+        student_adaptive_data = (
+            payload.get("student_adaptive_data")
+            if isinstance(payload.get("student_adaptive_data"), dict)
+            else {}
+        )
+        metadata = payload.get("metadata") if isinstance(payload.get("metadata"), dict) else {}
+        ai_generated = self._to_bool(
+            payload.get("ai_generated") or payload.get("is_ai_generated")
+        )
+        public_base_url = self._base_url(payload)
+        is_unlimited_time = self._to_bool(
+            payload.get("is_unlimited_time")
+            or payload.get("unlimited_time_mode")
+            or (self._str(payload.get("time_mode")).lower() == "unlimited")
+        )
         questions = [
             self._sanitize_quiz_row_text(q) for q in self._parse_questions(payload)
         ]
         self._write_quiz_csv(
             quiz_id,
             questions,
-            include_correct=True,
-            include_solution=True,
+            include_correct=False,
+            include_solution=False,
         )
 
         item = self._build_assessment_item(
@@ -10379,7 +11168,13 @@ class LocalAppDataService:
             class_name=class_name,
             chapters=chapters,
             question_count=len(questions),
-            ai_generated=False,
+            ai_generated=ai_generated,
+            is_unlimited_time=is_unlimited_time,
+            ui_spec=ui_spec,
+            student_adaptive_data=student_adaptive_data,
+            metadata=metadata,
+            questions=questions,
+            public_base_url=public_base_url,
         )
 
         async with self._lock:
@@ -10392,8 +11187,10 @@ class LocalAppDataService:
             "status": "SUCCESS",
             "message": "Quiz created",
             "id": quiz_id,
+            "assessment_id": quiz_id,
             "url": quiz_url,
             "quiz_url": quiz_url,
+            "assessment": item,
         }
 
     async def _ai_generate_quiz(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -10485,23 +11282,19 @@ class LocalAppDataService:
             raw_allow_web = payload.get("web_research_enabled")
         if raw_allow_web is None:
             raw_allow_web = payload.get("search_hard_pyq")
-        allow_web_search = self._to_bool(raw_allow_web)
-        if pyq_focus and raw_allow_web is None:
-            # PYQ mode should default to web retrieval unless explicitly disabled.
-            allow_web_search = True
+        allow_web_search = False
         pyq_answer_retrieval_required = self._to_bool(
             payload.get("pyq_answer_retrieval_required")
             or payload.get("require_answer_sources")
             or payload.get("require_pyq_answer_sources")
         )
         pyq_mode = self._str(payload.get("pyq_mode")).strip().lower()
-        pyq_web_only_mode = self._to_bool(
-            payload.get("pyq_web_only_mode") or payload.get("strict_related_web")
+        pyq_answer_retrieval_required = False
+        pyq_web_only_mode = False
+        strict_related_web_mode = False
+        interactive_student_pyq_mode = (
+            role == "student" and self_practice_mode and pyq_focus
         )
-        strict_related_web_mode = pyq_web_only_mode or pyq_mode in {
-            "strict_related_web",
-            "pyq_related_web_only",
-        }
         require_type_variety = self._to_bool(payload.get("require_type_variety"))
         if (
             payload.get("require_type_variety") is None
@@ -10604,14 +11397,47 @@ class LocalAppDataService:
         primary_web_diag: dict[str, Any] = {}
         solution_web_diag: dict[str, Any] = {}
         web_provider_diagnostics: dict[str, Any] = {}
+        pyq_search_timeout_s = 2.4 if interactive_student_pyq_mode else 6.0
+        pyq_page_timeout_s = 1.2 if interactive_student_pyq_mode else 3.5
+        pyq_query_budget_override = 2 if interactive_student_pyq_mode else None
+        pyq_page_check_budget = 2 if interactive_student_pyq_mode else None
+        pyq_ai_recovery_limit = 0 if interactive_student_pyq_mode else max(2, question_count)
+        is_single_question_pyq_shard = (
+            pyq_focus
+            and question_count <= 2
+            and (
+                bool(forced_type)
+                or payload.get("question_slot") is not None
+                or payload.get("target_question_type") is not None
+                or payload.get("forced_question_type") is not None
+            )
+        )
+        pyq_web_limit = (
+            max(4, question_count * 2)
+            if is_single_question_pyq_shard
+            else max(3, min(6, question_count + 1))
+            if interactive_student_pyq_mode
+            else max(8, question_count * 3)
+        )
+        pyq_merge_limit = (
+            max(6, question_count * 3)
+            if is_single_question_pyq_shard
+            else max(4, min(8, question_count * 2))
+            if interactive_student_pyq_mode
+            else max(8, question_count * 4)
+        )
         if pyq_focus and allow_web_search:
             primary_pyq_rows = self._fetch_pyq_web_snippets(
                 subject=web_scope_subject,
                 chapters=web_scope_chapters,
                 subtopics=web_scope_subtopics,
                 query_suffix="JEE PYQ hard question",
-                limit=max(8, question_count * 3),
+                limit=pyq_web_limit,
                 difficulty=difficulty,
+                search_timeout_s=pyq_search_timeout_s,
+                page_timeout_s=pyq_page_timeout_s,
+                query_budget_override=pyq_query_budget_override,
+                page_check_budget=pyq_page_check_budget,
             )
             primary_web_diag = dict(self._last_pyq_web_diagnostics)
             solution_pyq_rows = self._fetch_pyq_web_snippets(
@@ -10619,14 +11445,18 @@ class LocalAppDataService:
                 chapters=web_scope_chapters,
                 subtopics=web_scope_subtopics,
                 query_suffix="JEE PYQ detailed solution answer key",
-                limit=max(8, question_count * 3),
+                limit=pyq_web_limit,
                 difficulty=difficulty,
+                search_timeout_s=pyq_search_timeout_s,
+                page_timeout_s=pyq_page_timeout_s,
+                query_budget_override=pyq_query_budget_override,
+                page_check_budget=pyq_page_check_budget,
             )
             solution_web_diag = dict(self._last_pyq_web_diagnostics)
             merged_rows = self._merge_pyq_rows(
                 primary_pyq_rows,
                 solution_pyq_rows,
-                limit=max(8, question_count * 4),
+                limit=pyq_merge_limit,
             )
             quality_floor = 0.35 if strict_related_web_mode else 0.22
             web_snippets = [
@@ -10657,7 +11487,7 @@ class LocalAppDataService:
                     ]
                 ),
             }
-        if pyq_focus:
+        if pyq_focus and allow_web_search:
             offline_pyq_rows = self._local_pyq_archive_rows(
                 subject=web_scope_subject,
                 chapters=web_scope_chapters,
@@ -10724,7 +11554,7 @@ class LocalAppDataService:
                 ):
                     dns_hits = max(dns_hits, 1)
                 dns_blocked_mode = queries_with_results <= 0 and dns_hits > 0
-        offline_pyq_only_mode = pyq_focus and (not allow_web_search or dns_blocked_mode)
+        offline_pyq_only_mode = pyq_focus and allow_web_search and dns_blocked_mode
         strict_quality_lock = strict_hard_mode or ultra_hard_mode or difficulty >= 4
         hardness_floor = 150.0 if strict_quality_lock else 85.0
         if ultra_hard_mode or difficulty >= 5:
@@ -10733,7 +11563,15 @@ class LocalAppDataService:
         questions: list[dict[str, Any]] = []
         seen_question_stems: set[str] = set()
         attempts = 0
-        max_attempts = question_count * (24 if strict_quality_lock else 10)
+        max_attempts = question_count * (
+            10
+            if interactive_student_pyq_mode and strict_quality_lock
+            else 6
+            if interactive_student_pyq_mode
+            else 24
+            if strict_quality_lock
+            else 10
+        )
         arena_provider_wins: dict[str, int] = {}
         arena_entropy_values: list[float] = []
         arena_disagreement_values: list[float] = []
@@ -11355,7 +12193,9 @@ class LocalAppDataService:
                 )
                 if web_question_used and not source_solution_stub and pyq_answer_retrieval_required:
                     needs_ai_recovery = True
-                if needs_ai_recovery:
+                if needs_ai_recovery and (
+                    pyq_ai_solution_recovery_count < pyq_ai_recovery_limit
+                ):
                     recovered = await self._recover_solution_via_ai_engine(
                         question=prepared,
                         source_row=selected_web_source,
@@ -11386,7 +12226,10 @@ class LocalAppDataService:
                     if difficulty >= 5
                     else "synthesized_pyq"
                 )
-                if pyq_answer_retrieval_required:
+                if (
+                    pyq_answer_retrieval_required
+                    and pyq_ai_solution_recovery_count < pyq_ai_recovery_limit
+                ):
                     recovered = await self._recover_solution_via_ai_engine(
                         question=prepared,
                         source_row=None,
@@ -11459,13 +12302,9 @@ class LocalAppDataService:
                 ),
                 6,
             )
-            prepared["provider_used"] = self._str(
-                prepared.get("_arena_provider") or winner_provider
-            )
-            prepared["fallback_used"] = bool(
-                self._str(source_origin).startswith("ai_synth")
-                or self._str(source_origin).startswith("synthesized")
-            )
+            provider_used = self._str(prepared.get("_arena_provider") or winner_provider)
+            prepared["provider_used"] = provider_used
+            prepared["fallback_used"] = provider_used.startswith("template_")
             dedupe_key = re.sub(
                 r"\s+",
                 " ",
@@ -11509,7 +12348,11 @@ class LocalAppDataService:
         # of failing the entire request.
         if len(questions) < question_count and pyq_focus:
             backfill_attempts = 0
-            backfill_max_attempts = max(24, question_count * 18)
+            backfill_max_attempts = (
+                max(16, question_count * 8)
+                if interactive_student_pyq_mode
+                else max(24, question_count * 18)
+            )
             backfill_floor = 95.0 if strict_quality_lock else 75.0
             if difficulty >= 5:
                 backfill_floor = 105.0
@@ -11819,7 +12662,7 @@ class LocalAppDataService:
                 )
                 questions.append(base)
 
-        if pyq_focus and strict_web_requirement_unmet:
+        if pyq_focus and strict_web_requirement_unmet and not interactive_student_pyq_mode:
             return {
                 "ok": False,
                 "status": "PARTIAL_SUCCESS",
@@ -12038,7 +12881,7 @@ class LocalAppDataService:
             "generation_mode": source_policy_mode,
             "source_policy_json": json.dumps(source_policy, ensure_ascii=True),
         }
-        quiz_url = f"{self._base_url()}/app/quiz/{quiz_id}.csv"
+        quiz_url = f"{self._base_url(payload)}/app/quiz/{quiz_id}.csv"
 
         async with self._lock:
             self._upsert_by_id(self._ai_quizzes, quiz_id, record)
@@ -12217,18 +13060,14 @@ class LocalAppDataService:
 
         if "enable_pre_reasoning_context" not in options:
             options["enable_pre_reasoning_context"] = True
-        if "enable_web_retrieval" not in options:
-            options["enable_web_retrieval"] = True
+        options["enable_web_retrieval"] = False
         if "enable_graph_of_thought" not in options:
             options["enable_graph_of_thought"] = True
         if "enable_mcts_reasoning" not in options:
             options["enable_mcts_reasoning"] = True
-        if "require_citations" not in options:
-            options["require_citations"] = "auto"
-        if "evidence_mode" not in options:
-            options["evidence_mode"] = "auto"
-        if "min_citation_count" not in options:
-            options["min_citation_count"] = 1
+        options["require_citations"] = "none"
+        options["evidence_mode"] = "none"
+        options["min_citation_count"] = 0
         if "min_evidence_score" not in options:
             options["min_evidence_score"] = 0.58
 
@@ -12248,6 +13087,9 @@ class LocalAppDataService:
                 user_context[target_key] = value
         if isinstance(payload.get("card"), dict):
             user_context["card"] = dict(payload.get("card"))
+        user_context["student_profile"] = self._atlas_memory.build_student_profile(
+            user_context=user_context,
+        )
 
         input_data: Any
         if image_payload and pdf_payload:
@@ -12359,7 +13201,7 @@ class LocalAppDataService:
         }
         if explanation and explanation != answer:
             out["explanation"] = explanation
-        if 0.0 <= confidence <= 1.0:
+        if 0.0 < confidence <= 1.0:
             out["confidence"] = round(confidence, 6)
         if isinstance(result.get("visualization"), dict):
             out["visualization"] = result.get("visualization")
@@ -12565,6 +13407,15 @@ class LocalAppDataService:
                 return row
         return None
 
+    def _find_assessment_quiz(self, quiz_id: str) -> dict[str, Any] | None:
+        key = self._safe_id(quiz_id)
+        if not key:
+            return None
+        for row in self._assessments:
+            if self._safe_id(row.get("id") or row.get("quiz_id")) == key:
+                return row
+        return None
+
     async def _get_ai_quiz(self, payload: dict[str, Any]) -> dict[str, Any]:
         quiz_id = self._safe_id(payload.get("quiz_id") or payload.get("id"))
         if not quiz_id:
@@ -12650,11 +13501,15 @@ class LocalAppDataService:
                 "message": "quiz_id is required",
             }
         row = self._find_ai_quiz(quiz_id)
+        assessment_row = None
+        if row is None:
+            assessment_row = self._find_assessment_quiz(quiz_id)
+            row = assessment_row
         if row is None:
             return {
                 "ok": False,
                 "status": "NOT_FOUND",
-                "message": "AI quiz not found",
+                "message": "Quiz not found",
             }
         try:
             questions_raw = json.loads(self._str(row.get("questions_json")) or "[]")
@@ -12695,7 +13550,7 @@ class LocalAppDataService:
                     question,
                     fallback_question_id=self._str(question.get("question_id"))
                     or f"q_{i+1}",
-                    derive_from_visible=False,
+                    derive_from_visible=assessment_row is not None,
                 )
             except (QuestionStructureError, GradingValidationError, ValueError) as exc:
                 return {
@@ -12705,9 +13560,18 @@ class LocalAppDataService:
                 }
             options = [self._str(x) for x in (prepared.get("options") or [])]
             q_type = self._str(prepared.get("question_type"))
-            section = self._str(
-                (prepared.get("concept_tags") or [self._str(row.get("subject"))])[0]
-            ) or "General"
+            concept_tags = [
+                self._str(x)
+                for x in (prepared.get("concept_tags") or [])
+                if self._str(x)
+            ]
+            section = (
+                self._str(question.get("section"))
+                or self._str(question.get("chapter"))
+                or (concept_tags[0] if concept_tags else "")
+                or self._str(row.get("subject"))
+                or "General"
+            )
             section_total[section] = (section_total.get(section) or 0) + 1
 
             key_by_idx = str(i)
@@ -12768,19 +13632,31 @@ class LocalAppDataService:
                     "question_id": key_by_id,
                     "question_index": i,
                     "question_text": self._str(prepared.get("question_text")),
+                    "question_type": q_type,
+                    "question_image": self._str(
+                        question.get("image")
+                        or question.get("imageUrl")
+                        or question.get("image_url")
+                    ),
                     "options": options,
                     "student_answer": user_rendered,
                     "is_correct": is_correct,
                     "solution_explanation": self._str(
                         prepared.get("_solution_explanation")
                     ),
-                    "concept_tags": [
-                        self._str(x)
-                        for x in (prepared.get("concept_tags") or [])
-                        if self._str(x)
-                    ],
+                    "section": section,
+                    "concept_tags": concept_tags,
                     "difficulty_estimate": self._to_int(
                         prepared.get("difficulty_estimate"), 3
+                    ),
+                    "marks_correct": round(
+                        self._to_float(prepared.get("marks_correct"), 4.0), 4
+                    ),
+                    "marks_incorrect": round(
+                        self._to_float(prepared.get("marks_incorrect"), -1.0), 4
+                    ),
+                    "marks_unattempted": round(
+                        self._to_float(prepared.get("marks_unattempted"), 0.0), 4
                     ),
                 }
                 if q_type == "MCQ_SINGLE":
@@ -12845,7 +13721,7 @@ class LocalAppDataService:
             "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "ts": self._now_ms(),
             "engine_mode": self._str(row.get("engine_mode")),
-            "type": "AIExam",
+            "type": self._str(row.get("type") or ("AIExam" if assessment_row is None else "Exam")),
             "correct_upload_count": len(uploaded_correct_only),
         }
         if not preview_only:
@@ -12879,34 +13755,7 @@ class LocalAppDataService:
 
     async def _save_result(self, payload: dict[str, Any]) -> dict[str, Any]:
         result_id = self._safe_id(payload.get("id")) or self._new_id("res")
-        score = self._to_float(payload.get("score"), 0.0)
-        total = self._to_float(payload.get("total") or payload.get("max_score"), 100.0)
-        row = {
-            "id": result_id,
-            "quiz_id": self._str(payload.get("quiz_id") or payload.get("id")),
-            "topic": self._str(payload.get("topic") or payload.get("quiz_title")),
-            "name": self._str(payload.get("name") or payload.get("student_name")),
-            "student_name": self._str(
-                payload.get("student_name") or payload.get("name")
-            ),
-            "student_id": self._str(payload.get("student_id") or payload.get("user_id")),
-            "account_id": self._str(
-                payload.get("account_id")
-                or payload.get("student_id")
-                or payload.get("user_id")
-            ),
-            "score": score,
-            "total": max(total, 1.0),
-            "correct": self._to_int(payload.get("correct"), 0),
-            "wrong": self._to_int(payload.get("wrong"), 0),
-            "skipped": self._to_int(payload.get("skipped"), 0),
-            "submitted_at": self._str(
-                payload.get("submitted_at")
-                or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-            ),
-            "ts": self._to_int(payload.get("ts"), self._now_ms()),
-            "type": self._str(payload.get("type") or "Exam"),
-        }
+        row = self._normalized_result_row(payload, result_id=result_id)
         async with self._lock:
             self._upsert_by_id(self._results, result_id, row)
             self._write_list(self._results_file, self._results)
@@ -12914,7 +13763,14 @@ class LocalAppDataService:
 
     async def _get_results(self) -> dict[str, Any]:
         rows = sorted(
-            self._results,
+            [
+                self._normalized_result_row(
+                    row,
+                    result_id=self._safe_id(row.get("id")) or self._new_id("res"),
+                )
+                for row in self._results
+                if isinstance(row, dict)
+            ],
             key=lambda x: int(x.get("ts", 0) or 0),
             reverse=True,
         )
@@ -12924,13 +13780,23 @@ class LocalAppDataService:
         item = {
             "id": self._new_id("trev"),
             "quiz_id": self._str(payload.get("quiz_id")),
+            "quiz_title": self._str(payload.get("quiz_title")),
             "question_id": self._str(
                 payload.get("question_id") or payload.get("question_index")
             ),
+            "question_text": self._str(payload.get("question_text")),
+            "question_image": self._str(payload.get("question_image") or payload.get("image")),
             "student_answer": self._str(payload.get("student_answer")),
             "correct_answer": self._str(payload.get("correct_answer")),
             "student_id": self._str(payload.get("student_id") or payload.get("user_id")),
+            "student_name": self._str(payload.get("student_name") or payload.get("student")),
             "message": self._str(payload.get("message") or payload.get("doubt")),
+            "subject": self._str(payload.get("subject")),
+            "chapter": self._str(payload.get("chapter")),
+            "source_surface": self._str(payload.get("source_surface")),
+            "answer_key_card": dict(payload.get("answer_key_card"))
+            if isinstance(payload.get("answer_key_card"), dict)
+            else None,
             "timestamp": self._to_int(payload.get("timestamp"), self._now_ms()),
         }
         if not item["quiz_id"] or not item["question_id"] or not item["student_id"]:
@@ -13016,6 +13882,9 @@ class LocalAppDataService:
             "subject": self._str(payload.get("subject") or "General"),
             "chapters": self._str(payload.get("chapters") or payload.get("chapter")),
             "class": self._str(payload.get("class") or payload.get("class_name")),
+            "artifact_type": self._str(payload.get("artifact_type")),
+            "live_class_id": self._str(payload.get("live_class_id") or payload.get("class_id")),
+            "metadata": payload.get("metadata") if isinstance(payload.get("metadata"), dict) else None,
             "created_at": now_ms,
             "updated_at": now_ms,
         }
@@ -13029,7 +13898,15 @@ class LocalAppDataService:
                 self._materials.append(item)
             self._write_list(self._materials_file, self._materials)
 
-        return {"ok": True, "status": "SUCCESS", "message": "Material added", "material": item}
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "message": "Material added",
+            "material_id": material_id,
+            "title": title,
+            "url": item["url"],
+            "material": item,
+        }
 
     async def _get_materials(self) -> dict[str, Any]:
         out = sorted(
@@ -13038,6 +13915,1560 @@ class LocalAppDataService:
             reverse=True,
         )
         return {"ok": True, "status": "SUCCESS", "list": out}
+
+    def _find_material_item(self, material_id: str) -> dict[str, Any] | None:
+        key = self._safe_id(material_id)
+        if not key:
+            return None
+        for row in self._materials:
+            if self._safe_id(row.get("material_id")) == key:
+                return dict(row)
+        return None
+
+    def _material_ai_cache_key(
+        self,
+        *,
+        material_id: str,
+        mode: str,
+        prompt: str,
+        options: dict[str, Any],
+    ) -> str:
+        fingerprint = {
+            "material_id": material_id,
+            "mode": mode,
+            "prompt": prompt,
+            "options": options,
+        }
+        digest = hashlib.sha1(
+            json.dumps(fingerprint, sort_keys=True, default=str).encode("utf-8")
+        ).hexdigest()
+        return f"{self._safe_id(material_id) or 'material'}:{mode}:{digest}"
+
+    def _build_material_ai_card(
+        self,
+        *,
+        payload: dict[str, Any],
+        material: dict[str, Any] | None,
+        mode: str,
+        title: str,
+    ) -> dict[str, Any]:
+        card = dict(payload.get("card")) if isinstance(payload.get("card"), dict) else {}
+        material = dict(material or {})
+        notes = self._str(
+            card.get("material_notes") or material.get("notes") or payload.get("source_notes")
+        )
+        source_type = self._str(
+            card.get("material_type")
+            or card.get("source_type")
+            or material.get("type")
+            or payload.get("source_type")
+        )
+        source_url = self._str(
+            card.get("material_url")
+            or card.get("source_url")
+            or material.get("url")
+            or payload.get("source_url")
+        )
+        subject = self._str(
+            card.get("subject") or material.get("subject") or payload.get("subject")
+        )
+        chapter = self._str(
+            card.get("chapter")
+            or material.get("chapters")
+            or payload.get("chapter")
+            or payload.get("chapters")
+        )
+        ocr_required = self._to_bool(
+            card.get("ocr_required")
+            or payload.get("ocr_required")
+            or (source_type.lower() in {"image", "pdf"})
+            or source_url.lower().endswith(".pdf")
+        )
+        merged = {
+            "material_id": self._safe_id(
+                payload.get("material_id") or material.get("material_id")
+            ),
+            "mode": mode,
+            "title": title,
+            "subject": subject,
+            "chapter": chapter,
+            "material_type": source_type,
+            "material_url": source_url,
+            "class_name": self._str(
+                card.get("class_name") or material.get("class") or payload.get("class_name")
+            ),
+            "artifact_type": self._str(
+                card.get("artifact_type")
+                or material.get("artifact_type")
+                or payload.get("artifact_type")
+            ),
+            "enable_material_web_fusion": True,
+            "enable_material_ocr": True,
+            "prefer_visualization_when_math_detected": True,
+            "prefer_source_groups": True,
+            "material_context_depth": "deep",
+            "study_mode": f"atlas_material_{re.sub(r'[^a-z0-9]+', '_', mode.lower()).strip('_') or 'qa'}",
+        }
+        if notes:
+            merged["material_notes"] = notes[:6000]
+        if ocr_required:
+            merged["ocr_required"] = True
+        for key, value in card.items():
+            if key not in merged and value not in (None, "", []):
+                merged[key] = value
+        return merged
+
+    def _build_material_ai_options(
+        self,
+        *,
+        mode: str,
+        raw_options: dict[str, Any],
+        is_query: bool,
+    ) -> dict[str, Any]:
+        lowered = self._str(mode).lower()
+        summary_mode = "summary" in lowered or "summarize" in lowered
+        notes_mode = "note" in lowered
+        formula_mode = "formula" in lowered or "sheet" in lowered
+        flashcard_mode = "flashcard" in lowered
+        revision_plan_mode = "revision_plan" in lowered or "study_plan" in lowered
+        quiz_mode = "quiz" in lowered or "drill" in lowered
+        merged = {
+            "function": "material_query" if is_query else "material_generate",
+            "response_style": "material_grounded",
+            "enable_pre_reasoning_context": False,
+            "enable_web_retrieval": False,
+            "enable_graph_of_thought": False,
+            "enable_mcts_reasoning": False,
+            "enable_verification_reevaluation": False,
+            "enable_meta_verification": False,
+            "enable_citation_map": True,
+            "require_citations": "auto",
+            "evidence_mode": "auto",
+            "min_citation_count": 2,
+            "min_evidence_score": 0.60 if is_query else 0.62,
+            "web_search_scope": "study_material",
+            "web_search_timeout_s": 6.0 if is_query else 6.8,
+            "web_fetch_timeout_s": 2.8 if is_query else 3.2,
+            "web_similarity_threshold": 0.57 if is_query else 0.55,
+            "search_max_matches": 12 if is_query else 14,
+            "return_structured": True,
+            "return_markdown": True,
+            "return_latex": True,
+            "count_tokens": True,
+            "app_surface": "study_material",
+            "ocr_mode": "strict",
+            "strict_ocr": True,
+            "verify_equations": True,
+            "jee_quality_pass": True,
+            "enable_material_web_fusion": True,
+            "enable_material_ocr": True,
+            "prefer_visualization_when_math_detected": True,
+            "prefer_source_groups": True,
+            "prefer_stepwise_reasoning": True,
+            "prefer_revision_structure": summary_mode or revision_plan_mode,
+            "prefer_deep_note_structure": notes_mode,
+            "prefer_formula_sheet": formula_mode,
+            "prefer_flashcards": flashcard_mode,
+            "prefer_quiz_drill": quiz_mode,
+            "prefer_material_grounding": True,
+            "study_mode": (
+                "atlas_material_qa"
+                if is_query
+                else "atlas_material_summary"
+                if summary_mode
+                else "atlas_material_notes"
+            ),
+            "material_context_depth": "deep",
+        }
+        merged.update(raw_options)
+        return merged
+
+    def _build_material_ai_prompt(
+        self,
+        *,
+        mode: str,
+        title: str,
+        card: dict[str, Any],
+        question: str = "",
+        is_query: bool,
+    ) -> str:
+        notes = self._str(card.get("material_notes"))
+        if is_query:
+            lines = [
+                "Task: answer the student's question using the selected study material as primary context.",
+                "The answer may be conceptual; it does not need to be numeric.",
+                "Use the selected study material as the primary source of truth. Use validated web retrieval only as supporting evidence when it materially improves the answer.",
+                "Do not invent websites, books, citations, or source links that are not already provided by the material or engine citations.",
+                "Put the full final response directly in the answer body. Do not return only a label, title, or meta-commentary.",
+                f"Study material title: {title}",
+            ]
+        else:
+            lines = [
+                f"Task: produce a material-grounded JEE study output for '{title}'.",
+                "The requested deliverable itself is the answer. Do not say the question is missing and do not return [UNRESOLVED].",
+                "Use the selected study material as the primary source of truth. Use validated web retrieval only as supporting evidence when it materially improves the answer.",
+                "Do not invent websites, books, citations, or source links that are not already provided by the material or engine citations.",
+                "Put the complete markdown deliverable directly in the final answer. Do not return only a heading, title, or summary label.",
+                f"Study material title: {title}",
+            ]
+        if self._str(card.get("subject")):
+            lines.append(f"Subject: {self._str(card.get('subject'))}")
+        if self._str(card.get("chapter")):
+            lines.append(f"Chapter: {self._str(card.get('chapter'))}")
+        if self._str(card.get("material_type")):
+            lines.append(f"Material type: {self._str(card.get('material_type'))}")
+        if self._str(card.get("material_url")):
+            lines.append(f"Material URL: {self._str(card.get('material_url'))}")
+        if notes:
+            lines.append(
+                "Material notes/context: "
+                + (notes[:2200] if len(notes) > 2200 else notes)
+            )
+        if self._to_bool(card.get("ocr_required")):
+            lines.append(
+                "Strict OCR may be required. Preserve equations, labels, and symbols exactly before reasoning."
+            )
+        if is_query:
+            lines.extend(
+                [
+                    f"Student question: {question.strip()}",
+                    "Answer the question directly. The answer may be conceptual; it does not need to be numeric.",
+                    "For strategy or how-to questions, answer with reusable methods or decision rules first, not invented example scenarios.",
+                    "Return markdown with sections for Answer, Explanation, Key Takeaways, Common Traps, and Supporting Sources when available.",
+                    "If a graph or visualization materially helps, include graph-ready equations or visualization metadata.",
+                ]
+            )
+        elif "formula" in self._str(mode).lower() or "sheet" in self._str(mode).lower():
+            lines.extend(
+                [
+                    "Deliverable: a compact JEE formula sheet.",
+                    "Use sections: Formula Map, Symbol Legend, Validity / Constraints, Fast Use Cues, and Common Mistakes.",
+                    "Include only the highest-yield formulas, notation, sign conventions, hidden constraints, and one-line usage cues.",
+                    "Keep it scan-friendly and revision-first.",
+                ]
+            )
+        elif "flashcard" in self._str(mode).lower():
+            lines.extend(
+                [
+                    "Deliverable: high-yield JEE flashcards from this material.",
+                    "Return a crisp front/back style deck with concepts, formulas, traps, and quick recall prompts.",
+                    "Format explicitly as Card 1 / Front / Back, Card 2 / Front / Back, and keep each back concise.",
+                    "Keep cards short, memory-friendly, and exam-useful.",
+                ]
+            )
+        elif "revision_plan" in self._str(mode).lower() or "study_plan" in self._str(mode).lower():
+            lines.extend(
+                [
+                    "Deliverable: a focused revision plan from this material.",
+                    "Use sections: What to Read First, What to Memorize, Practice Order, Same-Day Checkpoint, 1-Day Plan, and 3-Day Plan.",
+                    "Include a 1-day and 3-day path, what to memorize, what to practice, what to self-test, and a same-day checkpoint list.",
+                ]
+            )
+        elif "quiz" in self._str(mode).lower() or "drill" in self._str(mode).lower():
+            lines.extend(
+                [
+                    "Deliverable: a short self-test drill from this material.",
+                    "Give 5 JEE-style questions with mixed difficulty, then provide a separate Answer Key section and one-line solving cue for each.",
+                ]
+            )
+        elif "summary" in self._str(mode).lower() or "summarize" in self._str(mode).lower():
+            lines.extend(
+                [
+                    "Deliverable: a high-accuracy JEE revision summary.",
+                    "Use sections: Core Idea Map, Must-Know Formulas, Pattern Cues, Common Traps, Quick Recall, and Last-Minute Checklist.",
+                    "Include core idea map, formulas, pattern cues, common traps, and quick recall bullets.",
+                    "If retrieval finds reliable evidence, use it only to support or sharpen the material-grounded answer.",
+                    "If a graph improves understanding, include graph-ready equations or metadata.",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    "Deliverable: deep JEE Advanced notes.",
+                    "Use sections: Concept Architecture, Derivation Flow, Shortcuts, Hidden Traps, Rank-Booster Tips, and Test Strategy.",
+                    "Include concept architecture, derivation flow, shortcuts, hidden traps, rank-booster tips, and test strategy.",
+                    "If retrieval finds reliable evidence, use it only to support or sharpen the material-grounded answer.",
+                    "If a graph improves understanding, include graph-ready equations or metadata.",
+                ]
+            )
+        lines.append(
+            "Return polished markdown with clear section headers. Keep the output material-grounded, exam-useful, and do not fabricate citations."
+        )
+        return "\n".join(lines)
+
+    def _material_mode_family(self, mode: str) -> str:
+        lowered = self._str(mode).lower()
+        if "formula" in lowered or "sheet" in lowered:
+            return "formula"
+        if "flashcard" in lowered:
+            return "flashcards"
+        if "revision_plan" in lowered or "study_plan" in lowered:
+            return "revision_plan"
+        if "quiz" in lowered or "drill" in lowered:
+            return "quiz_drill"
+        if "summary" in lowered or "summarize" in lowered:
+            return "summary"
+        if "note" in lowered:
+            return "notes"
+        if lowered == "qa" or "question" in lowered:
+            return "qa"
+        return "notes"
+
+    def _material_fallback_content(self, *, mode: str, title: str) -> str:
+        family = self._material_mode_family(mode)
+        if family == "formula":
+            return "\n".join(
+                [
+                    f"# Formula Sheet: {title}",
+                    "",
+                    "## Core Relations",
+                    "- Write the canonical formula before substitution.",
+                    "- Track notation, sign conventions, and conditions of use.",
+                    "",
+                    "## Quick Checks",
+                    "- Verify units and limiting cases.",
+                    "- Confirm the shortcut is valid for this regime.",
+                ]
+            )
+        if family == "flashcards":
+            return "\n".join(
+                [
+                    f"# Flashcards: {title}",
+                    "",
+                    "Q: What is the first principle to recall?",
+                    "A: Start with the governing definition and the standard formula.",
+                    "",
+                    "Q: What is the most common trap?",
+                    "A: Applying a shortcut outside its valid condition.",
+                ]
+            )
+        if family == "revision_plan":
+            return "\n".join(
+                [
+                    f"# Revision Plan: {title}",
+                    "",
+                    "## 20-minute rescue",
+                    "- Read the key definition and formulas.",
+                    "- Solve one direct example.",
+                    "",
+                    "## 60-minute revision",
+                    "- Rebuild the logic once.",
+                    "- Practice easy -> medium -> PYQ style.",
+                ]
+            )
+        if family == "quiz_drill":
+            return "\n".join(
+                [
+                    f"# Quiz Drill: {title}",
+                    "",
+                    "## Questions",
+                    "1. State the core concept.",
+                    "2. Write the main formula and define every symbol.",
+                    "3. Identify one common trap.",
+                    "4. Solve one direct application.",
+                    "5. State the fastest final verification step.",
+                ]
+            )
+        if family == "summary":
+            return "\n".join(
+                [
+                    f"# Summary: {title}",
+                    "",
+                    "## Core Idea",
+                    "- Main concept and where it is used.",
+                    "",
+                    "## Must-Know Points",
+                    "- Key formulas and conditions.",
+                    "- Common mistakes and validation checks.",
+                ]
+            )
+        if family == "qa":
+            return "\n".join(
+                [
+                    "**Answer**",
+                    "Start with the governing concept, apply the correct relation, and verify the final statement.",
+                    "",
+                    "**Explanation**",
+                    "1. Identify the right principle.",
+                    "2. Substitute carefully.",
+                    "3. Check sign, units, and limiting case.",
+                ]
+            )
+        return "\n".join(
+            [
+                f"# JEE Notes: {title}",
+                "",
+                "## Concept Architecture",
+                "- Core idea and chapter link.",
+                "",
+                "## Derivation / Logic Path",
+                "- Move from the standard relation to the final usable form.",
+                "",
+                "## Practice Ladder",
+                "- Easy check -> medium application -> PYQ challenge.",
+            ]
+        )
+
+    def _material_ai_is_placeholder_text(self, value: Any) -> bool:
+        text = re.sub(r"\s+", " ", self._str(value)).strip()
+        if not text:
+            return True
+        lowered = text.lower()
+        if lowered in {"[unresolved]", "unresolved", "n/a", "na"}:
+            return True
+        placeholder_tokens = (
+            "[unresolved]",
+            "uncertain answer:",
+            "insufficient evidence",
+            "provider error:",
+            "actual question is missing",
+            "do not provide a clear answer",
+            "could not solve this reliably",
+            "engine returned empty output",
+        )
+        return any(token in lowered for token in placeholder_tokens)
+
+    def _material_ai_keywords(self, text: str, *, limit: int = 6) -> list[str]:
+        tokens = re.findall(r"[A-Za-z][A-Za-z0-9_\-]{2,}", self._str(text))
+        if not tokens:
+            return []
+        stopwords = {
+            "the",
+            "and",
+            "with",
+            "from",
+            "that",
+            "this",
+            "these",
+            "those",
+            "into",
+            "using",
+            "used",
+            "what",
+            "when",
+            "where",
+            "which",
+            "student",
+            "question",
+            "material",
+            "study",
+            "notes",
+            "title",
+            "chapter",
+            "subject",
+            "return",
+            "answer",
+            "explanation",
+            "confidence",
+        }
+        keywords: list[str] = []
+        seen: set[str] = set()
+        for token in tokens:
+            lowered = token.lower()
+            if lowered in stopwords or lowered in seen:
+                continue
+            seen.add(lowered)
+            keywords.append(token)
+            if len(keywords) >= limit:
+                break
+        return keywords
+
+    def _build_material_ai_retrieval_query(
+        self,
+        *,
+        mode: str,
+        title: str,
+        card: dict[str, Any],
+        question: str = "",
+        is_query: bool,
+    ) -> str:
+        subject = self._str(card.get("subject"))
+        chapter = self._str(card.get("chapter"))
+        notes = self._str(card.get("material_notes"))
+        lead = " ".join(
+            chunk
+            for chunk in [subject, chapter or title]
+            if self._str(chunk)
+        ).strip() or title
+        note_keywords = " ".join(self._material_ai_keywords(notes, limit=6))
+        lowered = self._str(mode).lower()
+        if is_query:
+            return " ".join(
+                chunk
+                for chunk in [lead, "JEE", self._str(question), note_keywords]
+                if self._str(chunk)
+            ).strip()
+        if "formula" in lowered or "sheet" in lowered:
+            intent = "formula sheet identities constraints shortcuts"
+        elif "flashcard" in lowered:
+            intent = "flashcards quick recall traps"
+        elif "revision_plan" in lowered or "study_plan" in lowered:
+            intent = "revision plan practice order checkpoint"
+        elif "quiz" in lowered or "drill" in lowered:
+            intent = "self test drill answer key"
+        elif "summary" in lowered or "summarize" in lowered:
+            intent = "revision summary formulas common traps quick recall"
+        elif "note" in lowered:
+            intent = "deep notes derivation shortcuts"
+        else:
+            intent = "study guide key concepts"
+        return " ".join(
+            chunk
+            for chunk in [lead, "JEE", intent, note_keywords]
+            if self._str(chunk)
+        ).strip()
+
+    def _compose_material_ai_content(
+        self,
+        response: dict[str, Any],
+        *,
+        mode: str = "",
+        title: str = "",
+    ) -> str:
+        direct_content = self._str(response.get("content") or response.get("answer_text"))
+        answer = self._str(response.get("answer"))
+        explanation = self._str(response.get("explanation"))
+        concept = self._str(response.get("concept"))
+        confidence = self._str(response.get("confidence"))
+        if (
+            direct_content
+            and not self._material_ai_is_placeholder_text(direct_content)
+            and (
+                self._material_mode_family(mode) != "qa"
+                or "\n" in direct_content
+                or direct_content.lstrip().startswith("#")
+                or "**" in direct_content
+            )
+        ):
+            return direct_content
+        sections: list[str] = []
+        if answer and not self._material_ai_is_placeholder_text(answer):
+            sections.append(f"**Answer**\n{answer}")
+        if (
+            explanation
+            and explanation != answer
+            and not self._material_ai_is_placeholder_text(explanation)
+        ):
+            sections.append(f"**Explanation**\n{explanation}")
+        if concept:
+            sections.append(f"**Concept**: {concept}")
+        if confidence:
+            sections.append(f"**Confidence**: {confidence}")
+        if sections:
+            return "\n\n".join(sections).strip()
+        if direct_content and not self._material_ai_is_placeholder_text(direct_content):
+            return direct_content
+        return ""
+
+    def _material_ai_has_meaningful_payload(self, response: dict[str, Any]) -> bool:
+        for value in (
+            response.get("content"),
+            response.get("answer_text"),
+            response.get("answer"),
+            response.get("explanation"),
+        ):
+            text = self._str(value)
+            if text and not self._material_ai_is_placeholder_text(text):
+                return True
+        return False
+
+    async def _material_generate(self, payload: dict[str, Any]) -> dict[str, Any]:
+        material_id = self._safe_id(payload.get("material_id"))
+        mode = self._str(payload.get("mode") or "summarize") or "summarize"
+        material = self._find_material_item(material_id)
+        title = self._str(payload.get("title") or (material or {}).get("title"))
+        if not title:
+            return {
+                "ok": False,
+                "status": "MISSING_TITLE",
+                "message": "material title is required",
+            }
+        raw_options = dict(payload.get("options")) if isinstance(payload.get("options"), dict) else {}
+        card = self._build_material_ai_card(
+            payload=payload,
+            material=material,
+            mode=mode,
+            title=title,
+        )
+        options = self._build_material_ai_options(
+            mode=mode,
+            raw_options=raw_options,
+            is_query=False,
+        )
+        if "retrieval_query_override" not in options:
+            options["retrieval_query_override"] = self._build_material_ai_retrieval_query(
+                mode=mode,
+                title=title,
+                card=card,
+                is_query=False,
+            )
+        prompt = self._str(payload.get("prompt")) or self._build_material_ai_prompt(
+            mode=mode,
+            title=title,
+            card=card,
+            is_query=False,
+        )
+        cache_key = self._material_ai_cache_key(
+            material_id=material_id or title,
+            mode=mode,
+            prompt=prompt,
+            options=options,
+        )
+        cached = self._material_ai_cache.get(cache_key)
+        if isinstance(cached, dict):
+            return {**cached, "cached": True}
+        self._material_ai_status[cache_key] = {
+            "status": "generating",
+            "updated_at": self._now_ms(),
+            "material_id": material_id,
+            "mode": mode,
+        }
+        response = await material_generation_entry(
+            prompt=prompt,
+            title=title,
+            mode=mode,
+            card=card,
+            options=options,
+        )
+        content = self._compose_material_ai_content(response, mode=mode, title=title)
+        authoritative = self._material_ai_has_meaningful_payload(response)
+        output = dict(response)
+        if content:
+            output["content"] = content
+        if authoritative:
+            output["ok"] = True
+            self._material_ai_cache[cache_key] = dict(output)
+        else:
+            output["ok"] = False
+            if self._str(output.get("status")).lower() in {"", "ok"}:
+                output["status"] = "MATERIAL_ENGINE_EMPTY_OUTPUT"
+            if not self._str(output.get("message")):
+                output["message"] = "Material AI did not return usable content."
+            self._material_ai_cache.pop(cache_key, None)
+        self._material_ai_status[cache_key] = {
+            "status": "ready" if output.get("ok") else "failed",
+            "updated_at": self._now_ms(),
+            "material_id": material_id,
+            "mode": mode,
+        }
+        return output
+
+    async def _material_query(self, payload: dict[str, Any]) -> dict[str, Any]:
+        material_id = self._safe_id(payload.get("material_id"))
+        question = self._str(payload.get("question") or payload.get("prompt"))
+        if not material_id:
+            return {
+                "ok": False,
+                "status": "MISSING_MATERIAL_ID",
+                "message": "material_id is required",
+            }
+        if not question:
+            return {
+                "ok": False,
+                "status": "MISSING_QUESTION",
+                "message": "question is required",
+            }
+        mode = self._str(payload.get("context_mode") or payload.get("mode") or "qa")
+        material = self._find_material_item(material_id)
+        title = self._str(payload.get("title") or (material or {}).get("title") or "Study material")
+        raw_options = dict(payload.get("options")) if isinstance(payload.get("options"), dict) else {}
+        card = self._build_material_ai_card(
+            payload=payload,
+            material=material,
+            mode=mode,
+            title=title,
+        )
+        options = self._build_material_ai_options(
+            mode=mode,
+            raw_options=raw_options,
+            is_query=True,
+        )
+        if "retrieval_query_override" not in options:
+            options["retrieval_query_override"] = self._build_material_ai_retrieval_query(
+                mode=mode,
+                title=title,
+                card=card,
+                question=question,
+                is_query=True,
+            )
+        prompt = self._str(payload.get("prompt")) or self._build_material_ai_prompt(
+            mode=mode,
+            title=title,
+            card=card,
+            question=question,
+            is_query=True,
+        )
+        response = await material_generation_entry(
+            prompt=prompt,
+            title=title,
+            mode=mode,
+            card=card,
+            options=options,
+            question=question,
+        )
+        content = self._compose_material_ai_content(
+            response,
+            mode=mode,
+            title=title,
+        )
+        authoritative = self._material_ai_has_meaningful_payload(response)
+        if content:
+            response = {**response, "content": content}
+        if authoritative:
+            response["ok"] = True
+        else:
+            response["ok"] = False
+            if self._str(response.get("status")).lower() in {"", "ok"}:
+                response["status"] = "MATERIAL_ENGINE_EMPTY_OUTPUT"
+            if not self._str(response.get("message")):
+                response["message"] = "Material AI did not return usable content."
+        return response
+
+    async def _material_status(self, payload: dict[str, Any]) -> dict[str, Any]:
+        material_id = self._safe_id(payload.get("material_id"))
+        if not material_id:
+            return {
+                "ok": False,
+                "status": "MISSING_MATERIAL_ID",
+                "message": "material_id is required",
+            }
+        status_row = next(
+            (
+                dict(value)
+                for value in self._material_ai_status.values()
+                if self._safe_id(value.get("material_id")) == material_id
+            ),
+            None,
+        )
+        if status_row is not None:
+            return {"ok": True, **status_row}
+        return {
+            "ok": False,
+            "status": "not_requested",
+            "material_id": material_id,
+            "updated_at": self._now_ms(),
+        }
+
+    async def _class_summary(self, payload: dict[str, Any]) -> dict[str, Any]:
+        students = payload.get("students") if isinstance(payload.get("students"), list) else []
+        exams = payload.get("exams") if isinstance(payload.get("exams"), list) else []
+        homeworks = payload.get("homeworks") if isinstance(payload.get("homeworks"), list) else []
+        study_materials = (
+            payload.get("study_materials")
+            if isinstance(payload.get("study_materials"), list)
+            else []
+        )
+        scheduled_classes = (
+            payload.get("scheduled_classes")
+            if isinstance(payload.get("scheduled_classes"), list)
+            else []
+        )
+        if not students:
+            return {
+                "ok": False,
+                "status": "MISSING_STUDENTS",
+                "message": "students is required",
+            }
+        return await class_summary_entry(
+            students=[dict(item) for item in students if isinstance(item, dict)],
+            exams=[dict(item) for item in exams if isinstance(item, dict)],
+            homeworks=[dict(item) for item in homeworks if isinstance(item, dict)],
+            study_materials=[dict(item) for item in study_materials if isinstance(item, dict)],
+            scheduled_classes=[dict(item) for item in scheduled_classes if isinstance(item, dict)],
+            options=dict(payload.get("options")) if isinstance(payload.get("options"), dict) else None,
+        )
+
+    async def _student_profile(self, payload: dict[str, Any]) -> dict[str, Any]:
+        history = payload.get("history") if isinstance(payload.get("history"), list) else []
+        if not history:
+            return {
+                "ok": False,
+                "status": "MISSING_HISTORY",
+                "message": "history is required",
+            }
+        return await student_profile_entry(
+            history=[dict(item) for item in history if isinstance(item, dict)],
+            options=dict(payload.get("options")) if isinstance(payload.get("options"), dict) else None,
+        )
+
+    async def _student_intelligence(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._str(payload.get("account_id") or payload.get("student_id"))
+        latest_result = dict(payload.get("latest_result")) if isinstance(payload.get("latest_result"), dict) else {}
+        history = payload.get("history") if isinstance(payload.get("history"), list) else []
+        if not account_id:
+            return {
+                "ok": False,
+                "status": "MISSING_ACCOUNT_ID",
+                "message": "account_id is required",
+            }
+        if not latest_result:
+            return {
+                "ok": False,
+                "status": "MISSING_LATEST_RESULT",
+                "message": "latest_result is required",
+            }
+        return await student_intelligence_entry(
+            account_id=account_id,
+            latest_result=latest_result,
+            history=[dict(item) for item in history if isinstance(item, dict)],
+            options=dict(payload.get("options")) if isinstance(payload.get("options"), dict) else None,
+        )
+
+    async def _analyze_exam(self, payload: dict[str, Any]) -> dict[str, Any]:
+        result = dict(payload.get("result")) if isinstance(payload.get("result"), dict) else {}
+        if not result:
+            result = {
+                key: value
+                for key, value in payload.items()
+                if key not in {"action", "options"}
+            }
+        if not result:
+            return {
+                "ok": False,
+                "status": "MISSING_RESULT",
+                "message": "result is required",
+            }
+        response = await analyze_exam_entry(
+            result=result,
+            options=dict(payload.get("options")) if isinstance(payload.get("options"), dict) else None,
+        )
+        if response.get("ok") is True:
+            response.setdefault("ai_available", True)
+        return response
+
+    async def _atlas_report_issue(self, payload: dict[str, Any]) -> dict[str, Any]:
+        issue = self._str(
+            payload.get("issue")
+            or payload.get("issue_summary")
+            or payload.get("instruction")
+            or payload.get("prompt")
+            or payload.get("summary")
+            or payload.get("message")
+        )
+        role = self._str(payload.get("role") or payload.get("atlas_role")).lower() or "student"
+        context = dict(payload.get("context")) if isinstance(payload.get("context"), dict) else {}
+        context["surface"] = self._atlas_incident_surface(payload=payload, context=context)
+        account_id = self._str(
+            payload.get("account_id")
+            or payload.get("user_id")
+            or payload.get("student_id")
+            or context.get("account_id")
+            or context.get("user_id")
+            or context.get("student_id")
+        )
+        if not issue:
+            if self._str(payload.get("action")).lower() in {"health_check", "ping", "noop"}:
+                issue = "General app health check requested."
+            else:
+                return {
+                    "ok": False,
+                    "status": "MISSING_ISSUE",
+                    "message": "issue or instruction is required",
+                }
+        diagnostics = await self.atlas_health_snapshot(
+            role=role,
+            account_id=account_id,
+            context=context,
+        )
+        repair_attempt = await self._atlas_attempt_minor_repairs(
+            issue=issue,
+            role=role,
+            context=context,
+            diagnostics=diagnostics,
+        )
+        post_repair_diagnostics = diagnostics
+        if repair_attempt["applied_fix_count"]:
+            post_repair_diagnostics = await self.atlas_health_snapshot(
+                role=role,
+                account_id=account_id,
+                context={
+                    **context,
+                    "health_repair_summary": repair_attempt["summary"],
+                },
+            )
+        analysis = await self._atlas_issue_analysis(
+            issue=issue,
+            role=role,
+            context=context,
+            diagnostics=post_repair_diagnostics,
+            repair_attempt=repair_attempt,
+        )
+        incident_id = self._new_id("atlas_incident")
+        runtime_logs = self._atlas_collect_recent_runtime_logs(
+            context=context,
+            diagnostics=post_repair_diagnostics,
+        )
+        surface = self._atlas_incident_surface(payload=payload, context=context)
+        report = {
+            "incident_id": incident_id,
+            "ok": True,
+            "status": "SUCCESS",
+            "issue_summary": issue,
+            "surface": surface,
+            "role": role,
+            "reporter": {
+                "account_id": account_id,
+                "user_name": self._str(
+                    payload.get("user_name")
+                    or context.get("student_name")
+                    or context.get("teacher_name")
+                    or context.get("current_user_name")
+                    or context.get("user_name")
+                ),
+                "email": self._str(
+                    payload.get("email")
+                    or context.get("email")
+                    or (context.get("reporter") or {}).get("email")
+                    if isinstance(context.get("reporter"), dict)
+                    else context.get("email")
+                ),
+            },
+            **analysis,
+            "self_heal": repair_attempt,
+            "diagnostics_before_repair": diagnostics,
+            "diagnostics": post_repair_diagnostics,
+            "runtime_logs": runtime_logs,
+            "context": context,
+            "maintenance": {
+                "enabled": self._to_bool(context.get("maintenance_mode")),
+                "artifacts_isolated": self._to_bool(
+                    context.get("maintenance_artifacts_isolated")
+                ),
+                "trigger": self._str(context.get("trigger")),
+                "scheduled_window_local": self._str(
+                    context.get("scheduled_window_local")
+                ),
+                "scope": [
+                    self._str(item)
+                    for item in (context.get("maintenance_scope") or [])
+                    if self._str(item)
+                ],
+                "failing_areas": [
+                    self._str(item)
+                    for item in (context.get("maintenance_failing_areas") or [])
+                    if self._str(item)
+                ],
+                "audit": context.get("maintenance_audit")
+                if isinstance(context.get("maintenance_audit"), dict)
+                else None,
+            },
+        }
+        if self._to_bool(payload.get("auto_email", True)):
+            email_result = self._atlas_incident_email.send_incident_report(
+                report=report,
+                recipient=self._str(payload.get("recipient_email")) or None,
+            )
+        else:
+            email_result = {
+                "ok": True,
+                "sent": False,
+                "message": "auto_email was disabled for this report",
+            }
+        report["email"] = email_result
+        report["mail_sent"] = email_result.get("sent") is True
+        report["message"] = (
+            "Atlas analyzed the issue, applied a safe repair, and emailed support."
+            if report["mail_sent"] and repair_attempt["applied_fix_count"] > 0
+            else "Atlas analyzed the issue and emailed support."
+            if report["mail_sent"]
+            else "Atlas analyzed the issue, but the support email was not sent."
+        )
+        return report
+
+    async def _atlas_health_probe(self, payload: dict[str, Any]) -> dict[str, Any]:
+        role = self._str(payload.get("role") or payload.get("atlas_role")).lower() or "student"
+        context = dict(payload.get("context")) if isinstance(payload.get("context"), dict) else {}
+        account_id = self._str(
+            payload.get("account_id")
+            or payload.get("user_id")
+            or payload.get("student_id")
+            or context.get("account_id")
+            or context.get("user_id")
+            or context.get("student_id")
+        )
+        diagnostics = await self.atlas_health_snapshot(
+            role=role,
+            account_id=account_id,
+            context=context,
+        )
+        action = self._str(payload.get("action")).lower() or "health_check"
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "message": "Atlas app health is reachable.",
+            "probe_action": action,
+            "surface": self._atlas_incident_surface(payload=payload, context=context),
+            "diagnostics": diagnostics,
+        }
+
+    async def _atlas_issue_analysis(
+        self,
+        *,
+        issue: str,
+        role: str,
+        context: dict[str, Any],
+        diagnostics: dict[str, Any],
+        repair_attempt: dict[str, Any],
+    ) -> dict[str, Any]:
+        prompt = self._atlas_issue_prompt(
+            issue=issue,
+            role=role,
+            context=context,
+            diagnostics=diagnostics,
+            repair_attempt=repair_attempt,
+        )
+        try:
+            response = await self._ai_chat_or_solve(
+                {
+                    "prompt": prompt,
+                    "user_id": "atlas_support",
+                    "chat_id": f"atlas_support_{role}_{self._safe_id(context.get('surface')) or 'general'}",
+                    "options": {
+                        "function": "atlas_incident_triage",
+                        "app_surface": "atlas_support_incident",
+                        "return_structured": True,
+                        "return_markdown": False,
+                        "enable_web_retrieval": False,
+                        "require_citations": "none",
+                        "evidence_mode": "none",
+                    },
+                    "card": {
+                        "issue": issue,
+                        "role": role,
+                        "surface": self._str(context.get("surface")),
+                        "diagnostics": diagnostics,
+                    },
+                }
+            )
+            parsed = self._atlas_parse_json_candidate(
+                self._str(response.get("answer") or response.get("explanation"))
+            )
+            if isinstance(parsed, dict):
+                normalized = self._atlas_normalize_issue_analysis(parsed)
+                if normalized:
+                    return normalized
+        except Exception:
+            pass
+        return self._atlas_fallback_issue_analysis(
+            issue=issue,
+            role=role,
+            context=context,
+            diagnostics=diagnostics,
+            repair_attempt=repair_attempt,
+        )
+
+    def _atlas_issue_prompt(
+        self,
+        *,
+        issue: str,
+        role: str,
+        context: dict[str, Any],
+        diagnostics: dict[str, Any],
+        repair_attempt: dict[str, Any],
+    ) -> str:
+        payload = {
+            "issue": issue,
+            "role": role,
+            "surface": self._str(context.get("surface")),
+            "context_excerpt": self._atlas_compact_value(context),
+            "diagnostics": diagnostics,
+            "repair_attempt": repair_attempt,
+        }
+        return "\n".join(
+            [
+                "You are Atlas Incident Investigator for the LalaCore app.",
+                "Analyze the issue deeply using the provided app context and diagnostics.",
+                "Return strict JSON only with this shape:",
+                '{"summary":"...","severity":"low|medium|high|critical","likely_root_causes":["..."],"plausible_causes_by_layer":{"client":["..."],"backend":["..."],"ai":["..."],"network":["..."],"data":["..."]},"evidence":["..."],"next_steps":["..."],"impact_assessment":"...","engineer_checklist":["..."],"user_safe_reply":"...","engineer_report":"..."}',
+                "Keep the summary concrete and operational.",
+                "Mention likely backend, network, AI, UI, or data causes only when evidence supports them.",
+                "If a safe repair was already attempted, explain whether it likely helped and what still needs checking.",
+                "",
+                json.dumps(payload, ensure_ascii=False),
+            ]
+        )
+
+    def _atlas_normalize_issue_analysis(
+        self,
+        raw: dict[str, Any],
+    ) -> dict[str, Any]:
+        severity = self._str(raw.get("severity")).lower()
+        if severity not in {"low", "medium", "high", "critical"}:
+            severity = "medium"
+        by_layer = raw.get("plausible_causes_by_layer")
+        normalized_layers = {}
+        if isinstance(by_layer, dict):
+            for key in ("client", "backend", "ai", "network", "data"):
+                values = by_layer.get(key)
+                if isinstance(values, list):
+                    normalized_layers[key] = [
+                        self._str(item)
+                        for item in values
+                        if self._str(item)
+                    ][:4]
+        return {
+            "summary": self._str(raw.get("summary")),
+            "severity": severity,
+            "likely_root_causes": [
+                self._str(item)
+                for item in (raw.get("likely_root_causes") or [])
+                if self._str(item)
+            ][:6],
+            "evidence": [
+                self._str(item)
+                for item in (raw.get("evidence") or [])
+                if self._str(item)
+            ][:8],
+            "next_steps": [
+                self._str(item)
+                for item in (raw.get("next_steps") or [])
+                if self._str(item)
+            ][:6],
+            "plausible_causes_by_layer": normalized_layers,
+            "impact_assessment": self._str(raw.get("impact_assessment")),
+            "engineer_checklist": [
+                self._str(item)
+                for item in (raw.get("engineer_checklist") or [])
+                if self._str(item)
+            ][:8],
+            "user_safe_reply": self._str(raw.get("user_safe_reply")),
+            "engineer_report": self._str(raw.get("engineer_report")),
+        }
+
+    def _atlas_fallback_issue_analysis(
+        self,
+        *,
+        issue: str,
+        role: str,
+        context: dict[str, Any],
+        diagnostics: dict[str, Any],
+        repair_attempt: dict[str, Any],
+    ) -> dict[str, Any]:
+        lowered_issue = issue.lower()
+        evidence: list[str] = []
+        likely_root_causes: list[str] = []
+        next_steps: list[str] = []
+        engineer_checklist: list[str] = []
+        plausible_causes_by_layer: dict[str, list[str]] = {
+            "client": [],
+            "backend": [],
+            "ai": [],
+            "network": [],
+            "data": [],
+        }
+        severity = "medium"
+        last_error = self._str(context.get("last_error") or context.get("error"))
+        if last_error:
+            evidence.append(f"Last surfaced error: {last_error}")
+            plausible_causes_by_layer["client"].append(
+                "A user-visible error was surfaced on the current screen."
+            )
+        material_failed = self._to_int(
+            (diagnostics.get("material_ai_status") or {}).get("failed_count"),
+            0,
+        )
+        web_diag = diagnostics.get("web_diagnostics")
+        if isinstance(web_diag, dict):
+            web_error = self._str(
+                web_diag.get("web_error_reason") or web_diag.get("error_reason")
+            )
+            if web_error:
+                evidence.append(f"Recent web/AI retrieval issue: {web_error}")
+                likely_root_causes.append(
+                    "Recent AI or retrieval requests have failure signals in the backend diagnostics."
+                )
+                plausible_causes_by_layer["ai"].append(
+                    "Recent retrieval or provider diagnostics already show failure reasons."
+                )
+        if material_failed > 0:
+            evidence.append(
+                f"{material_failed} recent material-AI generation task(s) are marked failed."
+            )
+            likely_root_causes.append(
+                "Material or AI generation requests recently failed in the local app backend."
+            )
+            plausible_causes_by_layer["backend"].append(
+                "Recent AI-generation jobs failed inside the app backend state."
+            )
+        tool_stats = diagnostics.get("atlas_tool_stats")
+        if isinstance(tool_stats, dict):
+            avoid = tool_stats.get("avoid_tools")
+            if isinstance(avoid, list) and avoid:
+                evidence.append(
+                    f"Atlas recently observed failures on: {', '.join(str(item) for item in avoid[:5])}"
+                )
+                plausible_causes_by_layer["ai"].append(
+                    "Atlas tool telemetry already shows recent tool failures."
+                )
+        context_excerpt = diagnostics.get("context_excerpt")
+        network_quality = ""
+        if isinstance(context_excerpt, dict):
+            network_quality = self._str(
+                context_excerpt.get("network_quality")
+                or (context_excerpt.get("participantSnapshot") or {}).get("network_quality")
+                if isinstance(context_excerpt.get("participantSnapshot"), dict)
+                else context_excerpt.get("network_quality")
+            ).lower()
+        if network_quality in {"poor", "degraded"}:
+            evidence.append(f"Current network quality is reported as {network_quality}.")
+            likely_root_causes.append(
+                "Client-side or classroom network degradation is likely contributing to lag or failures."
+            )
+            plausible_causes_by_layer["network"].append(
+                "Network quality is already degraded in the current context snapshot."
+            )
+        maintenance_audit = context.get("maintenance_audit")
+        if isinstance(maintenance_audit, dict):
+            signature_map = maintenance_audit.get("failure_signatures")
+            extracted_signatures: list[dict[str, Any]] = []
+            if isinstance(signature_map, dict):
+                for rows in signature_map.values():
+                    if not isinstance(rows, list):
+                        continue
+                    for item in rows:
+                        if isinstance(item, dict):
+                            extracted_signatures.append(item)
+            if extracted_signatures:
+                labels = [
+                    self._str(item.get("code") or item.get("area"))
+                    for item in extracted_signatures
+                    if self._str(item.get("code") or item.get("area"))
+                ]
+                if labels:
+                    evidence.append(
+                        "Maintenance signatures detected: "
+                        + ", ".join(labels[:6])
+                    )
+                for item in extracted_signatures[:4]:
+                    cause = self._str(item.get("root_cause"))
+                    fix = self._str(item.get("atlas_fix"))
+                    layer = self._str(item.get("layer")).lower()
+                    if cause and cause not in likely_root_causes:
+                        likely_root_causes.append(cause)
+                    if fix:
+                        next_steps.append(fix)
+                    if cause and layer in plausible_causes_by_layer:
+                        plausible_causes_by_layer[layer].append(cause)
+        if repair_attempt.get("applied_fix_count"):
+            evidence.append(
+                f'Atlas applied {repair_attempt["applied_fix_count"]} safe repair(s): {self._str(repair_attempt.get("summary"))}'
+            )
+        local_backend_repair = context.get("local_backend_repair")
+        if isinstance(local_backend_repair, dict) and local_backend_repair.get("attempted") is True:
+            repair_summary = self._str(local_backend_repair.get("summary"))
+            if repair_summary:
+                evidence.append(f"Client-side backend repair: {repair_summary}")
+            after_url = self._str(local_backend_repair.get("after_auth_backend_url"))
+            if after_url:
+                plausible_causes_by_layer["client"].append(
+                    f"The app recently re-bound its backend routing to {after_url}."
+                )
+            if local_backend_repair.get("recovered") is True:
+                likely_root_causes.append(
+                    "A stale client-side backend routing override was preventing the app from reaching the healthy backend."
+                )
+                next_steps.append(
+                    "Confirm the repaired backend route stays healthy across the next app launch."
+                )
+        if any(token in lowered_issue for token in ("crash", "crashing", "stopped working")):
+            severity = "high"
+            likely_root_causes.append(
+                "The surface may be hitting an unhandled runtime error or an unstable action path."
+            )
+            plausible_causes_by_layer["client"].append(
+                "Crash-like symptoms usually point to an unstable runtime path or bad state transition."
+            )
+        elif any(token in lowered_issue for token in ("lag", "slow", "delay", "stuck")):
+            severity = "medium"
+            likely_root_causes.append(
+                "The affected surface is likely waiting on a slow backend or degraded network path."
+            )
+            plausible_causes_by_layer["backend"].append(
+                "Lag symptoms often come from slow backend action paths or oversized cached state."
+            )
+        elif any(token in lowered_issue for token in ("ai", "atlas")) and (
+            "not working" in lowered_issue or "failed" in lowered_issue
+        ):
+            severity = "high"
+            likely_root_causes.append(
+                "Atlas or AI execution may be degraded by backend request failures or invalid tool execution state."
+            )
+            plausible_causes_by_layer["ai"].append(
+                "AI failure symptoms are consistent with provider, retrieval, or tool-state problems."
+            )
+        if not likely_root_causes:
+            likely_root_causes.append(
+                "The issue appears real, but Atlas could not isolate a single dominant cause from the available diagnostics."
+            )
+        next_steps.extend(
+            [
+                "Review the attached diagnostics JSON and compare the failing surface with recent Atlas/tool failures.",
+                "Check whether the same issue reproduces on a second attempt with the same user flow.",
+                "If AI is affected, inspect recent backend/provider failures and fallback paths first.",
+            ]
+        )
+        engineer_checklist.extend(
+            [
+                "Reproduce the same user flow on the same surface using the same account context.",
+                "Check the attached diagnostics JSON for recent AI, retrieval, and Atlas tool failures.",
+                "Inspect network quality and any surfaced runtime error before changing feature logic.",
+                "If the issue remains after Atlas safe repair, inspect the exact failing backend action or screen load path.",
+            ]
+        )
+        summary = (
+            f"Atlas reviewed the {role} issue on {self._str(context.get('surface')) or 'the current surface'} "
+            f"and found {len(evidence)} supporting signal(s)."
+        )
+        return {
+            "summary": summary,
+            "severity": severity,
+            "likely_root_causes": likely_root_causes[:6],
+            "evidence": evidence[:8],
+            "next_steps": next_steps[:6],
+            "plausible_causes_by_layer": {
+                key: value[:4]
+                for key, value in plausible_causes_by_layer.items()
+                if value
+            },
+            "impact_assessment": self._atlas_issue_impact_assessment(
+                issue=issue,
+                role=role,
+                repair_attempt=repair_attempt,
+            ),
+            "engineer_checklist": engineer_checklist[:8],
+            "user_safe_reply": self._atlas_user_safe_issue_reply(
+                issue=issue,
+                repair_attempt=repair_attempt,
+            ),
+            "engineer_report": summary,
+        }
+
+    async def _atlas_attempt_minor_repairs(
+        self,
+        *,
+        issue: str,
+        role: str,
+        context: dict[str, Any],
+        diagnostics: dict[str, Any],
+    ) -> dict[str, Any]:
+        lowered = issue.lower()
+        repairs: list[dict[str, Any]] = []
+        if any(
+            token in lowered
+            for token in ("lag", "slow", "sluggish", "delay", "stuck", "freeze")
+        ):
+            cache_repair = self._atlas_trim_runtime_caches()
+            if cache_repair["removed_entries"] > 0:
+                repairs.append(cache_repair)
+        if any(
+            token in lowered
+            for token in ("ai", "atlas", "summary", "flashcard", "notes", "quiz")
+        ) or self._to_int(
+            (diagnostics.get("material_ai_status") or {}).get("failed_count"),
+            0,
+        ) > 0:
+            stale_repair = self._atlas_repair_stale_material_jobs()
+            if stale_repair["updated_jobs"] > 0:
+                repairs.append(stale_repair)
+        return {
+            "attempted": True,
+            "applied_fix_count": len(repairs),
+            "summary": (
+                "Atlas applied safe runtime cleanup."
+                if repairs
+                else "No safe self-heal was applicable without risking behavior changes."
+            ),
+            "actions": repairs,
+            "role": role,
+            "surface": self._str(context.get("surface")),
+        }
+
+    def _atlas_trim_runtime_caches(self) -> dict[str, Any]:
+        now = time.time()
+        removed_entries = 0
+        removed_entries += self._atlas_trim_expired_cache(self._web_search_cache, now)
+        removed_entries += self._atlas_trim_expired_cache(self._web_page_evidence_cache, now)
+        if len(self._import_chapter_infer_cache) > self._import_chapter_cache_max_entries:
+            overflow = len(self._import_chapter_infer_cache) - self._import_chapter_cache_max_entries
+            stale_keys = list(self._import_chapter_infer_cache.keys())[:overflow]
+            for key in stale_keys:
+                self._import_chapter_infer_cache.pop(key, None)
+            removed_entries += len(stale_keys)
+        return {
+            "type": "runtime_cache_cleanup",
+            "removed_entries": removed_entries,
+            "detail": "Trimmed expired runtime cache entries and bounded in-memory lookup caches.",
+        }
+
+    def _atlas_trim_expired_cache(
+        self,
+        cache: dict[str, dict[str, Any]],
+        now: float,
+    ) -> int:
+        stale_keys = [
+            key
+            for key, value in cache.items()
+            if float((value or {}).get("expires_at") or 0.0) <= now
+        ]
+        for key in stale_keys:
+            cache.pop(key, None)
+        if len(cache) > self._web_cache_max_entries:
+            overflow = len(cache) - self._web_cache_max_entries
+            oldest_keys = sorted(
+                cache.keys(),
+                key=lambda key: float((cache[key] or {}).get("saved_at") or 0.0),
+            )[:overflow]
+            for key in oldest_keys:
+                cache.pop(key, None)
+            stale_keys.extend(oldest_keys)
+        return len(stale_keys)
+
+    def _atlas_repair_stale_material_jobs(self) -> dict[str, Any]:
+        now_ms = int(time.time() * 1000)
+        stale_before_ms = now_ms - int(timedelta(minutes=45).total_seconds() * 1000)
+        updated_jobs = 0
+        sample_keys: list[str] = []
+        for key, value in self._material_ai_status.items():
+            row = dict(value)
+            status = self._str(row.get("status")).lower()
+            updated_at = self._to_int(row.get("updated_at"), 0)
+            if status not in {"queued", "running", "processing"}:
+                continue
+            if updated_at <= 0 or updated_at >= stale_before_ms:
+                continue
+            row["status"] = "failed"
+            row["error"] = (
+                "Atlas health triage marked this material-AI job as stale so the UI "
+                "can recover cleanly. Retry the generation to restart with a fresh job."
+            )
+            row["updated_at"] = now_ms
+            self._material_ai_status[key] = row
+            updated_jobs += 1
+            if len(sample_keys) < 5:
+                sample_keys.append(key)
+        return {
+            "type": "stale_material_ai_repair",
+            "updated_jobs": updated_jobs,
+            "detail": (
+                "Marked stale material-AI jobs as failed so the UI no longer appears stuck."
+            ),
+            "sample_job_keys": sample_keys,
+        }
+
+    def _atlas_collect_recent_runtime_logs(
+        self,
+        *,
+        context: dict[str, Any],
+        diagnostics: dict[str, Any],
+    ) -> dict[str, Any]:
+        recent_messages = context.get("recent_messages")
+        recent_feed = context.get("atlas_runtime")
+        snapshot_summary = context.get("snapshot_summary")
+        return {
+            "snapshot_summary": self._atlas_compact_value(snapshot_summary),
+            "recent_messages": self._atlas_compact_value(recent_messages),
+            "atlas_runtime": self._atlas_compact_value(recent_feed),
+            "avoid_tools": self._atlas_compact_value(
+                (diagnostics.get("atlas_tool_stats") or {}).get("avoid_tools")
+            ),
+            "material_ai_recent": self._atlas_compact_value(
+                (diagnostics.get("material_ai_status") or {}).get("recent")
+            ),
+        }
+
+    def _atlas_incident_surface(
+        self,
+        *,
+        payload: dict[str, Any],
+        context: dict[str, Any],
+    ) -> str:
+        context_card = context.get("context_card")
+        if isinstance(context_card, dict):
+            surface = self._str(context_card.get("surface"))
+            if surface:
+                return surface
+        return self._str(payload.get("surface") or context.get("surface")) or "unknown_surface"
+
+    def _atlas_issue_impact_assessment(
+        self,
+        *,
+        issue: str,
+        role: str,
+        repair_attempt: dict[str, Any],
+    ) -> str:
+        lowered = issue.lower()
+        if any(token in lowered for token in ("crash", "crashing", "stopped working")):
+            return (
+                f"The {role}-side flow is at risk of complete interruption until the failing path is stabilized."
+            )
+        if any(token in lowered for token in ("lag", "slow", "delay", "stuck")):
+            return (
+                f"The {role}-side experience is degraded and may feel unreliable, but some actions can still complete."
+            )
+        if repair_attempt.get("applied_fix_count"):
+            return (
+                "Atlas applied a low-risk repair, so the issue may already be reduced, but the attached diagnostics should still be reviewed."
+            )
+        return "The issue appears localized but real and should be reviewed before it spreads to more user flows."
+
+    def _atlas_user_safe_issue_reply(
+        self,
+        *,
+        issue: str,
+        repair_attempt: dict[str, Any],
+    ) -> str:
+        if repair_attempt.get("applied_fix_count"):
+            return (
+                "I investigated the issue, applied a safe repair where possible, and sent a detailed report to support."
+            )
+        if any(token in issue.lower() for token in ("crash", "crashing", "stopped working")):
+            return (
+                "I captured the failing state and sent a detailed crash report to support."
+            )
+        return "I analyzed the issue in depth, captured diagnostics, and sent a detailed report to support."
+
+    def _atlas_parse_json_candidate(self, text: str) -> dict[str, Any] | None:
+        raw = self._str(text)
+        if not raw:
+            return None
+        fenced_match = re.search(
+            r"```(?:json)?\s*(\{.*?\})\s*```",
+            raw,
+            flags=re.DOTALL,
+        )
+        candidate = fenced_match.group(1).strip() if fenced_match else raw
+        if not fenced_match:
+            start = candidate.find("{")
+            end = candidate.rfind("}")
+            if start != -1 and end > start:
+                candidate = candidate[start : end + 1]
+        try:
+            parsed = json.loads(candidate)
+        except Exception:
+            return None
+        return parsed if isinstance(parsed, dict) else None
+
+    def _atlas_compact_value(self, value: Any, *, depth: int = 0) -> Any:
+        if depth >= 3:
+            return self._str(value)[:280]
+        if isinstance(value, str):
+            return value[:1200]
+        if isinstance(value, (int, float, bool)) or value is None:
+            return value
+        if isinstance(value, list):
+            return [
+                self._atlas_compact_value(item, depth=depth + 1)
+                for item in value[:8]
+            ]
+        if isinstance(value, dict):
+            out: dict[str, Any] = {}
+            for key, item in list(value.items())[:20]:
+                out[self._str(key)] = self._atlas_compact_value(
+                    item,
+                    depth=depth + 1,
+                )
+            return out
+        return self._str(value)[:280]
 
     def _sort_live_class_schedule(self, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         status_rank = {"live": 0, "upcoming": 1, "scheduled": 1, "completed": 2, "ended": 2, "cancelled": 3}
@@ -13076,6 +15507,47 @@ class LocalAppDataService:
             payload.get("duration_minutes") or payload.get("duration") or seed.get("duration_minutes"),
             self._to_int(seed.get("duration_minutes"), 60),
         )
+        reminder_offsets = payload.get("reminder_offsets_minutes")
+        if not isinstance(reminder_offsets, list):
+            reminder_offsets = seed.get("reminder_offsets_minutes")
+        normalized_reminder_offsets = sorted(
+            {
+                max(1, self._to_int(value, 0))
+                for value in (reminder_offsets or [])
+                if self._to_int(value, 0) > 0
+            },
+            reverse=True,
+        )
+        metadata = payload.get("metadata")
+        if not isinstance(metadata, dict):
+            metadata = seed.get("metadata")
+        normalized_metadata = dict(metadata or {})
+        recurrence = payload.get("recurrence")
+        if not isinstance(recurrence, dict):
+            recurrence = seed.get("recurrence")
+        normalized_recurrence = dict(recurrence or {})
+        recurrence_id = self._safe_id(
+            payload.get("recurrence_id")
+            or normalized_recurrence.get("plan_id")
+            or seed.get("recurrence_id")
+        )
+        occurrence_id = self._safe_id(
+            payload.get("occurrence_id")
+            or normalized_recurrence.get("occurrence_id")
+            or seed.get("occurrence_id")
+        )
+        exception_dates = payload.get("exception_dates")
+        if not isinstance(exception_dates, list):
+            exception_dates = normalized_recurrence.get("exception_dates")
+        normalized_exception_dates = [
+            self._str(item)
+            for item in (exception_dates or [])
+            if self._str(item)
+        ]
+        override_metadata = payload.get("override_metadata")
+        if not isinstance(override_metadata, dict):
+            override_metadata = seed.get("override_metadata")
+        normalized_override_metadata = dict(override_metadata or {})
         item = {
             "class_id": class_id,
             "teacher_id": self._safe_id(payload.get("teacher_id") or seed.get("teacher_id")),
@@ -13091,6 +15563,13 @@ class LocalAppDataService:
             "description": self._str(payload.get("description") or seed.get("description")),
             "created_at": self._to_int(seed.get("created_at"), now_ms),
             "updated_at": now_ms,
+            "reminder_offsets_minutes": normalized_reminder_offsets,
+            "metadata": normalized_metadata,
+            "recurrence": normalized_recurrence,
+            "recurrence_id": recurrence_id,
+            "occurrence_id": occurrence_id,
+            "exception_dates": normalized_exception_dates,
+            "override_metadata": normalized_override_metadata,
         }
         started_at = self._str(payload.get("started_at") or seed.get("started_at"))
         ended_at = self._str(payload.get("ended_at") or seed.get("ended_at"))
@@ -13153,7 +15632,13 @@ class LocalAppDataService:
             rows = [row for row in rows if self._str(row.get("teacher_id")) == viewer_id]
         else:
             rows = [row for row in rows if self._str(row.get("status")).lower() != "cancelled"]
-        return {"ok": True, "status": "SUCCESS", "schedule": rows, "classes": rows}
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "schedule": rows,
+            "classes": rows,
+            "list": rows,
+        }
 
     async def _update_live_class_schedule_status(self, payload: dict[str, Any]) -> dict[str, Any]:
         class_id = self._safe_id(payload.get("class_id") or payload.get("id"))
@@ -13273,31 +15758,66 @@ class LocalAppDataService:
                 role="student",
             )
 
-        auth_file = Path(__file__).resolve().parents[2] / "data" / "auth" / "users.json"
+        for value in self._auth_users_from_json_file():
+            candidate_id = (
+                value.get("student_id")
+                or value.get("chat_id")
+                or value.get("username")
+                or value.get("email")
+            )
+            upsert_seed(
+                user_id=candidate_id,
+                name=value.get("name") or value.get("username"),
+                role=value.get("role") or "student",
+                chat_id=value.get("chat_id"),
+                username=value.get("username"),
+                email=value.get("email"),
+            )
+
+        for value in self._auth_users_from_sqlite_store():
+            candidate_id = (
+                value.get("student_id")
+                or value.get("chat_id")
+                or value.get("username")
+                or value.get("email")
+            )
+            upsert_seed(
+                user_id=candidate_id,
+                name=value.get("name") or value.get("username"),
+                role=value.get("role") or "student",
+                chat_id=value.get("chat_id"),
+                username=value.get("username"),
+                email=value.get("email"),
+            )
+
+    def _auth_users_from_json_file(self) -> list[dict[str, Any]]:
         try:
-            if auth_file.exists():
-                text = auth_file.read_text(encoding="utf-8").strip()
-                decoded = json.loads(text) if text else {}
-                if isinstance(decoded, dict):
-                    for key, value in decoded.items():
-                        if not isinstance(value, dict):
-                            continue
-                        candidate_id = (
-                            value.get("student_id")
-                            or value.get("chat_id")
-                            or value.get("username")
-                            or key
-                        )
-                        upsert_seed(
-                            user_id=candidate_id,
-                            name=value.get("name") or value.get("username"),
-                            role=value.get("role") or "student",
-                            chat_id=value.get("chat_id"),
-                            username=value.get("username"),
-                            email=value.get("email") or key,
-                        )
+            if not self._auth_users_file.exists():
+                return []
+            text = self._auth_users_file.read_text(encoding="utf-8").strip()
+            decoded = json.loads(text) if text else {}
+            if not isinstance(decoded, dict):
+                return []
+            return [dict(value) for value in decoded.values() if isinstance(value, dict)]
         except Exception:
-            pass
+            return []
+
+    def _auth_users_from_sqlite_store(self) -> list[dict[str, Any]]:
+        try:
+            decoded = self._auth_storage.read_json("auth_users")
+            if not isinstance(decoded, dict):
+                return []
+            out: list[dict[str, Any]] = []
+            for key, value in decoded.items():
+                if not isinstance(value, dict):
+                    continue
+                row = dict(value)
+                if self._str(row.get("email")).strip() == "" and self._str(key):
+                    row["email"] = self._str(key)
+                out.append(row)
+            return out
+        except Exception:
+            return []
 
     def _chat_user_name(self, user_id: str) -> str:
         key = self._normalize_chat_user_id(user_id)
@@ -13305,6 +15825,86 @@ class LocalAppDataService:
         if key == "TEACHER":
             return "Teacher (Direct)"
         return self._str(row.get("name") or row.get("username") or key)
+
+    def _direct_thread_signature(self, participants: list[str]) -> tuple[str, ...] | None:
+        ids = [
+            self._normalize_chat_user_id(x)
+            for x in participants
+            if self._normalize_chat_user_id(x)
+        ]
+        ids = list(dict.fromkeys(ids))
+        if len(ids) != 2:
+            return None
+        return tuple(sorted((x.lower() for x in ids)))
+
+    def _canonical_direct_chat_id(self, participants: list[str]) -> str:
+        ids = [
+            self._normalize_chat_user_id(x)
+            for x in participants
+            if self._normalize_chat_user_id(x)
+        ]
+        ids = list(dict.fromkeys(ids))
+        if len(ids) != 2:
+            return ""
+        ids.sort(key=lambda value: value.lower())
+        return f"{ids[0]}|{ids[1]}"
+
+    def _matching_direct_thread_keys(self, participants: list[str]) -> list[str]:
+        signature = self._direct_thread_signature(participants)
+        if signature is None:
+            return []
+        keys: list[str] = []
+        for key, raw in self._chat_threads.items():
+            thread = dict(raw)
+            if self._to_bool(thread.get("is_group")):
+                continue
+            thread_parts = [
+                self._normalize_chat_user_id(x)
+                for x in (thread.get("participants") or [])
+                if self._normalize_chat_user_id(x)
+            ]
+            if len(thread_parts) < 2:
+                thread_parts = [
+                    self._normalize_chat_user_id(x)
+                    for x in self._str(thread.get("chat_id") or key).split("|")
+                    if self._normalize_chat_user_id(x)
+                ]
+            if self._direct_thread_signature(thread_parts) == signature:
+                keys.append(key)
+        return keys
+
+    def _merge_message_lists(self, *message_lists: Any) -> list[dict[str, Any]]:
+        merged_by_key: dict[str, dict[str, Any]] = {}
+        fallback_index = 0
+        for raw_list in message_lists:
+            rows = raw_list if isinstance(raw_list, list) else []
+            for raw in rows:
+                if not isinstance(raw, dict):
+                    continue
+                item = dict(raw)
+                message_id = self._str(item.get("id"))
+                if message_id:
+                    existing = merged_by_key.get(message_id)
+                    if existing:
+                        next_item = dict(existing)
+                        next_item.update(item)
+                        merged_by_key[message_id] = next_item
+                    else:
+                        merged_by_key[message_id] = item
+                    continue
+                anon_key = f"__anon__{fallback_index}"
+                fallback_index += 1
+                merged_by_key[anon_key] = item
+
+        out = list(merged_by_key.values())
+        out.sort(
+            key=lambda row: (
+                self._to_int(row.get("time"), 0),
+                self._str(row.get("id")),
+                self._str(row.get("sender")),
+            )
+        )
+        return out[-500:]
 
     def _participants_from_payload(self, payload: dict[str, Any]) -> list[str]:
         raw = payload.get("participants")
@@ -13503,31 +16103,71 @@ class LocalAppDataService:
         msg["type"] = self._str(msg.get("type") or "text") or "text"
         msg["time"] = self._to_int(msg.get("time"), now_ms)
 
-        thread = dict(self._chat_threads.get(chat_id, {}))
-        if not thread:
-            legacy_id = self._safe_id(chat_id)
-            if legacy_id and legacy_id != chat_id:
-                thread = dict(self._chat_threads.get(legacy_id, {}))
-        existing_participants = [
-            self._normalize_chat_user_id(x) for x in (thread.get("participants") or [])
+        candidate_keys: list[str] = []
+        direct_signature = self._direct_thread_signature(participants)
+        for value in (
+            chat_id,
+            self._safe_id(chat_id),
+            self._canonical_direct_chat_id(participants) if direct_signature else "",
+        ):
+            key = self._safe_chat_id(value)
+            if key and key not in candidate_keys:
+                candidate_keys.append(key)
+        for key in self._matching_direct_thread_keys(participants):
+            safe_key = self._safe_chat_id(key)
+            if safe_key and safe_key not in candidate_keys:
+                candidate_keys.append(safe_key)
+
+        existing_threads = [
+            dict(self._chat_threads.get(key, {}))
+            for key in candidate_keys
+            if self._chat_threads.get(key)
         ]
+        existing_participants: list[str] = []
+        messages: list[dict[str, Any]] = []
+        read_by: dict[str, int] = {}
+        thread_group_name = ""
+        existing_is_group = self._to_bool(payload.get("is_group"))
+        last_updated = 0
+
+        for thread in existing_threads:
+            existing_participants.extend(
+                [
+                    self._normalize_chat_user_id(x)
+                    for x in (thread.get("participants") or [])
+                    if self._normalize_chat_user_id(x)
+                ]
+            )
+            messages = self._merge_message_lists(messages, thread.get("messages"))
+            for raw_user, raw_time in dict(thread.get("read_by") or {}).items():
+                key = self._normalize_chat_user_id(raw_user)
+                if not key:
+                    continue
+                parsed_time = self._to_int(raw_time, 0)
+                if parsed_time > self._to_int(read_by.get(key), 0):
+                    read_by[key] = parsed_time
+            thread_group_name = self._str(thread_group_name or thread.get("group_name"))
+            existing_is_group = existing_is_group or self._to_bool(thread.get("is_group"))
+            last_updated = max(last_updated, self._to_int(thread.get("updated_at"), 0))
+
         merged = participants + [x for x in existing_participants if x]
         merged = sorted(list(dict.fromkeys([x for x in merged if x])))
-        messages = [dict(x) for x in (thread.get("messages") or []) if isinstance(x, dict)]
-        messages.append(msg)
-        read_by = dict(thread.get("read_by") or {})
+        is_group = existing_is_group or len(merged) > 2
+        canonical_chat_id = chat_id
+        if not is_group:
+            canonical_chat_id = self._canonical_direct_chat_id(merged) or chat_id
+
+        messages = self._merge_message_lists(messages, [msg])
         if msg["sender"]:
             read_by[msg["sender"]] = msg["time"]
 
         thread = {
-            "chat_id": chat_id,
+            "chat_id": canonical_chat_id,
             "participants": merged,
-            "is_group": self._to_bool(thread.get("is_group"))
-            or len(merged) > 2
-            or self._to_bool(payload.get("is_group")),
-            "group_name": self._str(thread.get("group_name") or payload.get("group_name")),
-            "messages": messages[-500:],
-            "updated_at": msg["time"],
+            "is_group": is_group,
+            "group_name": self._str(thread_group_name or payload.get("group_name")),
+            "messages": messages,
+            "updated_at": max(msg["time"], last_updated),
             "read_by": read_by,
         }
 
@@ -13542,10 +16182,18 @@ class LocalAppDataService:
                 }
 
         async with self._lock:
-            self._chat_threads[chat_id] = thread
+            for key in candidate_keys:
+                if key and key != canonical_chat_id:
+                    self._chat_threads.pop(key, None)
+            self._chat_threads[canonical_chat_id] = thread
             self._write_map(self._chat_threads_file, self._chat_threads)
             self._write_map(self._chat_users_file, self._chat_users)
-        return {"ok": True, "status": "SUCCESS", "chat_id": chat_id, "thread": thread}
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "chat_id": canonical_chat_id,
+            "thread": thread,
+        }
 
     async def _mark_chat_read(self, payload: dict[str, Any]) -> dict[str, Any]:
         chat_id = self._safe_chat_id(payload.get("chat_id"))
@@ -13556,24 +16204,102 @@ class LocalAppDataService:
                 "status": "MISSING_FIELDS",
                 "message": "chat_id and user_id required",
             }
-        thread = dict(self._chat_threads.get(chat_id, {}))
+        thread_key = chat_id
+        thread = dict(self._chat_threads.get(thread_key, {}))
+        if not thread and "|" in chat_id:
+            participants = [
+                self._normalize_chat_user_id(x)
+                for x in chat_id.split("|")
+                if self._normalize_chat_user_id(x)
+            ]
+            canonical = self._canonical_direct_chat_id(participants)
+            if canonical:
+                candidate = dict(self._chat_threads.get(canonical, {}))
+                if candidate:
+                    thread = candidate
+                    thread_key = canonical
+            if not thread:
+                for key in self._matching_direct_thread_keys(participants):
+                    candidate = dict(self._chat_threads.get(key, {}))
+                    if candidate:
+                        thread = candidate
+                        thread_key = key
+                        break
         if not thread:
             return {"ok": True, "status": "SUCCESS"}
         read_by = dict(thread.get("read_by") or {})
         read_by[user_id] = self._now_ms()
         thread["read_by"] = read_by
         async with self._lock:
-            self._chat_threads[chat_id] = thread
+            self._chat_threads[thread_key] = thread
             self._write_map(self._chat_threads_file, self._chat_threads)
         return {"ok": True, "status": "SUCCESS"}
 
     async def _list_chat_directory(self, payload: dict[str, Any]) -> dict[str, Any]:
+        self._seed_chat_users_from_local_sources()
         user_id = self._normalize_chat_user_id(payload.get("chat_id") or payload.get("user_id"))
         role = self._str(payload.get("role")).lower()
-        out: list[dict[str, Any]] = []
+        grouped_threads: dict[str, dict[str, Any]] = {}
+        grouped_read_by: dict[str, dict[str, int]] = {}
+        grouped_updated_at: dict[str, int] = {}
+        grouped_group_name: dict[str, str] = {}
+        grouped_is_group: dict[str, bool] = {}
+
         for raw in self._chat_threads.values():
             thread = dict(raw)
             chat_id = self._str(thread.get("chat_id"))
+            if not chat_id:
+                continue
+            participants = [
+                self._normalize_chat_user_id(x)
+                for x in (thread.get("participants") or [])
+                if self._normalize_chat_user_id(x)
+            ]
+            is_group = self._to_bool(thread.get("is_group")) or len(participants) > 2
+            grouped_key = chat_id if is_group else (self._canonical_direct_chat_id(participants) or chat_id)
+            existing = grouped_threads.get(grouped_key, {})
+            existing_participants = [
+                self._normalize_chat_user_id(x)
+                for x in (existing.get("participants") or [])
+                if self._normalize_chat_user_id(x)
+            ]
+            merged_participants = sorted(
+                list(
+                    dict.fromkeys(
+                        [x for x in (participants + existing_participants) if x]
+                    )
+                )
+            )
+            grouped_threads[grouped_key] = {
+                "chat_id": grouped_key,
+                "participants": merged_participants,
+                "is_group": grouped_is_group.get(grouped_key, False) or is_group,
+                "group_name": self._str(
+                    grouped_group_name.get(grouped_key) or thread.get("group_name")
+                ),
+                "messages": self._merge_message_lists(
+                    existing.get("messages"), thread.get("messages")
+                ),
+            }
+            grouped_is_group[grouped_key] = grouped_threads[grouped_key]["is_group"] is True
+            grouped_group_name[grouped_key] = self._str(grouped_threads[grouped_key]["group_name"])
+            grouped_updated_at[grouped_key] = max(
+                grouped_updated_at.get(grouped_key, 0),
+                self._to_int(thread.get("updated_at"), 0),
+            )
+            read_bucket = dict(grouped_read_by.get(grouped_key, {}))
+            for raw_reader, raw_time in dict(thread.get("read_by") or {}).items():
+                reader = self._normalize_chat_user_id(raw_reader)
+                if not reader:
+                    continue
+                parsed = self._to_int(raw_time, 0)
+                if parsed > self._to_int(read_bucket.get(reader), 0):
+                    read_bucket[reader] = parsed
+            grouped_read_by[grouped_key] = read_bucket
+
+        out: list[dict[str, Any]] = []
+        for grouped_key, thread in grouped_threads.items():
+            chat_id = self._str(grouped_key)
             if not chat_id:
                 continue
             participants = [
@@ -13586,7 +16312,7 @@ class LocalAppDataService:
             messages = [dict(x) for x in (thread.get("messages") or []) if isinstance(x, dict)]
             messages.sort(key=lambda x: self._to_int(x.get("time"), 0))
             last = messages[-1] if messages else {}
-            read_by = dict(thread.get("read_by") or {})
+            read_by = dict(grouped_read_by.get(grouped_key, {}))
             unread = False
             if user_id and last:
                 last_time = self._to_int(last.get("time"), 0)
@@ -13594,7 +16320,7 @@ class LocalAppDataService:
                 last_sender = self._normalize_chat_user_id(last.get("sender"))
                 unread = last_time > read_time and last_sender != user_id
 
-            is_group = self._to_bool(thread.get("is_group")) or len(participants) > 2
+            is_group = grouped_is_group.get(grouped_key, False) or len(participants) > 2
             peer_id = ""
             peer_name = ""
             if not is_group and user_id:
@@ -13608,11 +16334,11 @@ class LocalAppDataService:
                 "friend_name": peer_name,
                 "messages": messages[-300:],
                 "last_msg": self._str(last.get("text")),
-                "time": self._to_int(last.get("time"), self._to_int(thread.get("updated_at"), 0)),
+                "time": self._to_int(last.get("time"), grouped_updated_at.get(grouped_key, 0)),
                 "unread": unread,
                 "participants": participants,
                 "is_group": is_group,
-                "group_name": self._str(thread.get("group_name")),
+                "group_name": self._str(grouped_group_name.get(grouped_key)),
             }
             out.append(item)
         out.sort(key=lambda x: self._to_int(x.get("time"), 0), reverse=True)
@@ -13683,9 +16409,7 @@ class LocalAppDataService:
             for row in self._doubts:
                 if self._str(row.get("id")) != doubt_id:
                     continue
-                messages = [dict(x) for x in (row.get("messages") or []) if isinstance(x, dict)]
-                messages.append(msg)
-                row["messages"] = messages[-500:]
+                row["messages"] = self._merge_message_lists(row.get("messages"), [msg])
                 row["time"] = msg["time"]
                 row["unread"] = True
                 updated = True
@@ -13782,7 +16506,7 @@ class LocalAppDataService:
         file_id = self._new_id("file")
         path = self._uploads_dir / f"{file_id}_{safe_name}"
         path.write_bytes(decoded)
-        file_url = f"{self._base_url()}/app/file/{file_id}"
+        file_url = f"{self._base_url(payload)}/app/file/{file_id}"
 
         meta = {
             "id": file_id,

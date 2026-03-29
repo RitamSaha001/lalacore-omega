@@ -10,7 +10,17 @@ from app.auth.local_auth_service import LocalAuthService
 class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         self._prev_otp_email_enabled = os.environ.get("OTP_EMAIL_ENABLED")
+        self._prev_reset_trusted_gate = os.environ.get(
+            "OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET"
+        )
+        self._prev_reset_issuing_gate = os.environ.get(
+            "OTP_REQUIRE_ISSUING_DEVICE_FOR_RESET"
+        )
+        self._prev_local_fallback = os.environ.get("OTP_ALLOW_LOCAL_FALLBACK")
         os.environ["OTP_EMAIL_ENABLED"] = "true"
+        os.environ.pop("OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET", None)
+        os.environ.pop("OTP_REQUIRE_ISSUING_DEVICE_FOR_RESET", None)
+        os.environ.pop("OTP_ALLOW_LOCAL_FALLBACK", None)
         self.device_id = "dev_test_primary"
         self.tmp = tempfile.TemporaryDirectory()
         root = Path(self.tmp.name)
@@ -24,6 +34,22 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
             os.environ.pop("OTP_EMAIL_ENABLED", None)
         else:
             os.environ["OTP_EMAIL_ENABLED"] = self._prev_otp_email_enabled
+        if self._prev_reset_trusted_gate is None:
+            os.environ.pop("OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET", None)
+        else:
+            os.environ["OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET"] = (
+                self._prev_reset_trusted_gate
+            )
+        if self._prev_reset_issuing_gate is None:
+            os.environ.pop("OTP_REQUIRE_ISSUING_DEVICE_FOR_RESET", None)
+        else:
+            os.environ["OTP_REQUIRE_ISSUING_DEVICE_FOR_RESET"] = (
+                self._prev_reset_issuing_gate
+            )
+        if self._prev_local_fallback is None:
+            os.environ.pop("OTP_ALLOW_LOCAL_FALLBACK", None)
+        else:
+            os.environ["OTP_ALLOW_LOCAL_FALLBACK"] = self._prev_local_fallback
         self.tmp.cleanup()
 
     async def test_register_login_and_wrong_password(self):
@@ -111,7 +137,7 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
         response = await self.service.handle_action({"action": "not_real"})
         self.assertEqual(response.get("status"), "UNKNOWN_ACTION")
 
-    async def test_forgot_otp_send_failure_falls_back_to_local_otp(self):
+    async def test_forgot_otp_send_failure_returns_email_failure_by_default(self):
         await self.service.handle_action(
             {
                 "action": "register_direct",
@@ -135,10 +161,9 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
                     "device_id": self.device_id,
                 }
             )
-        self.assertEqual(req.get("status"), "OTP_SENT")
-        self.assertEqual(req.get("delivery"), "local")
-        self.assertTrue(str(req.get("otp", "")).strip())
-        self.assertIn("nosend@example.com", self.service._otps)
+        self.assertEqual(req.get("status"), "EMAIL_SEND_FAILED")
+        self.assertFalse(str(req.get("otp", "")).strip())
+        self.assertNotIn("nosend@example.com", self.service._otps)
 
     async def test_upsert_user_updates_password(self):
         await self.service.handle_action(
@@ -173,7 +198,7 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(login.get("status"), "SUCCESS")
 
-    async def test_compat_otp_send_failure_falls_back_to_local_otp(self):
+    async def test_compat_otp_send_failure_returns_email_failure_by_default(self):
         with patch.object(
             LocalAuthService,
             "_send_otp_email",
@@ -185,10 +210,9 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
                     "email": "compat@example.com",
                 }
             )
-        self.assertEqual(req.get("status"), "OTP_SENT")
-        self.assertEqual(req.get("delivery"), "local")
-        self.assertTrue(str(req.get("otp", "")).strip())
-        self.assertIn("compat@example.com", self.service._otps)
+        self.assertEqual(req.get("status"), "EMAIL_SEND_FAILED")
+        self.assertFalse(str(req.get("otp", "")).strip())
+        self.assertNotIn("compat@example.com", self.service._otps)
 
     async def test_forgot_otp_cooldown(self):
         await self.service.handle_action(
@@ -223,7 +247,30 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(first.get("status"), "OTP_SENT")
         self.assertEqual(second.get("status"), "OTP_COOLDOWN")
 
-    async def test_forgot_otp_local_delivery_when_email_disabled(self):
+    async def test_forgot_otp_rejects_when_email_disabled_and_local_fallback_disallowed(self):
+        os.environ["OTP_EMAIL_ENABLED"] = "false"
+        await self.service.handle_action(
+            {
+                "action": "register_direct",
+                "email": "localotp@example.com",
+                "password": "abcd1234",
+                "name": "Local OTP",
+                "username": "localotp",
+                "device_id": self.device_id,
+            }
+        )
+        req = await self.service.handle_action(
+            {
+                "action": "request_forgot_otp",
+                "email": "localotp@example.com",
+                "device_id": self.device_id,
+            }
+        )
+        self.assertEqual(req.get("status"), "EMAIL_BACKEND_DISABLED")
+        self.assertFalse(str(req.get("otp", "")).strip())
+
+    async def test_forgot_otp_can_use_opt_in_local_fallback(self):
+        os.environ["OTP_ALLOW_LOCAL_FALLBACK"] = "true"
         os.environ["OTP_EMAIL_ENABLED"] = "false"
         await self.service.handle_action(
             {
@@ -247,6 +294,7 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(str(req.get("otp", "")).strip())
 
     async def test_forgot_otp_rejects_untrusted_device(self):
+        os.environ["OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET"] = "true"
         await self.service.handle_action(
             {
                 "action": "register_direct",
@@ -271,6 +319,58 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
                 }
             )
         self.assertEqual(bad.get("status"), "DEVICE_MISMATCH")
+
+    async def test_forgot_otp_allows_new_device_when_email_reset_gate_disabled(self):
+        await self.service.handle_action(
+            {
+                "action": "register_direct",
+                "email": "openreset@example.com",
+                "password": "abcd1234",
+                "name": "Open Reset",
+                "username": "openreset",
+                "device_id": self.device_id,
+            }
+        )
+
+        with patch.object(
+            LocalAuthService,
+            "_send_otp_email",
+            return_value=(True, "OTP sent"),
+        ):
+            req = await self.service.handle_action(
+                {
+                    "action": "request_forgot_otp",
+                    "email": "openreset@example.com",
+                    "device_id": "dev_new_phone",
+                }
+            )
+        self.assertEqual(req.get("status"), "OTP_SENT")
+
+    async def test_forgot_otp_accepts_plus_alias_email_addresses(self):
+        await self.service.handle_action(
+            {
+                "action": "register_direct",
+                "email": "atlas+teacher@example.com",
+                "password": "abcd1234",
+                "name": "Alias Reset",
+                "username": "aliasreset",
+                "device_id": self.device_id,
+            }
+        )
+
+        with patch.object(
+            LocalAuthService,
+            "_send_otp_email",
+            return_value=(True, "OTP sent"),
+        ):
+            req = await self.service.handle_action(
+                {
+                    "action": "request_forgot_otp",
+                    "email": "atlas+teacher@example.com",
+                    "device_id": self.device_id,
+                }
+            )
+        self.assertEqual(req.get("status"), "OTP_SENT")
 
 
 if __name__ == "__main__":

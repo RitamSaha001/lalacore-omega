@@ -103,6 +103,91 @@ class ProviderAnswerContractTests(unittest.TestCase):
         self.assertNotEqual(out.final_answer.strip(), "")
         self.assertIn("9", out.final_answer)
 
+    def test_pack_text_answer_preserves_multiline_material_output(self):
+        fabric = ProviderFabric()
+        profile = ProblemProfile(
+            subject="physics",
+            difficulty="medium",
+            numeric=False,
+            multi_concept=True,
+            trap_probability=0.0,
+        )
+        prompt = (
+            "[[LC9_MATERIAL_ENGINE:material_generate]]\n"
+            "Task: produce a material-grounded JEE study output for 'Electrostatics'."
+        )
+        out = fabric._pack_text_answer(
+            provider="test_provider",
+            text=(
+                "Reasoning: Build a revision-ready summary.\n"
+                "Final Answer:\n"
+                "# Electrostatics Summary\n\n"
+                "## Core Idea Map\n"
+                "- Field and potential.\n"
+            ),
+            latency_s=0.01,
+            raw={},
+            question_text=prompt,
+            profile=profile,
+        )
+
+        self.assertIn("Electrostatics Summary", out.final_answer)
+        self.assertIn("Core Idea Map", out.final_answer)
+        self.assertNotIn("Final Answer:", out.final_answer)
+
+    def test_pack_text_answer_preserves_multiline_analytics_output(self):
+        fabric = ProviderFabric()
+        profile = ProblemProfile(
+            subject="physics",
+            difficulty="medium",
+            numeric=False,
+            multi_concept=True,
+            trap_probability=0.0,
+        )
+        prompt = (
+            "[[LC9_ANALYTICS_ENGINE:analyze_exam]]\n"
+            "Generate a grounded post-exam analytics report."
+        )
+        out = fabric._pack_text_answer(
+            provider="test_provider",
+            text=(
+                "Reasoning: Build a structured analytics report.\n"
+                "Final Answer:\n"
+                '{"summary":"Good momentum.","strengths":["Mechanics"],'
+                '"weaknesses":["Thermodynamics"],"strategy":["Repair weak topic"],'
+                '"next_steps":["Retry mistakes"]}'
+            ),
+            latency_s=0.01,
+            raw={},
+            question_text=prompt,
+            profile=profile,
+        )
+
+        self.assertIn('"summary":"Good momentum."', out.final_answer)
+        self.assertNotIn("Final Answer:", out.final_answer)
+
+
+class SymbolicGuardReasoningTests(unittest.IsolatedAsyncioTestCase):
+    async def test_symbolic_guard_prefers_detailed_expected_solution_text(self):
+        fabric = ProviderFabric()
+        profile = ProblemProfile(
+            subject="math",
+            difficulty="hard",
+            numeric=True,
+            multi_concept=False,
+            trap_probability=0.0,
+        )
+        out = await fabric._run_symbolic_guard(
+            "For the hyperbola x^2/16 - y^2/9 = 1, find its eccentricity and equations of asymptotes.",
+            profile,
+            [],
+        )
+
+        self.assertEqual(out.provider, "symbolic_guard")
+        self.assertIn(r"\frac{5}{4}", out.reasoning)
+        self.assertIn(r"c^2 = a^2 + b^2", out.reasoning)
+        self.assertIn("e = 5/4", out.final_answer)
+
 
 if __name__ == "__main__":
     unittest.main()

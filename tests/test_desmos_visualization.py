@@ -51,7 +51,23 @@ class DesmosVisualizationTests(unittest.TestCase):
         self.assertLessEqual(abs(float(viewport["ymin"])), 1000.0)
         self.assertLessEqual(abs(float(viewport["ymax"])), 1000.0)
 
+    def test_prefixed_hyperbola_prompt_still_generates_visualization(self):
+        payload = self.builder.build(
+            question=(
+                "JEE Advanced level Hyperbola question: For the hyperbola "
+                "x^2/16 - y^2/9 = 1, find its eccentricity and equations of "
+                "asymptotes. Give full step-by-step solution."
+            ),
+            profile={"subject": "math", "graph_like": False},
+        )
+        self.assertIsNotNone(payload)
+        assert payload is not None
+        latex = [
+            str(item.get("latex", "")).replace(" ", "")
+            for item in payload.get("expressions", [])
+        ]
+        self.assertTrue(any("x^2/16-y^2/9=1" in expr for expr in latex))
+
 
 if __name__ == "__main__":
     unittest.main()
-

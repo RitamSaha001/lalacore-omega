@@ -2,7 +2,7 @@ import asyncio
 import unittest
 from unittest.mock import AsyncMock, patch
 
-from core.api.entrypoint import lalacore_entry
+from core.api.entrypoint import _should_require_citations, lalacore_entry
 from core.multimodal.intake import IntakePayload
 
 
@@ -37,6 +37,16 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
                 "provider_availability": {"mini": {"eligible": True}},
             },
         }
+
+    def test_require_citations_none_disables_evidence_requirement(self):
+        profile = type("Profile", (), {"subject": "math"})()
+        self.assertFalse(
+            _should_require_citations(
+                options={"require_citations": "none"},
+                profile=profile,
+                verified=False,
+            )
+        )
 
     async def test_single_entrypoint_text_flow(self):
         fake_result = {
@@ -81,6 +91,70 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
         self.assertIn("calibration_metrics", out)
         self.assertIn("research_verification", out)
         self.assertEqual(out["winner_provider"], "mini")
+
+    async def test_auxiliary_reasoning_blocks_inject_into_solver_prompt(self):
+        fake_result = self._fake_solve_result()
+        captured: dict[str, str] = {}
+
+        async def _fake_solve(prompt: str):
+            captured["prompt"] = prompt
+            return fake_result
+
+        with patch("core.api.entrypoint.solve_question", new=AsyncMock(side_effect=_fake_solve)):
+            out = await lalacore_entry(
+                input_data="Find eccentricity of x^2/16 - y^2/9 = 1.",
+                input_type="text",
+                options={
+                    "enable_meta_verification": False,
+                    "enable_graph_of_thought": False,
+                    "enable_mcts_reasoning": False,
+                    "enable_web_retrieval": False,
+                    "auxiliary_reasoning_blocks": [
+                        "Live class context:\n- Topic: Hyperbola",
+                        "CLASSROOM TASK DIRECTIVE:\nTeach like a live JEE copilot.",
+                    ],
+                },
+            )
+
+        self.assertEqual(out["question"], "Find eccentricity of x^2/16 - y^2/9 = 1.")
+        self.assertIn("Live class context:", captured["prompt"])
+        self.assertIn("CLASSROOM TASK DIRECTIVE:", captured["prompt"])
+        self.assertIn("User Question:", captured["prompt"])
+
+    async def test_atlas_output_includes_student_profile_and_action_plan(self):
+        fake_result = self._fake_solve_result()
+
+        with patch(
+            "core.api.entrypoint.solve_question",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            out = await lalacore_entry(
+                input_data="Find eccentricity of x^2/16 - y^2/9 = 1.",
+                input_type="text",
+                user_context={
+                    "user_id": "student_123",
+                    "student_profile": {
+                        "weak_concepts": ["Hyperbola tangents"],
+                        "preferred_style": "example_driven_teaching",
+                    },
+                },
+                options={
+                    "enable_meta_verification": False,
+                    "enable_graph_of_thought": False,
+                    "enable_mcts_reasoning": False,
+                    "enable_web_retrieval": False,
+                },
+            )
+
+        self.assertEqual(out["status"], "ok")
+        self.assertEqual(out.get("answer"), "42")
+        self.assertIn("clean_question", out)
+        self.assertIn("steps", out)
+        self.assertIn("retrieval_score", out)
+        self.assertIn("student_profile", out)
+        self.assertIn("atlas_actions", out)
+        self.assertIn("weak_concepts", out["student_profile"])
+        self.assertTrue(bool(out["atlas_actions"].get("recommended_actions")))
 
     async def test_meta_verification_correction_is_applied_when_unverified(self):
         fake_result = {
@@ -313,6 +387,135 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
             str(((out.get("quality_gate") or {}).get("reasons") or [])),
         )
 
+    async def test_graph_backed_output_is_not_suppressed_to_uncertain(self):
+        fake_result = {
+            "question": "Hyperbola graph question",
+            "reasoning": (
+                "For x^2/16 - y^2/9 = 1, we have a^2 = 16 and b^2 = 9. "
+                "Hence e = sqrt(1 + b^2/a^2) = 5/4 and the asymptotes are "
+                "y = +(3/4)x and y = -(3/4)x."
+            ),
+            "final_answer": (
+                "Eccentricity = 5/4; asymptotes are y = +(3/4)x and y = -(3/4)x."
+            ),
+            "verification": {"verified": False, "risk_score": 0.95},
+            "routing_decision": "test",
+            "escalate": True,
+            "winner_provider": "openrouter",
+            "profile": {
+                "subject": "math",
+                "difficulty": "hard",
+                "numeric": True,
+                "multiConcept": True,
+                "trapProbability": 0.0,
+            },
+            "arena": {
+                "entropy": 1.4,
+                "disagreement": 0.72,
+                "winner_margin": 0.03,
+                "ranked_providers": [{"provider": "openrouter", "score": 0.4}],
+            },
+            "quality_gate": {
+                "completion_ok": False,
+                "final_status": "Failed",
+                "force_escalate": True,
+                "reasons": [
+                    "verification_failed_high_risk",
+                    "cross_provider_disagreement",
+                    "high_entropy",
+                ],
+            },
+            "retrieval": {"top_blocks": [], "claim_support_score": 0.0},
+            "engine": {
+                "name": "LALACORE_X",
+                "version": "research-grade-v2",
+                "backward_compatible": True,
+                "provider_availability": {"openrouter": {"eligible": True}},
+            },
+        }
+
+        with patch("core.api.entrypoint.solve_question", new=AsyncMock(return_value=fake_result)):
+            out = await lalacore_entry(
+                input_data=(
+                    "JEE Advanced level Hyperbola question: For the hyperbola "
+                    "x^2/16 - y^2/9 = 1, find its eccentricity and equations "
+                    "of asymptotes. Give full step-by-step solution."
+                ),
+                input_type="text",
+                options={"enable_meta_verification": False, "enable_persona": False},
+            )
+
+        self.assertEqual(out["status"], "ok")
+        self.assertEqual(
+            out["final_answer"],
+            "Eccentricity = 5/4; asymptotes are y = +(3/4)x and y = -(3/4)x.",
+        )
+        self.assertIn("visualization", out)
+        self.assertTrue(bool((out.get("quality_gate") or {}).get("graph_supported_output")))
+        self.assertIn(
+            "graph_metadata_override",
+            str(((out.get("quality_gate") or {}).get("reasons") or [])),
+        )
+
+    async def test_graph_metadata_does_not_override_provider_empty_failure(self):
+        fake_result = {
+            "question": "Hyperbola graph question",
+            "reasoning": "Provider error: curl: (6) Could not resolve host: openrouter.ai",
+            "final_answer": (
+                "Uncertain answer: providers returned no usable output for this prompt. "
+                "Please retry."
+            ),
+            "verification": {"verified": False, "risk_score": 0.95},
+            "routing_decision": "degraded_mode",
+            "escalate": True,
+            "winner_provider": "openrouter",
+            "profile": {
+                "subject": "math",
+                "difficulty": "hard",
+                "numeric": True,
+                "multiConcept": True,
+                "trapProbability": 0.0,
+            },
+            "arena": {
+                "entropy": 1.3,
+                "disagreement": 0.71,
+                "winner_margin": 0.01,
+                "ranked_providers": [{"provider": "openrouter", "score": 0.0}],
+            },
+            "quality_gate": {
+                "completion_ok": False,
+                "final_status": "Failed",
+                "force_escalate": True,
+                "reasons": ["all_provider_answers_empty"],
+            },
+            "retrieval": {"top_blocks": [], "claim_support_score": 0.0},
+            "engine": {
+                "name": "LALACORE_X",
+                "version": "research-grade-v2",
+                "backward_compatible": True,
+                "provider_availability": {"openrouter": {"eligible": True}},
+            },
+        }
+
+        with patch("core.api.entrypoint.solve_question", new=AsyncMock(return_value=fake_result)):
+            out = await lalacore_entry(
+                input_data=(
+                    "JEE Advanced level Hyperbola question: For the hyperbola "
+                    "x^2/16 - y^2/9 = 1, find its eccentricity and equations "
+                    "of asymptotes. Give full step-by-step solution."
+                ),
+                input_type="text",
+                options={"enable_meta_verification": False, "enable_persona": False},
+            )
+
+        self.assertEqual(out["status"], "uncertain")
+        self.assertIn("visualization", out)
+        self.assertFalse(bool((out.get("quality_gate") or {}).get("graph_supported_output")))
+        self.assertNotIn(
+            "graph_metadata_override",
+            str(((out.get("quality_gate") or {}).get("reasons") or [])),
+        )
+
     async def test_multimodal_default_limit_accepts_larger_ocr_preprocess(self):
         intake_payload = IntakePayload(
             input_type="mixed",
@@ -356,6 +559,28 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
 
         self.assertEqual(out.get("status"), "error")
         self.assertEqual(out.get("error"), "pipeline_timeout")
+
+    async def test_pipeline_timeout_can_be_overridden_per_request(self):
+        async def _slow_execute(*args, **kwargs):
+            await asyncio.sleep(1.1)
+            return {"status": "ok"}
+
+        with patch(
+            "core.api.entrypoint._PIPELINE_CONTROLLER.execute",
+            new=AsyncMock(side_effect=_slow_execute),
+        ):
+            out = await lalacore_entry(
+                input_data="What is 2+2?",
+                input_type="text",
+                options={
+                    "enable_meta_verification": False,
+                    "pipeline_timeout_s": 1.0,
+                },
+            )
+
+        self.assertEqual(out.get("status"), "error")
+        self.assertEqual(out.get("error"), "pipeline_timeout")
+        self.assertEqual(out.get("latency_metrics", {}).get("timeout_s"), 1.0)
 
     async def test_pipeline_runtime_failure_returns_safe_error_payload(self):
         with patch(

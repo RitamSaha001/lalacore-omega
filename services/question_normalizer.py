@@ -77,6 +77,9 @@ class QuestionNormalizer:
                 "search_query": "",
                 "partial_query": "",
                 "math_only_query": "",
+                "semantic_query": "",
+                "equation_query": "",
+                "formula_query": "",
                 "options_removed": False,
             }
 
@@ -86,6 +89,13 @@ class QuestionNormalizer:
         search_query = self._to_search_query(stem)
         partial_query = self._truncate_words(search_query, 18)
         math_only_query = self._extract_math_query(stem)
+        semantic_query = self._build_semantic_query(stem)
+        equation_query = self._extract_equation_query(stem)
+        formula_query = self._build_formula_query(
+            stem=stem,
+            semantic_query=semantic_query,
+            equation_query=equation_query,
+        )
         return {
             "original": original,
             "latex_normalized": latex_normalized,
@@ -93,6 +103,9 @@ class QuestionNormalizer:
             "search_query": search_query,
             "partial_query": partial_query,
             "math_only_query": math_only_query,
+            "semantic_query": semantic_query,
+            "equation_query": equation_query,
+            "formula_query": formula_query,
             "options_removed": options_removed,
         }
 
@@ -142,12 +155,40 @@ class QuestionNormalizer:
 
     def _extract_math_query(self, text: str) -> str:
         raw = str(text or "")
+        equation = self._extract_equation_query(raw)
+        if equation:
+            return equation
         inline = re.findall(r"\$([^$]{1,200})\$", raw)
         if inline:
             return re.sub(r"\s+", " ", " ; ".join(inline[:3])).strip()
         latex_cmds = re.findall(r"(\\[a-zA-Z]+(?:_[^\s{}]+|\{[^}]+\})?(?:\^[^\s{}]+|\{[^}]+\})?)", raw)
         if latex_cmds:
             return re.sub(r"\s+", " ", " ".join(latex_cmds[:8])).strip()
+        return ""
+
+    def _extract_equation_query(self, text: str) -> str:
+        raw = str(text or "")
+        if not raw:
+            return ""
+        cleaned = raw.replace("$", " ")
+        cleaned = re.sub(r"\\frac\{([^}]+)\}\{([^}]+)\}", r"(\1)/(\2)", cleaned)
+        cleaned = re.sub(r"\\left|\\right", " ", cleaned)
+        cleaned = re.sub(r"\s+", " ", cleaned).strip()
+        patterns = (
+            r"([a-zA-Z0-9()^+\-*/\s]{3,120}=[a-zA-Z0-9()^+\-*/\s]{1,80})",
+            r"([a-zA-Z]\^2\s*/\s*\d+\s*[+\-]\s*[a-zA-Z]\^2\s*/\s*\d+\s*=\s*\d+)",
+        )
+        for pattern in patterns:
+            match = re.search(pattern, cleaned)
+            if not match:
+                continue
+            chunk = re.sub(r"\s+", " ", str(match.group(1))).strip(" ,.;:")
+            chunk = re.sub(r"(?i)^.*?\b([a-z]\^2.*=.*)$", r"\1", chunk)
+            chunk = re.sub(r"\s*/\s*", "/", chunk)
+            chunk = re.sub(r"\s*([=+\-])\s*", r" \1 ", chunk)
+            chunk = re.sub(r"\s+", " ", chunk).strip()
+            if len(chunk) >= 5:
+                return chunk[:160]
         return ""
 
     def _to_search_query(self, stem: str) -> str:
@@ -173,19 +214,151 @@ class QuestionNormalizer:
         for pattern, repl in replacements.items():
             text = re.sub(pattern, repl, text)
 
+        text = re.sub(r"([a-zA-Z])\s*\^\s*2\b", r"\1 squared", text)
+        text = re.sub(r"([a-zA-Z])\s*\^\s*3\b", r"\1 cubed", text)
+        text = re.sub(r"([a-zA-Z0-9)\]])\s*/\s*([a-zA-Z0-9(])", r"\1 over \2", text)
         text = re.sub(r"\$+", " ", text)
         text = re.sub(r"[{}\\]", " ", text)
         text = re.sub(r"[_^]", " ", text)
+        text = re.sub(
+            r"(?i)\b(include|with|show|add)\s+cited\s+sources?(?:\s+if\s+available)?\b",
+            " ",
+            text,
+        )
+        text = re.sub(r"(?i)\bif available\b", " ", text)
+        text = re.sub(r"(?i)\bstep by step\b", " ", text)
+        text = re.sub(r"(?i)\bstep-by-step\b", " ", text)
+        text = re.sub(r"(?i)\bfull solution\b", " ", text)
+        text = re.sub(
+            r"(?i)\b(?:jee(?:\s+advanced)?|advanced|mains?|level|question|give|write)\b",
+            " ",
+            text,
+        )
+        text = re.sub(r"(?i)\bfor the\b", " ", text)
         text = re.sub(r"(?i)\b(find|evaluate|determine|solve|calculate|compute)\b", " ", text)
         text = re.sub(r"(?i)\bvalue of\b", " ", text)
+        text = re.sub(r"(?i)\bits\b", " ", text)
         text = re.sub(r"[^a-zA-Z0-9+\-*/=().,\s]", " ", text)
         text = re.sub(r"\s+", " ", text).strip().lower()
+
+        # Drop low-signal leading scaffolding that hurts external retrieval quality.
+        text = re.sub(
+            r"^(?:for\s+)?(?:the\s+)?(?:hyperbola|ellipse|parabola|circle)\s+",
+            lambda m: m.group(0).strip() + " ",
+            text,
+        )
+        text = re.sub(
+            r"^(?:jee\s+advanced\s+)?(?:level\s+)?(?:question\s+)?",
+            "",
+            text,
+        ).strip()
 
         # Keep query compact for external search providers.
         words: List[str] = [w for w in text.split(" ") if w]
         if len(words) > 28:
             words = words[:28]
         return " ".join(words)
+
+    def _build_semantic_query(self, stem: str) -> str:
+        low = str(stem or "").lower()
+        if not low:
+            return ""
+        low = re.sub(r"\$[^$]{1,220}\$", " ", low)
+        low = re.sub(r"\\[a-z]+(?:\{[^}]+\})*", " ", low)
+        keywords = [
+            "hyperbola",
+            "ellipse",
+            "parabola",
+            "circle",
+            "conic",
+            "eccentricity",
+            "asymptote",
+            "asymptotes",
+            "focus",
+            "directrix",
+            "latus rectum",
+            "tangent",
+            "normal",
+            "chord",
+            "integral",
+            "derivative",
+            "limit",
+            "series",
+            "permutation",
+            "combination",
+            "probability",
+            "binomial",
+            "matrix",
+            "determinant",
+            "vector",
+            "complex",
+            "modulus",
+            "argand",
+        ]
+        found: List[str] = []
+        for keyword in keywords:
+            if keyword in low and keyword not in found:
+                found.append(keyword)
+        if found:
+            return " ".join(found[:6])
+
+        stopwords = {
+            "for",
+            "the",
+            "and",
+            "with",
+            "from",
+            "that",
+            "this",
+            "find",
+            "show",
+            "include",
+            "cited",
+            "sources",
+            "available",
+            "question",
+            "what",
+            "which",
+            "there",
+            "their",
+            "then",
+            "into",
+            "its",
+        }
+        tokens = [
+            tok
+            for tok in re.findall(r"[a-z]{3,}", low)
+            if tok not in stopwords
+        ]
+        dedup: List[str] = []
+        for token in tokens:
+            if token not in dedup:
+                dedup.append(token)
+            if len(dedup) >= 6:
+                break
+        return " ".join(dedup)
+
+    def _build_formula_query(
+        self,
+        *,
+        stem: str,
+        semantic_query: str,
+        equation_query: str,
+    ) -> str:
+        semantic = str(semantic_query or "").strip()
+        equation = str(equation_query or "").strip()
+        tokens = [token for token in semantic.split() if token]
+        if equation and tokens:
+            head = " ".join(tokens[:4])
+            return f"{head} {equation} formula".strip()[:220]
+        if tokens:
+            return f"{' '.join(tokens[:4])} formula".strip()[:220]
+        if equation:
+            return f"{equation} formula".strip()[:220]
+        fallback = re.findall(r"[a-z]{4,}", str(stem or "").lower())
+        if not fallback:
+            return ""
+        return f"{' '.join(fallback[:4])} formula".strip()[:220]
 
     def _truncate_words(self, text: str, max_words: int) -> str:
         words = [w for w in str(text or "").split() if w]

@@ -215,17 +215,27 @@ class ConceptVault:
         if not self._nodes:
             return []
 
+        inferred_subject = self._resolve_subject(question, subject)
         q_emb = self.embedder.encode(question)
         scored = []
 
         for node in self._nodes.values():
             score = cosine_similarity(q_emb, node.embedding)
+            node_subject = self._node_subject(node)
 
             # Subject-aware boost.
-            if subject.lower() in node.tags:
-                score += 0.08
+            if inferred_subject and inferred_subject in node.tags:
+                score += 0.16
+            if node_subject and inferred_subject and node_subject != inferred_subject:
+                score -= 0.24
             if "jee" in node.tags:
                 score += 0.03
+            if inferred_subject == "math" and any(
+                token in question.lower()
+                for token in ("x^2", "y^2", "hyperbola", "parabola", "ellipse", "circle", "permutation", "combination")
+            ):
+                if "math" in node.tags or "algebra" in node.tags or "equation" in node.tags:
+                    score += 0.08
 
             scored.append((score, node))
 
@@ -268,6 +278,64 @@ class ConceptVault:
 
         ranked = sorted(blocks.values(), key=lambda b: b.score, reverse=True)
         return ranked[: top_k + len(traps)]
+
+    def _resolve_subject(self, question: str, subject: str) -> str:
+        explicit = str(subject or "").strip().lower()
+        if explicit in {"mathematics", "math"}:
+            return "math"
+        if explicit in {"physics"}:
+            return "physics"
+        if explicit in {"chemistry", "chem"}:
+            return "chemistry"
+        lowered = str(question or "").lower()
+        math_signals = (
+            "x^2",
+            "y^2",
+            "hyperbola",
+            "parabola",
+            "ellipse",
+            "circle",
+            "asymptote",
+            "permutation",
+            "combination",
+            "probability",
+            "binomial",
+            "integral",
+            "derivative",
+            "matrix",
+        )
+        physics_signals = (
+            "velocity",
+            "acceleration",
+            "force",
+            "current",
+            "potential difference",
+            "wavelength",
+            "momentum",
+            "kinematics",
+        )
+        chemistry_signals = (
+            "mole",
+            "equilibrium",
+            "enthalpy",
+            "ph",
+            "organic",
+            "electrochemistry",
+            "stoichiometry",
+        )
+        if any(signal in lowered for signal in math_signals):
+            return "math"
+        if any(signal in lowered for signal in physics_signals):
+            return "physics"
+        if any(signal in lowered for signal in chemistry_signals):
+            return "chemistry"
+        return explicit
+
+    def _node_subject(self, node: _VaultNode) -> str:
+        for candidate in ("math", "physics", "chemistry"):
+            if candidate in node.tags:
+                return candidate
+        return ""
 
     def _trap_notes(self, question: str) -> List[str]:
         q = question.lower()

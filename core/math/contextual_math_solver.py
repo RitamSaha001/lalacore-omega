@@ -5,7 +5,7 @@ import math
 import re
 from collections import Counter
 from fractions import Fraction
-from typing import Any, Dict
+from typing import Any, Dict, List, Tuple
 
 import sympy as sp
 from sympy.parsing.sympy_parser import (
@@ -22,9 +22,17 @@ from core.math.combinatorics_modules import (
 from core.math.problem_parser import parse_structured_problem
 
 _X = sp.Symbol("x", real=True)
+_Y = sp.Symbol("y", real=True)
+_M = sp.Symbol("m", real=True)
+_A = sp.Symbol("a", positive=True, real=True)
+_B = sp.Symbol("b", positive=True, real=True)
 _TRANSFORMS = standard_transformations + (implicit_multiplication_application, convert_xor)
 _LOCAL_DICT = {
     "x": _X,
+    "y": _Y,
+    "m": _M,
+    "a": _A,
+    "b": _B,
     "pi": sp.pi,
     "e": sp.E,
     "oo": sp.oo,
@@ -140,7 +148,7 @@ def _is_safe_expr_text(expr: str) -> bool:
         return False
     if not _is_balanced_parentheses(cleaned):
         return False
-    if not re.search(r"(x|\d|pi|e|oo|asin|acos|atan|sin|cos|tan|sqrt)", lowered):
+    if not re.search(r"(x|y|m|a|b|\d|pi|e|oo|asin|acos|atan|sin|cos|tan|sqrt)", lowered):
         return False
     return True
 
@@ -702,6 +710,181 @@ def _fmt_count_or_fraction(value: int | Fraction) -> str:
             return str(int(value.numerator))
         return f"{int(value.numerator)}/{int(value.denominator)}"
     return str(int(value))
+
+
+def _count_bounded_nonnegative_solutions(total: int, upper_bounds: list[int | None]) -> int:
+    if total < 0:
+        return 0
+    var_count = len(upper_bounds)
+    if var_count == 0:
+        return int(total == 0)
+
+    bounded = [(idx, int(bound)) for idx, bound in enumerate(upper_bounds) if bound is not None]
+    if len(bounded) > 16:
+        return 0
+
+    count = 0
+    for mask in range(1 << len(bounded)):
+        reduction = 0
+        parity = 0
+        for bit, (_, bound) in enumerate(bounded):
+            if mask & (1 << bit):
+                reduction += int(bound) + 1
+                parity += 1
+        remaining = total - reduction
+        if remaining < 0:
+            continue
+        term = math.comb(remaining + var_count - 1, var_count - 1)
+        count += -term if parity % 2 else term
+    return int(count)
+
+
+def _solve_function_counting(question: str) -> Dict[str, Any] | None:
+    q = _normalize_text(question).lower().rstrip(".")
+
+    onto_patterns = (
+        r"\b(?:how many|number of)\s+(?:onto|surjective)\s+functions?\s+(?:are there\s+)?from\s+(?:an?\s+)?(\d+)(?:\s*-\s*element|\s+element)?\s+set\s+to\s+(?:an?\s+)?(\d+)(?:\s*-\s*element|\s+element)?\s+set\b",
+        r"\b(?:how many|number of)\s+(?:onto|surjective)\s+functions?\s+(?:are there\s+)?from\s+(?:a\s+)?set\s+of\s+size\s+(\d+)\s+to\s+(?:a\s+)?set\s+of\s+size\s+(\d+)\b",
+    )
+    for pattern in onto_patterns:
+        match = re.search(pattern, q, flags=re.IGNORECASE)
+        if not match:
+            continue
+        domain_size = int(match.group(1))
+        codomain_size = int(match.group(2))
+        if domain_size < 0 or codomain_size < 0:
+            return None
+        if codomain_size == 0:
+            answer = 1 if domain_size == 0 else 0
+        elif domain_size < codomain_size:
+            answer = 0
+        else:
+            answer = 0
+            for excluded in range(codomain_size + 1):
+                answer += ((-1) ** excluded) * math.comb(codomain_size, excluded) * (
+                    (codomain_size - excluded) ** domain_size
+                )
+        answer_text = str(int(answer))
+        return {
+            "handled": True,
+            "kind": "function_counting_onto",
+            "answer": answer_text,
+            "expected_expr": answer_text,
+            "expected_solution_text": None,
+            "reasoning": "Deterministic inclusion-exclusion count for surjective functions.",
+        }
+
+    injective_patterns = (
+        r"\b(?:how many|number of)\s+(?:injective|one[\s\-]?to[\s\-]?one)\s+functions?\s+(?:are there\s+)?from\s+(?:an?\s+)?(\d+)(?:\s*-\s*element|\s+element)?\s+set\s+to\s+(?:an?\s+)?(\d+)(?:\s*-\s*element|\s+element)?\s+set\b",
+        r"\b(?:how many|number of)\s+(?:injective|one[\s\-]?to[\s\-]?one)\s+functions?\s+(?:are there\s+)?from\s+(?:a\s+)?set\s+of\s+size\s+(\d+)\s+to\s+(?:a\s+)?set\s+of\s+size\s+(\d+)\b",
+    )
+    for pattern in injective_patterns:
+        match = re.search(pattern, q, flags=re.IGNORECASE)
+        if not match:
+            continue
+        domain_size = int(match.group(1))
+        codomain_size = int(match.group(2))
+        if domain_size < 0 or codomain_size < 0:
+            return None
+        answer = 0 if domain_size > codomain_size else math.factorial(codomain_size) // math.factorial(codomain_size - domain_size)
+        answer_text = str(int(answer))
+        return {
+            "handled": True,
+            "kind": "function_counting_injective",
+            "answer": answer_text,
+            "expected_expr": answer_text,
+            "expected_solution_text": None,
+            "reasoning": "Deterministic permutation count for injective functions.",
+        }
+
+    return None
+
+
+def _solve_bounded_integer_distribution(question: str) -> Dict[str, Any] | None:
+    q = _normalize_text(question).lower().rstrip(".")
+    if not re.search(r"\b(?:positive|non[\s\-]?negative)\s+integer\s+solutions?\b", q):
+        return None
+
+    equation_match = re.search(r"\b([a-z]\d*(?:\s*\+\s*[a-z]\d*)+)\s*=\s*(-?\d+)\b", q)
+    if not equation_match:
+        return None
+
+    variables = re.findall(r"[a-z]\d*", equation_match.group(1))
+    if len(variables) < 2:
+        return None
+
+    total = int(equation_match.group(2))
+    default_lower = 1 if "positive integer" in q else 0
+    lower_bounds = {var: int(default_lower) for var in variables}
+    upper_bounds: Dict[str, int | None] = {var: None for var in variables}
+
+    each_ge = re.search(r"\beach\s*(?:>=|≥)\s*(-?\d+)\b", q)
+    if each_ge:
+        for var in variables:
+            lower_bounds[var] = max(lower_bounds[var], int(each_ge.group(1)))
+    each_at_least = re.search(r"\beach\s+at\s+least\s+(-?\d+)\b", q)
+    if each_at_least:
+        for var in variables:
+            lower_bounds[var] = max(lower_bounds[var], int(each_at_least.group(1)))
+
+    each_le = re.search(r"\beach\s*(?:<=|≤)\s*(-?\d+)\b", q)
+    if each_le:
+        bound = int(each_le.group(1))
+        for var in variables:
+            upper_bounds[var] = bound if upper_bounds[var] is None else min(int(upper_bounds[var]), bound)
+    each_at_most = re.search(r"\beach\s+at\s+most\s+(-?\d+)\b", q)
+    if each_at_most:
+        bound = int(each_at_most.group(1))
+        for var in variables:
+            upper_bounds[var] = bound if upper_bounds[var] is None else min(int(upper_bounds[var]), bound)
+
+    for match in re.finditer(r"\b([a-z]\d*)\s*(<=|<|>=|>|≤|≥)\s*(-?\d+)\b", q):
+        var = match.group(1)
+        if var not in lower_bounds:
+            continue
+        op = match.group(2)
+        value = int(match.group(3))
+        if op in {">=", "≥"}:
+            lower_bounds[var] = max(lower_bounds[var], value)
+        elif op == ">":
+            lower_bounds[var] = max(lower_bounds[var], value + 1)
+        elif op in {"<=", "≤"}:
+            upper_bounds[var] = value if upper_bounds[var] is None else min(int(upper_bounds[var]), value)
+        elif op == "<":
+            cap = value - 1
+            upper_bounds[var] = cap if upper_bounds[var] is None else min(int(upper_bounds[var]), cap)
+
+    shifted_total = total - sum(int(lower_bounds[var]) for var in variables)
+    if shifted_total < 0:
+        answer_text = "0"
+    else:
+        transformed_upper: list[int | None] = []
+        for var in variables:
+            upper = upper_bounds[var]
+            if upper is None:
+                transformed_upper.append(None)
+                continue
+            transformed = int(upper) - int(lower_bounds[var])
+            if transformed < 0:
+                return {
+                    "handled": True,
+                    "kind": "bounded_integer_distribution",
+                    "answer": "0",
+                    "expected_expr": "0",
+                    "expected_solution_text": None,
+                    "reasoning": "Bounds are inconsistent after lower-bound normalization, so no solutions exist.",
+                }
+            transformed_upper.append(transformed)
+        answer_text = str(_count_bounded_nonnegative_solutions(shifted_total, transformed_upper))
+
+    return {
+        "handled": True,
+        "kind": "bounded_integer_distribution",
+        "answer": answer_text,
+        "expected_expr": answer_text,
+        "expected_solution_text": None,
+        "reasoning": "Deterministic stars-bars with lower-bound shift and inclusion-exclusion for upper bounds.",
+    }
 
 
 def _solve_thermodynamics_cycle_ratio(question: str) -> Dict[str, Any] | None:
@@ -1488,10 +1671,486 @@ def _solve_modular_combinatorics(question: str) -> Dict[str, Any] | None:
     return None
 
 
+def _parse_point_token(token: str):
+    return _safe_parse_expr(token.replace("{", "(").replace("}", ")"))
+
+
+def _split_top_level_once(text: str, separator: str = ",") -> tuple[str, str] | None:
+    depth = 0
+    for idx, char in enumerate(str(text or "")):
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth = max(0, depth - 1)
+        elif char == separator and depth == 0:
+            return text[:idx], text[idx + 1 :]
+    return None
+
+
+def _extract_points(question: str) -> List[Tuple[sp.Expr, sp.Expr]]:
+    points: List[Tuple[sp.Expr, sp.Expr]] = []
+    source = str(question or "")
+    idx = 0
+    while idx < len(source):
+        if source[idx] != "(":
+            idx += 1
+            continue
+        depth = 1
+        end = idx + 1
+        while end < len(source) and depth > 0:
+            if source[end] == "(":
+                depth += 1
+            elif source[end] == ")":
+                depth -= 1
+            end += 1
+        if depth != 0:
+            idx += 1
+            continue
+        inner = source[idx + 1 : end - 1].strip()
+        pieces = _split_top_level_once(inner, ",")
+        if pieces is not None:
+            x_text, y_text = (str(piece).strip() for piece in pieces)
+            x_val = _parse_point_token(x_text)
+            y_val = _parse_point_token(y_text)
+            if x_val is not None and y_val is not None:
+                points.append((sp.simplify(x_val), sp.simplify(y_val)))
+        idx = end
+    return points
+
+
+def _extract_hyperbola_standard(question: str) -> tuple[sp.Expr, sp.Expr] | None:
+    text = _normalize_text(question)
+    match = re.search(
+        r"x\^2\s*/\s*([A-Za-z0-9_*/()+.^]+)\s*-\s*y\^2\s*/\s*([A-Za-z0-9_*/()+.^]+)\s*=\s*1",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if not match:
+        return None
+    a2 = _safe_parse_expr(match.group(1))
+    b2 = _safe_parse_expr(match.group(2))
+    if a2 is None or b2 is None:
+        return None
+    return sp.simplify(a2), sp.simplify(b2)
+
+
+def _parse_equation_expr(text: str):
+    if "=" not in str(text or ""):
+        return None
+    lhs_text, rhs_text = str(text).split("=", 1)
+    lhs = _safe_parse_expr(lhs_text)
+    rhs = _safe_parse_expr(rhs_text)
+    if lhs is None or rhs is None:
+        return None
+    return sp.expand(lhs - rhs)
+
+
+def _line_slope_from_text(text: str):
+    expr = _parse_equation_expr(text)
+    if expr is None:
+        return None
+    coeff_x = sp.simplify(expr.coeff(_X))
+    coeff_y = sp.simplify(expr.coeff(_Y))
+    if coeff_y == 0:
+        return None
+    return sp.simplify(-coeff_x / coeff_y)
+
+
+def _extract_equation_after_phrase(text: str, phrase: str) -> str | None:
+    match = re.search(re.escape(phrase), str(text or ""), flags=re.IGNORECASE)
+    if not match:
+        return None
+    tail = str(text or "")[match.end() :].lstrip()
+    eq_match = re.search(
+        r"([A-Za-z0-9_*/()+.^\-\s]+?=\s*[A-Za-z0-9_*/()+.^\-\s]+?)(?=\s+(?:is|are|that|drawn|touches|touch|passes|at|from|in|if)\b|[.,;]|$)",
+        tail,
+        flags=re.IGNORECASE,
+    )
+    if eq_match:
+        return str(eq_match.group(1)).strip()
+    fallback = re.search(r"([A-Za-z0-9_*/()+.^\-\s]+?=\s*[A-Za-z0-9_*/()+.^\-\s]+)", tail, flags=re.IGNORECASE)
+    if fallback:
+        return str(fallback.group(1)).strip()
+    return None
+
+
+def _clear_linear_denominators(expr):
+    numerator = sp.expand(sp.together(expr).as_numer_denom()[0])
+    coeff_x = sp.simplify(numerator.coeff(_X))
+    coeff_y = sp.simplify(numerator.coeff(_Y))
+    coeff_c = sp.simplify(numerator.subs({_X: 0, _Y: 0}))
+    pieces = [coeff_x, coeff_y, coeff_c]
+    denoms = []
+    for piece in pieces:
+        den = sp.denom(piece)
+        if getattr(den, "is_Integer", False):
+            denoms.append(int(den))
+    scale = 1
+    for den in denoms:
+        scale = sp.ilcm(int(scale), int(den))
+    scaled = [sp.simplify(piece * scale) for piece in pieces]
+    if all(getattr(piece, "is_Integer", False) for piece in scaled if piece != 0):
+        gcd_val = 0
+        for piece in scaled:
+            if piece == 0:
+                continue
+            piece_int = abs(int(piece))
+            gcd_val = piece_int if gcd_val == 0 else math.gcd(gcd_val, piece_int)
+        if gcd_val > 1:
+            scaled = [sp.simplify(piece / gcd_val) for piece in scaled]
+    for piece in scaled:
+        if piece != 0:
+            if piece.could_extract_minus_sign():
+                scaled = [sp.simplify(-piece) for piece in scaled]
+            break
+    return tuple(scaled)
+
+
+def _format_linear_equation(expr) -> str:
+    coeff_x, coeff_y, coeff_c = _clear_linear_denominators(expr)
+    return f"{sp.sstr(coeff_x)}*x + {sp.sstr(coeff_y)}*y + {sp.sstr(coeff_c)} = 0"
+
+
+def _format_cartesian_equation(expr) -> str:
+    numerator = sp.expand(sp.together(expr).as_numer_denom()[0])
+    return f"{sp.sstr(numerator)} = 0"
+
+
+def _format_value_text(expr) -> str:
+    value = sp.simplify(expr)
+    text = sp.sstr(value)
+    return text.replace("**", "^")
+
+
+def _latex_value_text(expr) -> str:
+    try:
+        return sp.latex(sp.simplify(expr))
+    except Exception:
+        return _format_value_text(expr)
+
+
+def _latex_block(content: str) -> str:
+    return f"\\[\n{content}\n\\]"
+
+
+def _build_hyperbola_eccentricity_asymptotes_solution(a2, b2, ecc, slope) -> str:
+    a = sp.simplify(sp.sqrt(a2))
+    b = sp.simplify(sp.sqrt(b2))
+    c2 = sp.simplify(a2 + b2)
+    c = sp.simplify(sp.sqrt(c2))
+    equation_latex = (
+        rf"\frac{{x^2}}{{{_latex_value_text(a2)}}} - "
+        rf"\frac{{y^2}}{{{_latex_value_text(b2)}}} = 1"
+    )
+    return "\n\n".join(
+        [
+            "**Given**",
+            _latex_block(equation_latex),
+            "Compare this with the standard hyperbola form",
+            _latex_block(r"\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1"),
+            "So we identify",
+            _latex_block(
+                rf"a^2 = {_latex_value_text(a2)},\qquad b^2 = {_latex_value_text(b2)}"
+            ),
+            "Hence",
+            _latex_block(
+                rf"a = {_latex_value_text(a)},\qquad b = {_latex_value_text(b)}"
+            ),
+            "For a hyperbola of this form, the focal parameter satisfies",
+            _latex_block(r"c^2 = a^2 + b^2"),
+            "Therefore",
+            _latex_block(
+                rf"c^2 = {_latex_value_text(a2)} + {_latex_value_text(b2)} = {_latex_value_text(c2)}"
+            ),
+            _latex_block(rf"c = {_latex_value_text(c)}"),
+            "The eccentricity is",
+            _latex_block(rf"e = \frac{{c}}{{a}} = \frac{{{_latex_value_text(c)}}}{{{_latex_value_text(a)}}} = {_latex_value_text(ecc)}"),
+            "The asymptotes of",
+            _latex_block(r"\frac{x^2}{a^2} - \frac{y^2}{b^2} = 1"),
+            "are",
+            _latex_block(r"y = \pm \frac{b}{a}x"),
+            "So here",
+            _latex_block(rf"y = \pm {_latex_value_text(slope)}x"),
+            "**Final Answer**",
+            _latex_block(
+                rf"e = {_latex_value_text(ecc)},\qquad y = {_latex_value_text(slope)}x,\qquad y = -{_latex_value_text(slope)}x"
+            ),
+        ]
+    )
+
+
+def _solve_hyperbola_question(question: str) -> Dict[str, Any] | None:
+    text = _normalize_text(question)
+    low = text.lower()
+    params = _extract_hyperbola_standard(text)
+
+    if params and "eccentricity" in low and "asymptote" in low:
+        a2, b2 = params
+        ecc = sp.simplify(sp.sqrt(1 + (b2 / a2)))
+        slope = sp.simplify(sp.sqrt(b2 / a2))
+        return {
+            "handled": True,
+            "kind": "hyperbola_eccentricity_asymptotes",
+            "answer": (
+                f"e = {_format_value_text(ecc)}; asymptotes: "
+                f"y = {_format_value_text(slope)}*x and y = -{_format_value_text(slope)}*x."
+            ),
+            "expected_expr": None,
+            "expected_solution_text": _build_hyperbola_eccentricity_asymptotes_solution(
+                a2,
+                b2,
+                ecc,
+                slope,
+            ),
+            "verification_kind": "composite",
+            "expected_numbers": [_format_value_text(ecc)],
+            "expected_equations": [
+                f"y = {_format_value_text(slope)}*x",
+                f"y = -{_format_value_text(slope)}*x",
+            ],
+            "required_keywords": ["eccentricity", "asymptote"],
+            "reasoning": "Deterministic hyperbola analysis for eccentricity and asymptotes.",
+        }
+
+    if params and "parallel to the line" in low and "tangent" in low:
+        a2, b2 = params
+        line_text = _extract_equation_after_phrase(text, "parallel to the line")
+        if line_text:
+            slope = _line_slope_from_text(line_text)
+            if slope is not None:
+                tangent_term = sp.simplify(a2 * slope**2 - b2)
+                if tangent_term == 0:
+                    return {
+                        "handled": True,
+                        "kind": "hyperbola_parallel_tangent_none",
+                        "answer": "No real tangent exists; the given line direction is asymptotic.",
+                        "expected_expr": None,
+                        "expected_solution_text": None,
+                        "verification_kind": "text",
+                        "expected_keywords": ["no real tangent", "asymptotic"],
+                        "reasoning": "A line parallel to an asymptote cannot be a tangent to the hyperbola.",
+                    }
+                if tangent_term.is_real and bool(sp.N(tangent_term) > 0):
+                    root = sp.simplify(sp.sqrt(tangent_term))
+                    return {
+                        "handled": True,
+                        "kind": "hyperbola_parallel_tangents",
+                        "answer": (
+                            f"Tangents: y = {_format_value_text(slope)}*x + {_format_value_text(root)} "
+                            f"and y = {_format_value_text(slope)}*x - {_format_value_text(root)}."
+                        ),
+                        "expected_expr": None,
+                        "expected_solution_text": None,
+                        "verification_kind": "equation_set",
+                        "expected_equations": [
+                            f"y = {_format_value_text(slope)}*x + {_format_value_text(root)}",
+                            f"y = {_format_value_text(slope)}*x - {_format_value_text(root)}",
+                        ],
+                        "reasoning": "Deterministic slope-form tangent computation for the standard hyperbola.",
+                    }
+
+    if params and "chord of contact" in low:
+        points = _extract_points(text)
+        if points:
+            a2, b2 = params
+            x1, y1 = points[0]
+            expr = sp.expand((_X * x1 / a2) - (_Y * y1 / b2) - 1)
+            return {
+                "handled": True,
+                "kind": "hyperbola_chord_of_contact",
+                "answer": f"Chord of contact: {_format_linear_equation(expr)}.",
+                "expected_expr": None,
+                "expected_solution_text": None,
+                "verification_kind": "equation",
+                "expected_equations": [_format_linear_equation(expr)],
+                "reasoning": "Chord of contact for x^2/a^2 - y^2/b^2 = 1 is T = 0.",
+            }
+
+    if params and "touches the hyperbola" in low and "values of m" in low:
+        a2, b2 = params
+        line_match = re.search(r"line\s+y\s*=\s*m\s*x\s*([+\-]\s*[A-Za-z0-9_*/()+.^]+)\s+touches", text, flags=re.IGNORECASE)
+        if line_match:
+            c = _safe_parse_expr(line_match.group(1))
+            if c is not None:
+                m_sq = sp.simplify((c**2 + b2) / a2)
+                root = sp.simplify(sp.sqrt(m_sq))
+                return {
+                    "handled": True,
+                    "kind": "hyperbola_touching_slope",
+                    "answer": f"m = {_format_value_text(root)} or m = -{_format_value_text(root)}.",
+                    "expected_expr": None,
+                    "expected_solution_text": None,
+                    "verification_kind": "expression_set",
+                    "expected_expressions": [
+                        _format_value_text(root),
+                        f"-{_format_value_text(root)}",
+                    ],
+                    "reasoning": "For y = m*x + c to touch x^2/a^2 - y^2/b^2 = 1, c^2 = a^2*m^2 - b^2.",
+                }
+
+    if params and "equation of the tangent" in low and "at the point" in low:
+        points = _extract_points(text)
+        if points:
+            a2, b2 = params
+            x1, y1 = points[0]
+            expr = sp.expand((_X * x1 / a2) - (_Y * y1 / b2) - 1)
+            return {
+                "handled": True,
+                "kind": "hyperbola_tangent_at_point",
+                "answer": f"Tangent: {_format_linear_equation(expr)}.",
+                "expected_expr": None,
+                "expected_solution_text": None,
+                "verification_kind": "equation",
+                "expected_equations": [_format_linear_equation(expr)],
+                "reasoning": "Tangent at (x1, y1) for x^2/a^2 - y^2/b^2 = 1 is xx1/a^2 - yy1/b^2 = 1.",
+            }
+
+    if params and "perpendicular to the line" in low and "intercepts on the x-axis and y-axis" in low:
+        a2, b2 = params
+        line_text = _extract_equation_after_phrase(text, "perpendicular to the line")
+        if line_text:
+            base_slope = _line_slope_from_text(line_text)
+            if base_slope is not None and base_slope != 0:
+                tangent_slope = sp.simplify(-1 / base_slope)
+                tangent_term = sp.simplify(a2 * tangent_slope**2 - b2)
+                if tangent_term.is_real and bool(sp.N(tangent_term) >= 0):
+                    c_val = -sp.sqrt(tangent_term)
+                    a_intercept = sp.simplify(-c_val / tangent_slope)
+                    b_intercept = sp.simplify(c_val)
+                    target = re.search(r"\|\s*(\d+)\s*a\s*\|\s*\+\s*\|\s*(\d+)\s*b\s*\|", low)
+                    if target:
+                        left = int(target.group(1))
+                        right = int(target.group(2))
+                        value = sp.simplify(abs(left * a_intercept) + abs(right * b_intercept))
+                        return {
+                            "handled": True,
+                            "kind": "hyperbola_tangent_intercept_combo",
+                            "answer": _format_value_text(value),
+                            "expected_expr": sp.sstr(value),
+                            "expected_solution_text": None,
+                            "reasoning": "Deterministic tangent-slope and intercept computation for first-quadrant contact.",
+                        }
+
+    if params and "locus of the midpoint of chords" in low and "parallel to the line" in low:
+        a2, b2 = params
+        line_text = _extract_equation_after_phrase(text, "parallel to the line")
+        if line_text:
+            slope = _line_slope_from_text(line_text)
+            if slope is not None and slope != 0:
+                expr = sp.expand((_Y) - ((b2 / (a2 * slope)) * _X))
+                return {
+                    "handled": True,
+                    "kind": "hyperbola_midpoint_locus",
+                    "answer": f"Locus: {_format_linear_equation(expr)}.",
+                    "expected_expr": None,
+                    "expected_solution_text": None,
+                    "verification_kind": "equation",
+                    "expected_equations": [_format_linear_equation(expr)],
+                    "reasoning": "Midpoints of parallel chords of a conic lie on the corresponding diameter.",
+                }
+
+    if params and "pair of tangents" in low and "from the point" in low:
+        a2, b2 = params
+        points = _extract_points(text)
+        if points:
+            x1, y1 = points[0]
+            quad_a = sp.simplify(x1**2 - a2)
+            quad_b = sp.simplify(-2 * x1 * y1)
+            quad_c = sp.simplify(y1**2 + b2)
+            disc = sp.simplify(quad_b**2 - 4 * quad_a * quad_c)
+            if disc.is_real and bool(sp.N(disc) < 0):
+                return {
+                    "handled": True,
+                    "kind": "hyperbola_pair_tangents_none",
+                    "answer": "No real tangents can be drawn from the given point.",
+                    "expected_expr": None,
+                    "expected_solution_text": None,
+                    "verification_kind": "text",
+                    "expected_keywords": ["no real tangent"],
+                    "reasoning": "The tangent-slope quadratic has negative discriminant, so no real tangents exist.",
+                }
+            if disc.is_real and bool(sp.N(disc) >= 0):
+                m1 = sp.simplify((-quad_b + sp.sqrt(disc)) / (2 * quad_a))
+                m2 = sp.simplify((-quad_b - sp.sqrt(disc)) / (2 * quad_a))
+                return {
+                    "handled": True,
+                    "kind": "hyperbola_pair_tangents",
+                    "answer": (
+                        f"Tangents: y - {_format_value_text(y1)} = {_format_value_text(m1)}*(x - {_format_value_text(x1)}) "
+                        f"and y - {_format_value_text(y1)} = {_format_value_text(m2)}*(x - {_format_value_text(x1)})."
+                    ),
+                    "expected_expr": None,
+                    "expected_solution_text": None,
+                    "verification_kind": "equation_set",
+                    "expected_equations": [
+                        f"y - {_format_value_text(y1)} = {_format_value_text(m1)}*(x - {_format_value_text(x1)})",
+                        f"y - {_format_value_text(y1)} = {_format_value_text(m2)}*(x - {_format_value_text(x1)})",
+                    ],
+                    "reasoning": "Deterministic tangent-slope quadratic for tangents from an external point.",
+                }
+
+    if "passes through" in low and "eccentricity" in low and "find its equation" in low:
+        points = _extract_points(text)
+        ecc_match = re.search(r"eccentricity\s+is\s+([A-Za-z0-9_*/()+.^-]+)", text, flags=re.IGNORECASE)
+        if points and ecc_match:
+            x1, y1 = points[0]
+            e_val = _safe_parse_expr(ecc_match.group(1))
+            if e_val is not None:
+                ratio = sp.simplify(e_val**2 - 1)
+                if ratio != 0:
+                    a2 = sp.simplify(x1**2 - (y1**2 / ratio))
+                    b2 = sp.simplify(ratio * a2)
+                    expr = sp.expand((_X**2 / a2) - (_Y**2 / b2) - 1)
+                    return {
+                        "handled": True,
+                        "kind": "hyperbola_from_point_and_eccentricity",
+                        "answer": f"Hyperbola: {_format_cartesian_equation(expr)}.",
+                        "expected_expr": None,
+                        "expected_solution_text": None,
+                        "verification_kind": "equation",
+                        "expected_equations": [_format_cartesian_equation(expr)],
+                        "reasoning": "Used e^2 = 1 + b^2/a^2 together with the given point condition.",
+                    }
+
+    if params and "equation of the normal" in low and "at the point" in low:
+        points = _extract_points(text)
+        if points:
+            a2, b2 = params
+            x1, y1 = points[0]
+            tangent_slope = sp.simplify((b2 * x1) / (a2 * y1))
+            if tangent_slope != 0:
+                normal_slope = sp.simplify(-1 / tangent_slope)
+                expr = sp.expand((_Y - y1) - normal_slope * (_X - x1))
+                return {
+                    "handled": True,
+                    "kind": "hyperbola_normal_at_point",
+                    "answer": f"Normal: {_format_linear_equation(expr)}.",
+                    "expected_expr": None,
+                    "expected_solution_text": None,
+                    "verification_kind": "equation",
+                    "expected_equations": [_format_linear_equation(expr)],
+                    "reasoning": "Normal is perpendicular to the tangent at the given point.",
+                }
+
+    return None
+
+
 def solve_contextual_math_question(question: str) -> Dict[str, Any] | None:
+    hyperbola_case = _solve_hyperbola_question(question)
+    if hyperbola_case:
+        return hyperbola_case
+
     structured_case = _solve_structured_problem(question)
     if structured_case:
         return structured_case
+
+    function_count_case = _solve_function_counting(question)
+    if function_count_case:
+        return function_count_case
+
+    bounded_distribution_case = _solve_bounded_integer_distribution(question)
+    if bounded_distribution_case:
+        return bounded_distribution_case
 
     modular_case = _solve_modular_combinatorics(question)
     if modular_case:

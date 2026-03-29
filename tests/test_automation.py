@@ -2,19 +2,109 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import tempfile
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 
 from core.automation.feeder_engine import FeederEngine
 from core.automation.orchestrator import AutomationOrchestrator
 from core.automation.state_manager import AutomationStateManager
 from core.lalacore_x.mini_evolution import MiniEvolutionEngine
 from core.lalacore_x.token_budget import TokenBudgetGuardian
+from app.auth.local_auth_service import LocalAuthService
+from app.data.local_app_data_service import LocalAppDataService
+from app.main import AtlasMaintenanceLockMiddleware
+from services.app_update_release_notifier import AppUpdateReleaseNotifierService
+from services.atlas_maintenance_service import (
+    AtlasMaintenanceService,
+    _AtlasPipelineMaintenanceAuditor,
+)
 
 
 class AutomationTests(unittest.TestCase):
+    def test_app_update_release_notifier_sends_mail_for_new_release_once(self):
+        class _FakeEmailService:
+            def __init__(self) -> None:
+                self.calls: list[dict] = []
+
+            def send_release_confirmation(self, **kwargs):
+                self.calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release confirmation sent",
+                }
+
+        csv_text = (
+            "enabled,app_id,channel,audience,platform,version,build_number,apk_url,force,message,release_notes\n"
+            "TRUE,lalacore_rebuild,stable,all,android,1.0.0,1,https://example.com/app.apk,FALSE,Update available,Added AI upgrades\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            state = AutomationStateManager(path=str(Path(tmp) / "LC9_AUTOMATION_STATE.json"))
+            email = _FakeEmailService()
+            service = AppUpdateReleaseNotifierService(
+                state=state,
+                email_service=email,
+                fetcher=lambda url: csv_text,
+                sheet_url="https://example.com/updates.csv",
+            )
+
+            first = asyncio.run(service.poll_for_new_releases(trigger="manual"))
+            second = asyncio.run(service.poll_for_new_releases(trigger="manual"))
+
+        self.assertTrue(first.get("ok"))
+        self.assertEqual(first.get("new_release_count"), 1)
+        self.assertEqual(second.get("status"), "NO_NEW_RELEASE")
+        self.assertEqual(len(email.calls), 1)
+        self.assertEqual(
+            email.calls[0]["releases"][0]["release_key"],
+            "lalacore_rebuild|stable|all|android|1.0.0|1",
+        )
+
+    def test_app_update_release_notifier_force_resend_ignores_seen_keys(self):
+        class _FakeEmailService:
+            def __init__(self) -> None:
+                self.calls: list[dict] = []
+
+            def send_release_confirmation(self, **kwargs):
+                self.calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release confirmation sent",
+                }
+
+        csv_text = (
+            "enabled,app_id,channel,audience,platform,version,build_number,apk_url,force,message\n"
+            "TRUE,lalacore_rebuild,stable,teacher,android,1.0.0,1,https://example.com/teacher.apk,FALSE,Teacher update available\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            state = AutomationStateManager(path=str(Path(tmp) / "LC9_AUTOMATION_STATE.json"))
+            email = _FakeEmailService()
+            service = AppUpdateReleaseNotifierService(
+                state=state,
+                email_service=email,
+                fetcher=lambda url: csv_text,
+                sheet_url="https://example.com/updates.csv",
+            )
+
+            asyncio.run(service.poll_for_new_releases(trigger="manual"))
+            resent = asyncio.run(
+                service.poll_for_new_releases(
+                    trigger="manual",
+                    force_resend=True,
+                )
+            )
+
+        self.assertTrue(resent.get("ok"))
+        self.assertEqual(resent.get("new_release_count"), 1)
+        self.assertEqual(len(email.calls), 2)
+
     def test_feeder_enqueue_is_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -89,6 +179,308 @@ class AutomationTests(unittest.TestCase):
             self.assertTrue(out.get("ok"))
             self.assertTrue(out.get("skipped"))
             self.assertEqual(out.get("reason"), "not_due")
+
+    def test_atlas_maintenance_runs_once_per_window(self):
+        class _FakeAppData:
+            def __init__(self) -> None:
+                self.calls: list[dict] = []
+
+            async def handle_action(self, payload: dict) -> dict:
+                self.calls.append(payload)
+                return {
+                    "ok": True,
+                    "status": "SUCCESS",
+                    "incident_id": "atlas_incident_1",
+                    "mail_sent": True,
+                    "self_heal": {"applied_fix_count": 1},
+                }
+
+        class _FakeAuditor:
+            def expected_duration_seconds(self) -> int:
+                return 120
+
+            async def run(self) -> dict:
+                return {
+                    "overall_status": "healthy",
+                    "failing_areas": [],
+                    "degraded_areas": [],
+                    "artifacts_isolated": True,
+                    "areas": {
+                        "auth_login": {"status": "healthy", "iterations": 2},
+                        "ai_quiz_pipeline": {"status": "healthy", "iterations": 2},
+                    },
+                }
+
+        with tempfile.TemporaryDirectory() as tmp:
+            previous_tz = os.environ.get("ATLAS_MAINTENANCE_TZ")
+            os.environ["ATLAS_MAINTENANCE_TZ"] = "UTC"
+            try:
+                state = AutomationStateManager(path=str(Path(tmp) / "LC9_AUTOMATION_STATE.json"))
+                fake = _FakeAppData()
+                service = AtlasMaintenanceService(
+                    app_data=fake,
+                    state=state,
+                    auditor=_FakeAuditor(),
+                )
+                saturday_window = datetime(2026, 3, 28, 1, 15, tzinfo=timezone.utc)
+
+                first = asyncio.run(service.run_if_due(now=saturday_window))
+                second = asyncio.run(service.run_if_due(now=saturday_window))
+
+                self.assertTrue(first.get("ok"))
+                self.assertFalse(first.get("skipped", False))
+                self.assertTrue(second.get("skipped"))
+                self.assertEqual(second.get("reason"), "already_ran_this_window")
+                self.assertEqual(len(fake.calls), 1)
+            finally:
+                if previous_tz is None:
+                    os.environ.pop("ATLAS_MAINTENANCE_TZ", None)
+                else:
+                    os.environ["ATLAS_MAINTENANCE_TZ"] = previous_tz
+
+    def test_atlas_maintenance_lock_middleware_blocks_normal_routes(self):
+        class _FakeService:
+            def is_running(self) -> bool:
+                return True
+
+            def status_snapshot(self) -> dict:
+                return {
+                    "running": True,
+                    "phase": "auditing",
+                    "estimated_duration_minutes": 7.5,
+                }
+
+        app = FastAPI()
+        app.add_middleware(AtlasMaintenanceLockMiddleware, service=_FakeService())
+
+        @app.get("/health")
+        async def health():
+            return {"ok": True}
+
+        @app.get("/hello")
+        async def hello():
+            return {"ok": True}
+
+        @app.get("/ops/atlas-maintenance/status")
+        async def maintenance_status():
+            return {"ok": True}
+
+        with TestClient(app) as client:
+            blocked = client.get("/hello")
+            allowed_health = client.get("/health")
+            allowed_ops = client.get("/ops/atlas-maintenance/status")
+
+        self.assertEqual(blocked.status_code, 503)
+        self.assertEqual(blocked.json().get("status"), "MAINTENANCE")
+        self.assertEqual(allowed_health.status_code, 200)
+        self.assertEqual(allowed_ops.status_code, 200)
+
+    def test_maintenance_schedule_probe_accepts_schedule_response_shape(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        app_routes, live_classes_api = auditor._runtime_modules()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            app_data = LocalAppDataService(
+                assessments_file=root / "assessments.json",
+                materials_file=root / "materials.json",
+                live_class_schedule_file=root / "live_class_schedule.json",
+                uploads_file=root / "uploads.json",
+                ai_quizzes_file=root / "ai_quizzes.json",
+                results_file=root / "results.json",
+                teacher_review_file=root / "teacher_review.json",
+                import_drafts_file=root / "import_drafts.json",
+                import_question_bank_file=root / "import_question_bank.json",
+                storage_db_file=root / "app_data.sqlite3",
+            )
+            auth = LocalAuthService(
+                users_file=root / "users.json",
+                otp_file=root / "otp.json",
+                storage_db_file=root / "auth_store.sqlite3",
+            )
+            with auditor._isolated_backend(
+                app_data=app_data,
+                auth=auth,
+                app_routes=app_routes,
+                live_classes_api=live_classes_api,
+            ):
+                app = FastAPI()
+                app.include_router(app_routes.router)
+                app.include_router(live_classes_api.router)
+                with TestClient(app) as client:
+                    result = auditor._probe_schedule_pipeline(
+                        client,
+                        0,
+                        adaptive=False,
+                    )
+        self.assertTrue(result.get("ok"))
+        self.assertEqual(result.get("list_count"), 1)
+
+    def test_maintenance_live_class_signature_helper_ignores_valid_single_question_payload(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "live_class_ai",
+            1,
+            lambda idx, adaptive: {
+                "ok": True,
+                "degraded": False,
+                "explain_citations": 0,
+                "quiz_items": 1,
+                "quiz_detected": True,
+                "quiz_payload_shape": "single_question",
+                "provider_error_detected": False,
+            },
+        )
+        self.assertEqual(summary.get("status"), "healthy")
+        self.assertEqual(auditor._area_failure_signatures("live_class_ai", summary), [])
+
+    def test_maintenance_material_ai_signature_helper_flags_empty_modes(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "material_ai_pipeline",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "empty_modes": ["formula_sheet", "quiz_drill"],
+            },
+        )
+        signatures = auditor._area_failure_signatures("material_ai_pipeline", summary)
+        self.assertTrue(
+            any(sig.get("code") == "material_ai_mode_empty_output" for sig in signatures)
+        )
+
+    def test_maintenance_material_ai_query_signature_helper_flags_blank_output(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "material_ai_query_pipeline",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "answer_signal": 0,
+            },
+        )
+        signatures = auditor._area_failure_signatures(
+            "material_ai_query_pipeline",
+            summary,
+        )
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("material_ai_query_blank", codes)
+
+    def test_maintenance_teacher_authoring_signature_helper_flags_weak_questions(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "teacher_authoring_ai_pipeline",
+            1,
+            lambda idx, adaptive: {
+                "ok": True,
+                "degraded": True,
+                "question_count": 3,
+                "weak_question_count": 2,
+                "weak_question_indices": [1, 3],
+            },
+        )
+        signatures = auditor._area_failure_signatures(
+            "teacher_authoring_ai_pipeline",
+            summary,
+        )
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("teacher_authoring_ai_weak_questions", codes)
+
+    def test_maintenance_app_atlas_signature_helper_flags_invalid_plan(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "app_atlas_planner",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "plan_valid": False,
+                "disallowed_tool_count": 1,
+            },
+        )
+        signatures = auditor._area_failure_signatures("app_atlas_planner", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("app_atlas_plan_shape_invalid", codes)
+        self.assertIn("app_atlas_disallowed_tool_selected", codes)
+
+    def test_maintenance_app_atlas_signature_helper_tracks_truncated_plan_recovery(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "app_atlas_planner",
+            1,
+            lambda idx, adaptive: {
+                "ok": True,
+                "degraded": False,
+                "plan_valid": True,
+                "disallowed_tool_count": 0,
+                "recovery_mode": "tool_mentions_from_reasoning",
+            },
+        )
+        signatures = auditor._area_failure_signatures("app_atlas_planner", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("app_atlas_truncated_plan_recovered", codes)
+
+    def test_maintenance_attachment_import_signature_helper_flags_missing_questions(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "attachment_import_ai",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "question_count": 0,
+            },
+        )
+        signatures = auditor._area_failure_signatures("attachment_import_ai", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("attachment_import_ai_no_questions", codes)
+
+    def test_maintenance_live_class_support_signature_helper_flags_missing_evidence(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "live_class_support_ai",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "citation_count": 0,
+            },
+        )
+        signatures = auditor._area_failure_signatures("live_class_support_ai", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("live_class_support_missing_evidence", codes)
+
+    def test_maintenance_live_attachment_poll_signature_helper_flags_invalid_output(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "live_attachment_poll_ai",
+            1,
+            lambda idx, adaptive: {
+                "ok": False,
+                "degraded": True,
+                "option_count": 1,
+            },
+        )
+        signatures = auditor._area_failure_signatures("live_attachment_poll_ai", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("live_attachment_poll_invalid", codes)
+
+    def test_maintenance_live_agent_signature_helper_tracks_truncated_plan_recovery(self):
+        auditor = _AtlasPipelineMaintenanceAuditor()
+        summary = auditor._run_probe_series(
+            "live_class_agent_planner",
+            1,
+            lambda idx, adaptive: {
+                "ok": True,
+                "degraded": False,
+                "agent_plan_valid": True,
+                "recovery_mode": "tool_mentions_from_reasoning",
+            },
+        )
+        signatures = auditor._area_failure_signatures("live_class_agent_planner", summary)
+        codes = {sig.get("code") for sig in signatures}
+        self.assertIn("live_class_agent_truncated_plan_recovered", codes)
 
 
 if __name__ == "__main__":

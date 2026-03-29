@@ -1,11 +1,6 @@
-from services.context_builder import RetrievalContextBuilder
-from services.input_analyzer import InputAnalyzer
-from services.mcts_logger import MCTSLogger
-from services.question_normalizer import QuestionNormalizer
-from services.reasoning_graph_logger import ReasoningGraphLogger
-from services.question_search_engine import QuestionSearchEngine
-from services.search_cache import SearchCacheStore
-from services.solution_fetcher import SolutionFetcher
+from __future__ import annotations
+
+from importlib import import_module
 
 __all__ = [
     "InputAnalyzer",
@@ -17,3 +12,24 @@ __all__ = [
     "SearchCacheStore",
     "ReasoningGraphLogger",
 ]
+
+_EXPORTS = {
+    "InputAnalyzer": ("services.input_analyzer", "InputAnalyzer"),
+    "QuestionNormalizer": ("services.question_normalizer", "QuestionNormalizer"),
+    "QuestionSearchEngine": ("services.question_search_engine", "QuestionSearchEngine"),
+    "SolutionFetcher": ("services.solution_fetcher", "SolutionFetcher"),
+    "RetrievalContextBuilder": ("services.context_builder", "RetrievalContextBuilder"),
+    "MCTSLogger": ("services.mcts_logger", "MCTSLogger"),
+    "SearchCacheStore": ("services.search_cache", "SearchCacheStore"),
+    "ReasoningGraphLogger": ("services.reasoning_graph_logger", "ReasoningGraphLogger"),
+}
+
+
+def __getattr__(name: str):
+    if name not in _EXPORTS:
+        raise AttributeError(name)
+    module_name, attr_name = _EXPORTS[name]
+    module = import_module(module_name)
+    value = getattr(module, attr_name)
+    globals()[name] = value
+    return value

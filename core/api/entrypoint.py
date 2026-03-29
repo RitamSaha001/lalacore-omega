@@ -18,7 +18,7 @@ from engine.mcts_reasoner import MCTSSearch
 from core.api.persona_layer import apply_persona
 from core.lalacore_x.classifier import ProblemClassifier
 from core.lalacore_x.plausibility_checker import check_answer_plausibility
-from core.lalacore_x.providers import ProviderFabric
+from core.lalacore_x.providers import ProviderFabric, provider_runtime_budget
 from core.lalacore_x.retrieval import ConceptVault
 from core.lalacore_x.research_calibration import BayesianConfidenceAdjuster
 from core.lalacore_x.research_verifier import ResearchMetaVerifier
@@ -31,6 +31,9 @@ from core.multimodal.vision_router import VisionRouter
 from core.solver import solve_question
 from core.visualization import DesmosGraphBuilder
 from services.context_builder import RetrievalContextBuilder
+from services.atlas_action_controller import AtlasActionController
+from services.atlas_input_handler import AtlasInputHandler
+from services.atlas_memory_service import AtlasMemoryService
 from services.input_analyzer import InputAnalyzer
 from services.mcts_logger import MCTSLogger
 from services.question_normalizer import QuestionNormalizer
@@ -58,6 +61,9 @@ _SEARCH_CACHE = SearchCacheStore(ttl_days=7)
 _QUESTION_SEARCH_ENGINE = QuestionSearchEngine(cache_store=_SEARCH_CACHE)
 _SOLUTION_FETCHER = SolutionFetcher()
 _CONTEXT_BUILDER = RetrievalContextBuilder()
+_ATLAS_INPUT = AtlasInputHandler()
+_ATLAS_MEMORY = AtlasMemoryService()
+_ATLAS_ACTIONS = AtlasActionController()
 _GOT_ENGINE = GraphOfThoughtEngine(max_nodes=20)
 _MCTS_ENGINE = MCTSSearch(got_engine=_GOT_ENGINE, max_depth=8, max_nodes=200, max_iterations=50)
 _REASONING_GRAPH_LOGGER = ReasoningGraphLogger()
@@ -78,8 +84,8 @@ _DEFAULT_MAX_INPUT_CHARS = 18_000
 _DEFAULT_MULTIMODAL_MAX_INPUT_CHARS = 120_000
 _DEFAULT_MAX_IMAGE_BYTES = 10_000_000
 _DEFAULT_META_TIMEOUT_S = 8.0
-_DEFAULT_WEB_SEARCH_TIMEOUT_S = 1.60
-_DEFAULT_WEB_FETCH_TIMEOUT_S = 1.30
+_DEFAULT_WEB_SEARCH_TIMEOUT_S = 2.85
+_DEFAULT_WEB_FETCH_TIMEOUT_S = 1.85
 _DEFAULT_SEARCH_MAX_MATCHES = 14
 _DEFAULT_GOT_TIMEOUT_S = 1.20
 _DEFAULT_GOT_MAX_NODES = 20
@@ -245,6 +251,140 @@ def _json_sanitize(value: Any) -> Any:
     return str(value)
 
 
+def _clean_context_blocks(raw_blocks: Any) -> list[str]:
+    if not isinstance(raw_blocks, Sequence) or isinstance(raw_blocks, (str, bytes)):
+        return []
+    out: list[str] = []
+    for item in raw_blocks:
+        text = str(item or "").strip()
+        if not text:
+            continue
+        if text not in out:
+            out.append(text)
+    return out[:8]
+
+
+def _merge_student_profiles(*values: Any) -> dict[str, Any]:
+    merged: dict[str, Any] = {}
+    for value in values:
+        if not isinstance(value, dict):
+            continue
+        for key, raw in value.items():
+            token = str(key or "").strip()
+            if not token:
+                continue
+            if raw in (None, "", [], {}):
+                continue
+            if token in {"weak_concepts", "strong_concepts", "recent_doubt_topics", "recent_chat_topics"}:
+                current = merged.get(token)
+                items = list(current) if isinstance(current, list) else []
+                for item in raw if isinstance(raw, list) else [raw]:
+                    text = str(item or "").strip()
+                    if text and text not in items:
+                        items.append(text)
+                merged[token] = items
+                continue
+            if token == "concept_mastery" and isinstance(raw, dict):
+                current = dict(merged.get(token) or {})
+                for sub_key, sub_value in raw.items():
+                    try:
+                        current[str(sub_key)] = float(sub_value)
+                    except Exception:
+                        continue
+                merged[token] = current
+                continue
+            merged[token] = raw
+    return merged
+
+
+def _extract_reasoning_steps(text: str, *, cap: int = 8) -> list[str]:
+    rows: list[str] = []
+    for raw_line in str(text or "").splitlines():
+        line = str(raw_line or "").strip()
+        if not line:
+            continue
+        line = re.sub(r"^[\-\*\u2022]+\s*", "", line)
+        line = re.sub(r"^\d+[\.\)]\s*", "", line)
+        if line and line not in rows:
+            rows.append(line)
+        if len(rows) >= cap:
+            return rows
+    for part in re.split(r"(?<=[\.\!\?])\s+", str(text or "").strip()):
+        line = str(part or "").strip()
+        if not line or line in rows:
+            continue
+        rows.append(line)
+        if len(rows) >= cap:
+            break
+    return rows
+
+
+def _derive_concepts(
+    *,
+    profile: Dict[str, Any],
+    atlas_context: Dict[str, Any],
+    student_profile: Dict[str, Any],
+) -> list[str]:
+    items: list[str] = []
+    subject = str(profile.get("subject") or "").strip()
+    if subject:
+        items.append(subject)
+    for source in (
+        atlas_context.get("concept_hints"),
+        student_profile.get("weak_concepts"),
+        student_profile.get("strong_concepts"),
+    ):
+        if not isinstance(source, list):
+            continue
+        for item in source:
+            text = str(item or "").strip()
+            if text and text not in items:
+                items.append(text)
+            if len(items) >= 10:
+                return items
+    return items
+
+
+def _risk_label(risk_score: float) -> str:
+    risk = float(max(0.0, min(1.0, risk_score)))
+    if risk <= 0.18:
+        return "low"
+    if risk <= 0.42:
+        return "moderate"
+    return "high"
+
+
+def _build_source_groups(
+    *,
+    citations: Sequence[Dict[str, Any]],
+    formulas: Sequence[str],
+    hint: str,
+    solution_excerpt: str,
+) -> Dict[str, list[Dict[str, Any]]]:
+    formula_groups: list[Dict[str, Any]] = []
+    explanation_groups: list[Dict[str, Any]] = []
+    example_groups: list[Dict[str, Any]] = []
+    for row in citations:
+        if not isinstance(row, dict):
+            continue
+        item = {
+            "source": str(row.get("source") or ""),
+            "title": str(row.get("title") or ""),
+            "url": str(row.get("url") or ""),
+            "similarity": float(row.get("similarity", 0.0) or 0.0),
+        }
+        explanation_groups.append(item)
+        if len(formulas) and len(formula_groups) < 3:
+            formula_groups.append(item)
+        if (hint or solution_excerpt) and len(example_groups) < 3:
+            example_groups.append(item)
+    return {
+        "formula": formula_groups[:3],
+        "explanation": explanation_groups[:4],
+        "examples": example_groups[:3],
+    }
+
+
 def _should_require_citations(
     *,
     options: Dict[str, Any],
@@ -278,6 +418,10 @@ def _should_require_citations(
         if subject in {"mathematics", "math"} and verified:
             return False
         return False
+    if raw_token in {"none", "false", "off", "disabled", "no"}:
+        return False
+    if raw_token in {"required", "true", "on", "enabled", "yes", "strict", "soft"}:
+        return True
     return bool(raw)
 
 
@@ -444,8 +588,12 @@ class PipelineConfig:
     mcts_provider_reasoning: bool
     mcts_developer_mode: bool
     optional_web_snippets: list[Any]
+    auxiliary_reasoning_blocks: list[str]
     similarity_threshold: float
     enable_verification_reevaluation: bool
+    solve_stage_timeout_s: float | None
+    solve_reevaluation_timeout_s: float | None
+    provider_timeout_overrides: Dict[str, float]
 
     @classmethod
     def from_options(cls, options: Dict[str, Any]) -> "PipelineConfig":
@@ -539,12 +687,41 @@ class PipelineConfig:
             optional_web_snippets, (str, bytes)
         ):
             optional_web_snippets = []
-        similarity_threshold_raw = options.get("web_similarity_threshold", 0.75)
+        auxiliary_reasoning_blocks = _clean_context_blocks(
+            options.get("auxiliary_reasoning_blocks")
+            or options.get("context_prefix_blocks")
+        )
+        similarity_threshold_raw = options.get("web_similarity_threshold", 0.68)
         try:
             similarity_threshold = float(similarity_threshold_raw)
         except (TypeError, ValueError):
-            similarity_threshold = 0.75
+            similarity_threshold = 0.68
         similarity_threshold = float(max(0.4, min(0.95, similarity_threshold)))
+        solve_stage_timeout_raw = options.get("solve_stage_timeout_s")
+        solve_stage_timeout_s = (
+            float(max(1.0, solve_stage_timeout_raw))
+            if solve_stage_timeout_raw not in (None, "", False)
+            else None
+        )
+        solve_reevaluation_timeout_raw = options.get("solve_reevaluation_timeout_s")
+        solve_reevaluation_timeout_s = (
+            float(max(1.0, solve_reevaluation_timeout_raw))
+            if solve_reevaluation_timeout_raw not in (None, "", False)
+            else None
+        )
+        provider_timeout_overrides: Dict[str, float] = {}
+        raw_provider_timeout_overrides = options.get("provider_timeout_overrides")
+        if isinstance(raw_provider_timeout_overrides, dict):
+            for raw_key, raw_value in raw_provider_timeout_overrides.items():
+                key = str(raw_key or "").strip().lower()
+                if not key:
+                    continue
+                try:
+                    timeout_value = float(raw_value)
+                except (TypeError, ValueError):
+                    continue
+                if timeout_value > 0.0:
+                    provider_timeout_overrides[key] = timeout_value
 
         return cls(
             max_input_chars=max_input_chars,
@@ -568,10 +745,14 @@ class PipelineConfig:
             mcts_provider_reasoning=mcts_provider_reasoning,
             mcts_developer_mode=mcts_developer_mode,
             optional_web_snippets=list(optional_web_snippets),
+            auxiliary_reasoning_blocks=auxiliary_reasoning_blocks,
             similarity_threshold=similarity_threshold,
             enable_verification_reevaluation=bool(
                 options.get("enable_verification_reevaluation", True)
             ),
+            solve_stage_timeout_s=solve_stage_timeout_s,
+            solve_reevaluation_timeout_s=solve_reevaluation_timeout_s,
+            provider_timeout_overrides=provider_timeout_overrides,
         )
 
 
@@ -587,14 +768,18 @@ class PipelineState:
     stage_failures: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     intake: IntakePayload | None = None
     question_text: str = ""
+    clean_question_text: str = ""
     input_analysis: Dict[str, Any] = field(default_factory=dict)
     normalized_question: Dict[str, Any] = field(default_factory=dict)
+    retrieval_question_normalized: Dict[str, Any] = field(default_factory=dict)
     ocr_data: Dict[str, Any] | None = None
     pdf_data: Dict[str, Any] | None = None
     pdf_primary_ocr: Dict[str, Any] | None = None
     vision_analysis: Dict[str, Any] | None = None
     profile: Any = None
     profile_dict: Dict[str, Any] = field(default_factory=dict)
+    atlas_input_context: Dict[str, Any] = field(default_factory=dict)
+    student_profile: Dict[str, Any] = field(default_factory=dict)
     vault_blocks: list[Any] = field(default_factory=list)
     vault_context_payload: Dict[str, Any] = field(default_factory=dict)
     web_search_payload: Dict[str, Any] = field(default_factory=_default_web_search_payload)
@@ -612,6 +797,7 @@ class PipelineState:
     research_verification: Dict[str, Any] = field(default_factory=dict)
     calibration_metrics: Dict[str, Any] = field(default_factory=dict)
     meta_verification: Dict[str, Any] = field(default_factory=dict)
+    atlas_actions: Dict[str, Any] = field(default_factory=dict)
     final_output: Dict[str, Any] = field(default_factory=dict)
     terminal_response: Dict[str, Any] | None = None
 
@@ -669,6 +855,23 @@ class LalaCorePipelineController:
             }
         finally:
             await self._cleanup(state)
+
+    async def _solve_with_request_budget(
+        self,
+        *,
+        prompt: str,
+        state: PipelineState,
+        timeout_s: float | None,
+    ) -> Dict[str, Any]:
+        async def _call() -> Dict[str, Any]:
+            with provider_runtime_budget(
+                timeout_overrides=state.config.provider_timeout_overrides
+            ):
+                return await solve_question(prompt)
+
+        if timeout_s is not None and float(timeout_s) > 0.0:
+            return await asyncio.wait_for(_call(), timeout=float(timeout_s))
+        return await _call()
 
     async def _run_stage(
         self,
@@ -999,7 +1202,10 @@ class LalaCorePipelineController:
             pdf_data=state.pdf_data,
         )
         state.normalized_question = _QUESTION_NORMALIZER.normalize(question_text)
-        state.profile = _CLASSIFIER.classify(question_text)
+        question_for_profile = str(
+            state.normalized_question.get("stem") or question_text
+        ).strip()
+        state.profile = _CLASSIFIER.classify(question_for_profile)
         state.profile_dict = {
             "subject": state.profile.subject,
             "difficulty": state.profile.difficulty,
@@ -1047,6 +1253,88 @@ class LalaCorePipelineController:
                 state.vision_analysis, state.ocr_data
             )
 
+        atlas_input = _ATLAS_INPUT.build(
+            question_text=state.question_text,
+            normalized_question=state.normalized_question,
+            ocr_data=state.ocr_data,
+            pdf_data=state.pdf_data,
+            vision_analysis=state.vision_analysis,
+            user_context=state.user_context,
+        )
+        state.clean_question_text = (
+            atlas_input.clean_question.strip() or state.question_text
+        )
+        state.retrieval_question_normalized = _QUESTION_NORMALIZER.normalize(
+            atlas_input.retrieval_question or state.clean_question_text
+        )
+        state.atlas_input_context = {
+            "clean_question": state.clean_question_text,
+            "retrieval_question": str(
+                atlas_input.retrieval_question or state.clean_question_text
+            ).strip(),
+            "context_blocks": list(atlas_input.context_blocks),
+            "concept_hints": list(atlas_input.concept_hints),
+            "equation_hints": list(atlas_input.equation_hints),
+            "question_boundaries": list(atlas_input.question_boundaries),
+            "source_metadata": dict(atlas_input.source_metadata),
+        }
+        retrieval_query_override = str(
+            state.options.get("retrieval_query_override") or ""
+        ).strip()
+        if retrieval_query_override:
+            state.retrieval_question_normalized = _QUESTION_NORMALIZER.normalize(
+                retrieval_query_override
+            )
+            state.atlas_input_context["retrieval_question"] = retrieval_query_override
+            state.atlas_input_context["retrieval_query_override"] = True
+        profile_from_context = {}
+        if isinstance(state.user_context.get("student_profile"), dict):
+            profile_from_context = dict(state.user_context.get("student_profile") or {})
+        mastery_snapshot = (
+            dict(state.user_context.get("mastery_snapshot") or {})
+            if isinstance(state.user_context.get("mastery_snapshot"), dict)
+            else {}
+        )
+        mastery_weak = [
+            str(item).strip()
+            for item in (mastery_snapshot.get("weakest_concepts") or [])
+            if str(item).strip()
+        ]
+        profile_from_mastery = {
+            "weak_concepts": mastery_weak,
+            "preferred_style": str(
+                mastery_snapshot.get("preferred_style")
+                or state.user_context.get("preferred_style")
+                or ""
+            ).strip(),
+        }
+        state.student_profile = _merge_student_profiles(
+            _ATLAS_MEMORY.build_student_profile(
+                user_context=state.user_context,
+                fallback_profile=profile_from_context,
+            ),
+            profile_from_context,
+            profile_from_mastery,
+        )
+        state.input_analysis.update(
+            {
+                "clean_question": state.clean_question_text,
+                "retrieval_question": state.atlas_input_context.get(
+                    "retrieval_question", ""
+                ),
+                "retrieval_query_override": bool(
+                    state.atlas_input_context.get("retrieval_query_override", False)
+                ),
+                "question_boundaries_detected": len(
+                    state.atlas_input_context.get("question_boundaries", [])
+                ),
+                "equation_count": len(
+                    state.atlas_input_context.get("equation_hints", [])
+                ),
+                "student_profile_available": bool(state.student_profile),
+            }
+        )
+
         state.intake = IntakePayload(
             input_type=intake.input_type,
             text=intake.text,
@@ -1057,22 +1345,37 @@ class LalaCorePipelineController:
         return {
             "detected_type": intake.input_type,
             "question_length": len(state.question_text),
+            "clean_question_length": len(state.clean_question_text),
             "normalized_search_query": str(
-                state.normalized_question.get("search_query") or ""
+                state.retrieval_question_normalized.get("search_query")
+                or state.normalized_question.get("search_query")
+                or ""
             )[:180],
             "profile": dict(state.profile_dict),
             "ocr_available": state.ocr_data is not None,
             "pdf_available": state.pdf_data is not None,
             "vision_available": state.vision_analysis is not None,
+            "student_profile_available": bool(state.student_profile),
         }
 
     async def _stage_retrieval_and_context(self, state: PipelineState) -> Dict[str, Any]:
+        retrieval_question = str(
+            state.atlas_input_context.get("retrieval_question")
+            or state.clean_question_text
+            or state.question_text
+        ).strip()
+        retrieval_normalized = (
+            dict(state.retrieval_question_normalized)
+            if state.retrieval_question_normalized
+            else dict(state.normalized_question)
+        )
+
         async def _vault_task():
             t0 = perf_counter()
             try:
                 return await asyncio.to_thread(
                     _CONCEPT_VAULT.retrieve,
-                    state.question_text,
+                    retrieval_question,
                     str(getattr(state.profile, "subject", "general")),
                     5,
                 )
@@ -1088,7 +1391,7 @@ class LalaCorePipelineController:
             t0 = perf_counter()
             try:
                 return await _QUESTION_SEARCH_ENGINE.search(
-                    state.normalized_question,
+                    retrieval_normalized,
                     max_matches=state.config.search_max_matches,
                     query_timeout_s=state.config.web_search_timeout_s,
                 )
@@ -1159,7 +1462,7 @@ class LalaCorePipelineController:
         )
         state.vault_context_payload = _build_vault_context_payload(state.vault_blocks)
         state.context_payload = _CONTEXT_BUILDER.build(
-            original_question=state.question_text,
+            original_question=retrieval_question,
             search_payload=state.web_search_payload,
             fetched_solution=state.fetched_solution,
         )
@@ -1169,6 +1472,25 @@ class LalaCorePipelineController:
             prompt_sections.append(str(state.vault_context_payload["context_block"]))
         if state.context_payload.get("context_block"):
             prompt_sections.append(str(state.context_payload["context_block"]))
+        prompt_sections.extend(
+            str(block).strip()
+            for block in (state.atlas_input_context.get("context_blocks") or [])
+            if str(block).strip()
+        )
+        if state.student_profile:
+            profile_lines = ["STUDENT PROFILE:"]
+            for label, value in (
+                ("Weak concepts", ", ".join(state.student_profile.get("weak_concepts", [])[:5])),
+                ("Strong concepts", ", ".join(state.student_profile.get("strong_concepts", [])[:4])),
+                ("Preferred style", str(state.student_profile.get("preferred_style") or "")),
+                ("Explanation depth", str(state.student_profile.get("explanation_depth") or "")),
+                ("Recent doubt topics", " | ".join(state.student_profile.get("recent_doubt_topics", [])[:4])),
+            ):
+                if str(value or "").strip():
+                    profile_lines.append(f"- {label}: {value}")
+            if len(profile_lines) > 1:
+                prompt_sections.append("\n".join(profile_lines))
+        prompt_sections.extend(state.config.auxiliary_reasoning_blocks)
         prompt_sections.append(f"User Question:\n{state.question_text}")
         state.final_prompt = "\n\n".join(
             section.strip() for section in prompt_sections if str(section).strip()
@@ -1185,8 +1507,14 @@ class LalaCorePipelineController:
             "vault_blocks": len(state.vault_blocks),
             "web_matches": len(state.web_search_payload.get("matches", []) or []),
             "context_injected": bool(state.context_payload.get("context_block"))
-            or bool(state.vault_context_payload.get("context_block")),
+            or bool(state.vault_context_payload.get("context_block"))
+            or bool(state.atlas_input_context.get("context_blocks"))
+            or bool(state.config.auxiliary_reasoning_blocks),
             "evidence_score": float(state.evidence_metrics.get("score", 0.0) or 0.0),
+            "auxiliary_reasoning_blocks": len(
+                state.config.auxiliary_reasoning_blocks
+            ),
+            "retrieval_question": retrieval_question[:220],
         }
 
     async def _stage_multi_reasoning_generation(
@@ -1352,7 +1680,11 @@ class LalaCorePipelineController:
 
     async def _stage_provider_arena(self, state: PipelineState) -> Dict[str, Any]:
         ts = perf_counter()
-        solve_result = await solve_question(state.final_prompt)
+        solve_result = await self._solve_with_request_budget(
+            prompt=state.final_prompt,
+            state=state,
+            timeout_s=state.config.solve_stage_timeout_s,
+        )
         state.stage_timing["solver_s"] = float(max(0.0, perf_counter() - ts))
         _TELEMETRY.log_timing(
             stage="solver",
@@ -1436,7 +1768,11 @@ class LalaCorePipelineController:
                 solve_result=state.solve_result,
                 explicit_verification=state.explicit_verification,
             )
-            reevaluated_result = await solve_question(reevaluation_prompt)
+            reevaluated_result = await self._solve_with_request_budget(
+                prompt=reevaluation_prompt,
+                state=state,
+                timeout_s=state.config.solve_reevaluation_timeout_s,
+            )
             if isinstance(reevaluated_result, dict):
                 reevaluated_verification = await asyncio.to_thread(
                     verify_solution,
@@ -1891,12 +2227,16 @@ class LalaCorePipelineController:
             "enabled": bool(state.config.web_retrieval_enabled),
             "query": str(
                 state.web_search_payload.get("query")
+                or state.retrieval_question_normalized.get("search_query")
                 or state.normalized_question.get("search_query")
                 or ""
             ),
             "cache_hit": bool(state.web_search_payload.get("cache_hit", False)),
             "input_analysis": _json_sanitize(dict(state.input_analysis)),
-            "normalized_question": _json_sanitize(dict(state.normalized_question)),
+            "normalized_question": _json_sanitize(
+                dict(state.retrieval_question_normalized or state.normalized_question)
+            ),
+            "clean_question": str(state.clean_question_text or state.question_text),
             "matches": web_matches[:8],
             "solution": {
                 "hint": str(state.fetched_solution.get("hint") or ""),
@@ -1918,7 +2258,8 @@ class LalaCorePipelineController:
                 ][:8],
             },
             "context_block": str(state.context_payload.get("context_block") or ""),
-            "context_injected": bool(state.context_payload.get("context_block")),
+            "context_injected": bool(state.context_payload.get("context_block"))
+            or bool(state.atlas_input_context.get("context_blocks")),
             "citations": [
                 _json_sanitize(dict(row))
                 for row in (state.context_payload.get("citations") or [])
@@ -1931,6 +2272,7 @@ class LalaCorePipelineController:
             ],
             "mismatch_with_verified_answer": bool(mismatch_with_verified_answer),
             "evidence": _json_sanitize(dict(state.evidence_metrics)),
+            "retrieval_score": float(state.evidence_metrics.get("score", 0.0) or 0.0),
             "latency_s": {
                 "search": float(state.stage_timing.get("web_search_s", 0.0)),
                 "fetch": float(state.stage_timing.get("web_fetch_s", 0.0)),
@@ -1962,12 +2304,66 @@ class LalaCorePipelineController:
         effective_verification = dict(base_verification)
         effective_verification["raw_risk_score"] = raw_risk
         effective_verification["risk_score"] = effective_risk
+        visualization = _DESMOS.build(
+            question=state.question_text, profile=state.profile_dict
+        )
+        quality_gate_reasons = [
+            str(item).strip().lower()
+            for item in (quality_gate.get("reasons") or [])
+            if str(item).strip()
+        ]
+        explanation_text = str(
+            solve_result.get("explanation")
+            or solve_result.get("reasoning")
+            or solve_result.get("solution")
+            or ""
+        ).strip()
+        final_answer_text = str(solve_result.get("final_answer", "")).strip()
+        placeholder_final_answer = final_answer_text.lower().startswith(
+            "uncertain answer:"
+        ) or final_answer_text.lower().startswith(
+            "insufficient evidence to answer"
+        )
+        placeholder_explanation = explanation_text.lower().startswith(
+            "provider error:"
+        )
+        graph_supported_output = bool(
+            visualization is not None
+            and final_answer_text
+            and explanation_text
+            and not placeholder_final_answer
+            and not placeholder_explanation
+            and "all_provider_answers_empty" not in quality_gate_reasons
+            and "empty_final_answer" not in quality_gate_reasons
+        )
 
         suppress_failed_answer = bool(
             quality_failed
             and not bool(effective_verification.get("verified", False))
             and (low_confidence_guard or high_risk_guard or disagreement_guard)
         )
+        if suppress_failed_answer and graph_supported_output:
+            reasons = [
+                str(item)
+                for item in (quality_gate.get("reasons") or [])
+                if str(item).strip()
+            ]
+            if "graph_metadata_override" not in reasons:
+                reasons.append("graph_metadata_override")
+            quality_gate.update(
+                {
+                    "graph_supported_output": True,
+                    "graph_metadata_attached": True,
+                    "output_suppressed": False,
+                    "final_status": "Warning",
+                    "reasons": reasons,
+                }
+            )
+            solve_result["quality_gate"] = quality_gate
+            solve_result["final_status"] = "Warning"
+            solve_result["escalate"] = bool(solve_result.get("escalate", False))
+            state.meta_verification["graph_metadata_override"] = True
+            suppress_failed_answer = False
         empty_final_answer_guard = bool(
             (not str(solve_result.get("final_answer", "")).strip())
             and not bool(effective_verification.get("verified", False))
@@ -2041,6 +2437,32 @@ class LalaCorePipelineController:
             )
             solve_result["quality_gate"] = quality_gate
 
+        explanation_text = str(
+            solve_result.get("explanation")
+            or solve_result.get("reasoning")
+            or solve_result.get("solution")
+            or ""
+        ).strip()
+        steps = _extract_reasoning_steps(explanation_text)
+        concepts = _derive_concepts(
+            profile=state.profile_dict,
+            atlas_context=state.atlas_input_context,
+            student_profile=state.student_profile,
+        )
+        source_groups = _build_source_groups(
+            citations=web_retrieval.get("citations", []),
+            formulas=state.context_payload.get("formulas", []),
+            hint=str(state.context_payload.get("hint") or ""),
+            solution_excerpt=str(state.context_payload.get("solution_excerpt") or ""),
+        )
+        state.atlas_actions = _ATLAS_ACTIONS.plan(
+            question=state.question_text,
+            concepts=concepts,
+            student_profile=state.student_profile,
+            verification=effective_verification,
+            calibration_metrics=state.calibration_metrics,
+            research_verification=state.research_verification,
+        )
         enable_citation_map = bool(
             state.options.get(
                 "enable_citation_map",
@@ -2069,6 +2491,13 @@ class LalaCorePipelineController:
             if (suppress_failed_answer or empty_final_answer_guard)
             else "ok",
             "question": state.question_text,
+            "clean_question": state.clean_question_text or state.question_text,
+            "answer": str(solve_result.get("final_answer", "")),
+            "steps": steps,
+            "concepts": concepts,
+            "confidence": round(float(effective_confidence), 6),
+            "risk": _risk_label(effective_risk),
+            "retrieval_score": float(state.evidence_metrics.get("score", 0.0) or 0.0),
             "verification": effective_verification,
             "input_metadata": multimodal,
             "input_analysis": state.input_analysis,
@@ -2093,6 +2522,19 @@ class LalaCorePipelineController:
                 "min_score": float(min_evidence_score),
                 "min_citations": int(min_citations),
             },
+            "source_groups": source_groups,
+            "student_profile": state.student_profile,
+            "atlas_actions": state.atlas_actions,
+            "atlas_context": {
+                "concept_hints": state.atlas_input_context.get("concept_hints", []),
+                "equation_hints": state.atlas_input_context.get("equation_hints", []),
+                "question_boundaries": state.atlas_input_context.get(
+                    "question_boundaries", []
+                ),
+                "source_metadata": state.atlas_input_context.get(
+                    "source_metadata", {}
+                ),
+            },
             "entropy": entropy,
             "disagreement": disagreement,
             "latency_metrics": dict(state.stage_timing),
@@ -2108,12 +2550,7 @@ class LalaCorePipelineController:
                 "reevaluation": _json_sanitize(state.reevaluation),
             }
         out = _json_sanitize(out)
-        visualization = _DESMOS.build(
-            question=state.question_text, profile=state.profile_dict
-        )
         if visualization is not None:
-            out["answer"] = str(out.get("final_answer", ""))
-            out["confidence"] = round(float(effective_confidence), 6)
             out["visualization"] = visualization
 
         response_style = str(state.options.get("response_style", "") or "").strip().lower()
@@ -2315,6 +2752,17 @@ async def lalacore_entry(
     Unified public entrypoint for app integration.
     """
 
+    timeout_override = None
+    if isinstance(options, dict):
+        timeout_override = options.get("pipeline_timeout_s")
+    if timeout_override not in (None, "", False):
+        try:
+            pipeline_timeout_s = float(max(1.0, timeout_override))
+        except (TypeError, ValueError):
+            pipeline_timeout_s = float(_PIPELINE_TIMEOUT_S)
+    else:
+        pipeline_timeout_s = float(_PIPELINE_TIMEOUT_S)
+
     async def _run_pipeline() -> Dict[str, Any]:
         async with _PIPELINE_SEMAPHORE:
             return await _PIPELINE_CONTROLLER.execute(
@@ -2325,21 +2773,21 @@ async def lalacore_entry(
             )
 
     try:
-        return await asyncio.wait_for(_run_pipeline(), timeout=_PIPELINE_TIMEOUT_S)
+        return await asyncio.wait_for(_run_pipeline(), timeout=pipeline_timeout_s)
     except asyncio.TimeoutError:
         _TELEMETRY.log_event(
             "pipeline_timeout",
             {
-                "timeout_s": float(_PIPELINE_TIMEOUT_S),
+                "timeout_s": float(pipeline_timeout_s),
                 "input_type": str(input_type or "auto"),
             },
         )
         return {
             "status": "error",
             "error": "pipeline_timeout",
-            "message": f"Pipeline exceeded {_PIPELINE_TIMEOUT_S:.1f}s timeout.",
+            "message": f"Pipeline exceeded {pipeline_timeout_s:.1f}s timeout.",
             "input_metadata": {"detected_type": str(input_type or "auto")},
-            "latency_metrics": {"timeout_s": float(_PIPELINE_TIMEOUT_S)},
+            "latency_metrics": {"timeout_s": float(pipeline_timeout_s)},
         }
     except Exception as exc:
         _TELEMETRY.log_event(
@@ -2604,6 +3052,18 @@ async def _warm_provider_availability() -> Dict[str, Any]:
     except Exception:
         providers = []
     return {"providers": [str(p) for p in providers if str(p).strip()], "ok": bool(providers)}
+
+
+async def warm_atlas_runtime() -> Dict[str, Any]:
+    provider_report, retrieval_report = await asyncio.gather(
+        _warm_provider_availability(),
+        _QUESTION_SEARCH_ENGINE.warm(),
+        return_exceptions=True,
+    )
+    return {
+        "providers": provider_report if isinstance(provider_report, dict) else {},
+        "retrieval": retrieval_report if isinstance(retrieval_report, dict) else {},
+    }
 
 
 def _normalize_answer_token(value: Any) -> str:

@@ -52,6 +52,13 @@ class SolverFixTests(unittest.TestCase):
         self.assertTrue(report["plausible"])
         self.assertNotIn("too_short", report["issues"])
 
+    def test_counting_set_question_stays_numeric_not_list(self):
+        question = "How many onto functions are there from a 5-element set to a 3-element set?"
+        report = check_answer_plausibility(question, "150", {"observed_type": "numeric"})
+        self.assertTrue(report["plausible"])
+        self.assertEqual(report["expected_type"], "numeric")
+        self.assertNotIn("expected_list_type", report["issues"])
+
     def test_solution_prompt_not_forced_numeric(self):
         question = "Find x if sin^(-1)(x)+cos^(-1)(x)=pi."
         answer = "no real solution"
@@ -72,6 +79,14 @@ class SolverFixTests(unittest.TestCase):
         out = extract_answer(question, raw, {"numeric_expected": False})
         self.assertTrue(out["matched"])
         self.assertEqual(out["final_answer"], "A, B and D")
+
+    def test_extraction_for_counting_set_question_prefers_numeric_answer(self):
+        question = "How many onto functions are there from a 5-element set to a 3-element set?"
+        raw = "Reasoning: Use inclusion-exclusion.\nFinal Answer: 150"
+        out = extract_answer(question, raw, {"numeric_expected": False})
+        self.assertTrue(out["matched"])
+        self.assertEqual(out["expected_type"], "numeric")
+        self.assertEqual(out["final_answer"], "150")
 
     def test_escalation_on_unverified_high_risk(self):
         policy = SolvePipelinePolicy()

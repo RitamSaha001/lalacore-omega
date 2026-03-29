@@ -5,7 +5,7 @@ import html
 import re
 from typing import Any, Dict, List, Sequence
 
-import httpx
+from core.network.resilient_http import request_async
 
 
 class SolutionFetcher:
@@ -41,7 +41,7 @@ class SolutionFetcher:
 
         top = matches[: min(4, len(matches))]
         results = await self._fetch_many(top, timeout_s=timeout_s)
-        best = self._pick_best(results)
+        best = self._pick_best(results, search_payload=search_payload)
         if not best:
             return {
                 "solution_text": "",
@@ -73,19 +73,21 @@ class SolutionFetcher:
     async def _fetch_many(self, matches: Sequence[Dict[str, Any]], *, timeout_s: float) -> List[Dict[str, Any]]:
         async def _single(match: Dict[str, Any]) -> Dict[str, Any]:
             url = str(match.get("url") or "").strip()
+            fetch_url = str(match.get("fetch_url") or url).strip()
             if not url.startswith(("http://", "https://")):
                 return {"ok": False, "source_url": url, "source": str(match.get("source") or "")}
             try:
-                timeout = httpx.Timeout(timeout=max(0.5, timeout_s), connect=max(0.4, timeout_s * 0.6))
-                async with httpx.AsyncClient(follow_redirects=True, timeout=timeout) as client:
-                    response = await client.get(
-                        url,
-                        headers={
-                            "User-Agent": "Mozilla/5.0 (LalaCore/1.0; +https://lalacore.local)",
-                            "Accept-Language": "en-US,en;q=0.9",
-                        },
-                    )
-                    raw = response.text or ""
+                response = await request_async(
+                    "GET",
+                    fetch_url,
+                    headers={
+                        "User-Agent": "Mozilla/5.0 (LalaCore/1.0; +https://lalacore.local)",
+                        "Accept-Language": "en-US,en;q=0.9",
+                    },
+                    timeout_s=max(0.5, timeout_s),
+                    follow_redirects=True,
+                )
+                raw = response.text or ""
             except Exception:
                 return {"ok": False, "source_url": url, "source": str(match.get("source") or "")}
 
@@ -107,6 +109,10 @@ class SolutionFetcher:
                 "ok": True,
                 "source_url": url,
                 "source": str(match.get("source") or ""),
+                "title": str(match.get("title") or ""),
+                "snippet": str(match.get("snippet") or ""),
+                "query_variant": str(match.get("query_variant") or ""),
+                "similarity": float(match.get("similarity", 0.0) or 0.0),
                 "answer": answer,
                 "hint": hint,
                 "solution_text": solution_text,
@@ -127,19 +133,78 @@ class SolutionFetcher:
                 out.append(row)
         return out
 
-    def _pick_best(self, rows: Sequence[Dict[str, Any]]) -> Dict[str, Any] | None:
+    def _pick_best(
+        self,
+        rows: Sequence[Dict[str, Any]],
+        *,
+        search_payload: Dict[str, Any] | None = None,
+    ) -> Dict[str, Any] | None:
         usable = [row for row in rows if isinstance(row, dict) and bool(row.get("ok"))]
         if not usable:
             return None
+        signals = dict((search_payload or {}).get("query_signals") or {})
+        semantic_tokens = self._tokenize(str(signals.get("semantic_query") or ""))
+        stem_tokens = self._tokenize(str(signals.get("stem") or signals.get("search_query") or ""))
+        equation_tokens = self._equation_tokens(
+            str(signals.get("equation_query") or signals.get("math_only_query") or "")
+        )
         usable.sort(
             key=lambda row: (
-                float(row.get("confidence", 0.0)),
+                round(
+                    float(row.get("confidence", 0.0))
+                    + (0.18 * self._overlap_score(semantic_tokens, self._tokenize(self._row_text(row))))
+                    + (0.14 * self._overlap_score(stem_tokens, self._tokenize(self._row_text(row))))
+                    + (0.16 * self._equation_overlap_score(equation_tokens, self._row_text(row))),
+                    6,
+                ),
+                1.0 if str(row.get("query_variant", "")).strip().lower() in {"equation", "semantic_equation"} else 0.0,
                 1.0 if str(row.get("solution_text", "")).strip() else 0.0,
                 1.0 if str(row.get("answer", "")).strip() else 0.0,
             ),
             reverse=True,
         )
         return usable[0]
+
+    def _row_text(self, row: Dict[str, Any]) -> str:
+        return " ".join(
+            part
+            for part in (
+                str(row.get("title") or ""),
+                str(row.get("snippet") or ""),
+                str(row.get("answer") or ""),
+                str(row.get("hint") or ""),
+                str(row.get("solution_text") or ""),
+                " ".join(str(x) for x in (row.get("formulas") or [])[:8]),
+            )
+            if part
+        ).strip()
+
+    def _tokenize(self, text: str) -> set[str]:
+        return {
+            tok
+            for tok in re.findall(r"[a-z0-9_+\-*/=^]+", str(text or "").lower())
+            if len(tok) >= 2
+        }
+
+    def _equation_tokens(self, text: str) -> set[str]:
+        return {
+            tok
+            for tok in re.findall(r"[a-z0-9^]+", str(text or "").lower())
+            if tok not in {"x", "y"} and len(tok) >= 1
+        }
+
+    def _overlap_score(self, wanted: set[str], observed: set[str]) -> float:
+        if not wanted or not observed:
+            return 0.0
+        hits = len(wanted.intersection(observed))
+        return float(hits / max(1, len(wanted)))
+
+    def _equation_overlap_score(self, wanted: set[str], row_text: str) -> float:
+        if not wanted:
+            return 0.0
+        low = str(row_text or "").lower()
+        hits = sum(1 for tok in wanted if tok in low)
+        return float(hits / max(1, len(wanted)))
 
     def _clean_html(self, raw_html: str) -> str:
         text = str(raw_html or "")

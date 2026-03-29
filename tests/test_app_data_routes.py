@@ -14,12 +14,14 @@ os.environ.setdefault("OTP_EMAIL_ENABLED", "false")
 import app.routes as routes  # noqa: E402
 from app.data.local_app_data_service import LocalAppDataService  # noqa: E402
 from app.main import app  # noqa: E402
+from app.storage.sqlite_json_store import SQLiteJsonBlobStore  # noqa: E402
 
 
 class AppDataRoutesTests(unittest.TestCase):
     def setUp(self) -> None:
         self._tmp = tempfile.TemporaryDirectory()
         root = Path(self._tmp.name)
+        auth_root = root / "auth"
         self._original = routes._APP_DATA
         routes._APP_DATA = LocalAppDataService(
             assessments_file=root / "assessments.json",
@@ -28,7 +30,10 @@ class AppDataRoutesTests(unittest.TestCase):
             uploads_file=root / "uploads.json",
             import_drafts_file=root / "import_drafts.json",
             import_question_bank_file=root / "import_question_bank.json",
+            auth_users_file=auth_root / "users.json",
+            auth_storage_db_file=auth_root / "auth_store.sqlite3",
         )
+        self._auth_store = SQLiteJsonBlobStore(auth_root / "auth_store.sqlite3")
         self.client = TestClient(app)
 
     def tearDown(self) -> None:
@@ -62,6 +67,351 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(master.status_code, 200)
         self.assertTrue(master.json().get("ok"))
         self.assertIn("Kinematics Drill", master.json().get("csv", ""))
+
+    def test_create_quiz_uses_request_origin_for_published_urls(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Origin Sensitive Quiz",
+                "type": "Exam",
+                "duration": 25,
+                "role": "teacher",
+                "questions": [{"text": "1 + 1 = ?", "correct": "2"}],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        quiz_url = str(body.get("quiz_url") or body.get("url") or "")
+        parsed = urlparse(quiz_url)
+        self.assertEqual(parsed.scheme, "http")
+        self.assertEqual(parsed.netloc, "testserver")
+        self.assertTrue(parsed.path.startswith("/app/quiz/"))
+
+    def test_upload_file_uses_request_origin_for_download_url(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "upload_file",
+                "name": "probe.txt",
+                "data": "data:text/plain;base64,SGVsbG8=",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        file_url = str(body.get("file_url") or body.get("url") or "")
+        parsed = urlparse(file_url)
+        self.assertEqual(parsed.scheme, "http")
+        self.assertEqual(parsed.netloc, "testserver")
+        self.assertTrue(parsed.path.startswith("/app/file/"))
+
+    def test_ping_probe_is_lightweight_and_does_not_send_support_email(self) -> None:
+        with patch.object(
+            routes._APP_DATA._atlas_incident_email,
+            "send_incident_report",
+        ) as mocked_send:
+            response = self.client.post("/app/action", json={"action": "ping"})
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("probe_action"), "ping")
+        self.assertIn("diagnostics", body)
+        mocked_send.assert_not_called()
+
+    def test_publish_quiz_alias_creates_live_assessment(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "publish_quiz",
+                "title": "Published Alias Quiz",
+                "type": "Exam",
+                "duration": 30,
+                "role": "teacher",
+                "questions": [{"text": "v = u + at", "correct": "formula"}],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("assessment_id"), body.get("id"))
+        self.assertIn("app/quiz/", str(body.get("quiz_url") or body.get("url") or ""))
+
+    def test_create_quiz_hides_answers_in_csv_but_keeps_backend_answer_key(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Teacher Mechanics Test",
+                "type": "Exam",
+                "duration": 45,
+                "role": "teacher",
+                "questions": [
+                    {
+                        "text": "What is the SI unit of force?",
+                        "type": "MCQ",
+                        "options": ["Joule", "Pascal", "Newton", "Watt"],
+                        "correct": "Newton",
+                        "solution_explanation": "Force is measured in Newton.",
+                    }
+                ],
+                "ui_spec": {"layout": {"card_corner_radius": 28}},
+                "student_adaptive_data": {"mastery_status": {"Mechanics": "watch"}},
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        quiz_id = str(body.get("id") or "")
+        quiz_url = str(body.get("quiz_url") or body.get("url") or "")
+        self.assertTrue(quiz_id)
+        self.assertTrue(quiz_url)
+
+        csv_res = self.client.get(urlparse(quiz_url).path)
+        self.assertEqual(csv_res.status_code, 200)
+        self.assertIn("What is the SI unit of force?", csv_res.text)
+        self.assertNotIn("Force is measured in Newton.", csv_res.text)
+
+        evaluated = self.client.post(
+            "/app/action",
+            json={
+                "action": "evaluate_quiz_submission",
+                "quiz_id": quiz_id,
+                "answers": {"0": ["C"]},
+                "role": "teacher",
+                "include_answer_key": True,
+                "preview_only": True,
+            },
+        )
+        self.assertEqual(evaluated.status_code, 200)
+        evaluated_body = evaluated.json()
+        self.assertTrue(evaluated_body.get("ok"))
+        answer_key = evaluated_body.get("answer_key", [])
+        self.assertEqual(len(answer_key), 1)
+        self.assertEqual(answer_key[0].get("correct_option"), "C")
+        self.assertIn("Newton", answer_key[0].get("correct_answer", ""))
+
+    def test_publish_study_material_alias_adds_material(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "publish_study_material",
+                "title": "Alias Material",
+                "type": "pdf",
+                "url": "https://example.com/notes.pdf",
+                "subject": "Physics",
+                "chapters": "Current Electricity",
+                "role": "teacher",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        self.assertTrue(str(body.get("material_id") or "").strip())
+        self.assertEqual(body.get("url"), "https://example.com/notes.pdf")
+
+    def test_create_quiz_preserves_ui_spec_and_student_adaptive_metadata(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Rich Publish Test",
+                "type": "Exam",
+                "duration": 35,
+                "role": "teacher",
+                "questions": [{"text": "x + 1 = 2", "correct": "1"}],
+                "ui_spec": {"question_card": {"front": {"confidence_pill": False}}},
+                "student_adaptive_data": {"recommendations": ["Revise linear equations"]},
+                "is_ai_generated": True,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json().get("ok"))
+
+        assessments = self.client.get(
+            "/app/action",
+            params={"action": "get_assessments"},
+        )
+        self.assertEqual(assessments.status_code, 200)
+        rows = assessments.json().get("list", [])
+        self.assertTrue(rows)
+        row = next(x for x in rows if x.get("title") == "Rich Publish Test")
+        self.assertEqual(
+            row.get("ui_spec", {})
+            .get("question_card", {})
+            .get("front", {})
+            .get("confidence_pill"),
+            False,
+        )
+        self.assertEqual(
+            row.get("student_adaptive_data", {}).get("recommendations"),
+            ["Revise linear equations"],
+        )
+        self.assertTrue(row.get("ai_generated"))
+
+    def test_evaluate_quiz_submission_answer_key_preserves_image_and_marks(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Image Mark Fidelity",
+                "type": "Homework",
+                "duration": 25,
+                "role": "teacher",
+                "questions": [
+                    {
+                        "text": "Identify the graph shown.",
+                        "image": "https://example.com/graph.png",
+                        "type": "MCQ",
+                        "section": "Graphs",
+                        "options": ["Parabola", "Line", "Circle", "Ellipse"],
+                        "correct": "Circle",
+                        "solution_explanation": "The image shows a circle centered at the origin.",
+                        "posMark": 6,
+                        "negMark": 2,
+                    }
+                ],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        quiz_id = str(response.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        evaluated = self.client.post(
+            "/app/action",
+            json={
+                "action": "evaluate_quiz_submission",
+                "quiz_id": quiz_id,
+                "answers": {"0": ["Circle"]},
+                "role": "student",
+                "include_answer_key": True,
+                "preview_only": True,
+            },
+        )
+        self.assertEqual(evaluated.status_code, 200)
+        body = evaluated.json()
+        self.assertTrue(body.get("ok"))
+        answer_key = body.get("answer_key", [])
+        self.assertEqual(len(answer_key), 1)
+        row = answer_key[0]
+        self.assertEqual(row.get("question_image"), "https://example.com/graph.png")
+        self.assertEqual(row.get("question_type"), "MCQ_SINGLE")
+        self.assertEqual(row.get("marks_correct"), 6.0)
+        self.assertEqual(row.get("marks_incorrect"), -2.0)
+        self.assertEqual(row.get("section"), "Graphs")
+
+    def test_teacher_quiz_negative_mark_penalty_is_applied_by_backend_grader(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Penalty Check",
+                "type": "Exam",
+                "duration": 20,
+                "role": "teacher",
+                "questions": [
+                    {
+                        "text": "2 + 2 = ?",
+                        "type": "MCQ",
+                        "options": ["3", "4", "5", "6"],
+                        "correct": "4",
+                        "posMark": 5,
+                        "negMark": 2,
+                    }
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        evaluated = self.client.post(
+            "/app/action",
+            json={
+                "action": "evaluate_quiz_submission",
+                "quiz_id": quiz_id,
+                "answers": {"0": ["3"]},
+                "role": "student",
+                "include_answer_key": True,
+                "preview_only": True,
+            },
+        )
+        self.assertEqual(evaluated.status_code, 200)
+        body = evaluated.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("score"), -2.0)
+        self.assertEqual(body.get("wrong"), 1)
+
+    def test_create_quiz_evaluation_handles_latex_wrapped_correct_options(self) -> None:
+        response = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Hyperbola Quiz",
+                "type": "Exam",
+                "duration": 20,
+                "role": "teacher",
+                "questions": [
+                    {
+                        "text": "If x^2/16 - y^2/9 = 1, find e.",
+                        "type": "MCQ",
+                        "options": ["3/4", "4/3", "5/4", "5/3"],
+                        "correct": "5/4",
+                        "solution_explanation": "Use e = sqrt(1 + b^2/a^2).",
+                    }
+                ],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        quiz_id = str(body.get("id") or "")
+        self.assertTrue(quiz_id)
+
+        evaluated = self.client.post(
+            "/app/action",
+            json={
+                "action": "evaluate_quiz_submission",
+                "quiz_id": quiz_id,
+                "answers": {"0": ["C"]},
+                "role": "teacher",
+                "include_answer_key": True,
+                "preview_only": True,
+            },
+        )
+        self.assertEqual(evaluated.status_code, 200)
+        evaluated_body = evaluated.json()
+        self.assertTrue(evaluated_body.get("ok"))
+        self.assertEqual(evaluated_body.get("correct"), 1)
+        self.assertEqual(
+            (evaluated_body.get("answer_key") or [{}])[0].get("correct_option"),
+            "C",
+        )
+
+    def test_import_raw_text_parser_handles_common_ocr_label_confusions(self) -> None:
+        rows = routes._APP_DATA._parse_import_raw_text(
+            "G1. What is the SI unit of force?\n"
+            "A Newton\n"
+            "@ Joule\n"
+            "C. Pascal\n"
+            "O Watt\n"
+            "Anewer. A",
+            meta_defaults={},
+        )
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row.get("question_text"), "What is the SI unit of force?")
+        options = row.get("options") or []
+        self.assertEqual(
+            [(item.get("label"), item.get("text")) for item in options],
+            [
+                ("A", "Newton"),
+                ("B", "Joule"),
+                ("C", "Pascal"),
+                ("D", "Watt"),
+            ],
+        )
+        self.assertEqual((row.get("correct_answer") or {}).get("single"), "A")
 
     def test_add_material_and_list(self) -> None:
         add = self.client.post(
@@ -352,29 +702,10 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertTrue(any(x.get("quiz_id") == quiz_id for x in queue.json().get("list", [])))
 
     def test_ai_generate_pyq_strict_mode_uses_ranked_web_sources(self) -> None:
-        web_row = {
-            "title": "JEE Advanced Binomial PYQ",
-            "url": "https://example.com/jee-binomial-pyq",
-            "snippet": "Hard PYQ on coefficient extraction and greatest term",
-            "query": "binomial theorem jee pyq hard",
-            "scope_score": 0.92,
-            "pyq_score": 1.0,
-            "hardness_score": 0.88,
-            "quality_score": 1.14,
-            "question_text": "In the expansion of (1+x)^12, the coefficient of x^5 is:",
-            "options": ["792", "462", "924", "950"],
-            "correct_answer": "A",
-            "question_stub": "In (1+x)^12, find the coefficient of x^5 ?",
-            "answer_stub": "A",
-            "solution_stub": "Use general term and match the power of x.",
-            "has_answer": True,
-            "has_solution": True,
-        }
         with patch.object(
             routes._APP_DATA,
             "_fetch_pyq_web_snippets",
-            side_effect=[[dict(web_row)], [dict(web_row)]],
-        ):
+        ) as mocked_fetch:
             generated = self.client.post(
                 "/app/action",
                 json={
@@ -400,65 +731,25 @@ class AppDataRoutesTests(unittest.TestCase):
         body = generated.json()
         self.assertTrue(body.get("ok"))
         policy = body.get("source_policy", {})
-        self.assertEqual(policy.get("mode"), "pyq_related_web_only")
-        self.assertGreaterEqual(policy.get("web_source_applied_count", 0), 1)
+        self.assertEqual(policy.get("mode"), "synthesized_pyq_fallback")
+        self.assertEqual(policy.get("web_source_applied_count", 0), 0)
         questions = body.get("questions_json", [])
         self.assertEqual(len(questions), 3)
         self.assertTrue(
-            all(str(q.get("source_origin", "")).startswith("web_pyq") for q in questions)
-        )
-        self.assertTrue(
-            any(
-                "example.com/jee-binomial-pyq" in str(q.get("source_url", ""))
+            all(
+                str(q.get("source_origin", "")).startswith("ai_synth")
+                or str(q.get("source_origin", "")).startswith("synthesized")
                 for q in questions
             )
         )
+        self.assertTrue(all(not str(q.get("source_url", "")).strip() for q in questions))
+        mocked_fetch.assert_not_called()
 
     def test_ai_generate_pyq_hybrid_mode_mixes_online_and_offline_sources(self) -> None:
-        web_rows = [
-            {
-                "title": "Definite Integration PYQ Web",
-                "url": "https://example.com/jee-definite-integral-1",
-                "snippet": "Evaluate integral with parameter",
-                "query": "definite integral jee pyq hard",
-                "scope_score": 0.94,
-                "pyq_score": 0.96,
-                "hardness_score": 0.88,
-                "quality_score": 1.08,
-                "question_text": "If I = integral from 0 to 1 of x(1-x) dx, then 24I equals:",
-                "options": ["4", "6", "8", "12"],
-                "correct_answer": "A",
-                "question_stub": "Compute I = int_0^1 x(1-x) dx and find 24I.",
-                "answer_stub": "A",
-                "solution_stub": "Integrate polynomial and simplify.",
-                "has_answer": True,
-                "has_solution": True,
-            },
-            {
-                "title": "Definite Integration PYQ Offline",
-                "url": "local://question_bank/def_int_2",
-                "snippet": "Definite integral substitution",
-                "query": "local_import_bank",
-                "scope_score": 0.91,
-                "pyq_score": 0.95,
-                "hardness_score": 0.82,
-                "quality_score": 1.01,
-                "question_text": "Let J = integral from 0 to pi/2 of sin x dx. Then 2J equals:",
-                "options": ["1", "2", "pi", "4"],
-                "correct_answer": "B",
-                "question_stub": "Compute 2 * int_0^(pi/2) sin x dx.",
-                "answer_stub": "B",
-                "solution_stub": "Use antiderivative of sin x.",
-                "has_answer": True,
-                "has_solution": True,
-                "source_provider": "local_pyq_import_bank",
-            },
-        ]
         with patch.object(
             routes._APP_DATA,
             "_fetch_pyq_web_snippets",
-            side_effect=[[dict(x) for x in web_rows], [dict(x) for x in web_rows]],
-        ):
+        ) as mocked_fetch:
             generated = self.client.post(
                 "/app/action",
                 json={
@@ -483,60 +774,20 @@ class AppDataRoutesTests(unittest.TestCase):
         body = generated.json()
         self.assertTrue(body.get("ok"))
         policy = body.get("source_policy", {})
-        self.assertEqual(policy.get("mode"), "hybrid")
-        self.assertTrue(policy.get("mixed_pyq_source_mode"))
-        self.assertGreaterEqual(policy.get("web_source_online_applied_count", 0), 1)
-        self.assertGreaterEqual(policy.get("web_source_offline_applied_count", 0), 1)
-        self.assertFalse(policy.get("fallback_used"))
+        self.assertEqual(policy.get("mode"), "synthesized_pyq_fallback")
+        self.assertFalse(policy.get("mixed_pyq_source_mode"))
+        self.assertEqual(policy.get("web_source_online_applied_count", 0), 0)
+        self.assertEqual(policy.get("web_source_offline_applied_count", 0), 0)
+        self.assertTrue(policy.get("fallback_used"))
         source_urls = [str(q.get("source_url") or "") for q in body.get("questions_json", [])]
-        self.assertTrue(any(url.startswith("https://") for url in source_urls))
-        self.assertTrue(any(url.startswith("local://") for url in source_urls))
+        self.assertTrue(all(not url for url in source_urls))
+        mocked_fetch.assert_not_called()
 
     def test_ai_generate_pyq_tries_backup_web_rows_before_synthesis(self) -> None:
-        unusable_top_row = {
-            "title": "High score but incomplete",
-            "url": "https://example.com/unusable-top-row",
-            "snippet": "No parsable answer/options",
-            "query": "definite integral jee pyq",
-            "scope_score": 0.99,
-            "pyq_score": 0.97,
-            "hardness_score": 0.89,
-            "quality_score": 1.3,
-            "question_text": "Evaluate integral from 0 to 1 of x^2 dx.",
-            "options": [],
-            "correct_answer": "",
-            "question_stub": "Evaluate int_0^1 x^2 dx.",
-            "answer_stub": "",
-            "solution_stub": "",
-            "has_answer": False,
-            "has_solution": False,
-        }
-        backup_row = {
-            "title": "Valid backup PYQ row",
-            "url": "https://example.com/usable-backup-row",
-            "snippet": "Has full options and answer",
-            "query": "definite integral jee pyq",
-            "scope_score": 0.94,
-            "pyq_score": 0.95,
-            "hardness_score": 0.86,
-            "quality_score": 1.1,
-            "question_text": "If K = integral from 0 to 1 of (2x+1) dx, then K is:",
-            "options": ["2", "3", "4", "5"],
-            "correct_answer": "A",
-            "question_stub": "Compute int_0^1 (2x+1) dx.",
-            "answer_stub": "A",
-            "solution_stub": "Integrate termwise and evaluate.",
-            "has_answer": True,
-            "has_solution": True,
-        }
         with patch.object(
             routes._APP_DATA,
             "_fetch_pyq_web_snippets",
-            side_effect=[
-                [dict(unusable_top_row), dict(backup_row)],
-                [dict(unusable_top_row), dict(backup_row)],
-            ],
-        ):
+        ) as mocked_fetch:
             generated = self.client.post(
                 "/app/action",
                 json={
@@ -562,42 +813,22 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertTrue(body.get("ok"))
         questions = body.get("questions_json", [])
         self.assertEqual(len(questions), 1)
-        self.assertEqual(questions[0].get("source_url"), "https://example.com/usable-backup-row")
-        self.assertTrue(str(questions[0].get("source_origin", "")).startswith("web_pyq"))
+        self.assertFalse(str(questions[0].get("source_url", "")).strip())
+        self.assertTrue(
+            str(questions[0].get("source_origin", "")).startswith("ai_synth")
+            or str(questions[0].get("source_origin", "")).startswith("synthesized")
+        )
+        mocked_fetch.assert_not_called()
 
     def test_ai_generate_pyq_recovers_solution_when_web_answer_missing(self) -> None:
-        weak_web_row = {
-            "title": "JEE PYQ Binomial",
-            "url": "https://example.com/jee-binomial-no-answer",
-            "snippet": "PYQ statement without answer key",
-            "query": "binomial theorem jee pyq",
-            "scope_score": 0.81,
-            "pyq_score": 0.92,
-            "hardness_score": 0.75,
-            "quality_score": 0.86,
-            "question_text": "The middle term in (1+x)^10 has coefficient:",
-            "options": ["120", "252", "210", "126"],
-            "correct_answer": "B",
-            "question_stub": "Find the middle term in (1+x)^10 ?",
-            "answer_stub": "B",
-            "solution_stub": "",
-            "has_answer": True,
-            "has_solution": False,
-        }
         with patch.object(
             routes._APP_DATA,
             "_fetch_pyq_web_snippets",
-            side_effect=[[dict(weak_web_row)], [dict(weak_web_row)]],
-        ), patch.object(
+        ) as mocked_fetch, patch.object(
             routes._APP_DATA,
             "_recover_solution_via_ai_engine",
-            new=AsyncMock(
-                return_value={
-                    "answer_token": "B",
-                    "solution_explanation": "Step 1: Write general term. Step 2: Match exponent and simplify.",
-                }
-            ),
-        ):
+            new_callable=AsyncMock,
+        ) as mocked_recover:
             generated = self.client.post(
                 "/app/action",
                 json={
@@ -624,23 +855,21 @@ class AppDataRoutesTests(unittest.TestCase):
         body = generated.json()
         self.assertTrue(body.get("ok"))
         policy = body.get("source_policy", {})
-        self.assertGreaterEqual(policy.get("ai_solution_recovery_count", 0), 1)
-        self.assertTrue(policy.get("answer_sources_verified"))
+        self.assertEqual(policy.get("ai_solution_recovery_count", 0), 0)
+        self.assertFalse(policy.get("answer_sources_verified"))
         questions = body.get("questions_json", [])
         self.assertEqual(len(questions), 2)
         for q in questions:
             self.assertTrue((q.get("solution_explanation") or "").strip())
-            self.assertIn(
-                q.get("source_origin"),
-                {"web_pyq_ai_solution", "web_pyq_verified", "ai_synth_ultra_verified"},
-            )
+            self.assertIn(q.get("source_origin"), {"ai_synth_ultra_verified", "synthesized_pyq"})
+        mocked_fetch.assert_not_called()
+        mocked_recover.assert_not_called()
 
     def test_ai_generate_pyq_strict_mode_requires_verified_web_fetch(self) -> None:
         with patch.object(
             routes._APP_DATA,
             "_fetch_pyq_web_snippets",
-            side_effect=[[], []],
-        ):
+        ) as mocked_fetch:
             generated = self.client.post(
                 "/app/action",
                 json={
@@ -664,12 +893,55 @@ class AppDataRoutesTests(unittest.TestCase):
 
         self.assertEqual(generated.status_code, 200)
         body = generated.json()
-        self.assertFalse(body.get("ok"))
-        self.assertEqual(body.get("status"), "PARTIAL_SUCCESS")
-        self.assertEqual(body.get("error_reason"), "insufficient_ultra_hard_verified_questions")
-        self.assertEqual(body.get("web_source_applied_count"), 0)
-        self.assertTrue(body.get("web_error_reason"))
-        self.assertIn("web_provider_diagnostics", body)
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("status"), "SUCCESS")
+        self.assertEqual(body.get("source_policy", {}).get("web_source_applied_count"), 0)
+        self.assertEqual(
+            body.get("source_policy", {}).get("mode"),
+            "synthesized_pyq_fallback",
+        )
+        mocked_fetch.assert_not_called()
+
+    def test_ai_generate_student_self_practice_softens_strict_web_requirement(self) -> None:
+        with patch.object(
+            routes._APP_DATA,
+            "_fetch_pyq_web_snippets",
+        ) as mocked_fetch:
+            generated = self.client.post(
+                "/app/action",
+                json={
+                    "action": "ai_generate_quiz",
+                    "subject": "Physics",
+                    "chapters": ["Alternating Current"],
+                    "subtopics": ["Alternating Current"],
+                    "difficulty": 5,
+                    "question_count": 2,
+                    "trap_intensity": "high",
+                    "role": "student",
+                    "authoring_mode": False,
+                    "self_practice_mode": True,
+                    "include_answer_key": True,
+                    "pyq_focus": True,
+                    "search_hard_pyq": True,
+                    "pyq_mode": "strict_related_web",
+                    "pyq_web_only_mode": True,
+                    "pyq_answer_retrieval_required": True,
+                    "user_id": "student_real_device",
+                },
+            )
+
+        self.assertEqual(generated.status_code, 200)
+        body = generated.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("status"), "SUCCESS")
+        questions = body.get("questions_json", [])
+        self.assertEqual(len(questions), 2)
+        source_policy = body.get("source_policy", {})
+        self.assertEqual(source_policy.get("mode"), "synthesized_pyq_fallback")
+        self.assertFalse(source_policy.get("strict_web_requirement_unmet"))
+        self.assertFalse(source_policy.get("answer_sources_verified"))
+        self.assertEqual(source_policy.get("web_source_applied_count"), 0)
+        mocked_fetch.assert_not_called()
 
     def test_teacher_can_request_answer_key_on_submission(self) -> None:
         generated = self.client.post(
@@ -784,6 +1056,217 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertIn("x = 4", str(body.get("answer", "")))
         self.assertEqual(mocked.await_count, 1)
 
+    def test_material_generate_action_uses_dedicated_material_engine_with_content(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "content": "# Electrostatics Summary\n\n## Core Idea Map\n- Electric field lines and superposition.",
+            "final_answer": "# Electrostatics Summary\n\n## Core Idea Map\n- Electric field lines and superposition.",
+            "reasoning": "Use Coulomb law, field lines, and superposition for the revision sheet.",
+            "winner_provider": "gemini",
+            "engine": {"version": "research-grade-v2"},
+        }
+        add = self.client.post(
+            "/app/action",
+            json={
+                "action": "add_material",
+                "title": "Electrostatics Sheet",
+                "type": "pdf",
+                "url": "https://example.com/electrostatics.pdf",
+                "class": "Class 12",
+                "subject": "Physics",
+                "chapters": "Electrostatics",
+                "notes": "Electric field, superposition, and flux.",
+                "role": "teacher",
+            },
+        )
+        self.assertEqual(add.status_code, 200)
+        material_id = add.json().get("material", {}).get("material_id")
+        self.assertTrue(material_id)
+
+        with patch(
+            "app.data.local_app_data_service.material_generation_entry",
+            new=AsyncMock(return_value=fake_result),
+        ) as mocked:
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "material_generate",
+                    "material_id": material_id,
+                    "mode": "summarize",
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("ok"))
+        self.assertIn("Electrostatics Summary", str(body.get("content", "")))
+        self.assertEqual(mocked.await_count, 1)
+        call_kwargs = mocked.await_args.kwargs
+        self.assertIn(
+            "Task: produce a material-grounded JEE study output",
+            str(call_kwargs.get("prompt", "")),
+        )
+        options = dict(call_kwargs.get("options") or {})
+        self.assertEqual(options.get("function"), "material_generate")
+        self.assertFalse(bool(options.get("enable_pre_reasoning_context")))
+        self.assertFalse(bool(options.get("enable_web_retrieval")))
+        self.assertFalse(bool(options.get("enable_graph_of_thought")))
+        self.assertFalse(bool(options.get("enable_mcts_reasoning")))
+        self.assertFalse(bool(options.get("enable_verification_reevaluation")))
+        self.assertFalse(bool(options.get("enable_meta_verification")))
+        self.assertIn("Electrostatics", str(options.get("retrieval_query_override", "")))
+
+    def test_material_generate_failure_does_not_inject_fake_fallback_content(self) -> None:
+        add = self.client.post(
+            "/app/action",
+            json={
+                "action": "add_material",
+                "title": "Thermodynamics Sheet",
+                "type": "pdf",
+                "url": "https://example.com/thermo.pdf",
+                "class": "Class 12",
+                "subject": "Physics",
+                "chapters": "Thermodynamics",
+                "notes": "Entropy, Carnot, efficiency.",
+                "role": "teacher",
+            },
+        )
+        self.assertEqual(add.status_code, 200)
+        material_id = add.json().get("material", {}).get("material_id")
+        self.assertTrue(material_id)
+
+        with patch(
+            "app.data.local_app_data_service.material_generation_entry",
+            new=AsyncMock(
+                return_value={
+                    "ok": False,
+                    "status": "MATERIAL_ENGINE_EMPTY_OUTPUT",
+                    "message": "Material AI did not return a usable study response.",
+                }
+            ),
+        ):
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "material_generate",
+                    "material_id": material_id,
+                    "mode": "formula_sheet",
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertFalse(body.get("ok"))
+        self.assertEqual(body.get("status"), "MATERIAL_ENGINE_EMPTY_OUTPUT")
+        self.assertFalse(bool(body.get("content")))
+
+    def test_material_generate_placeholder_output_is_not_marked_success(self) -> None:
+        add = self.client.post(
+            "/app/action",
+            json={
+                "action": "add_material",
+                "title": "Electrostatics Sheet",
+                "type": "pdf",
+                "url": "https://example.com/electrostatics.pdf",
+                "class": "Class 12",
+                "subject": "Physics",
+                "chapters": "Electrostatics",
+                "notes": "Electric field, Gauss law, and capacitor basics.",
+                "role": "teacher",
+            },
+        )
+        self.assertEqual(add.status_code, 200)
+        material_id = add.json().get("material", {}).get("material_id")
+        self.assertTrue(material_id)
+
+        with patch(
+            "app.data.local_app_data_service.material_generation_entry",
+            new=AsyncMock(
+                return_value={
+                    "status": "ok",
+                    "final_answer": "[UNRESOLVED]",
+                    "reasoning": "The actual question is missing.",
+                }
+            ),
+        ):
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "material_generate",
+                    "material_id": material_id,
+                    "mode": "summarize",
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertFalse(body.get("ok"))
+        self.assertEqual(body.get("status"), "MATERIAL_ENGINE_EMPTY_OUTPUT")
+        self.assertFalse(bool(body.get("content")))
+
+    def test_material_query_action_uses_material_context(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "content": "**Answer**\nEccentricity is 5/4.\n\n**Explanation**\nFor x^2/16 - y^2/9 = 1, use e = sqrt(1 + b^2/a^2).",
+            "final_answer": "**Answer**\nEccentricity is 5/4.\n\n**Explanation**\nFor x^2/16 - y^2/9 = 1, use e = sqrt(1 + b^2/a^2).",
+            "reasoning": "Use the standard form and asymptote relation.",
+            "winner_provider": "gemini",
+            "engine": {"version": "research-grade-v2"},
+            "visualization": {
+                "type": "desmos",
+                "expressions": ["x^2/16-y^2/9=1"],
+            },
+        }
+        add = self.client.post(
+            "/app/action",
+            json={
+                "action": "add_material",
+                "title": "Hyperbola Notes",
+                "type": "pdf",
+                "url": "https://example.com/hyperbola.pdf",
+                "class": "Class 12",
+                "subject": "Mathematics",
+                "chapters": "Hyperbola",
+                "notes": "Standard form x^2/a^2 - y^2/b^2 = 1",
+                "role": "teacher",
+            },
+        )
+        self.assertEqual(add.status_code, 200)
+        material_id = add.json().get("material", {}).get("material_id")
+        self.assertTrue(material_id)
+
+        with patch(
+            "app.data.local_app_data_service.material_generation_entry",
+            new=AsyncMock(return_value=fake_result),
+        ) as mocked:
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "material_query",
+                    "material_id": material_id,
+                    "question": "Find eccentricity and asymptotes.",
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("ok"))
+        self.assertIn("Eccentricity is 5/4.", str(body.get("content", "")))
+        self.assertTrue(body.get("visualization"))
+        self.assertEqual(mocked.await_count, 1)
+        call_kwargs = mocked.await_args.kwargs
+        self.assertIn(
+            "Task: answer the student's question",
+            str(call_kwargs.get("prompt", "")),
+        )
+        options = dict(call_kwargs.get("options") or {})
+        self.assertEqual(options.get("function"), "material_query")
+        self.assertFalse(bool(options.get("enable_pre_reasoning_context")))
+        self.assertFalse(bool(options.get("enable_web_retrieval")))
+        self.assertFalse(bool(options.get("enable_graph_of_thought")))
+        self.assertFalse(bool(options.get("enable_mcts_reasoning")))
+        self.assertFalse(bool(options.get("enable_verification_reevaluation")))
+        self.assertFalse(bool(options.get("enable_meta_verification")))
+        self.assertIn("Find eccentricity", str(options.get("retrieval_query_override", "")))
+
     def test_ai_chat_empty_engine_payload_returns_failed_empty_result(self) -> None:
         fake_result = {
             "status": "ok",
@@ -817,6 +1300,889 @@ class AppDataRoutesTests(unittest.TestCase):
         )
         self.assertIn("no usable answer", str(body.get("message", "")).lower())
         self.assertEqual(mocked.await_count, 1)
+        options = dict(mocked.await_args.kwargs.get("options") or {})
+        self.assertFalse(bool(options.get("enable_web_retrieval")))
+        self.assertEqual(options.get("require_citations"), "none")
+        self.assertEqual(options.get("min_citation_count"), 0)
+
+    def test_ai_app_agent_returns_structured_single_action_plan(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Check pending homework",
+                    "plan_id": "student_plan_1",
+                    "summary": "Atlas can check the pending homework queue.",
+                    "student_notice": "I will use your dashboard only.",
+                    "tool": "list_pending_homeworks",
+                    "title": "Check pending homework",
+                    "detail": "Reading the current homework queue.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ) as mocked:
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Which homeworks are remaining?",
+                    "context": {
+                        "pending_homework_count": 2,
+                        "study_materials": [],
+                    },
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "single_action")
+        self.assertEqual(body.get("tool"), "list_pending_homeworks")
+        self.assertEqual(body.get("actions", [])[0].get("tool"), "list_pending_homeworks")
+        self.assertEqual(mocked.await_count, 1)
+
+    def test_ai_app_agent_parses_structured_plan_from_final_answer(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Check pending homework",
+                    "plan_id": "student_plan_final_1",
+                    "summary": "Atlas can check the pending homework queue.",
+                    "tool": "list_pending_homeworks",
+                    "title": "Check pending homework",
+                    "detail": "Reading the current homework queue.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+            "reasoning": "Structured plan returned in final_answer.",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Which homeworks are remaining?",
+                    "context": {
+                        "pending_homework_count": 2,
+                    },
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "single_action")
+        self.assertEqual(body.get("tool"), "list_pending_homeworks")
+
+    def test_ai_app_agent_recovers_plan_from_unsafe_candidate_answer(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "Uncertain answer: verification failed under high risk. Please retry with a stronger model.",
+            "answer": "Uncertain answer: verification failed under high risk. Please retry with a stronger model.",
+            "unsafe_candidate_answer": json.dumps(
+                {
+                    "type": "multi_step_plan",
+                    "goal": "Create a quiz and open analytics",
+                    "plan_id": "teacher_plan_unsafe_1",
+                    "summary": "Create the quiz draft and then open analytics.",
+                    "steps": [
+                        {
+                            "id": "step_1",
+                            "tool": "generate_teacher_quiz_draft",
+                            "title": "Generate quiz draft",
+                            "detail": "Create a 5-question thermodynamics quiz draft.",
+                            "risk": "low",
+                            "args": {
+                                "topic": "Thermodynamics",
+                                "question_count": 5,
+                            },
+                        },
+                        {
+                            "id": "step_2",
+                            "tool": "open_teacher_student_analytics",
+                            "title": "Open analytics",
+                            "detail": "Navigate to student analytics after the draft is ready.",
+                            "risk": "low",
+                            "args": {},
+                            "depends_on": ["step_1"],
+                        },
+                    ],
+                }
+            ),
+            "reasoning": "The candidate plan was suppressed by the solver quality gate.",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Create a class 12 thermodynamics quiz with 5 questions and then open student analytics.",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "teacher_id": "teacher_plan_maint",
+                    },
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(body.get("steps", [])[0].get("tool"), "generate_teacher_quiz_draft")
+        self.assertEqual(body.get("steps", [])[1].get("tool"), "open_teacher_student_analytics")
+
+    def test_ai_app_agent_recovers_truncated_teacher_plan_from_reasoning_tool_mentions(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_status": "Completed",
+            "answer": (
+                '{"type":"multi_step_plan","goal":"Create a quiz and then open student analytics",'
+                '"plan_id":"create_quiz_and_analytics","summary":"Create a quiz and then navigate to '
+                'student analytics","teacher_notice":"Please review the quiz draft before publishing",'
+                '"requires_confirmation":false,'
+            ),
+            "final_answer": (
+                '{"type":"multi_step_plan","goal":"Create a quiz and then open student analytics",'
+                '"plan_id":"create_quiz_and_analytics","summary":"Create a quiz and then navigate to '
+                'student analytics","teacher_notice":"Please review the quiz draft before publishing",'
+                '"requires_confirmation":false,'
+            ),
+            "reasoning": (
+                "Reasoning: The teacher wants to create a class 12 thermodynamics quiz with 5 "
+                "questions and then open student analytics. To achieve this, we need to use the "
+                "`generate_teacher_quiz_draft` tool to create the quiz and then use the "
+                "`open_teacher_student_analytics` tool to navigate to student analytics."
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Create a class 12 thermodynamics quiz with 5 questions and then open student analytics.",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "teacher_id": "teacher_plan_maint",
+                        "selected_student": {
+                            "student_id": "student_7",
+                            "name": "Aarav",
+                        },
+                    },
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(body.get("recovery_mode"), "tool_mentions_from_reasoning")
+        self.assertEqual(body.get("steps", [])[0].get("tool"), "generate_teacher_quiz_draft")
+        self.assertEqual(body.get("steps", [])[0].get("args", {}).get("question_count"), 5)
+        self.assertEqual(body.get("steps", [])[0].get("args", {}).get("class_name"), "Class 12")
+        self.assertEqual(body.get("steps", [])[0].get("args", {}).get("topic"), "Thermodynamics")
+        self.assertEqual(body.get("steps", [])[1].get("tool"), "open_teacher_student_analytics")
+        self.assertEqual(body.get("steps", [])[1].get("args", {}).get("student_id"), "student_7")
+
+    def test_ai_app_agent_asks_follow_up_for_ambiguous_material_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "needs_more_info",
+                    "goal": "Download study material",
+                    "summary": "Atlas needs to know which material you mean.",
+                    "needs_more_info": True,
+                    "follow_up_questions": [
+                        "Which study material should I download?"
+                    ],
+                    "actions": [],
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ) as mocked:
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Download this material",
+                    "context": {
+                        "selected_material": {},
+                        "study_materials": [],
+                    },
+                },
+            )
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertIn("follow_up_questions", body)
+        self.assertTrue(body.get("follow_up_questions"))
+        self.assertEqual(mocked.await_count, 1)
+
+    def test_ai_app_agent_returns_adaptive_memory_stats_and_passive_events(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Resume Study",
+                    "plan_id": "student_plan_resume_1",
+                    "summary": "Atlas will reopen the most relevant Study material.",
+                    "student_notice": "Using the adaptive student memory layer.",
+                    "tool": "open_material",
+                    "title": "Resume Study material",
+                    "detail": "Open the last material from memory.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            observed = self.client.post(
+                "/ai/app/agent/observe",
+                json={
+                    "account_id": "student_22",
+                    "tool_name": "open_material",
+                    "category": "study",
+                    "success": True,
+                    "latency_ms": 220,
+                    "context": {
+                        "selected_material": {
+                            "material_id": "mat_45",
+                            "subject": "Physics",
+                        }
+                    },
+                    "args": {"material_id": "mat_45"},
+                },
+            )
+            self.assertEqual(observed.status_code, 200)
+            observed_body = observed.json()
+            self.assertTrue(observed_body.get("ok"))
+            self.assertEqual(
+                observed_body.get("student_memory", {}).get("last_material_id"),
+                "mat_45",
+            )
+
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Resume physics",
+                    "context": {
+                        "account_id": "student_22",
+                        "selected_material": {
+                            "material_id": "mat_45",
+                            "subject": "Physics",
+                        },
+                        "pending_homework_count": 2,
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "open_material")
+        self.assertEqual(body.get("student_memory", {}).get("last_material_id"), "mat_45")
+        self.assertIn("open_material", body.get("tool_stats_summary", {}).get("preferred_tools", []))
+        self.assertTrue(body.get("passive_events"))
+
+    def test_ai_app_agent_passive_endpoint_returns_student_nudges(self) -> None:
+        observed = self.client.post(
+            "/ai/app/agent/observe",
+            json={
+                "account_id": "student_11",
+                "tool_name": "list_pending_homeworks",
+                "category": "assessment",
+                "success": True,
+                "latency_ms": 180,
+                "context": {
+                    "pending_homework_count": 3,
+                    "student_profile": {"weak_topics": ["Thermodynamics"]},
+                },
+            },
+        )
+        self.assertEqual(observed.status_code, 200)
+
+        passive = self.client.post(
+            "/ai/app/agent/passive",
+            json={
+                "account_id": "student_11",
+                "context": {
+                    "pending_homework_count": 3,
+                    "student_profile": {"weak_topics": ["Thermodynamics"]},
+                },
+            },
+        )
+        self.assertEqual(passive.status_code, 200)
+        body = passive.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("account_id"), "student_11")
+        self.assertIn("preferred_tools", body.get("tool_stats_summary", {}))
+        self.assertTrue(body.get("passive_events"))
+        self.assertEqual(
+            body.get("passive_events", [])[0].get("event"),
+            "homework_due",
+        )
+
+    def test_ai_app_agent_respects_allowed_tool_subset(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "multi_step_plan",
+                    "goal": "Resume work",
+                    "plan_id": "student_plan_tools_1",
+                    "summary": "Atlas will stay inside the limited tool subset.",
+                    "steps": [
+                        {
+                            "id": "step_1",
+                            "tool": "list_pending_homeworks",
+                            "title": "Pending homework",
+                            "detail": "Read homework queue.",
+                            "args": {},
+                        },
+                        {
+                            "id": "step_2",
+                            "tool": "open_material",
+                            "title": "Open material",
+                            "detail": "This tool should be filtered out.",
+                            "args": {},
+                        },
+                    ],
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Check my work",
+                    "context": {
+                        "account_id": "student_55",
+                        "allowed_tools": ["list_pending_homeworks"],
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        actions = body.get("actions", [])
+        self.assertEqual(len(actions), 1)
+        self.assertEqual(actions[0].get("tool"), "list_pending_homeworks")
+
+    def test_ai_app_agent_allows_new_study_material_formula_tool(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Open a formula sheet for this material",
+                    "plan_id": "student_plan_formula_1",
+                    "summary": "Atlas will open a formula sheet for the selected material.",
+                    "tool": "open_material_formula_sheet",
+                    "title": "Open formula sheet",
+                    "detail": "Use the selected Study material.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Make a formula sheet for this material",
+                    "context": {
+                        "account_id": "student_77",
+                        "selected_material": {
+                            "material_id": "mat_formula_1",
+                            "title": "Binomial Theorem Notes",
+                            "subject": "Mathematics",
+                        },
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "open_material_formula_sheet")
+        self.assertEqual(body.get("actions", [])[0].get("tool"), "open_material_formula_sheet")
+
+    def test_ai_app_agent_teacher_mode_returns_teacher_dashboard_tool(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Open teacher student analytics",
+                    "plan_id": "teacher_plan_analytics_1",
+                    "summary": "Atlas will open teacher student analytics.",
+                    "teacher_notice": "Using teacher dashboard context only.",
+                    "tool": "open_teacher_student_analytics",
+                    "title": "Open student analytics",
+                    "detail": "Navigate to the analytics surface.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ) as mocked:
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Open student analytics",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_1",
+                        "teacher_students": [],
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("role"), "teacher")
+        self.assertEqual(body.get("tool"), "open_teacher_student_analytics")
+        self.assertEqual(
+            body.get("actions", [])[0].get("tool"),
+            "open_teacher_student_analytics",
+        )
+        self.assertEqual(mocked.await_count, 1)
+
+    def test_ai_app_agent_teacher_mode_allows_class_performance_summary_tool(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Summarize the whole class performance",
+                    "plan_id": "teacher_plan_class_perf_1",
+                    "summary": "Atlas will summarize the full class performance.",
+                    "teacher_notice": "Using teacher analytics context.",
+                    "tool": "get_teacher_class_performance_summary",
+                    "title": "Class performance summary",
+                    "detail": "Summarize the whole class using recent results.",
+                    "risk": "low",
+                    "args": {},
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Show me the whole class performance summary",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_1",
+                        "teacher_students": [
+                            {
+                                "student_name": "Riya",
+                                "average_pct": 72.5,
+                                "attempts": 4,
+                            }
+                        ],
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "get_teacher_class_performance_summary")
+        self.assertEqual(
+            body.get("actions", [])[0].get("tool"),
+            "get_teacher_class_performance_summary",
+        )
+
+    def test_ai_app_agent_teacher_mode_requests_follow_up_for_schedule(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "needs_more_info",
+                    "goal": "Schedule next class",
+                    "summary": "Atlas needs the class time.",
+                    "teacher_notice": "I can schedule it once the time is clear.",
+                    "needs_more_info": True,
+                    "follow_up_questions": [
+                        "What time should I schedule the next class for?"
+                    ],
+                    "actions": [],
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Schedule next week's class",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_1",
+                        "teacher_scheduled_classes": [],
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("role"), "teacher")
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertIn("follow_up_questions", body)
+        self.assertTrue(body.get("follow_up_questions"))
+
+    def test_ai_app_agent_student_mode_understands_natural_remaining_work_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Can you just show me what I still have left?",
+                    "context": {
+                        "account_id": "student_201",
+                        "pending_homework_count": 3,
+                        "pending_exam_count": 1,
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "single_action")
+        self.assertEqual(body.get("tool"), "show_remaining_work")
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_student_mode_builds_authoritative_study_plan(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Create a quick study plan for binomial theorem",
+                    "context": {
+                        "account_id": "student_301",
+                        "pending_homework_count": 2,
+                        "pending_exam_count": 1,
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        steps = body.get("steps", [])
+        self.assertEqual(
+            [step.get("tool") for step in steps],
+            [
+                "find_study_material",
+                "get_study_overview",
+                "get_weak_topics",
+                "suggest_next_best_task",
+            ],
+        )
+        self.assertEqual(
+            steps[0].get("args", {}).get("query"),
+            "Binomial Theorem",
+        )
+        self.assertEqual(
+            steps[-1].get("depends_on"),
+            ["step_1", "step_2", "step_3"],
+        )
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_teacher_mode_builds_topic_study_support_plan(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Create a short study plan for binomial theorem and suggest the next best action.",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_301",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(
+            [step.get("tool") for step in body.get("steps", [])],
+            [
+                "open_teacher_add_material",
+                "generate_teacher_quiz_draft",
+            ],
+        )
+        self.assertEqual(
+            body.get("steps", [])[1].get("args", {}).get("topic"),
+            "Binomial Theorem",
+        )
+        self.assertEqual(
+            body.get("steps", [])[1].get("depends_on"),
+            ["step_1"],
+        )
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_teacher_mode_understands_attachment_quiz_review_publish_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Can you turn this PDF into a quiz, let me review it, and then publish it?",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_7",
+                        "teacher_latest_attachment": {
+                            "file_id": "file_pdf_1",
+                            "name": "worksheet.pdf",
+                            "mime": "application/pdf",
+                        },
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(
+            [step.get("tool") for step in body.get("steps", [])],
+            [
+                "import_teacher_quiz_from_attachment",
+                "preview_teacher_quiz_draft",
+                "publish_teacher_quiz_draft",
+            ],
+        )
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_allows_report_system_issue_tool(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "answer": json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Diagnose the broken analytics screen",
+                    "plan_id": "student_plan_issue_1",
+                    "summary": "Atlas will diagnose and report the issue.",
+                    "tool": "report_system_issue",
+                    "title": "Report system issue",
+                    "detail": "Investigate the failing analytics flow.",
+                    "risk": "low",
+                    "args": {
+                        "issue_summary": "Analytics screen is lagging and AI is not working",
+                        "surface": "student_analytics",
+                    },
+                }
+            ),
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Analytics is lagging and AI is not working",
+                    "context": {
+                        "account_id": "student_91",
+                        "surface": "student_analytics",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "report_system_issue")
+        self.assertEqual(body.get("actions", [])[0].get("tool"), "report_system_issue")
+
+    def test_ai_app_agent_understands_live_media_quality_issue_language(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "My video is blurry and the sound quality is bad in the live class.",
+                    "context": {
+                        "account_id": "student_91",
+                        "surface": "live_class_student_chat",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "report_system_issue")
+        self.assertEqual(
+            body.get("args", {}).get("failing_feature"),
+            "live_media_quality",
+        )
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_falls_back_to_deterministic_issue_plan_when_planner_fails(self) -> None:
+        with patch(
+            "app.routes.lalacore_entry",
+            new=AsyncMock(side_effect=RuntimeError("planner backend unavailable")),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Atlas is not working and the app is stuck on offline fallback because the backend is unreachable.",
+                    "context": {
+                        "account_id": "student_91",
+                        "surface": "student_ai_chat",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "report_system_issue")
+        self.assertEqual(
+            body.get("actions", [])[0].get("tool"),
+            "report_system_issue",
+        )
+        self.assertEqual(
+            body.get("planner_recovery_mode"),
+            "deterministic_signal_fallback",
+        )
+        self.assertIn(
+            "planner backend unavailable",
+            str(body.get("planner_error", "")),
+        )
+
+    def test_report_system_issue_runs_analysis_and_sends_support_mail(self) -> None:
+        fake_analysis = {
+            "summary": "Atlas found a likely slow analytics data path and recent AI generation failures.",
+            "severity": "high",
+            "likely_root_causes": [
+                "Analytics screen is waiting on a slow or unstable AI-dependent data path."
+            ],
+            "plausible_causes_by_layer": {
+                "client": ["Analytics screen is surfacing a visible error state."],
+                "backend": ["Recent AI-generation jobs failed inside the app backend state."],
+                "ai": ["Recent retrieval or provider diagnostics already show failure reasons."],
+            },
+            "evidence": [
+                "Last surfaced error: Timeout while loading analytics",
+                "Recent AI or retrieval requests have failure signals in the backend diagnostics.",
+            ],
+            "next_steps": [
+                "Inspect the analytics load path first.",
+                "Review recent AI fallback failures.",
+            ],
+            "impact_assessment": "The teacher-side analytics experience is degraded and may block review work.",
+            "engineer_checklist": [
+                "Reproduce the analytics flow.",
+                "Review attached diagnostics JSON.",
+            ],
+            "user_safe_reply": "I investigated the issue and sent a detailed report.",
+            "engineer_report": "Detailed engineer-facing report.",
+        }
+        with patch.object(
+            routes._APP_DATA,
+            "_ai_chat_or_solve",
+            new=AsyncMock(
+                return_value={
+                    "answer": json.dumps(fake_analysis),
+                    "explanation": "",
+                }
+            ),
+        ), patch.object(
+            routes._APP_DATA._atlas_incident_email,
+            "send_incident_report",
+            return_value={"ok": True, "sent": True, "message": "Support email sent"},
+        ) as mocked_mail:
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "report_system_issue",
+                    "issue": "Teacher analytics screen is lagging and AI is not working",
+                    "role": "teacher",
+                    "account_id": "teacher_7",
+                    "surface": "teacher_analytics",
+                    "context": {
+                        "surface": "teacher_analytics",
+                        "last_error": "Timeout while loading analytics",
+                        "pending_homework_count": 2,
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("ok"))
+        self.assertTrue(body.get("mail_sent"))
+        self.assertEqual(body.get("severity"), "high")
+        self.assertIn("self_heal", body)
+        self.assertIn("diagnostics", body)
+        self.assertIn("runtime_logs", body)
+        self.assertIn("engineer_checklist", body)
+        mocked_mail.assert_called_once()
 
     def test_ai_question_search_endpoint(self) -> None:
         fake_matches = [
@@ -1547,13 +2913,15 @@ Ans. 4 2
                 [{"title": "JEE QP", "url": "https://jeeadv.ac.in/past_qps/2022_1_English.pdf", "snippet": "paper"}],
                 {"query": "jee", "providers": [], "result_count": 1, "error_reason": ""},
             ),
-        ):
+        ) as mocked_search:
             response = self.client.post(
                 "/app/action",
                 json={
                     "action": "lc9_web_verify_query",
                     "query": "JEE advanced quadratic question",
                     "max_rows": 5,
+                    "search_scope": "general_ai",
+                    "timeout_s": 3.25,
                 },
             )
         self.assertEqual(response.status_code, 200)
@@ -1561,6 +2929,41 @@ Ans. 4 2
         self.assertTrue(body.get("ok"))
         self.assertEqual(body.get("status"), "SUCCESS")
         self.assertEqual(body.get("count"), 1)
+        self.assertEqual(body.get("search_scope"), "general_ai")
+        self.assertAlmostEqual(float(body.get("timeout_s") or 0.0), 3.25, places=2)
+        self.assertEqual(
+            mocked_search.call_args.kwargs.get("search_scope"),
+            "general_ai",
+        )
+        self.assertAlmostEqual(
+            float(mocked_search.call_args.kwargs.get("total_timeout_s") or 0.0),
+            3.25,
+            places=2,
+        )
+
+    def test_stackexchange_provider_rows_include_fetch_url(self) -> None:
+        sample = {
+            "items": [
+                {
+                    "question_id": 2626594,
+                    "link": "https://math.stackexchange.com/questions/2626594/example",
+                    "title": "Hyperbola eccentricity from asymptotes",
+                    "tags": ["analytic-geometry", "conic-sections"],
+                    "answer_count": 4,
+                    "score": 2,
+                }
+            ]
+        }
+        rows = routes._APP_DATA._extract_search_rows_from_stackexchange_json(
+            raw_json=json.dumps(sample),
+            max_rows=5,
+            site="math",
+            search_scope="general_ai",
+        )
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["url"], "https://math.stackexchange.com/questions/2626594/example")
+        self.assertIn("stackprinter.appspot.com/export", rows[0]["fetch_url"])
+        self.assertIn("answers: 4", rows[0]["snippet"])
 
     def test_chat_thread_preserves_direct_id_and_flexible_user_search(self) -> None:
         save_result = self.client.post(
@@ -1612,6 +3015,50 @@ Ans. 4 2
         rows = directory.json().get("list", [])
         self.assertTrue(any(x.get("chat_id") == "student_1|TEACHER" for x in rows))
 
+    def test_save_result_preserves_rich_analytics_fields(self) -> None:
+        save_result = self.client.post(
+            "/app/action",
+            json={
+                "action": "save_result",
+                "quiz_id": "quiz_rich_1",
+                "quiz_title": "Thermodynamics",
+                "student_name": "Aarav",
+                "student_id": "stu_aarav",
+                "account_id": "stu_aarav",
+                "score": 68,
+                "max_score": 100,
+                "correct": 17,
+                "wrong": 4,
+                "skipped": 4,
+                "total_time": 1320,
+                "section_accuracy": {
+                    "Thermodynamics": 52.0,
+                    "Mechanics": 78.0,
+                },
+                "user_answers": {"1": ["A"], "2": ["B"]},
+            },
+        )
+        self.assertEqual(save_result.status_code, 200)
+        self.assertTrue(save_result.json().get("ok"))
+
+        results = self.client.get("/app/action", params={"action": "get_results"})
+        self.assertEqual(results.status_code, 200)
+        rows = results.json().get("list", [])
+        rich = next(
+            row for row in rows if row.get("quiz_id") == "quiz_rich_1"
+        )
+        self.assertEqual(rich.get("quiz_title"), "Thermodynamics")
+        self.assertEqual(rich.get("max_score"), 100.0)
+        self.assertEqual(rich.get("total_time"), 1320)
+        self.assertEqual(
+            rich.get("section_accuracy", {}).get("Thermodynamics"),
+            52.0,
+        )
+        self.assertEqual(
+            rich.get("user_answers", {}).get("1"),
+            ["A"],
+        )
+
         marked = self.client.post(
             "/app/action",
             json={
@@ -1650,6 +3097,208 @@ Ans. 4 2
         self.assertTrue(student_search.json().get("ok"))
         student_users = student_search.json().get("list", [])
         self.assertTrue(any(x.get("user_id") == "stu_riya" for x in student_users))
+
+    def test_chat_thread_canonicalizes_teacher_alias_and_dedupes_retry_by_message_id(self) -> None:
+        first = self.client.post(
+            "/app/action",
+            json={
+                "action": "send_message",
+                "is_peer": True,
+                "chat_id": "student_1|teacher",
+                "participants": "student_1,TEACHER",
+                "payload": {
+                    "id": "m_same",
+                    "sender": "student_1",
+                    "senderName": "Student One",
+                    "text": "hello teacher",
+                    "type": "text",
+                    "time": 1730000000000,
+                },
+            },
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertTrue(first.json().get("ok"))
+        self.assertEqual(first.json().get("chat_id"), "student_1|TEACHER")
+
+        second = self.client.post(
+            "/app/action",
+            json={
+                "action": "send_message",
+                "is_peer": True,
+                "chat_id": "student_1|TEACHER",
+                "participants": "student_1,TEACHER",
+                "payload": {
+                    "id": "m_same",
+                    "sender": "student_1",
+                    "senderName": "Student One",
+                    "text": "hello teacher",
+                    "type": "text",
+                    "time": 1730000000000,
+                },
+            },
+        )
+        self.assertEqual(second.status_code, 200)
+        self.assertTrue(second.json().get("ok"))
+        self.assertEqual(second.json().get("chat_id"), "student_1|TEACHER")
+
+        directory = self.client.post(
+            "/app/action",
+            json={
+                "action": "list_chat_directory",
+                "chat_id": "student_1",
+                "role": "student",
+            },
+        )
+        self.assertEqual(directory.status_code, 200)
+        rows = directory.json().get("list", [])
+        target = next(
+            (row for row in rows if row.get("chat_id") == "student_1|TEACHER"),
+            None,
+        )
+        self.assertIsNotNone(target)
+        message_ids = [
+            (entry.get("id") if isinstance(entry, dict) else None)
+            for entry in (target or {}).get("messages", [])
+        ]
+        self.assertEqual(message_ids.count("m_same"), 1)
+
+    def test_chat_search_and_directory_resolve_users_from_auth_sqlite_store(self) -> None:
+        self._auth_store.write_json(
+            "auth_users",
+            {
+                "me@example.com": {
+                    "student_id": "ME123",
+                    "name": "Aman Kumar",
+                    "username": "aman",
+                    "email": "me@example.com",
+                },
+                "friend@example.com": {
+                    "student_id": "FRI123",
+                    "name": "Riya Sharma",
+                    "username": "riya",
+                    "email": "friend@example.com",
+                },
+            },
+        )
+
+        search = self.client.post(
+            "/app/action",
+            json={
+                "action": "search_chat_users",
+                "user_id": "ME123",
+                "role": "student",
+                "query": "riya",
+            },
+        )
+        self.assertEqual(search.status_code, 200)
+        self.assertTrue(search.json().get("ok"))
+        matches = search.json().get("list", [])
+        self.assertTrue(
+            any(
+                row.get("user_id") == "FRI123"
+                and row.get("name") == "Riya Sharma"
+                for row in matches
+            )
+        )
+
+        sent = self.client.post(
+            "/app/action",
+            json={
+                "action": "send_message",
+                "is_peer": True,
+                "chat_id": "ME123|FRI123",
+                "participants": "ME123,FRI123",
+                "payload": {
+                    "id": "m_sqlite_friend",
+                    "sender": "ME123",
+                    "senderName": "Aman Kumar",
+                    "text": "Hey Riya",
+                    "type": "text",
+                    "time": 1730000000456,
+                },
+            },
+        )
+        self.assertEqual(sent.status_code, 200)
+        self.assertTrue(sent.json().get("ok"))
+
+        directory = self.client.post(
+            "/app/action",
+            json={
+                "action": "list_chat_directory",
+                "chat_id": "ME123",
+                "role": "student",
+            },
+        )
+        self.assertEqual(directory.status_code, 200)
+        self.assertTrue(directory.json().get("ok"))
+        target = next(
+            (
+                row
+                for row in directory.json().get("list", [])
+                if row.get("friend_id") == "FRI123"
+            ),
+            None,
+        )
+        self.assertIsNotNone(target)
+        self.assertEqual((target or {}).get("friend_name"), "Riya Sharma")
+
+    def test_teacher_review_queue_preserves_rich_doubt_context(self) -> None:
+        queued = self.client.post(
+            "/app/action",
+            json={
+                "action": "queue_teacher_review",
+                "quiz_id": "quiz_ctx",
+                "quiz_title": "Hyperbola Drill",
+                "question_id": "3",
+                "question_text": "Find the eccentricity of x^2/16 - y^2/9 = 1",
+                "question_image": "https://example.com/q.png",
+                "student_answer": "5/4",
+                "correct_answer": "5/4",
+                "student_id": "stu_riya",
+                "student_name": "Riya Sharma",
+                "message": "Please check if my asymptotes are correct too.",
+                "subject": "Mathematics",
+                "chapter": "Hyperbola",
+                "source_surface": "answer_key_teacher_review",
+                "answer_key_card": {
+                    "question_text": "Find the eccentricity of x^2/16 - y^2/9 = 1",
+                    "correct_answer": "5/4",
+                },
+            },
+        )
+        self.assertEqual(queued.status_code, 200)
+        body = queued.json()
+        self.assertTrue(body.get("ok"))
+        queue_item = body.get("queue_item", {})
+        self.assertEqual(queue_item.get("quiz_title"), "Hyperbola Drill")
+        self.assertEqual(queue_item.get("student_name"), "Riya Sharma")
+        self.assertEqual(queue_item.get("subject"), "Mathematics")
+        self.assertEqual(queue_item.get("chapter"), "Hyperbola")
+        self.assertEqual(queue_item.get("source_surface"), "answer_key_teacher_review")
+        self.assertIsInstance(queue_item.get("answer_key_card"), dict)
+
+    def test_ops_atlas_maintenance_run_uses_shared_maintenance_service(self) -> None:
+        with patch.object(routes, "_ATLAS_MAINTENANCE") as maintenance:
+            maintenance.run_weekly_maintenance = AsyncMock(
+                return_value={
+                    "ok": True,
+                    "trigger": "manual",
+                    "maintenance_report": {
+                        "mail_sent": True,
+                        "incident_id": "atlas_incident_123",
+                    },
+                }
+            )
+            res = self.client.post(
+                "/ops/atlas-maintenance/run",
+                json={"trigger": "manual"},
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("trigger"), "manual")
+        self.assertTrue(body.get("maintenance_report", {}).get("mail_sent"))
 
 
 if __name__ == "__main__":

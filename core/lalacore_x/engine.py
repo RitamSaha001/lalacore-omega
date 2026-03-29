@@ -35,6 +35,7 @@ from core.lalacore_x.solve_pipeline import SolvePipelinePolicy
 from core.lalacore_x.statistical_sanity import StatisticalSanityValidator
 from core.lalacore_x.telemetry import DEFAULT_TELEMETRY
 from core.lalacore_x.token_budget import TokenBudgetGuardian
+from core.math.contextual_math_solver import solve_contextual_math_question
 from core.math.problem_parser import parse_structured_problem
 from verification.verifier import verify_solution
 
@@ -82,9 +83,10 @@ class LalaCoreXEngine:
         self.shadow_probe_timeout_s = max(0.5, float(os.getenv("LC9_SHADOW_PROBE_TIMEOUT_S", "2.5") or 2.5))
 
     async def solve(self, question: str) -> Dict:
-        profile = self.classifier.classify(question)
-        symbolic_heavy = self._is_symbolic_heavy(question, profile)
-        retrieved = self.vault.retrieve(question, subject=profile.subject, top_k=5)
+        authority_question = self._authority_question(question)
+        profile = self.classifier.classify(authority_question)
+        symbolic_heavy = self._is_symbolic_heavy(authority_question, profile)
+        retrieved = self.vault.retrieve(authority_question, subject=profile.subject, top_k=5)
         concept_clusters = self._concept_clusters(retrieved)
         reinforced_clusters = self.vault.expand_concept_clusters(concept_clusters, depth=2)
         question_tokens = int(profile.features.get("token_count", 0))
@@ -184,7 +186,7 @@ class LalaCoreXEngine:
         crash_snapshot["responses"] = [self._snapshot_candidate(c) for c in candidates]
 
         if symbolic_heavy:
-            symbolic_guard = await self.providers.generate("symbolic_guard", question, profile, retrieved)
+            symbolic_guard = await self.providers.generate("symbolic_guard", authority_question, profile, retrieved)
             if symbolic_guard.final_answer.strip():
                 replaced = False
                 updated_candidates: List[ProviderAnswer] = []
@@ -276,33 +278,31 @@ class LalaCoreXEngine:
         claims = self.reasoner.extract_claims(reasoning_graph, limit=6)
         claim_support = self.vault.check_claims(claims[:3], top_k=2)
 
-        substitution_hooks = self.reasoner.numeric_substitution_hooks(question)
+        substitution_hooks = self.reasoner.numeric_substitution_hooks(authority_question)
 
         verification_by_provider: Dict[str, Dict] = {}
         plausibility_by_provider: Dict[str, Dict] = {}
         for candidate in candidates:
+            report = verify_solution(
+                question=authority_question,
+                predicted_answer=candidate.final_answer,
+                difficulty=profile.difficulty,
+                substitution_hooks=substitution_hooks,
+            )
             if candidate.provider == "symbolic_guard" and str(candidate.final_answer or "").strip():
-                report = {
-                    "verified": True,
-                    "confidence_score": 0.99,
-                    "stage_results": {"symbolic_guard": "deterministic_pass"},
-                    "stage_timings": {},
-                    "risk_score": 0.02,
-                    "escalate": False,
-                    "reason": "symbolic_guard_deterministic",
-                    "failure_reason": "",
-                }
-            else:
-                report = verify_solution(
-                    question=question,
-                    predicted_answer=candidate.final_answer,
-                    difficulty=profile.difficulty,
-                    substitution_hooks=substitution_hooks,
-                )
+                report.setdefault("stage_results", {})
+                if bool(report.get("verified")):
+                    report["stage_results"]["symbolic_guard"] = "deterministic_pass"
+                    report["reason"] = report.get("reason") or "symbolic_guard_deterministic"
+                    report["failure_reason"] = ""
+                    report["confidence_score"] = max(0.99, float(report.get("confidence_score", 0.0)))
+                    report["risk_score"] = min(0.02, float(report.get("risk_score", 1.0)))
+                else:
+                    report["stage_results"]["symbolic_guard"] = "deterministic_mismatch"
             report["trap_probability"] = profile.trap_probability
 
             plausibility = check_answer_plausibility(
-                question_text=question,
+                question_text=authority_question,
                 final_answer=candidate.final_answer,
                 metadata={
                     "numeric_expected": bool(profile.numeric),
@@ -329,7 +329,7 @@ class LalaCoreXEngine:
 
             self.debug_logger.log_plausibility(
                 provider=candidate.provider,
-                question=question,
+                question=authority_question,
                 answer=candidate.final_answer,
                 report=plausibility,
             )
@@ -387,7 +387,7 @@ class LalaCoreXEngine:
             ver = verification_by_provider.get(candidate.provider, {})
             self.debug_logger.log_provider_output(
                 provider=candidate.provider,
-                question=question,
+                question=authority_question,
                 raw_output=str(candidate.raw.get("raw_output_text", "") if isinstance(candidate.raw, dict) else candidate.reasoning),
                 extracted_answer=str(candidate.final_answer),
                 tokens_used=total_tokens,
@@ -592,7 +592,7 @@ class LalaCoreXEngine:
                     selected_verification = updated_verification
                 if updated_candidate is not None:
                     selected_plausibility = check_answer_plausibility(
-                        question_text=question,
+                        question_text=authority_question,
                         final_answer=updated_candidate.final_answer,
                         metadata={"numeric_expected": bool(profile.numeric)},
                     )
@@ -628,7 +628,7 @@ class LalaCoreXEngine:
                 )
                 selected_judge = judge_by_provider.get(selected_provider)
 
-        disagreement = self._disagreement(candidates, question_text=question)
+        disagreement = self._disagreement(candidates, question_text=authority_question)
         claim_support_score = self._claim_support_score(claim_support)
 
         winner_margin = float(arena_outcome.get("winner_margin", 0.0))
@@ -1659,8 +1659,23 @@ class LalaCoreXEngine:
             return 2
         return 1
 
+    def _authority_question(self, question: str) -> str:
+        text = str(question or "")
+        lowered = text.lower()
+        for marker in ("user question:\n", "user question:", "original question:\n", "original question:"):
+            idx = lowered.rfind(marker)
+            if idx == -1:
+                continue
+            extracted = text[idx + len(marker) :].strip()
+            if extracted:
+                return extracted
+        return text
+
     def _is_symbolic_heavy(self, question: str, profile) -> bool:
         text = str(question or "").lower()
+        deterministic_case = solve_contextual_math_question(question)
+        if deterministic_case and bool(deterministic_case.get("handled")):
+            return True
         # Treat structured/discrete math as deterministic-friendly so symbolic_guard
         # is always injected before arena arbitration.
         if parse_structured_problem(text) is not None:

@@ -117,6 +117,22 @@ class DeterministicGuardingTests(unittest.TestCase):
         self.assertIsNone(out1)
         self.assertIsNone(out2)
 
+    def test_onto_function_count_is_deterministically_solved(self):
+        out = solve_contextual_math_question(
+            "How many onto functions are there from a 5-element set to a 3-element set?"
+        )
+        self.assertIsNotNone(out)
+        self.assertTrue(bool(out.get("handled")))
+        self.assertEqual(out.get("answer"), "150")
+
+    def test_bounded_integer_solution_count_is_deterministically_solved(self):
+        out = solve_contextual_math_question(
+            "Positive integer solutions of x1+x2+x3+x4=20 with each >=2 and x1<=5"
+        )
+        self.assertIsNotNone(out)
+        self.assertTrue(bool(out.get("handled")))
+        self.assertEqual(out.get("answer"), "290")
+
 
 if __name__ == "__main__":
     unittest.main()

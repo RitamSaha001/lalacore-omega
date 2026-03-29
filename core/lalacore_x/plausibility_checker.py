@@ -13,11 +13,29 @@ def _alnum_count(text: str) -> int:
     return len(re.findall(r"[A-Za-z0-9]", str(text or "")))
 
 
+def _is_counting_numeric_prompt(question_text: str) -> bool:
+    q = _norm(question_text)
+    if re.search(r"\b(how many|number of|count|probability)\b", q):
+        return True
+    if re.search(r"\b(arrangements?|permutations?|combinations?|selections?|subsets?|ways)\b", q):
+        return True
+    if re.search(r"\b(onto|surjective|injective|one[\s\-]?to[\s\-]?one)\s+functions?\b", q):
+        return True
+    if re.search(r"\b(?:positive|non[\s\-]?negative)\s+integer\s+solutions?\b", q) and re.search(r"\b(each|where|with)\b", q):
+        return True
+    return False
+
+
 def _detect_expected_type(question_text: str, metadata: Dict[str, Any]) -> str:
     q = _norm(question_text)
     if re.search(r"\b(option|mcq|correct option|which option)\b", q) or re.search(r"\([a-d]\)", q):
         return "option"
-    if re.search(r"\b(list|set of|roots|values|ordered pair|vector)\b", q):
+    if _is_counting_numeric_prompt(q):
+        return "numeric"
+    if re.search(
+        r"\b(list|roots?|ordered pair|ordered pairs|vector|vectors|solution set|set of solutions|set of values|possible values|all values|all roots)\b",
+        q,
+    ):
         return "list"
     if re.search(r"\b(solve|find|determine|evaluate|compute|calculate|simplify)\b", q):
         return "solution"
@@ -74,23 +92,30 @@ def _looks_option(answer: str) -> bool:
 
 
 def _looks_solution(answer: str) -> bool:
-    s = str(answer or "").strip().lower()
-    if not s:
+    original = str(answer or "").strip().lower()
+    if not original:
         return False
-    if _looks_numeric(s) or _looks_list(s):
-        return True
-    if re.search(r"\\frac|\\sqrt|\\boxed", s):
-        return True
-    if re.search(r"[a-z]\s*[\^*/+\-=]\s*[-+a-z0-9./()]+", s):
-        return True
-    if re.search(r"[a-z]\s*/\s*[a-z0-9()]+", s):
-        return True
-    if re.search(r"\bx\s*(>=|<=|>|<|!=)\s*[-+a-z0-9\./()]+", s):
-        return True
-    if re.search(r"\b(no real solution|no solution|empty set|all real)\b", s):
-        return True
-    if re.search(r"\bx\s*in\s*[\[\(\{].+[\]\)\}]", s):
-        return True
+    candidates = [original]
+    labeled = re.sub(r"^[a-z][a-z\s_-]{0,32}:\s*", "", original)
+    if labeled != original:
+        candidates.append(labeled)
+    for s in candidates:
+        if _looks_numeric(s) or _looks_list(s):
+            return True
+        if re.search(r"\\frac|\\sqrt|\\boxed", s):
+            return True
+        if "=" in s and re.search(r"\b[xymab]\b|[xyabm]\s*[\^*/+\-]", s):
+            return True
+        if re.search(r"[a-z]\s*[\^*/+\-=]\s*[-+a-z0-9./()]+", s):
+            return True
+        if re.search(r"[a-z]\s*/\s*[a-z0-9()]+", s):
+            return True
+        if re.search(r"\bx\s*(>=|<=|>|<|!=)\s*[-+a-z0-9\./()]+", s):
+            return True
+        if re.search(r"\b(no real solution|no solution|no real tangents?|no tangents?|empty set|all real)\b", s):
+            return True
+        if re.search(r"\bx\s*in\s*[\[\(\{].+[\]\)\}]", s):
+            return True
     return False
 
 

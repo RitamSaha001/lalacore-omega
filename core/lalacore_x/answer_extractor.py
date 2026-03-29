@@ -68,13 +68,31 @@ def _looks_option_label(text: str) -> bool:
     return all(bool(re.fullmatch(r"[a-d]", part)) for part in parts)
 
 
+def _is_counting_numeric_prompt(question_text: str) -> bool:
+    q = _norm(question_text)
+    if re.search(r"\b(how many|number of|count|probability)\b", q):
+        return True
+    if re.search(r"\b(arrangements?|permutations?|combinations?|selections?|subsets?|ways)\b", q):
+        return True
+    if re.search(r"\b(onto|surjective|injective|one[\s\-]?to[\s\-]?one)\s+functions?\b", q):
+        return True
+    if re.search(r"\b(?:positive|non[\s\-]?negative)\s+integer\s+solutions?\b", q) and re.search(r"\b(each|where|with)\b", q):
+        return True
+    return False
+
+
 def _expected_answer_type(question_text: str, metadata: Dict[str, Any]) -> str:
     q = _norm(question_text)
     if re.search(r"\b(solve|find\s+[a-z])\b", q):
         return "solution"
     if re.search(r"\b(option|mcq|correct option|which option)\b", q) or re.search(r"\([a-d]\)", q):
         return "option"
-    if re.search(r"\b(list|set of|roots|values|ordered pair)\b", q):
+    if _is_counting_numeric_prompt(q):
+        return "numeric"
+    if re.search(
+        r"\b(list|roots?|ordered pair|ordered pairs|solution set|set of solutions|set of values|possible values|all values|all roots)\b",
+        q,
+    ):
         return "list"
     if bool(metadata.get("numeric_expected")):
         return "numeric"

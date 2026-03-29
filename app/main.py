@@ -1,18 +1,79 @@
+import asyncio
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 import logging
 import os
+import sys
 
 from app.live_classes_api import router as live_classes_router
-from app.routes import router
+from app import routes as app_routes
 from app.discovery import start_discovery_responder
 from core.bootstrap import initialize_keys
+from core.api.entrypoint import warm_atlas_runtime
 from core.db.connection import Database
+from services.app_update_release_notifier import AppUpdateReleaseNotifierScheduler
+from services.atlas_maintenance_service import AtlasMaintenanceScheduler
 
 load_dotenv()
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="LalaCore Omega")
+_atlas_maintenance_scheduler: AtlasMaintenanceScheduler | None = None
+_app_update_release_notifier_scheduler: AppUpdateReleaseNotifierScheduler | None = None
+_atlas_maintenance_service = app_routes._ATLAS_MAINTENANCE
+_app_update_release_notifier_service = app_routes._APP_UPDATE_RELEASE_NOTIFIER
+_atlas_runtime_warm_task = None
+_atlas_runtime_warm_report: dict[str, object] = {}
+
+
+class AtlasMaintenanceLockMiddleware:
+    def __init__(self, app, *, service) -> None:
+        self.app = app
+        self._service = service
+        self._allowed_prefixes = (
+            "/health",
+            "/ops/atlas-maintenance",
+        )
+
+    def _is_allowed(self, path: str) -> bool:
+        return any(path.startswith(prefix) for prefix in self._allowed_prefixes)
+
+    async def __call__(self, scope, receive, send) -> None:
+        scope_type = str(scope.get("type") or "")
+        path = str(scope.get("path") or "")
+        if scope_type not in {"http", "websocket"}:
+            await self.app(scope, receive, send)
+            return
+        if self._is_allowed(path) or not self._service.is_running():
+            await self.app(scope, receive, send)
+            return
+        status = self._service.status_snapshot()
+        if scope_type == "websocket":
+            await send(
+                {
+                    "type": "websocket.close",
+                    "code": 1013,
+                    "reason": "Atlas maintenance in progress",
+                }
+            )
+            return
+        response = JSONResponse(
+            status_code=503,
+            content={
+                "ok": False,
+                "status": "MAINTENANCE",
+                "message": (
+                    "Atlas weekly maintenance is in progress. The app is temporarily inaccessible "
+                    "until the maintenance sweep completes."
+                ),
+                "maintenance": status,
+            },
+        )
+        await response(scope, receive, send)
+
+
+app.add_middleware(AtlasMaintenanceLockMiddleware, service=_atlas_maintenance_service)
 
 
 def _bool_env(name: str, default: bool) -> bool:
@@ -28,6 +89,14 @@ def _validate_env() -> None:
         return
 
     sender = os.getenv("OTP_SENDER_EMAIL", "").strip()
+    if not sender:
+        fallback_sender = os.getenv("FORGOT_OTP_SENDER_EMAIL", "").strip()
+        if fallback_sender:
+            os.environ["OTP_SENDER_EMAIL"] = fallback_sender
+            sender = fallback_sender
+            logger.info(
+                "OTP_SENDER_EMAIL missing; using FORGOT_OTP_SENDER_EMAIL for OTP email."
+            )
     sender_password = os.getenv("OTP_SENDER_PASSWORD", "").strip()
     if not sender or not sender_password:
         # Keep the server bootable in local/dev mode and let auth service
@@ -61,32 +130,115 @@ def _validate_env() -> None:
             )
 
 
+def _detect_http_port() -> int:
+    for env_name in ("LC9_HTTP_PORT", "APP_PUBLIC_PORT", "PORT", "UVICORN_PORT"):
+        raw = os.getenv(env_name, "").strip()
+        if not raw:
+            continue
+        try:
+            return int(raw)
+        except ValueError:
+            continue
+
+    argv = list(sys.argv)
+    for index, token in enumerate(argv):
+        lowered = str(token).strip().lower()
+        if lowered == "--port" and index + 1 < len(argv):
+            try:
+                return int(str(argv[index + 1]).strip())
+            except ValueError:
+                continue
+        if lowered.startswith("--port="):
+            try:
+                return int(lowered.split("=", 1)[1].strip())
+            except ValueError:
+                continue
+    return 8000
+
+
 @app.on_event("startup")
 async def startup_event():
+    global _atlas_maintenance_scheduler, _app_update_release_notifier_scheduler
+    global _atlas_runtime_warm_task
     _validate_env()
     initialize_keys()
     try:
         discovery_port = int(os.getenv("LC9_DISCOVERY_PORT", "37999"))
     except ValueError:
         discovery_port = 37999
-    try:
-        http_port = int(os.getenv("LC9_HTTP_PORT", os.getenv("PORT", "8000")))
-    except ValueError:
-        http_port = 8000
-    start_discovery_responder(port=discovery_port, http_port=http_port)
+    http_port = _detect_http_port()
+    os.environ["LC9_HTTP_PORT"] = str(http_port)
+    if _bool_env("LC9_DISABLE_DISCOVERY", False):
+        logger.info("LC9 discovery responder disabled by configuration.")
+    else:
+        start_discovery_responder(port=discovery_port, http_port=http_port)
     try:
         await Database.init()
     except Exception as exc:
         # DB is optional for file-backed research mode.
         logger.warning("Database init skipped: %s", exc)
+    if _atlas_runtime_warm_task is None or _atlas_runtime_warm_task.done():
+        _atlas_runtime_warm_task = asyncio.create_task(_warm_atlas_runtime_in_background())
+    if _bool_env("ATLAS_MAINTENANCE_ENABLED", True):
+        try:
+            _atlas_maintenance_scheduler = AtlasMaintenanceScheduler(
+                service=_atlas_maintenance_service
+            )
+            _atlas_maintenance_scheduler.start()
+        except Exception as exc:
+            logger.warning("Atlas maintenance scheduler startup skipped: %s", exc)
+    if _bool_env("APP_UPDATE_CONFIRMATION_ENABLED", True):
+        try:
+            _app_update_release_notifier_scheduler = AppUpdateReleaseNotifierScheduler(
+                service=_app_update_release_notifier_service
+            )
+            _app_update_release_notifier_scheduler.start()
+        except Exception as exc:
+            logger.warning("App update confirmation scheduler startup skipped: %s", exc)
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
+    global _atlas_maintenance_scheduler, _app_update_release_notifier_scheduler
+    global _atlas_runtime_warm_task
+    try:
+        if _atlas_maintenance_scheduler is not None:
+            await _atlas_maintenance_scheduler.stop()
+    except Exception:
+        pass
+    _atlas_maintenance_scheduler = None
+    try:
+        if _app_update_release_notifier_scheduler is not None:
+            await _app_update_release_notifier_scheduler.stop()
+    except Exception:
+        pass
+    _app_update_release_notifier_scheduler = None
+    task = _atlas_runtime_warm_task
+    _atlas_runtime_warm_task = None
+    try:
+        if task is not None:
+            task.cancel()
+            await task
+    except asyncio.CancelledError:
+        pass
+    except Exception:
+        pass
     try:
         await Database.close()
     except Exception:
         pass
+
+
+async def _warm_atlas_runtime_in_background() -> None:
+    global _atlas_runtime_warm_report
+    try:
+        _atlas_runtime_warm_report = dict(await warm_atlas_runtime())
+        logger.info("Atlas runtime warmup completed.")
+    except asyncio.CancelledError:
+        raise
+    except Exception as exc:
+        _atlas_runtime_warm_report = {"ok": False, "error": str(exc)[:400]}
+        logger.warning("Atlas runtime warmup skipped: %s", exc)
 
 
 @app.get("/")
@@ -99,6 +251,11 @@ async def health():
     return {"ok": True, "status": "healthy"}
 
 
+@app.get("/health/live")
+async def health_live():
+    return {"ok": True, "status": "live"}
+
+
 @app.get("/health/ready")
 async def health_ready():
     db_ready = False
@@ -109,5 +266,5 @@ async def health_ready():
     return {"ok": True, "status": "ready", "db_ready": bool(db_ready)}
 
 
-app.include_router(router)
+app.include_router(app_routes.router)
 app.include_router(live_classes_router)

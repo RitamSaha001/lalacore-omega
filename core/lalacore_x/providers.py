@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import contextvars
 import hashlib
 import os
 import re
 import time
 from collections import OrderedDict
+from contextlib import contextmanager
 from typing import Any, Dict, List, Sequence
 
 import httpx
@@ -18,7 +20,37 @@ from core.lalacore_x.provider_circuit import ProviderCircuitBreaker
 from core.lalacore_x.runtime_telemetry import RuntimeTelemetry
 from core.lalacore_x.schemas import ProblemProfile, ProviderAnswer, RetrievedBlock
 from core.math.contextual_math_solver import solve_contextual_math_question
+from core.network.resilient_http import request_async
 from models.mini_loader import run_mini
+
+
+_PROVIDER_TIMEOUT_OVERRIDES: contextvars.ContextVar[Dict[str, float] | None] = (
+    contextvars.ContextVar("lc9_provider_timeout_overrides", default=None)
+)
+
+
+@contextmanager
+def provider_runtime_budget(
+    *,
+    timeout_overrides: Dict[str, float] | None = None,
+):
+    normalized: Dict[str, float] = {}
+    if isinstance(timeout_overrides, dict):
+        for raw_key, raw_value in timeout_overrides.items():
+            key = str(raw_key or "").strip().lower()
+            if not key:
+                continue
+            try:
+                value = float(raw_value)
+            except (TypeError, ValueError):
+                continue
+            if value > 0.0:
+                normalized[key] = value
+    token = _PROVIDER_TIMEOUT_OVERRIDES.set(normalized or None)
+    try:
+        yield
+    finally:
+        _PROVIDER_TIMEOUT_OVERRIDES.reset(token)
 
 
 class ProviderFabric:
@@ -57,6 +89,19 @@ class ProviderFabric:
         self.warmup_on_start = str(os.getenv("LC9_PROVIDER_WARMUP_ON_START", "1")).strip().lower() in {"1", "true", "yes", "on"}
         self.warmup_timeout_s = max(0.5, float(os.getenv("LC9_PROVIDER_WARMUP_TIMEOUT_S", "4.0") or 4.0))
         self._warmup_done = False
+
+    def _timeout_for(self, provider: str) -> float:
+        default = float(self.provider_timeouts_s.get(provider, 45.0))
+        overrides = _PROVIDER_TIMEOUT_OVERRIDES.get()
+        if not isinstance(overrides, dict):
+            return default
+        override = overrides.get(str(provider or "").strip().lower())
+        if override is None:
+            return default
+        try:
+            return float(max(0.5, override))
+        except (TypeError, ValueError):
+            return default
 
     def available_providers(self) -> List[str]:
         report = self.availability_report()
@@ -226,7 +271,7 @@ class ProviderFabric:
             try:
                 await asyncio.wait_for(
                     self.generate(provider, "What is 2+2?", probe_profile, []),
-                    timeout=min(self.warmup_timeout_s, float(self.provider_timeouts_s.get(provider, 45.0))),
+                    timeout=min(self.warmup_timeout_s, self._timeout_for(provider)),
                 )
             except Exception:
                 # Warm-up is best-effort and should never block solve flow.
@@ -256,7 +301,7 @@ class ProviderFabric:
                 return cached
             return self._error_answer(provider, RuntimeError("provider_temporarily_disabled_by_circuit"))
 
-        timeout_s = float(self.provider_timeouts_s.get(provider, 45.0))
+        timeout_s = self._timeout_for(provider)
         try:
             answer = await asyncio.wait_for(runner(question, profile, retrieved), timeout=timeout_s)
         except asyncio.TimeoutError as exc:
@@ -435,7 +480,11 @@ class ProviderFabric:
 
         if deterministic and bool(deterministic.get("handled")):
             answer = str(deterministic.get("answer", "")).strip()
-            reasoning = str(deterministic.get("reasoning", "Deterministic symbolic guard solve.")).strip()
+            reasoning = str(
+                deterministic.get("expected_solution_text")
+                or deterministic.get("reasoning")
+                or "Deterministic symbolic guard solve."
+            ).strip()
             token_usage = {
                 "prompt_tokens": float(self._estimate_tokens(question)),
                 "completion_tokens": float(self._estimate_tokens(reasoning + "\n" + answer)),
@@ -453,6 +502,7 @@ class ProviderFabric:
                 raw={
                     "mode": "deterministic_contextual",
                     "expected_expr": deterministic.get("expected_expr"),
+                    "expected_solution_text": deterministic.get("expected_solution_text"),
                     "prompt_meta": self._prompt_meta(
                         provider="symbolic_guard",
                         model_name="sympy-contextual-guard",
@@ -525,12 +575,13 @@ class ProviderFabric:
                 "X-Title": "LalaCore-X",
             }
             try:
-                async with httpx.AsyncClient(timeout=40) as client:
-                    response = await client.post(
-                        "https://openrouter.ai/api/v1/chat/completions",
-                        headers=headers,
-                        json=payload,
-                    )
+                response = await request_async(
+                    "POST",
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers=headers,
+                    json_body=payload,
+                    timeout_s=40.0,
+                )
                 response.raise_for_status()
                 data = response.json()
                 content = self._extract_chat_content(data)
@@ -547,6 +598,7 @@ class ProviderFabric:
                     profile=profile,
                     prompt_meta=prompt_meta,
                     token_usage=token_usage,
+                    extra_raw={"transport": response.transport},
                 )
             except Exception as exc:
                 last_exc = exc
@@ -612,8 +664,13 @@ class ProviderFabric:
                 "Content-Type": "application/json",
             }
             try:
-                async with httpx.AsyncClient(timeout=40) as client:
-                    response = await client.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=payload)
+                response = await request_async(
+                    "POST",
+                    "https://api.groq.com/openai/v1/chat/completions",
+                    headers=headers,
+                    json_body=payload,
+                    timeout_s=40.0,
+                )
                 response.raise_for_status()
                 data = response.json()
                 content = self._extract_chat_content(data)
@@ -630,6 +687,7 @@ class ProviderFabric:
                     profile=profile,
                     prompt_meta=prompt_meta,
                     token_usage=token_usage,
+                    extra_raw={"transport": response.transport},
                 )
             except Exception as exc:
                 last_exc = exc
@@ -692,8 +750,12 @@ class ProviderFabric:
             attempted_hashes.append(self._mask_key(key))
             url = f"https://generativelanguage.googleapis.com/v1/models/{model}:generateContent?key={key}"
             try:
-                async with httpx.AsyncClient(timeout=50) as client:
-                    response = await client.post(url, json=payload)
+                response = await request_async(
+                    "POST",
+                    url,
+                    json_body=payload,
+                    timeout_s=50.0,
+                )
                 response.raise_for_status()
                 data = response.json()
                 content = data["candidates"][0]["content"]["parts"][0]["text"].strip()
@@ -708,6 +770,7 @@ class ProviderFabric:
                     profile=profile,
                     prompt_meta=prompt_meta,
                     token_usage=token_usage,
+                    extra_raw={"transport": response.transport},
                 )
             except Exception as exc:
                 last_exc = exc
@@ -771,8 +834,13 @@ class ProviderFabric:
             attempted_hashes.append(self._mask_key(key))
             headers = {"Authorization": f"Bearer {key}"}
             try:
-                async with httpx.AsyncClient(timeout=60) as client:
-                    response = await client.post(url, headers=headers, json=payload)
+                response = await request_async(
+                    "POST",
+                    url,
+                    headers=headers,
+                    json_body=payload,
+                    timeout_s=60.0,
+                )
                 response.raise_for_status()
                 data = response.json()
                 if isinstance(data, dict):
@@ -795,6 +863,7 @@ class ProviderFabric:
                     profile=profile,
                     prompt_meta=prompt_meta,
                     token_usage=token_usage,
+                    extra_raw={"transport": response.transport},
                 )
             except Exception as exc:
                 last_exc = exc
@@ -823,7 +892,31 @@ class ProviderFabric:
         profile: ProblemProfile,
         retrieved: Sequence[RetrievedBlock],
     ) -> str:
+        content_task_kind = self._content_task_kind(question)
         retrieved_text = "\n".join(f"[{b.title}] {b.text}" for b in retrieved[:5])
+        if content_task_kind:
+            if content_task_kind.startswith("analytics_"):
+                engine_label = "learning analytics AI engine"
+            else:
+                engine_label = "study-material AI engine"
+            return (
+                f"You are Lalacore's dedicated {engine_label}.\n"
+                "This is a long-form educational content task, not a short-answer solver task.\n"
+                f"Surface: {content_task_kind}\n"
+                f"Subject: {profile.subject}; Difficulty: {profile.difficulty}; Numeric: {profile.numeric}.\n"
+                "Use supporting knowledge blocks when they sharpen the material-grounded answer.\n\n"
+                f"Supporting knowledge blocks:\n{retrieved_text or '[none]'}\n\n"
+                f"Material task:\n{question}\n\n"
+                "Output Contract (strict):\n"
+                "- Include line `Final Answer:` exactly once.\n"
+                "- Everything after `Final Answer:` is the full final deliverable and may span multiple markdown lines.\n"
+                "- Never return only a heading, title, or placeholder.\n"
+                "- Do not reply with `[UNRESOLVED]` unless the input itself is empty or corrupt.\n\n"
+                "Return format:\n"
+                "Reasoning: <2-5 short planning lines>\n"
+                "Final Answer:\n"
+                "<complete markdown deliverable>"
+            )
 
         return (
             "Solve the following JEE-style question with concise reasoning.\n"
@@ -850,31 +943,50 @@ class ProviderFabric:
         profile: ProblemProfile,
         prompt_meta: Dict[str, Any] | None = None,
         token_usage: Dict[str, float] | None = None,
+        extra_raw: Dict[str, Any] | None = None,
     ) -> ProviderAnswer:
-        extraction = extract_answer(
-            question_text=question_text,
-            raw_output=text,
-            metadata={"numeric_expected": bool(getattr(profile, "numeric", False))},
-        )
-        reasoning = str(extraction.get("reasoning", ""))
-        final_answer = str(extraction.get("final_answer", ""))
-        fallback_used = False
-        if not final_answer.strip() and str(text or "").strip():
-            # Salvage responses that do not follow strict tags to avoid false
-            # empty-response circuit failures.
-            fallback_reasoning, fallback_answer = self._split_reasoning_answer(text)
-            fallback_answer = str(fallback_answer or "").strip()
-            if fallback_answer:
-                final_answer = fallback_answer[:320].strip()
+        content_task_kind = self._content_task_kind(question_text)
+        if content_task_kind:
+            reasoning, final_answer, matched = self._extract_content_answer(text)
+            fallback_used = not matched
+            extraction = {
+                "matched": bool(matched),
+                "pattern": "material_multiline_contract" if matched else "material_fulltext_fallback",
+                "expected_type": "content",
+                "candidates": [final_answer[:280]] if final_answer else [],
+            }
+            if not final_answer.strip():
                 fallback_used = True
-                if not reasoning.strip():
-                    reasoning = str(fallback_reasoning or "").strip()[:1200]
+                final_answer = str(text or "").strip()
+        else:
+            extraction = extract_answer(
+                question_text=question_text,
+                raw_output=text,
+                metadata={"numeric_expected": bool(getattr(profile, "numeric", False))},
+            )
+            reasoning = str(extraction.get("reasoning", ""))
+            final_answer = str(extraction.get("final_answer", ""))
+            fallback_used = False
+            if not final_answer.strip() and str(text or "").strip():
+                # Salvage responses that do not follow strict tags to avoid false
+                # empty-response circuit failures.
+                fallback_reasoning, fallback_answer = self._split_reasoning_answer(text)
+                fallback_answer = str(fallback_answer or "").strip()
+                if fallback_answer:
+                    final_answer = fallback_answer[:320].strip()
+                    fallback_used = True
+                    if not reasoning.strip():
+                        reasoning = str(fallback_reasoning or "").strip()[:1200]
         raw_payload = dict(raw)
         raw_payload["raw_output_text"] = text
+        if content_task_kind:
+            raw_payload["content_task_kind"] = content_task_kind
         if prompt_meta is not None:
             raw_payload["prompt_meta"] = prompt_meta
         if token_usage is not None:
             raw_payload["token_usage"] = token_usage
+        if isinstance(extra_raw, dict) and extra_raw:
+            raw_payload.update(extra_raw)
         raw_payload["extraction"] = {
             "matched": bool(extraction.get("matched", False)),
             "pattern": str(extraction.get("pattern", "")),
@@ -959,6 +1071,41 @@ class ProviderFabric:
             return "\n".join(lines[:-1]), lines[-1]
 
         return cleaned, cleaned
+
+    def _content_task_kind(self, question: str) -> str:
+        lowered = str(question or "").lower()
+        if "[[lc9_analytics_engine:analyze_exam]]" in lowered:
+            return "analytics_analyze_exam"
+        if "[[lc9_analytics_engine:student_profile]]" in lowered:
+            return "analytics_student_profile"
+        if "[[lc9_analytics_engine:student_intelligence]]" in lowered:
+            return "analytics_student_intelligence"
+        if "[[lc9_analytics_engine:class_summary]]" in lowered:
+            return "analytics_class_summary"
+        if "[[lc9_material_engine:material_query]]" in lowered:
+            return "material_query"
+        if "[[lc9_material_engine:material_generate]]" in lowered:
+            return "material_generate"
+        if "task: answer the student's question using the selected study material as primary context." in lowered:
+            return "material_query"
+        if "task: produce a material-grounded jee study output" in lowered:
+            return "material_generate"
+        return ""
+
+    def _extract_content_answer(self, text: str) -> tuple[str, str, bool]:
+        cleaned = str(text or "").strip()
+        if not cleaned:
+            return "", "", False
+        match = re.search(
+            r"final\s*answer\s*:\s*(.*)$",
+            cleaned,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if match:
+            reasoning = cleaned[: match.start()].strip()
+            final_answer = match.group(1).strip()
+            return reasoning, final_answer, True
+        return "", cleaned, False
 
     def _extract_chat_content(self, data: Dict[str, Any]) -> str:
         if not isinstance(data, dict):
@@ -1291,7 +1438,12 @@ class ProviderFabric:
             return "timeout"
         if isinstance(exc, httpx.NetworkError):
             return "network"
-        if "nodename nor servname" in text or "name or service not known" in text or "temporary failure in name resolution" in text:
+        if (
+            "nodename nor servname" in text
+            or "name or service not known" in text
+            or "temporary failure in name resolution" in text
+            or "could not resolve host" in text
+        ):
             return "network"
         if "schema" in text or "json" in text:
             return "schema_validation"

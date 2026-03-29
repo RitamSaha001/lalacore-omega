@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest.mock import AsyncMock, patch
 
 from fastapi.testclient import TestClient
 
@@ -119,6 +120,23 @@ class LiveClassesRoutesTests(unittest.TestCase):
             self.assertEqual(
                 state.json().get("active_whiteboard_user_id"), "student_01"
             )
+            self.assertEqual(state.json().get("whiteboard_surface_style"), "classic")
+
+            teacher_sync.send_json(
+                {
+                    "type": "whiteboard_surface_changed",
+                    "class_id": "phy_live_01",
+                    "sender_id": "teacher_01",
+                    "timestamp": "2026-03-08T00:00:00Z",
+                    "metadata": {"surface": "document"},
+                }
+            )
+            surface_update = student_sync.receive_json()
+            self.assertEqual(surface_update.get("type"), "whiteboard_surface_changed")
+            mirrored_surface = teacher_sync.receive_json()
+            self.assertEqual(
+                mirrored_surface.get("type"), "whiteboard_surface_changed"
+            )
 
             stroke_payload = {
                 "type": "whiteboard_stroke",
@@ -147,6 +165,85 @@ class LiveClassesRoutesTests(unittest.TestCase):
                 len(state_after_stroke.json().get("whiteboard_strokes", [])),
                 1,
             )
+            self.assertEqual(
+                state_after_stroke.json().get("whiteboard_surface_style"),
+                "document",
+            )
+
+            teacher_sync.send_json(
+                {
+                    "type": "whiteboard_snapshot",
+                    "class_id": "phy_live_01",
+                    "sender_id": "teacher_01",
+                    "timestamp": "2026-03-08T00:00:01Z",
+                    "metadata": {
+                        "surface": "document",
+                        "strokes": [
+                            {
+                                "points": [{"x": 0.2, "y": 0.3}, {"x": 0.8, "y": 0.7}],
+                                "color": 4278190335,
+                                "width": 4,
+                                "tool": "rectangle",
+                            }
+                        ],
+                    },
+                }
+            )
+            snapshot_echo = student_sync.receive_json()
+            self.assertEqual(snapshot_echo.get("type"), "whiteboard_snapshot")
+            state_after_snapshot = self.client.get(
+                "/class/state",
+                params={"class_id": "phy_live_01", "user_id": "teacher_01"},
+            )
+            self.assertEqual(state_after_snapshot.status_code, 200)
+            strokes = state_after_snapshot.json().get("whiteboard_strokes", [])
+            self.assertEqual(len(strokes), 1)
+            self.assertEqual(strokes[0].get("tool"), "rectangle")
+
+            teacher_sync.send_json(
+                {
+                    "type": "whiteboard_operation",
+                    "class_id": "phy_live_01",
+                    "sender_id": "teacher_01",
+                    "timestamp": "2026-03-08T00:00:01Z",
+                    "metadata": {
+                        "operation": {
+                            "id": "op_import_1",
+                            "kind": "import_document",
+                            "actor_id": "teacher_01",
+                            "lamport": 7,
+                            "timestamp": "2026-03-08T00:00:01Z",
+                            "payload": {
+                                "active_page_id": "doc_pg_1",
+                                "pages": [
+                                    {
+                                        "id": "doc_pg_1",
+                                        "document_id": "doc_1",
+                                        "page_number": 1,
+                                        "title": "Sheet 1",
+                                        "source_label": "Worksheet",
+                                        "background_data_url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9sM4P6gAAAAASUVORK5CYII=",
+                                        "revision": 1,
+                                        "width": 1,
+                                        "height": 1,
+                                    }
+                                ],
+                            },
+                        }
+                    },
+                }
+            )
+            operation_echo = student_sync.receive_json()
+            self.assertEqual(operation_echo.get("type"), "whiteboard_operation")
+            state_after_operation = self.client.get(
+                "/class/state",
+                params={"class_id": "phy_live_01", "user_id": "teacher_01"},
+            )
+            self.assertEqual(state_after_operation.status_code, 200)
+            operation_body = state_after_operation.json()
+            self.assertEqual(operation_body.get("active_whiteboard_page_id"), "doc_pg_1")
+            self.assertEqual(len(operation_body.get("whiteboard_document_pages", [])), 1)
+            self.assertEqual(operation_body.get("whiteboard_clock"), 7)
 
             teacher_sync.send_json(
                 {
@@ -319,6 +416,369 @@ class LiveClassesRoutesTests(unittest.TestCase):
                 message.get("text"), "Consider the limit as x tends to zero."
             )
             self.assertEqual(message.get("timestamp"), "2026-03-12T10:00:00Z")
+
+    def test_agent_route_returns_structured_plan(self) -> None:
+        mocked_result = {
+            "final_answer": """
+            {
+              "type": "multi_step_plan",
+              "goal": "Find a tough PYQ and make it a 2 minute poll.",
+              "plan_id": "plan_pyq_poll_1",
+              "summary": "Prepared a poll and a reminder.",
+              "teacher_notice": "Teacher can approve or stop execution.",
+              "requires_confirmation": true,
+              "needs_more_info": false,
+              "follow_up_questions": [],
+              "proposed_tools": ["create_poll", "set_reminder"],
+              "steps": [
+                {
+                  "id": "step_1",
+                  "tool": "create_poll",
+                  "title": "Launch tough PYQ poll",
+                  "detail": "Create a 2-minute question on hyperbola.",
+                  "risk": "medium",
+                  "requires_confirmation": true,
+                  "args": {
+                    "question": "Find the eccentricity of x^2/16 - y^2/9 = 1.",
+                    "options": ["1", "5/4", "3/2", "2"],
+                    "correct_index": 1,
+                    "timer_seconds": 120
+                  },
+                  "depends_on": [],
+                  "on_failure": {"strategy": "replan"}
+                },
+                {
+                  "id": "step_2",
+                  "tool": "set_reminder",
+                  "title": "Remind teacher to end class",
+                  "detail": "Trigger after 10 minutes.",
+                  "risk": "low",
+                  "requires_confirmation": false,
+                  "args": {
+                    "note": "End the class in 10 minutes",
+                    "delay_minutes": 10
+                  },
+                  "depends_on": ["step_1"],
+                  "on_failure": {"strategy": "retry"}
+                }
+              ]
+            }
+            """,
+            "citations": [
+                {"title": "PYQ source", "url": "https://example.com/pyq"}
+            ],
+            "web_retrieval": {"enabled": True, "context_injected": True},
+            "sources_consulted": ["example.com"],
+        }
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Find a tough PYQ and make it a 2 minute poll.",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(body.get("plan_id"), "plan_pyq_poll_1")
+        self.assertEqual(body.get("summary"), "Prepared a poll and a reminder.")
+        self.assertTrue(body.get("requires_confirmation"))
+        self.assertEqual(len(body.get("steps", [])), 2)
+        self.assertEqual(len(body.get("actions", [])), 2)
+        self.assertEqual(body["actions"][0]["tool"], "create_poll")
+        self.assertEqual(body["actions"][1]["tool"], "set_reminder")
+        self.assertFalse(body.get("needs_more_info"))
+        self.assertEqual(
+            body.get("proposed_tools"), ["create_poll", "set_reminder"]
+        )
+        self.assertEqual(body.get("sources_consulted"), ["example.com"])
+
+    def test_agent_route_can_request_follow_up_questions(self) -> None:
+        mocked_result = {
+            "final_answer": """
+            {
+              "type": "needs_more_info",
+              "goal": "Schedule the next class.",
+              "summary": "I can schedule the next class, but I still need the time.",
+              "teacher_notice": "Reply in the same Atlas chat and I will continue.",
+              "requires_confirmation": false,
+              "needs_more_info": true,
+              "follow_up_questions": [
+                "When should I schedule the next class?",
+                "What title should students see?"
+              ],
+              "proposed_tools": ["schedule_next_class"],
+              "actions": []
+            }
+            """,
+        }
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Schedule the next class.",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertEqual(
+            body.get("follow_up_questions"),
+            [
+                "When should I schedule the next class?",
+                "What title should students see?",
+            ],
+        )
+        self.assertEqual(body.get("proposed_tools"), ["schedule_next_class"])
+        self.assertEqual(body.get("actions"), [])
+
+    def test_agent_route_can_request_recurring_schedule_details(self) -> None:
+        mocked_result = {
+            "final_answer": """
+            {
+              "summary": "Atlas can build a recurring class plan, but it needs the first time and repeat pattern.",
+              "teacher_notice": "Reply in the same Atlas chat and I will continue.",
+              "requires_confirmation": false,
+              "needs_more_info": true,
+              "follow_up_questions": [
+                "When should the first class happen?",
+                "How should it repeat?"
+              ],
+              "proposed_tools": ["create_recurring_class_plan"],
+              "actions": []
+            }
+            """,
+        }
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Create a recurring class plan for this batch.",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertEqual(
+            body.get("proposed_tools"), ["create_recurring_class_plan"]
+        )
+        self.assertEqual(body.get("actions"), [])
+
+    def test_agent_route_recovers_plan_from_unsafe_candidate_answer(self) -> None:
+        mocked_result = {
+            "final_answer": "Uncertain answer: verification failed under high risk. Please retry with a stronger model.",
+            "unsafe_candidate_answer": """
+            {
+              "type": "multi_step_plan",
+              "goal": "Admit all, mute all, and write Binomial Theorem",
+              "plan_id": "live_agent_unsafe_1",
+              "summary": "Admit waiting students, mute all, then write the heading on the board.",
+              "steps": [
+                {
+                  "id": "step_1",
+                  "tool": "approve_waiting_all",
+                  "title": "Admit waiting students",
+                  "detail": "Admit everyone currently waiting.",
+                  "risk": "low",
+                  "args": {}
+                },
+                {
+                  "id": "step_2",
+                  "tool": "mute_all",
+                  "title": "Mute all students",
+                  "detail": "Mute the room before writing on the board.",
+                  "risk": "low",
+                  "args": {},
+                  "depends_on": ["step_1"]
+                },
+                {
+                  "id": "step_3",
+                  "tool": "draw_text_on_whiteboard",
+                  "title": "Write board heading",
+                  "detail": "Write Binomial Theorem on the board.",
+                  "risk": "low",
+                  "args": {"text": "Binomial Theorem"},
+                  "depends_on": ["step_2"]
+                }
+              ]
+            }
+            """,
+            "reasoning": "The candidate plan was preserved in unsafe_candidate_answer.",
+        }
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Admit all waiting students, mute all, and write Binomial Theorem on the board.",
+                    "context": {"class_metadata": {"topic": "Binomial Theorem"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(body.get("steps", [])[0].get("tool"), "approve_waiting_all")
+        self.assertEqual(body.get("steps", [])[2].get("tool"), "draw_text_on_whiteboard")
+
+    def test_agent_route_recovers_plan_from_reasoning_tool_mentions(self) -> None:
+        mocked_result = {
+            "final_answer": '{"type":"multi_step_plan","goal":"Admit all, mute all, and write on the board",',
+            "reasoning": (
+                "Reasoning: We should use `approve_waiting_all` first, then `mute_all`, "
+                "and finally `draw_text_on_whiteboard` to write Binomial Theorem on the board."
+            ),
+        }
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Admit all waiting students, mute all, and write Binomial Theorem on the board.",
+                    "context": {"class_metadata": {"topic": "Binomial Theorem"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(body.get("recovery_mode"), "tool_mentions_from_reasoning")
+        self.assertEqual(body.get("steps", [])[0].get("tool"), "approve_waiting_all")
+        self.assertEqual(body.get("steps", [])[1].get("tool"), "mute_all")
+        self.assertEqual(body.get("steps", [])[2].get("tool"), "draw_text_on_whiteboard")
+        self.assertEqual(
+            body.get("steps", [])[2].get("args", {}).get("text"),
+            "Binomial Theorem",
+        )
+
+    def test_agent_route_can_request_homework_details(self) -> None:
+        mocked_result = {"final_answer": "{}"}
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Create a homework for this class.",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertEqual(body.get("proposed_tools"), ["create_homework_assignment"])
+        self.assertIn("Which chapter or topic should the homework cover?", body.get("follow_up_questions", []))
+
+    def test_agent_route_can_request_revision_pack_details(self) -> None:
+        mocked_result = {"final_answer": "{}"}
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Make a revision pack for this batch.",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertEqual(body.get("proposed_tools"), ["create_revision_pack"])
+        self.assertIn(
+            "Which chapter or topic should the revision pack cover?",
+            body.get("follow_up_questions", []),
+        )
+
+    def test_agent_route_understands_natural_classroom_sequence_request(self) -> None:
+        mocked_result = {"final_answer": "{}", "reasoning": ""}
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Can you let everyone in, quiet the room, and then put Newton's laws of motion on the board?",
+                    "context": {"class_metadata": {"topic": "Newton's Laws of Motion"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("type"), "multi_step_plan")
+        self.assertEqual(
+            [step.get("tool") for step in body.get("steps", [])],
+            ["approve_waiting_all", "mute_all", "draw_text_on_whiteboard"],
+        )
+        self.assertEqual(
+            body.get("steps", [])[2].get("args", {}).get("text"),
+            "Newton's laws of motion",
+        )
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_agent_route_understands_natural_schedule_request_needs_time(self) -> None:
+        mocked_result = {"final_answer": "{}", "reasoning": ""}
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Can you line up the next class and ping the students before it?",
+                    "context": {"class_metadata": {"topic": "Hyperbola"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("needs_more_info"))
+        self.assertIn("schedule_next_class", body.get("proposed_tools", []))
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_agent_route_understands_blurry_video_audio_issue_as_diagnosis(self) -> None:
+        mocked_result = {"final_answer": "{}", "reasoning": ""}
+        with patch(
+            "app.live_classes_api._run_live_class_pipeline",
+            new=AsyncMock(return_value=mocked_result),
+        ):
+            response = self.client.post(
+                "/ai/class/agent",
+                json={
+                    "instruction": "Atlas, Karthik says the video is blurry and the sound quality is bad.",
+                    "context": {"class_metadata": {"topic": "Electrostatics"}},
+                    "authority_level": "assist",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("type"), "single_action")
+        self.assertEqual(body.get("tool"), "report_system_issue")
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
 
 
 def _restore_env(key: str, value: str | None) -> None:

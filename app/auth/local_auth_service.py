@@ -13,20 +13,37 @@ from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
+from app.storage.sqlite_json_store import SQLiteJsonBlobStore
+
 
 class LocalAuthService:
-    """File-backed auth + OTP service for app login and forgot-password flow."""
+    """SQLite-backed auth + OTP service with JSON-file migration support."""
 
     def __init__(
         self,
         users_file: str | Path | None = None,
         otp_file: str | Path | None = None,
+        storage_db_file: str | Path | None = None,
     ) -> None:
         root = Path(__file__).resolve().parents[2]
         auth_dir = root / "data" / "auth"
         auth_dir.mkdir(parents=True, exist_ok=True)
         self._users_file = Path(users_file) if users_file else auth_dir / "users.json"
         self._otp_file = Path(otp_file) if otp_file else auth_dir / "otp.json"
+        default_storage_root = (
+            self._users_file.parent
+            if users_file is not None or otp_file is not None
+            else auth_dir
+        )
+        self._storage = SQLiteJsonBlobStore(
+            Path(storage_db_file)
+            if storage_db_file
+            else default_storage_root / "auth_store.sqlite3"
+        )
+        self._storage_keys = {
+            self._users_file.resolve(): "auth_users",
+            self._otp_file.resolve(): "auth_otps",
+        }
         self._lock = asyncio.Lock()
         self._users: dict[str, dict[str, Any]] = {}
         self._otps: dict[str, dict[str, Any]] = {}
@@ -88,6 +105,12 @@ class LocalAuthService:
             self._loaded = True
 
     def _read_json_file(self, path: Path) -> dict[str, dict[str, Any]]:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            cached = self._storage.read_json(storage_key)
+            normalized = self._normalize_json_map(cached)
+            if cached is not None:
+                return normalized
         try:
             if not path.exists():
                 return {}
@@ -95,19 +118,29 @@ class LocalAuthService:
             if not text:
                 return {}
             decoded = json.loads(text)
-            if isinstance(decoded, dict):
-                out: dict[str, dict[str, Any]] = {}
-                for k, v in decoded.items():
-                    if isinstance(v, dict):
-                        out[str(k).strip().lower()] = dict(v)
-                return out
-            return {}
+            out = self._normalize_json_map(decoded)
+            if storage_key and out:
+                self._storage.write_json(storage_key, out)
+            return out
         except Exception:
             return {}
 
     def _write_json_file(self, path: Path, data: dict[str, dict[str, Any]]) -> None:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            self._storage.write_json(storage_key, data)
+            return
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(data, ensure_ascii=True, indent=2), encoding="utf-8")
+
+    def _normalize_json_map(self, decoded: Any) -> dict[str, dict[str, Any]]:
+        if not isinstance(decoded, dict):
+            return {}
+        out: dict[str, dict[str, Any]] = {}
+        for k, v in decoded.items():
+            if isinstance(v, dict):
+                out[str(k).strip().lower()] = dict(v)
+        return out
 
     def _str(self, value: Any) -> str:
         return str(value or "").strip()
@@ -121,8 +154,19 @@ class LocalAuthService:
         text = self._str(value).lower()
         return text in {"1", "true", "yes", "on"}
 
+    def _env_flag(self, name: str, default: bool = False) -> bool:
+        raw = os.getenv(name)
+        if raw is None:
+            return default
+        return raw.strip().lower() in {"1", "true", "yes", "on"}
+
     def _is_valid_email(self, email: str) -> bool:
-        return bool(re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email))
+        return bool(
+            re.match(
+                r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$",
+                email,
+            )
+        )
 
     def _hash_password(self, email: str, password: str) -> str:
         salted = f"{email.lower()}::{password}".encode("utf-8")
@@ -151,6 +195,15 @@ class LocalAuthService:
             return ""
         # Keep ID compact and deterministic for storage comparisons.
         return re.sub(r"[^a-zA-Z0-9:_-]", "", value)[:128]
+
+    def _require_trusted_device_for_reset(self) -> bool:
+        return self._env_flag("OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET", False)
+
+    def _require_issuing_device_for_reset(self) -> bool:
+        return self._env_flag("OTP_REQUIRE_ISSUING_DEVICE_FOR_RESET", False)
+
+    def _allow_local_otp_fallback(self) -> bool:
+        return self._env_flag("OTP_ALLOW_LOCAL_FALLBACK", False)
 
     def _trusted_devices_from_user(self, user: dict[str, Any]) -> list[str]:
         raw = user.get("trusted_device_ids")
@@ -328,24 +381,19 @@ class LocalAuthService:
             }
 
         trusted_devices = self._trusted_devices_from_user(user)
-        if not trusted_devices and not device_id:
-            return {
-                "ok": False,
-                "status": "DEVICE_REQUIRED",
-                "message": "Reset requires a trusted device on this account",
-            }
-        if trusted_devices and (not device_id or device_id not in trusted_devices):
-            return {
-                "ok": False,
-                "status": "DEVICE_MISMATCH",
-                "message": "Reset is allowed only on a previously used trusted device",
-            }
-        if not trusted_devices and device_id:
-            self._attach_trusted_device(user, device_id)
-            user["updated_at"] = int(time.time() * 1000)
-            self._users[email] = user
-            async with self._lock:
-                self._write_json_file(self._users_file, self._users)
+        if self._require_trusted_device_for_reset():
+            if not trusted_devices and not device_id:
+                return {
+                    "ok": False,
+                    "status": "DEVICE_REQUIRED",
+                    "message": "Reset requires a trusted device on this account",
+                }
+            if trusted_devices and (not device_id or device_id not in trusted_devices):
+                return {
+                    "ok": False,
+                    "status": "DEVICE_MISMATCH",
+                    "message": "Reset is allowed only on a previously used trusted device",
+                }
 
         now = int(time.time())
         ttl = max(120, int(os.getenv("OTP_TTL_SECONDS", "600")))
@@ -366,19 +414,33 @@ class LocalAuthService:
         email_enabled = self._bool(os.getenv("OTP_EMAIL_ENABLED", "true"))
         fallback_reason = ""
         if email_enabled:
-            sent, send_msg = self._send_otp_email(
+            sent, send_msg = await asyncio.to_thread(
+                self._send_otp_email,
                 email=email,
                 otp=otp,
                 ttl_seconds=ttl,
             )
             if not sent:
-                # Development-safe fallback: keep OTP flow alive even when SMTP is unavailable.
-                fallback_reason = send_msg
-                email_enabled = False
-                sent = True
-                send_msg = f"OTP generated locally ({send_msg})"
+                if self._allow_local_otp_fallback():
+                    fallback_reason = send_msg
+                    email_enabled = False
+                    sent = True
+                    send_msg = f"OTP generated locally ({send_msg})"
+                else:
+                    return {
+                        "ok": False,
+                        "status": "EMAIL_SEND_FAILED",
+                        "message": send_msg,
+                    }
         else:
-            sent, send_msg = True, "OTP generated locally"
+            if self._allow_local_otp_fallback():
+                sent, send_msg = True, "OTP generated locally"
+            else:
+                return {
+                    "ok": False,
+                    "status": "EMAIL_BACKEND_DISABLED",
+                    "message": "OTP email delivery is disabled and local fallback is not allowed",
+                }
         if not sent:
             return {
                 "ok": False,
@@ -412,7 +474,7 @@ class LocalAuthService:
 
     def _send_otp_email(self, email: str, otp: str, ttl_seconds: int) -> tuple[bool, str]:
         sender = self._str(
-            os.getenv("OTP_SENDER_EMAIL", ""),
+            os.getenv("OTP_SENDER_EMAIL", "") or os.getenv("FORGOT_OTP_SENDER_EMAIL", ""),
         )
         sender_password = self._str(os.getenv("OTP_SENDER_PASSWORD", "")).replace(" ", "")
         smtp_host = self._str(os.getenv("OTP_SMTP_HOST", "smtp.gmail.com"))
@@ -498,13 +560,22 @@ class LocalAuthService:
 
         trusted_devices = self._trusted_devices_from_user(user)
         otp_device = self._normalize_device_id(current.get("device_id"))
-        if otp_device and request_device and otp_device != request_device:
+        if (
+            self._require_issuing_device_for_reset()
+            and otp_device
+            and request_device
+            and otp_device != request_device
+        ):
             return {
                 "ok": False,
                 "status": "DEVICE_MISMATCH",
                 "message": "Reset code was issued to a different trusted device",
             }
-        if trusted_devices and (not request_device or request_device not in trusted_devices):
+        if (
+            self._require_trusted_device_for_reset()
+            and trusted_devices
+            and (not request_device or request_device not in trusted_devices)
+        ):
             return {
                 "ok": False,
                 "status": "DEVICE_MISMATCH",
@@ -558,14 +629,29 @@ class LocalAuthService:
         email_enabled = self._bool(os.getenv("OTP_EMAIL_ENABLED", "true"))
         fallback_reason = ""
         if email_enabled:
-            sent, send_msg = self._send_otp_email(email=email, otp=otp, ttl_seconds=ttl)
+            sent, send_msg = await asyncio.to_thread(
+                self._send_otp_email,
+                email=email,
+                otp=otp,
+                ttl_seconds=ttl,
+            )
             if not sent:
-                fallback_reason = send_msg
-                email_enabled = False
-                sent = True
-                send_msg = f"OTP generated locally ({send_msg})"
+                if self._allow_local_otp_fallback():
+                    fallback_reason = send_msg
+                    email_enabled = False
+                    sent = True
+                    send_msg = f"OTP generated locally ({send_msg})"
+                else:
+                    return {"ok": False, "status": "EMAIL_SEND_FAILED", "message": send_msg}
         else:
-            sent, send_msg = True, "OTP generated locally"
+            if self._allow_local_otp_fallback():
+                sent, send_msg = True, "OTP generated locally"
+            else:
+                return {
+                    "ok": False,
+                    "status": "EMAIL_BACKEND_DISABLED",
+                    "message": "OTP email delivery is disabled and local fallback is not allowed",
+                }
         if not sent:
             return {"ok": False, "status": "EMAIL_SEND_FAILED", "message": send_msg}
         now = int(time.time())

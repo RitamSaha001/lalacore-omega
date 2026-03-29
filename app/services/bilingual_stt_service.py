@@ -6,7 +6,7 @@ import os
 import wave
 from typing import Any
 
-import requests
+from core.network.resilient_http import request_sync
 
 
 class BilingualSttService:
@@ -103,7 +103,8 @@ class BilingualSttService:
         if language_hint:
             params["detect_language"] = "true"
         try:
-            response = requests.post(
+            response = request_sync(
+                "POST",
                 url,
                 params=params,
                 data=audio_bytes,
@@ -111,7 +112,7 @@ class BilingualSttService:
                     "Authorization": f"Token {self._deepgram_key}",
                     "Content-Type": content_type,
                 },
-                timeout=20,
+                timeout_s=20.0,
             )
             if response.status_code >= 400:
                 return {"text": "", "confidence": 0.0}
@@ -157,12 +158,13 @@ class BilingualSttService:
             }
         data = {"model": model, "prompt": prompt}
         try:
-            response = requests.post(
+            response = request_sync(
+                "POST",
                 url,
                 files=files,
                 data=data,
                 headers={"Authorization": f"Bearer {self._openai_key}"},
-                timeout=30,
+                timeout_s=30.0,
             )
             if response.status_code >= 400:
                 return {"text": "", "confidence": 0.0}
