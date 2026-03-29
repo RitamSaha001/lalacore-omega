@@ -13075,6 +13075,21 @@ class LocalAppDataService:
         if isinstance(web_snippets, list) and web_snippets and "optional_web_snippets" not in options:
             options["optional_web_snippets"] = web_snippets
 
+        chat_function = self._str(
+            options.get("function") or payload.get("function")
+        ).lower()
+        card_grounding = self._build_ai_card_surface_grounding(
+            function=chat_function,
+            card=card_payload if isinstance(card_payload, dict) else None,
+        )
+        if prompt and card_grounding:
+            prompt = (
+                f"{prompt}\n\n"
+                "App context you must use directly for this answer:\n"
+                f"{card_grounding}\n\n"
+                "Ground your response in this app context. Do not say the context is missing if these details are present."
+            )
+
         user_context = {}
         for source_key, target_key in (
             ("user_id", "user_id"),
@@ -13138,6 +13153,23 @@ class LocalAppDataService:
             or result.get("display_answer")
         )
         explanation = self._str(result.get("reasoning") or result.get("explanation"))
+        if self._should_prefer_explanation_as_answer(
+            function=chat_function,
+            answer=answer,
+            explanation=explanation,
+        ):
+            answer = explanation
+        if self._should_use_card_surface_fallback(
+            function=chat_function,
+            answer=answer,
+            explanation=explanation,
+        ):
+            fallback_answer = self._build_card_surface_fallback_answer(
+                function=chat_function,
+                card=card_payload if isinstance(card_payload, dict) else None,
+            )
+            if fallback_answer:
+                answer = fallback_answer
         winner_provider = self._str(
             result.get("winner_provider")
             or (result.get("provider_diagnostics") or {}).get("winner_provider")
@@ -13221,6 +13253,167 @@ class LocalAppDataService:
         if concept:
             out["concept"] = concept
         return out
+
+    def _build_ai_card_surface_grounding(
+        self,
+        *,
+        function: str,
+        card: dict[str, Any] | None,
+    ) -> str:
+        if not isinstance(card, dict):
+            return ""
+        lines: list[str] = []
+        if function == "analytics_review":
+            weak_topics = ", ".join(
+                self._str(topic)
+                for topic in (card.get("weak_topics") or [])
+                if self._str(topic)
+            )
+            if weak_topics:
+                lines.append(f"Weak topics: {weak_topics}")
+            score = self._str(card.get("score"))
+            if score:
+                lines.append(f"Score: {score}")
+            percentile = self._str(card.get("percentile"))
+            if percentile:
+                lines.append(f"Percentile: {percentile}")
+            rank = self._str(card.get("rank"))
+            if rank:
+                lines.append(f"Rank: {rank}")
+        elif function == "study_material_chat":
+            title = self._str(card.get("title"))
+            if title:
+                lines.append(f"Material title: {title}")
+            subject = self._str(card.get("subject"))
+            chapter = self._str(card.get("chapter"))
+            if subject or chapter:
+                lines.append(
+                    "Scope: "
+                    + " / ".join(part for part in [subject, chapter] if part)
+                )
+            notes = self._str(card.get("material_notes") or card.get("notes"))
+            if notes:
+                lines.append(f"Material notes: {notes}")
+        elif function == "teacher_dashboard_review":
+            recommended_focus = self._str(card.get("recommended_focus"))
+            if recommended_focus:
+                lines.append(f"Recommended focus: {recommended_focus}")
+            attention_students = card.get("attention_students")
+            if isinstance(attention_students, list) and attention_students:
+                formatted: list[str] = []
+                for row in attention_students[:5]:
+                    if not isinstance(row, dict):
+                        continue
+                    name = self._str(row.get("name"))
+                    issue = self._str(row.get("issue"))
+                    if name and issue:
+                        formatted.append(f"{name} ({issue})")
+                    elif name:
+                        formatted.append(name)
+                if formatted:
+                    lines.append("Attention students: " + "; ".join(formatted))
+        return "\n".join(lines).strip()
+
+    def _should_prefer_explanation_as_answer(
+        self,
+        *,
+        function: str,
+        answer: str,
+        explanation: str,
+    ) -> bool:
+        if function not in {
+            "study_material_chat",
+            "analytics_review",
+            "teacher_dashboard_review",
+        }:
+            return False
+        explanation_text = self._str(explanation)
+        if len(explanation_text) < 48:
+            return False
+        answer_text = self._str(answer)
+        if not answer_text:
+            return True
+        if len(answer_text) < 24:
+            return True
+        if len(answer_text.split()) <= 4:
+            return True
+        return False
+
+    def _should_use_card_surface_fallback(
+        self,
+        *,
+        function: str,
+        answer: str,
+        explanation: str,
+    ) -> bool:
+        if function not in {
+            "study_material_chat",
+            "analytics_review",
+            "teacher_dashboard_review",
+        }:
+            return False
+        answer_text = self._str(answer).lower()
+        explanation_text = self._str(explanation).lower()
+        weak_markers = (
+            "[unresolved]",
+            "context is missing",
+            "does not provide enough context",
+            "cannot create a definitive answer",
+            "identify unknown quantity and governing relations.",
+        )
+        if not answer_text:
+            return True
+        return any(marker in answer_text or marker in explanation_text for marker in weak_markers)
+
+    def _build_card_surface_fallback_answer(
+        self,
+        *,
+        function: str,
+        card: dict[str, Any] | None,
+    ) -> str:
+        if not isinstance(card, dict):
+            return ""
+        if function == "analytics_review":
+            weak_topics = [
+                self._str(topic)
+                for topic in (card.get("weak_topics") or [])
+                if self._str(topic)
+            ]
+            primary_topic = weak_topics[0] if weak_topics else "the weakest topic"
+            return (
+                f"Biggest weakness: {primary_topic}. "
+                f"Next step: attempt a focused practice quiz on {primary_topic} and review the first two mistakes before moving on."
+            )
+        if function == "study_material_chat":
+            notes = self._str(card.get("material_notes") or card.get("notes"))
+            chapter = self._str(card.get("chapter") or card.get("title") or "this material")
+            if notes:
+                return (
+                    f"Study summary: {notes}. "
+                    "Main trap: mixing units, signs, or definitions while switching between closely related formulas."
+                )
+            return (
+                f"Study summary: focus on the key ideas from {chapter}. "
+                "Main trap: mixing units, signs, or formula conditions."
+            )
+        if function == "teacher_dashboard_review":
+            attention_students = card.get("attention_students")
+            top_student = ""
+            top_issue = ""
+            if isinstance(attention_students, list) and attention_students:
+                row = attention_students[0]
+                if isinstance(row, dict):
+                    top_student = self._str(row.get("name"))
+                    top_issue = self._str(row.get("issue"))
+            recommended_focus = self._str(card.get("recommended_focus") or "the weakest topic")
+            student_line = top_student or "The flagged student"
+            if top_issue:
+                student_line = f"{student_line} ({top_issue})"
+            return (
+                f"- Student needing attention: {student_line}.\n"
+                f"- Next quiz to create: a focused {recommended_focus} quiz targeting the current weakness."
+            )
+        return ""
 
     def _build_lc_aqie_payload(
         self,
