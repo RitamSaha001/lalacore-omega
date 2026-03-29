@@ -1,11 +1,19 @@
 [phases.setup]
-nixPkgs = ["python311", "tesseract", "poppler_utils"]
+nixPkgs = [
+  "python311Full",
+  "python311Packages.pip",
+  "python311Packages.setuptools",
+  "tesseract",
+  "poppler_utils",
+]
 
 [phases.install]
 cmds = [
+  "python -m ensurepip --upgrade",
   "python -m pip install --upgrade pip",
-  "pip install -r requirements.txt"
+  "python -m pip install --upgrade setuptools wheel",
+  "python -m pip install -r requirements.txt",
 ]
 
 [start]
-cmd = "uvicorn core.api.entrypoint:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 60"
+cmd = "sh -c 'uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000} --timeout-keep-alive 60'"
