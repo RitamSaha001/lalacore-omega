@@ -46,10 +46,6 @@
 !data/app/import_drafts.json
 !data/app/chat_threads.json
 !data/app/chat_users.json
-!data/app/uploads/
-!data/app/uploads/**
-!data/app/quizzes/
-!data/app/quizzes/**
 !data/auth/
 !data/auth/users.json
 !data/auth/otp.json

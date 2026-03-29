@@ -44,8 +44,6 @@ COPY data/app/teacher_review_queue.json /app/data/app/teacher_review_queue.json
 COPY data/app/import_drafts.json /app/data/app/import_drafts.json
 COPY data/app/chat_threads.json /app/data/app/chat_threads.json
 COPY data/app/chat_users.json /app/data/app/chat_users.json
-COPY data/app/uploads /app/data/app/uploads
-COPY data/app/quizzes /app/data/app/quizzes
 COPY data/auth/users.json /app/data/auth/users.json
 COPY data/auth/otp.json /app/data/auth/otp.json
 
