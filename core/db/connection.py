@@ -13,6 +13,17 @@ class Database:
     _MIGRATION_LOCK_KEY = 22820740512026
 
     @classmethod
+    def _has_connection_config(cls) -> bool:
+        database_url = (os.getenv("DATABASE_URL") or "").strip()
+        if database_url:
+            return True
+        return bool(
+            (os.getenv("DB_HOST") or "").strip()
+            and (os.getenv("DB_NAME") or "").strip()
+            and (os.getenv("DB_USER") or "").strip()
+        )
+
+    @classmethod
     async def init(cls):
         if cls._pool is not None:
             return  # already initialized
@@ -97,7 +108,14 @@ class Database:
     @classmethod
     async def health_check(cls) -> bool:
         if cls._pool is None:
-            return False
+            if not cls._has_connection_config():
+                return False
+            try:
+                await cls.init()
+            except Exception as e:
+                logger.error(f"DB lazy init failed during health check: {e}")
+                cls._pool = None
+                return False
 
         try:
             async with cls._pool.acquire() as conn:
@@ -105,7 +123,23 @@ class Database:
             return True
         except Exception as e:
             logger.error(f"DB health check failed: {e}")
-            return False
+            try:
+                await cls.close()
+            except Exception:
+                cls._pool = None
+
+            if not cls._has_connection_config():
+                return False
+
+            try:
+                await cls.init()
+                async with cls._pool.acquire() as conn:
+                    await conn.execute("SELECT 1;")
+                return True
+            except Exception as retry_exc:
+                logger.error(f"DB reinit during health check failed: {retry_exc}")
+                cls._pool = None
+                return False
 
 
 async def init_db():
