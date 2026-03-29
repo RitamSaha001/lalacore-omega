@@ -203,6 +203,64 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(download.text, "Hello")
         self.assertTrue(local_path.exists())
 
+    def test_create_quiz_keeps_question_image_in_public_csv_and_answer_key(self) -> None:
+        uploaded = self.client.post(
+            "/app/action",
+            json={
+                "action": "upload_file",
+                "name": "probe.txt",
+                "data": "data:text/plain;base64,SGVsbG8=",
+            },
+        )
+        self.assertEqual(uploaded.status_code, 200)
+        file_url = str(uploaded.json().get("file_url") or "")
+        self.assertTrue(file_url)
+
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Image Quiz",
+                "type": "Exam",
+                "duration": 15,
+                "questions": [
+                    {
+                        "text": "Pick the right answer",
+                        "type": "MCQ",
+                        "options": ["1", "2", "3", "4"],
+                        "correct": "3",
+                        "question_image": file_url,
+                    }
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        quiz_url = str(created.json().get("quiz_url") or created.json().get("url") or "")
+        self.assertTrue(quiz_id)
+        self.assertTrue(quiz_url)
+
+        csv_res = self.client.get(urlparse(quiz_url).path)
+        self.assertEqual(csv_res.status_code, 200)
+        self.assertIn(file_url, csv_res.text)
+
+        evaluated = self.client.post(
+            "/app/action",
+            json={
+                "action": "evaluate_quiz_submission",
+                "quiz_id": quiz_id,
+                "answers": {"0": ["3"]},
+                "include_answer_key": True,
+            },
+        )
+        self.assertEqual(evaluated.status_code, 200)
+        body = evaluated.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("evaluation_result", {}).get("score"), 4.0)
+        answer_key = body.get("answer_key", [])
+        self.assertEqual(len(answer_key), 1)
+        self.assertEqual(answer_key[0].get("question_image"), file_url)
+
     def test_ping_probe_is_lightweight_and_does_not_send_support_email(self) -> None:
         with patch.object(
             routes._APP_DATA._atlas_incident_email,

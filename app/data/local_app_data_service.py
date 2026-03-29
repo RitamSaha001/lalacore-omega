@@ -11206,6 +11206,9 @@ class LocalAppDataService:
         for key in ("text", "question", "question_text"):
             if key in out:
                 out[key] = sanitize_latex(self._str(out.get(key)))
+        for key in ("image", "imageUrl", "image_url", "question_image"):
+            if key in out:
+                out[key] = self._normalize_public_url(out.get(key))
         if isinstance(out.get("options"), list):
             sanitized_options: list[Any] = []
             for item in out.get("options", []):
@@ -11271,7 +11274,10 @@ class LocalAppDataService:
                     [
                         question_text,
                         self._normalize_public_url(
-                            row.get("image") or row.get("imageUrl") or row.get("image_url")
+                            row.get("image")
+                            or row.get("imageUrl")
+                            or row.get("image_url")
+                            or row.get("question_image")
                         ),
                         self._str(
                             row.get("type") or row.get("question_type") or "MCQ"
@@ -13986,6 +13992,7 @@ class LocalAppDataService:
                         question.get("image")
                         or question.get("imageUrl")
                         or question.get("image_url")
+                        or question.get("question_image")
                     ),
                     "options": options,
                     "student_answer": user_rendered,
