@@ -48,7 +48,6 @@ COPY data/app/uploads /app/data/app/uploads
 COPY data/app/quizzes /app/data/app/quizzes
 COPY data/auth/users.json /app/data/auth/users.json
 COPY data/auth/otp.json /app/data/auth/otp.json
-COPY data/auth/auth_store.sqlite3 /app/data/auth/auth_store.sqlite3
 
 RUN mkdir -p \
     /app/data/app/uploads \

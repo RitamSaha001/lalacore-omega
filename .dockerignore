@@ -53,4 +53,3 @@
 !data/auth/
 !data/auth/users.json
 !data/auth/otp.json
-!data/auth/auth_store.sqlite3
