@@ -16,17 +16,26 @@ class Database:
     async def init(cls):
         if cls._pool is not None:
             return  # already initialized
-
-        cls._pool = await asyncpg.create_pool(
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME"),
-            host=os.getenv("DB_HOST", "localhost"),
-            port=int(os.getenv("DB_PORT", 5432)),
-            min_size=5,
-            max_size=20,
-            command_timeout=30
-        )
+        pool_kwargs = {
+            "min_size": 5,
+            "max_size": 20,
+            "command_timeout": 30,
+        }
+        database_url = (os.getenv("DATABASE_URL") or "").strip()
+        if database_url:
+            cls._pool = await asyncpg.create_pool(
+                dsn=database_url,
+                **pool_kwargs,
+            )
+        else:
+            cls._pool = await asyncpg.create_pool(
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                database=os.getenv("DB_NAME"),
+                host=os.getenv("DB_HOST", "localhost"),
+                port=int(os.getenv("DB_PORT", 5432)),
+                **pool_kwargs,
+            )
 
         await cls._run_startup_migrations()
         logger.info("✅ Postgres connection pool created")
