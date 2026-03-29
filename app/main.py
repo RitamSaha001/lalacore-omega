@@ -1,6 +1,8 @@
 import asyncio
+import base64
+import json
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 import logging
 import os
@@ -12,6 +14,8 @@ from app.discovery import start_discovery_responder
 from core.bootstrap import initialize_keys
 from core.api.entrypoint import warm_atlas_runtime
 from core.db.connection import Database
+from core.multimodal.ocr_engine import OCREngine
+from core.multimodal.pdf_processor import PDFProcessor
 from services.app_update_release_notifier import AppUpdateReleaseNotifierScheduler
 from services.atlas_maintenance_service import AtlasMaintenanceScheduler
 
@@ -25,6 +29,11 @@ _atlas_maintenance_service = app_routes._ATLAS_MAINTENANCE
 _app_update_release_notifier_service = app_routes._APP_UPDATE_RELEASE_NOTIFIER
 _atlas_runtime_warm_task = None
 _atlas_runtime_warm_report: dict[str, object] = {}
+_public_ocr = OCREngine(enable_remote_worker=False)
+_public_pdf = PDFProcessor(
+    ocr_engine=_public_ocr,
+    enable_remote_worker=False,
+)
 
 
 class AtlasMaintenanceLockMiddleware:
@@ -264,6 +273,74 @@ async def health_ready():
     except Exception:
         db_ready = False
     return {"ok": True, "status": "ready", "db_ready": bool(db_ready)}
+
+
+@app.post("/ocr/frame")
+async def ocr_frame(payload: dict = Body(default_factory=dict)):
+    raw_image = str(
+        payload.get("image_base64")
+        or payload.get("base64_image")
+        or payload.get("image")
+        or ""
+    ).strip()
+    if not raw_image:
+        raise HTTPException(status_code=400, detail="image_base64 is required")
+    if raw_image.startswith("data:") and "," in raw_image:
+        raw_image = raw_image.split(",", 1)[1]
+    try:
+        image_bytes = base64.b64decode(raw_image, validate=False)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=f"invalid_image_base64:{exc}",
+        ) from exc
+    ocr_data = await _public_ocr.extract_async(
+        image_bytes,
+        page_number=max(1, int(payload.get("page_number") or 1)),
+        math_aware=bool(payload.get("math_aware", True)),
+        optional_web_snippets=[
+            dict(x)
+            for x in (payload.get("optional_web_snippets") or [])
+            if isinstance(x, dict)
+        ],
+    )
+    text = (
+        str(ocr_data.get("clean_text") or "").strip()
+        or str(ocr_data.get("math_normalized_text") or "").strip()
+        or str(ocr_data.get("raw_text") or "").strip()
+    )
+    return {
+        "ok": True,
+        "status": "SUCCESS",
+        "text": text,
+        "ocr_data": ocr_data,
+    }
+
+
+@app.post("/ocr/pdf")
+async def ocr_pdf(
+    file: UploadFile = File(...),
+    optional_web_snippets_json: str = Form(""),
+):
+    blob = await file.read()
+    snippets: list[dict] = []
+    if optional_web_snippets_json.strip():
+        try:
+            decoded = json.loads(optional_web_snippets_json)
+            if isinstance(decoded, list):
+                snippets = [dict(x) for x in decoded if isinstance(x, dict)]
+        except Exception:
+            snippets = []
+    pdf_data = await _public_pdf.process(
+        blob,
+        optional_web_snippets=snippets,
+    )
+    return {
+        "ok": True,
+        "status": "SUCCESS",
+        "text": str(pdf_data.get("merged_text") or "").strip(),
+        "pdf_data": pdf_data,
+    }
 
 
 app.include_router(app_routes.router)

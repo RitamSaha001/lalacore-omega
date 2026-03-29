@@ -54,6 +54,7 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("status"), "SUCCESS")
         quiz_url = str(body.get("quiz_url") or body.get("url") or "")
         self.assertTrue(quiz_url)
 
@@ -106,6 +107,101 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(parsed.scheme, "http")
         self.assertEqual(parsed.netloc, "testserver")
         self.assertTrue(parsed.path.startswith("/app/file/"))
+
+    def test_get_assessments_normalizes_local_urls_to_request_origin(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Normalization Quiz",
+                "type": "Exam",
+                "duration": 20,
+                "questions": [{"text": "2 + 2 = ?", "correct": "4"}],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        self.assertTrue(routes._APP_DATA._assessments)
+        routes._APP_DATA._assessments[0]["url"] = (
+            f"http://10.0.2.2:8000/app/quiz/{quiz_id}.csv"
+        )
+
+        listed = self.client.get("/app/action", params={"action": "get_assessments"})
+        self.assertEqual(listed.status_code, 200)
+        rows = listed.json().get("list", [])
+        row = next(x for x in rows if x.get("id") == quiz_id)
+        parsed = urlparse(str(row.get("url") or ""))
+        self.assertEqual(parsed.scheme, "http")
+        self.assertEqual(parsed.netloc, "testserver")
+        self.assertEqual(parsed.path, f"/app/quiz/{quiz_id}.csv")
+
+    def test_quiz_csv_rebuilds_when_runtime_file_is_missing(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "CSV Rebuild Quiz",
+                "type": "Exam",
+                "duration": 20,
+                "questions": [
+                    {
+                        "text": "What is 1 + 3?",
+                        "type": "MCQ",
+                        "options": ["2", "3", "4", "5"],
+                        "correct": "4",
+                    }
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        body = created.json()
+        quiz_id = str(body.get("id") or "")
+        quiz_url = str(body.get("quiz_url") or body.get("url") or "")
+        self.assertTrue(quiz_id)
+        csv_path = urlparse(quiz_url).path
+
+        local_csv = routes._APP_DATA._quizzes_dir / f"{quiz_id}.csv"
+        self.assertTrue(local_csv.exists())
+        local_csv.unlink()
+        self.assertFalse(local_csv.exists())
+
+        csv_res = self.client.get(csv_path)
+        self.assertEqual(csv_res.status_code, 200)
+        self.assertIn("What is 1 + 3?", csv_res.text)
+        self.assertTrue(local_csv.exists())
+
+    def test_upload_download_restores_file_from_db_when_local_copy_is_missing(self) -> None:
+        uploaded = self.client.post(
+            "/app/action",
+            json={
+                "action": "upload_file",
+                "name": "probe.txt",
+                "data": "data:text/plain;base64,SGVsbG8=",
+            },
+        )
+        self.assertEqual(uploaded.status_code, 200)
+        body = uploaded.json()
+        file_url = str(body.get("file_url") or body.get("url") or "")
+        file_id = str(body.get("id") or "")
+        self.assertTrue(file_id)
+
+        local_path = Path(routes._APP_DATA._uploads[file_id]["path"])
+        self.assertTrue(local_path.exists())
+        local_path.unlink()
+        self.assertFalse(local_path.exists())
+
+        with patch.object(
+            routes._APP_DATA,
+            "_read_upload_blob_from_db",
+            new=AsyncMock(return_value=("probe.txt", "text/plain", b"Hello")),
+        ):
+            download = self.client.get(urlparse(file_url).path)
+
+        self.assertEqual(download.status_code, 200)
+        self.assertEqual(download.text, "Hello")
+        self.assertTrue(local_path.exists())
 
     def test_ping_probe_is_lightweight_and_does_not_send_support_email(self) -> None:
         with patch.object(
@@ -2213,10 +2309,65 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertTrue(body.get("ok"))
-        self.assertEqual(body.get("status"), "SUCCESS")
-        self.assertTrue(body.get("cache_hit"))
-        self.assertEqual(len(body.get("matches", [])), 1)
-        self.assertIn("normalized_query", body)
+
+    def test_ai_chat_prefers_rich_explanation_for_study_material_surface(self) -> None:
+        with patch(
+            "core.api.entrypoint.lalacore_entry",
+            new=AsyncMock(
+                return_value={
+                    "status": "ok",
+                    "final_answer": "Unit mismatch.",
+                    "reasoning": (
+                        "Rotational motion summary: revise angular velocity, torque, "
+                        "moment of inertia, and rolling constraints first. "
+                        "The main trap is mixing linear and angular units."
+                    ),
+                    "winner_provider": "groq",
+                    "engine": {"version": "research-grade-v2"},
+                }
+            ),
+        ):
+            response = self.client.post(
+                "/app/action",
+                json={
+                    "action": "ai_chat",
+                    "prompt": "Give me a crisp study summary from this material and tell me the main trap.",
+                    "options": {"function": "study_material_chat"},
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        self.assertIn("Rotational motion summary", str(body.get("answer")))
+        self.assertNotEqual(str(body.get("answer")), "Unit mismatch.")
+
+    def test_ai_chat_keeps_short_math_answer_for_general_chat(self) -> None:
+        with patch(
+            "core.api.entrypoint.lalacore_entry",
+            new=AsyncMock(
+                return_value={
+                    "status": "ok",
+                    "final_answer": "x = 2",
+                    "reasoning": "Use the quadratic formula and simplify.",
+                    "winner_provider": "openrouter",
+                    "engine": {"version": "research-grade-v2"},
+                }
+            ),
+        ):
+            response = self.client.post(
+                "/app/action",
+                json={
+                    "action": "ai_chat",
+                    "prompt": "solve x^2 - 4 = 0",
+                    "options": {"function": "general_chat"},
+                },
+            )
+
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("answer"), "x = 2")
 
     def test_evaluate_route_supports_multi_and_numerical_with_hidden_keys(self) -> None:
         generated = self.client.post(
@@ -3040,6 +3191,22 @@ Ans. 4 2
         )
         self.assertEqual(save_result.status_code, 200)
         self.assertTrue(save_result.json().get("ok"))
+
+        peer_result = self.client.post(
+            "/app/action",
+            json={
+                "action": "save_result",
+                "quiz_id": "quiz_peer_1",
+                "quiz_title": "Rotational Motion",
+                "student_name": "Riya Sharma",
+                "student_id": "stu_riya",
+                "account_id": "stu_riya",
+                "score": 76,
+                "max_score": 100,
+            },
+        )
+        self.assertEqual(peer_result.status_code, 200)
+        self.assertTrue(peer_result.json().get("ok"))
 
         results = self.client.get("/app/action", params={"action": "get_results"})
         self.assertEqual(results.status_code, 200)

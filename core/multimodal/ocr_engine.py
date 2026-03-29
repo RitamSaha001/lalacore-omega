@@ -10,6 +10,10 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Sequence, Tuple
 
 from core.multimodal.lc_iie_engine import LCIIEEngine
+from core.multimodal.remote_worker import (
+    remote_image_ocr,
+    remote_worker_enabled,
+)
 from core.multimodal.telemetry import DEFAULT_MULTIMODAL_TELEMETRY, MultimodalTelemetry
 
 
@@ -91,6 +95,9 @@ class OCREngine:
         max_region_candidates: int = 5,
         enable_handwritten_refine: bool = True,
         max_handwriting_variants: int = 3,
+        enable_remote_worker: bool | None = None,
+        remote_worker_url: str | None = None,
+        remote_worker_token: str | None = None,
         telemetry: MultimodalTelemetry | None = None,
         lc_iie: LCIIEEngine | None = None,
     ) -> None:
@@ -100,6 +107,9 @@ class OCREngine:
         self.max_region_candidates = int(max(0, max_region_candidates))
         self.enable_handwritten_refine = bool(enable_handwritten_refine)
         self.max_handwriting_variants = int(max(0, max_handwriting_variants))
+        self.enable_remote_worker = enable_remote_worker
+        self.remote_worker_url = (remote_worker_url or "").strip()
+        self.remote_worker_token = (remote_worker_token or "").strip()
         self.telemetry = telemetry or DEFAULT_MULTIMODAL_TELEMETRY
         self.lc_iie = lc_iie or LCIIEEngine()
 
@@ -111,6 +121,21 @@ class OCREngine:
         math_aware: bool | None = None,
         optional_web_snippets: Sequence[Dict[str, Any]] | None = None,
     ) -> Dict[str, Any]:
+        if remote_worker_enabled(
+            explicit=self.enable_remote_worker,
+            worker_url=self.remote_worker_url,
+        ):
+            remote_payload = await asyncio.to_thread(
+                remote_image_ocr,
+                image_bytes,
+                page_number=page_number,
+                math_aware=self.math_aware_default if math_aware is None else bool(math_aware),
+                optional_web_snippets=optional_web_snippets,
+                worker_url=self.remote_worker_url,
+                worker_token=self.remote_worker_token,
+            )
+            if isinstance(remote_payload, dict) and remote_payload:
+                return remote_payload
         return await asyncio.to_thread(
             self.extract,
             image_bytes,

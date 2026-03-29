@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Sequence
 
 from core.multimodal.ocr_engine import OCREngine
+from core.multimodal.remote_worker import remote_pdf_ocr, remote_worker_enabled
 from core.multimodal.telemetry import DEFAULT_MULTIMODAL_TELEMETRY, MultimodalTelemetry
 
 
@@ -47,6 +48,9 @@ class PDFProcessor:
         max_pages: int = 20,
         ocr_parallelism: int = 4,
         max_pdf_bytes: int = 24_000_000,
+        enable_remote_worker: bool | None = None,
+        remote_worker_url: str | None = None,
+        remote_worker_token: str | None = None,
         telemetry: MultimodalTelemetry | None = None,
     ) -> None:
         self.ocr_engine = ocr_engine or OCREngine()
@@ -54,6 +58,9 @@ class PDFProcessor:
         self.max_pages = int(max(1, max_pages))
         self.ocr_parallelism = int(max(1, ocr_parallelism))
         self.max_pdf_bytes = int(max(1024, max_pdf_bytes))
+        self.enable_remote_worker = enable_remote_worker
+        self.remote_worker_url = (remote_worker_url or "").strip()
+        self.remote_worker_token = (remote_worker_token or "").strip()
         self.telemetry = telemetry or DEFAULT_MULTIMODAL_TELEMETRY
 
     async def process(
@@ -83,6 +90,19 @@ class PDFProcessor:
                 "reason": "pdf_size_limit_exceeded",
                 "max_pdf_bytes": int(self.max_pdf_bytes),
             }
+        if remote_worker_enabled(
+            explicit=self.enable_remote_worker,
+            worker_url=self.remote_worker_url,
+        ):
+            remote_payload = await asyncio.to_thread(
+                remote_pdf_ocr,
+                pdf_bytes,
+                optional_web_snippets=optional_web_snippets,
+                worker_url=self.remote_worker_url,
+                worker_token=self.remote_worker_token,
+            )
+            if isinstance(remote_payload, dict) and remote_payload:
+                return remote_payload
 
         pages = await asyncio.to_thread(self._convert_pdf_to_images, pdf_bytes)
         if not pages:

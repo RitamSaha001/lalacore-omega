@@ -5,6 +5,8 @@
 !requirements.txt
 !main.py
 !*.py
+!import_worker/
+!import_worker/**
 
 !app/
 !app/**

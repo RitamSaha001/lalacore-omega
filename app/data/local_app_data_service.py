@@ -19,7 +19,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, quote_plus, unquote, urlparse
+from urllib.parse import parse_qs, quote_plus, unquote, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 from grading_engine import (
@@ -40,6 +40,7 @@ from latex_sanitizer import (
 from services.atlas_incident_email_service import AtlasIncidentEmailService
 from services.atlas_memory_service import AtlasMemoryService
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
+from core.db.connection import Database
 from core.analytics_insight_engine import (
     analyze_exam_entry,
     class_summary_entry,
@@ -51,6 +52,8 @@ from core.material_generation_engine import material_generation_entry
 
 class LocalAppDataService:
     """SQLite-backed app-data authority with JSON migration for legacy state."""
+
+    _LOCAL_HOST_TOKENS = ("10.0.2.2", "127.0.0.1", "localhost")
 
     _IMPORT_QUESTION_START_RE = re.compile(
         r"^\s*(?:[qg](?:uestion)?\s*)?\d+\s*[\).:\-]\s*",
@@ -413,7 +416,7 @@ class LocalAppDataService:
             return await self._create_quiz(payload)
 
         if action in {"list_assessments", "get_assessments", "get_quizzes"}:
-            return await self._list_assessments()
+            return await self._list_assessments(payload)
 
         if action in {
             "ai_generate_quiz",
@@ -477,7 +480,7 @@ class LocalAppDataService:
             return await self._evaluate_quiz_submission(payload)
 
         if action == "get_master_csv":
-            return await self._get_master_csv()
+            return await self._get_master_csv(payload)
 
         if action in {
             "add_material",
@@ -678,7 +681,10 @@ class LocalAppDataService:
             return None
         path = Path(self._str(meta.get("path")))
         if not path.exists():
-            return None
+            restored = await self._restore_uploaded_file_from_db(key, meta)
+            if restored is None:
+                return None
+            path = restored
         return {
             "path": str(path),
             "name": self._str(meta.get("name")) or f"{key}.bin",
@@ -692,7 +698,10 @@ class LocalAppDataService:
             return None
         path = self._quizzes_dir / f"{key}.csv"
         if not path.exists():
-            return None
+            rebuilt = self._rebuild_quiz_csv_from_runtime_state(key)
+            if rebuilt is None:
+                return None
+            path = rebuilt
         return str(path)
 
     async def _ensure_loaded(self) -> None:
@@ -701,19 +710,87 @@ class LocalAppDataService:
         async with self._lock:
             if self._loaded:
                 return
-            self._assessments = self._read_list(self._assessments_file)
-            self._materials = self._read_list(self._materials_file)
-            self._live_class_schedule = self._read_list(self._live_class_schedule_file)
-            self._uploads = self._read_map(self._uploads_file)
-            self._ai_quizzes = self._read_list(self._ai_quizzes_file)
-            self._results = self._read_list(self._results_file)
-            self._teacher_review_queue = self._read_list(self._teacher_review_file)
-            self._import_drafts = self._read_list(self._import_drafts_file)
+            self._assessments = [
+                self._normalize_assessment_item(row)
+                for row in await self._load_list(self._assessments_file)
+            ]
+            self._materials = await self._load_list(self._materials_file)
+            self._live_class_schedule = await self._load_list(
+                self._live_class_schedule_file
+            )
+            self._uploads = await self._load_map(self._uploads_file)
+            self._ai_quizzes = await self._load_list(self._ai_quizzes_file)
+            self._results = await self._load_list(self._results_file)
+            self._teacher_review_queue = await self._load_list(
+                self._teacher_review_file
+            )
+            self._import_drafts = await self._load_list(self._import_drafts_file)
             self._import_question_bank = self._load_preferred_question_bank()
-            self._chat_users = self._read_map(self._chat_users_file)
-            self._chat_threads = self._read_map(self._chat_threads_file)
-            self._doubts = self._read_list(self._doubts_file)
+            self._chat_users = await self._load_map(self._chat_users_file)
+            self._chat_threads = await self._load_map(self._chat_threads_file)
+            self._doubts = await self._load_list(self._doubts_file)
             self._loaded = True
+
+    async def _load_list(self, path: Path) -> list[dict[str, Any]]:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            cached = await self._read_runtime_json_from_db(storage_key)
+            if cached is not None:
+                normalized = self._normalize_list_blob(cached)
+                self._storage.write_json(storage_key, normalized)
+                return normalized
+        return self._read_list(path)
+
+    async def _load_map(self, path: Path) -> dict[str, dict[str, Any]]:
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            cached = await self._read_runtime_json_from_db(storage_key)
+            if cached is not None:
+                normalized = self._normalize_map_blob(cached)
+                self._storage.write_json(storage_key, normalized)
+                return normalized
+        return self._read_map(path)
+
+    async def _persist_list(self, path: Path, data: list[dict[str, Any]]) -> None:
+        self._write_list(path, data)
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            await self._write_runtime_json_to_db(storage_key, data)
+
+    async def _persist_map(
+        self, path: Path, data: dict[str, dict[str, Any]]
+    ) -> None:
+        self._write_map(path, data)
+        storage_key = self._storage_keys.get(path.resolve())
+        if storage_key:
+            await self._write_runtime_json_to_db(storage_key, data)
+
+    async def _restore_uploaded_file_from_db(
+        self, file_id: str, meta: dict[str, Any]
+    ) -> Path | None:
+        restored = await self._read_upload_blob_from_db(file_id)
+        if restored is None:
+            return None
+        file_name, mime, content = restored
+        safe_name = self._safe_filename(
+            self._str(meta.get("name")) or file_name,
+            Path(file_name).suffix or mimetypes.guess_extension(mime) or ".bin",
+        )
+        path = self._uploads_dir / f"{file_id}_{safe_name}"
+        path.write_bytes(content)
+        updated_meta = dict(meta)
+        updated_meta.update(
+            {
+                "name": safe_name,
+                "mime": mime,
+                "path": str(path),
+                "size": len(content),
+            }
+        )
+        async with self._lock:
+            self._uploads[file_id] = updated_meta
+            await self._persist_map(self._uploads_file, self._uploads)
+        return path
 
     def _read_list(self, path: Path) -> list[dict[str, Any]]:
         storage_key = self._storage_keys.get(path.resolve())
@@ -949,6 +1026,185 @@ class LocalAppDataService:
             or "8000"
         )
         return f"{scheme}://{host}:{port}".rstrip("/")
+
+    def _normalize_public_url(
+        self,
+        raw_url: Any,
+        *,
+        payload: dict[str, Any] | None = None,
+    ) -> str:
+        url = self._str(raw_url)
+        if not url:
+            return ""
+        parsed = urlparse(url)
+        if not parsed.scheme or not parsed.netloc:
+            return url
+        public_base = self._base_url(payload)
+        public_parsed = urlparse(public_base)
+        host = parsed.netloc.strip().lower()
+        public_host = public_parsed.netloc.strip().lower()
+        scheme = parsed.scheme.strip().lower()
+        is_localish_host = (
+            host.endswith(".railway.internal")
+            or host.startswith(self._LOCAL_HOST_TOKENS)
+            or host.startswith("0.0.0.0")
+        )
+        if public_host and (
+            is_localish_host
+            or (host == public_host and public_parsed.scheme and scheme != public_parsed.scheme)
+            or (
+                scheme == "http"
+                and (host.endswith(".railway.app") or host.endswith(".up.railway.app"))
+            )
+        ):
+            return urlunparse(
+                (
+                    public_parsed.scheme or parsed.scheme,
+                    public_parsed.netloc or parsed.netloc,
+                    parsed.path,
+                    parsed.params,
+                    parsed.query,
+                    parsed.fragment,
+                )
+            )
+        return url
+
+    async def _runtime_db_pool(self):
+        try:
+            return await Database.get_pool()
+        except Exception:
+            return None
+
+    async def _read_runtime_json_from_db(self, blob_key: str) -> Any | None:
+        key = self._str(blob_key)
+        if not key:
+            return None
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return None
+        try:
+            async with pool.acquire() as conn:
+                row = await conn.fetchrow(
+                    """
+                    SELECT json_value
+                    FROM app_runtime_json_store
+                    WHERE blob_key = $1
+                    """,
+                    key,
+                )
+        except Exception:
+            return None
+        if not row:
+            return None
+        raw_value = row["json_value"]
+        if raw_value is None:
+            return None
+        try:
+            return json.loads(str(raw_value))
+        except Exception:
+            return None
+
+    async def _write_runtime_json_to_db(self, blob_key: str, value: Any) -> None:
+        key = self._str(blob_key)
+        if not key:
+            return
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return
+        payload = json.dumps(value, ensure_ascii=True, indent=2)
+        updated_at = self._now_ms()
+        try:
+            async with pool.acquire() as conn:
+                await conn.execute(
+                    """
+                    INSERT INTO app_runtime_json_store (blob_key, json_value, updated_at)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (blob_key) DO UPDATE
+                    SET json_value = EXCLUDED.json_value,
+                        updated_at = EXCLUDED.updated_at
+                    """,
+                    key,
+                    payload,
+                    updated_at,
+                )
+        except Exception:
+            return
+
+    async def _write_upload_blob_to_db(
+        self,
+        *,
+        file_id: str,
+        file_name: str,
+        mime: str,
+        content: bytes,
+    ) -> None:
+        key = self._str(file_id)
+        if not key or not content:
+            return
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return
+        try:
+            async with pool.acquire() as conn:
+                await conn.execute(
+                    """
+                    INSERT INTO app_upload_blobs (
+                        file_id,
+                        file_name,
+                        mime,
+                        content,
+                        size_bytes,
+                        updated_at
+                    )
+                    VALUES ($1, $2, $3, $4, $5, $6)
+                    ON CONFLICT (file_id) DO UPDATE
+                    SET file_name = EXCLUDED.file_name,
+                        mime = EXCLUDED.mime,
+                        content = EXCLUDED.content,
+                        size_bytes = EXCLUDED.size_bytes,
+                        updated_at = EXCLUDED.updated_at
+                    """,
+                    key,
+                    self._str(file_name) or f"{key}.bin",
+                    self._str(mime) or "application/octet-stream",
+                    content,
+                    len(content),
+                    self._now_ms(),
+                )
+        except Exception:
+            return
+
+    async def _read_upload_blob_from_db(
+        self, file_id: str
+    ) -> tuple[str, str, bytes] | None:
+        key = self._str(file_id)
+        if not key:
+            return None
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return None
+        try:
+            async with pool.acquire() as conn:
+                row = await conn.fetchrow(
+                    """
+                    SELECT file_name, mime, content
+                    FROM app_upload_blobs
+                    WHERE file_id = $1
+                    """,
+                    key,
+                )
+        except Exception:
+            return None
+        if not row:
+            return None
+        content = row["content"]
+        if content is None:
+            return None
+        return (
+            self._str(row["file_name"]) or f"{key}.bin",
+            self._str(row["mime"]) or "application/octet-stream",
+            bytes(content),
+        )
 
     def _upsert_by_id(
         self, items: list[dict[str, Any]], item_id: str, item: dict[str, Any]
@@ -4412,7 +4668,7 @@ class LocalAppDataService:
         }
         async with self._lock:
             self._import_drafts.append(row)
-            self._write_list(self._import_drafts_file, self._import_drafts)
+            await self._persist_list(self._import_drafts_file, self._import_drafts)
 
         return {
             "ok": True,
@@ -4707,7 +4963,7 @@ class LocalAppDataService:
             self._import_question_bank.extend(published_rows)
             self._import_drafts.append(draft_snapshot)
             self._write_list(self._import_question_bank_file, self._import_question_bank)
-            self._write_list(self._import_drafts_file, self._import_drafts)
+            await self._persist_list(self._import_drafts_file, self._import_drafts)
 
         return {
             "ok": True,
@@ -11014,7 +11270,9 @@ class LocalAppDataService:
                 writer.writerow(
                     [
                         question_text,
-                        self._str(row.get("image") or row.get("imageUrl")),
+                        self._normalize_public_url(
+                            row.get("image") or row.get("imageUrl") or row.get("image_url")
+                        ),
                         self._str(
                             row.get("type") or row.get("question_type") or "MCQ"
                         ),
@@ -11044,6 +11302,58 @@ class LocalAppDataService:
                 )
         return str(csv_path)
 
+    def _question_rows_from_quiz_record(
+        self, record: dict[str, Any] | None
+    ) -> list[dict[str, Any]]:
+        if not isinstance(record, dict):
+            return []
+        raw = record.get("questions_json")
+        if isinstance(raw, list):
+            return [dict(x) for x in raw if isinstance(x, dict)]
+        raw_text = self._str(raw)
+        if not raw_text:
+            return []
+        try:
+            decoded = json.loads(raw_text)
+        except Exception:
+            return []
+        if not isinstance(decoded, list):
+            return []
+        return [dict(x) for x in decoded if isinstance(x, dict)]
+
+    def _rebuild_quiz_csv_from_runtime_state(self, quiz_id: str) -> Path | None:
+        key = self._safe_id(quiz_id)
+        if not key:
+            return None
+        record = self._find_assessment_quiz(key) or self._find_ai_quiz(key)
+        questions = self._question_rows_from_quiz_record(record)
+        if not questions:
+            return None
+        try:
+            self._write_quiz_csv(
+                key,
+                questions,
+                include_correct=False,
+                include_solution=False,
+            )
+        except Exception:
+            return None
+        path = self._quizzes_dir / f"{key}.csv"
+        return path if path.exists() else None
+
+    def _normalize_assessment_item(
+        self, row: dict[str, Any], *, payload: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
+        out = dict(row)
+        if out.get("url") is not None:
+            out["url"] = self._normalize_public_url(out.get("url"), payload=payload)
+        if out.get("quiz_url") is not None:
+            out["quiz_url"] = self._normalize_public_url(
+                out.get("quiz_url"),
+                payload=payload,
+            )
+        return out
+
     def _build_assessment_item(
         self,
         *,
@@ -11065,8 +11375,9 @@ class LocalAppDataService:
     ) -> dict[str, Any]:
         now_ms = self._now_ms()
         base_url = (public_base_url or self._base_url()).rstrip("/")
-        quiz_url = f"{base_url}/app/quiz/{quiz_id}.csv"
-        return {
+        quiz_url = self._normalize_public_url(f"{base_url}/app/quiz/{quiz_id}.csv")
+        return self._normalize_assessment_item(
+            {
             "id": quiz_id,
             "title": title,
             "url": quiz_url,
@@ -11084,7 +11395,8 @@ class LocalAppDataService:
             "questions_json": json.dumps(questions or [], ensure_ascii=True),
             "created_at": now_ms,
             "updated_at": now_ms,
-        }
+            }
+        )
 
     async def _create_quiz(self, payload: dict[str, Any]) -> dict[str, Any]:
         role = self._str(
@@ -11179,7 +11491,7 @@ class LocalAppDataService:
 
         async with self._lock:
             self._upsert_by_id(self._assessments, quiz_id, item)
-            self._write_list(self._assessments_file, self._assessments)
+            await self._persist_list(self._assessments_file, self._assessments)
 
         quiz_url = self._str(item.get("url"))
         return {
@@ -12881,11 +13193,14 @@ class LocalAppDataService:
             "generation_mode": source_policy_mode,
             "source_policy_json": json.dumps(source_policy, ensure_ascii=True),
         }
-        quiz_url = f"{self._base_url(payload)}/app/quiz/{quiz_id}.csv"
+        quiz_url = self._normalize_public_url(
+            f"{self._base_url(payload)}/app/quiz/{quiz_id}.csv",
+            payload=payload,
+        )
 
         async with self._lock:
             self._upsert_by_id(self._ai_quizzes, quiz_id, record)
-            self._write_list(self._ai_quizzes_file, self._ai_quizzes)
+            await self._persist_list(self._ai_quizzes_file, self._ai_quizzes)
 
         client_questions = [
             self._sanitize_ai_question_for_client(
@@ -13075,21 +13390,6 @@ class LocalAppDataService:
         if isinstance(web_snippets, list) and web_snippets and "optional_web_snippets" not in options:
             options["optional_web_snippets"] = web_snippets
 
-        chat_function = self._str(
-            options.get("function") or payload.get("function")
-        ).lower()
-        card_grounding = self._build_ai_card_surface_grounding(
-            function=chat_function,
-            card=card_payload if isinstance(card_payload, dict) else None,
-        )
-        if prompt and card_grounding:
-            prompt = (
-                f"{prompt}\n\n"
-                "App context you must use directly for this answer:\n"
-                f"{card_grounding}\n\n"
-                "Ground your response in this app context. Do not say the context is missing if these details are present."
-            )
-
         user_context = {}
         for source_key, target_key in (
             ("user_id", "user_id"),
@@ -13153,23 +13453,15 @@ class LocalAppDataService:
             or result.get("display_answer")
         )
         explanation = self._str(result.get("reasoning") or result.get("explanation"))
+        chat_function = self._str(
+            options.get("function") or payload.get("function")
+        ).lower()
         if self._should_prefer_explanation_as_answer(
             function=chat_function,
             answer=answer,
             explanation=explanation,
         ):
             answer = explanation
-        if self._should_use_card_surface_fallback(
-            function=chat_function,
-            answer=answer,
-            explanation=explanation,
-        ):
-            fallback_answer = self._build_card_surface_fallback_answer(
-                function=chat_function,
-                card=card_payload if isinstance(card_payload, dict) else None,
-            )
-            if fallback_answer:
-                answer = fallback_answer
         winner_provider = self._str(
             result.get("winner_provider")
             or (result.get("provider_diagnostics") or {}).get("winner_provider")
@@ -13254,66 +13546,6 @@ class LocalAppDataService:
             out["concept"] = concept
         return out
 
-    def _build_ai_card_surface_grounding(
-        self,
-        *,
-        function: str,
-        card: dict[str, Any] | None,
-    ) -> str:
-        if not isinstance(card, dict):
-            return ""
-        lines: list[str] = []
-        if function == "analytics_review":
-            weak_topics = ", ".join(
-                self._str(topic)
-                for topic in (card.get("weak_topics") or [])
-                if self._str(topic)
-            )
-            if weak_topics:
-                lines.append(f"Weak topics: {weak_topics}")
-            score = self._str(card.get("score"))
-            if score:
-                lines.append(f"Score: {score}")
-            percentile = self._str(card.get("percentile"))
-            if percentile:
-                lines.append(f"Percentile: {percentile}")
-            rank = self._str(card.get("rank"))
-            if rank:
-                lines.append(f"Rank: {rank}")
-        elif function == "study_material_chat":
-            title = self._str(card.get("title"))
-            if title:
-                lines.append(f"Material title: {title}")
-            subject = self._str(card.get("subject"))
-            chapter = self._str(card.get("chapter"))
-            if subject or chapter:
-                lines.append(
-                    "Scope: "
-                    + " / ".join(part for part in [subject, chapter] if part)
-                )
-            notes = self._str(card.get("material_notes") or card.get("notes"))
-            if notes:
-                lines.append(f"Material notes: {notes}")
-        elif function == "teacher_dashboard_review":
-            recommended_focus = self._str(card.get("recommended_focus"))
-            if recommended_focus:
-                lines.append(f"Recommended focus: {recommended_focus}")
-            attention_students = card.get("attention_students")
-            if isinstance(attention_students, list) and attention_students:
-                formatted: list[str] = []
-                for row in attention_students[:5]:
-                    if not isinstance(row, dict):
-                        continue
-                    name = self._str(row.get("name"))
-                    issue = self._str(row.get("issue"))
-                    if name and issue:
-                        formatted.append(f"{name} ({issue})")
-                    elif name:
-                        formatted.append(name)
-                if formatted:
-                    lines.append("Attention students: " + "; ".join(formatted))
-        return "\n".join(lines).strip()
-
     def _should_prefer_explanation_as_answer(
         self,
         *,
@@ -13338,82 +13570,6 @@ class LocalAppDataService:
         if len(answer_text.split()) <= 4:
             return True
         return False
-
-    def _should_use_card_surface_fallback(
-        self,
-        *,
-        function: str,
-        answer: str,
-        explanation: str,
-    ) -> bool:
-        if function not in {
-            "study_material_chat",
-            "analytics_review",
-            "teacher_dashboard_review",
-        }:
-            return False
-        answer_text = self._str(answer).lower()
-        explanation_text = self._str(explanation).lower()
-        weak_markers = (
-            "[unresolved]",
-            "context is missing",
-            "does not provide enough context",
-            "cannot create a definitive answer",
-            "identify unknown quantity and governing relations.",
-        )
-        if not answer_text:
-            return True
-        return any(marker in answer_text or marker in explanation_text for marker in weak_markers)
-
-    def _build_card_surface_fallback_answer(
-        self,
-        *,
-        function: str,
-        card: dict[str, Any] | None,
-    ) -> str:
-        if not isinstance(card, dict):
-            return ""
-        if function == "analytics_review":
-            weak_topics = [
-                self._str(topic)
-                for topic in (card.get("weak_topics") or [])
-                if self._str(topic)
-            ]
-            primary_topic = weak_topics[0] if weak_topics else "the weakest topic"
-            return (
-                f"Biggest weakness: {primary_topic}. "
-                f"Next step: attempt a focused practice quiz on {primary_topic} and review the first two mistakes before moving on."
-            )
-        if function == "study_material_chat":
-            notes = self._str(card.get("material_notes") or card.get("notes"))
-            chapter = self._str(card.get("chapter") or card.get("title") or "this material")
-            if notes:
-                return (
-                    f"Study summary: {notes}. "
-                    "Main trap: mixing units, signs, or definitions while switching between closely related formulas."
-                )
-            return (
-                f"Study summary: focus on the key ideas from {chapter}. "
-                "Main trap: mixing units, signs, or formula conditions."
-            )
-        if function == "teacher_dashboard_review":
-            attention_students = card.get("attention_students")
-            top_student = ""
-            top_issue = ""
-            if isinstance(attention_students, list) and attention_students:
-                row = attention_students[0]
-                if isinstance(row, dict):
-                    top_student = self._str(row.get("name"))
-                    top_issue = self._str(row.get("issue"))
-            recommended_focus = self._str(card.get("recommended_focus") or "the weakest topic")
-            student_line = top_student or "The flagged student"
-            if top_issue:
-                student_line = f"{student_line} ({top_issue})"
-            return (
-                f"- Student needing attention: {student_line}.\n"
-                f"- Next quiz to create: a focused {recommended_focus} quiz targeting the current weakness."
-            )
-        return ""
 
     def _build_lc_aqie_payload(
         self,
@@ -13826,7 +13982,7 @@ class LocalAppDataService:
                     "question_index": i,
                     "question_text": self._str(prepared.get("question_text")),
                     "question_type": q_type,
-                    "question_image": self._str(
+                    "question_image": self._normalize_public_url(
                         question.get("image")
                         or question.get("imageUrl")
                         or question.get("image_url")
@@ -13920,7 +14076,7 @@ class LocalAppDataService:
         if not preview_only:
             async with self._lock:
                 self._results.append(result_row)
-                self._write_list(self._results_file, self._results)
+                await self._persist_list(self._results_file, self._results)
 
         return {
             "ok": True,
@@ -13951,7 +14107,7 @@ class LocalAppDataService:
         row = self._normalized_result_row(payload, result_id=result_id)
         async with self._lock:
             self._upsert_by_id(self._results, result_id, row)
-            self._write_list(self._results_file, self._results)
+            await self._persist_list(self._results_file, self._results)
         return {"ok": True, "status": "SUCCESS", "result": row}
 
     async def _get_results(self) -> dict[str, Any]:
@@ -13978,7 +14134,9 @@ class LocalAppDataService:
                 payload.get("question_id") or payload.get("question_index")
             ),
             "question_text": self._str(payload.get("question_text")),
-            "question_image": self._str(payload.get("question_image") or payload.get("image")),
+            "question_image": self._normalize_public_url(
+                payload.get("question_image") or payload.get("image")
+            ),
             "student_answer": self._str(payload.get("student_answer")),
             "correct_answer": self._str(payload.get("correct_answer")),
             "student_id": self._str(payload.get("student_id") or payload.get("user_id")),
@@ -14000,7 +14158,7 @@ class LocalAppDataService:
             }
         async with self._lock:
             self._teacher_review_queue.append(item)
-            self._write_list(self._teacher_review_file, self._teacher_review_queue)
+            await self._persist_list(self._teacher_review_file, self._teacher_review_queue)
         return {"ok": True, "status": "SUCCESS", "queue_item": item}
 
     async def _get_teacher_review_queue(self) -> dict[str, Any]:
@@ -14011,15 +14169,22 @@ class LocalAppDataService:
         )
         return {"ok": True, "status": "SUCCESS", "list": rows}
 
-    async def _list_assessments(self) -> dict[str, Any]:
+    async def _list_assessments(
+        self, payload: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         out = sorted(
-            self._assessments,
+            [
+                self._normalize_assessment_item(row, payload=payload)
+                for row in self._assessments
+            ],
             key=lambda x: int(x.get("created_at", 0) or 0),
             reverse=True,
         )
         return {"ok": True, "status": "SUCCESS", "list": out}
 
-    async def _get_master_csv(self) -> dict[str, Any]:
+    async def _get_master_csv(
+        self, payload: dict[str, Any] | None = None
+    ) -> dict[str, Any]:
         rows: list[list[str]] = [["ID", "Title", "URL", "Deadline", "Type", "Duration"]]
         assessments = sorted(
             self._assessments,
@@ -14031,7 +14196,7 @@ class LocalAppDataService:
                 [
                     self._str(item.get("id")),
                     self._str(item.get("title")),
-                    self._str(item.get("url")),
+                    self._normalize_public_url(item.get("url"), payload=payload),
                     self._str(item.get("deadline")),
                     self._str(item.get("type") or "Exam"),
                     self._str(item.get("duration") or 30),
@@ -14089,7 +14254,7 @@ class LocalAppDataService:
                     break
             else:
                 self._materials.append(item)
-            self._write_list(self._materials_file, self._materials)
+            await self._persist_list(self._materials_file, self._materials)
 
         return {
             "ok": True,
@@ -15808,7 +15973,7 @@ class LocalAppDataService:
             else:
                 index = self._live_class_schedule.index(existing)
                 self._live_class_schedule[index] = item
-            self._write_list(self._live_class_schedule_file, self._live_class_schedule)
+            await self._persist_list(self._live_class_schedule_file, self._live_class_schedule)
             schedule = self._sort_live_class_schedule(self._live_class_schedule)
         self._publish_live_class_schedule_event(
             "schedule_upserted" if existing is not None else "schedule_created",
@@ -15870,7 +16035,7 @@ class LocalAppDataService:
             item = self._normalize_live_class_schedule_item(patch, existing=existing)
             index = self._live_class_schedule.index(existing)
             self._live_class_schedule[index] = item
-            self._write_list(self._live_class_schedule_file, self._live_class_schedule)
+            await self._persist_list(self._live_class_schedule_file, self._live_class_schedule)
             schedule = self._sort_live_class_schedule(self._live_class_schedule)
         self._publish_live_class_schedule_event(
             "schedule_status_changed",
@@ -16151,7 +16316,7 @@ class LocalAppDataService:
             row["role"] = self._str(row["role"] or existing.get("role") or "student")
         async with self._lock:
             self._chat_users[user_id] = row
-            self._write_map(self._chat_users_file, self._chat_users)
+            await self._persist_map(self._chat_users_file, self._chat_users)
         return {
             "ok": True,
             "status": "SUCCESS",
@@ -16258,7 +16423,7 @@ class LocalAppDataService:
         }
         async with self._lock:
             self._chat_threads[chat_id] = thread
-            self._write_map(self._chat_threads_file, self._chat_threads)
+            await self._persist_map(self._chat_threads_file, self._chat_threads)
         return {"ok": True, "status": "SUCCESS", "chat_id": chat_id, "thread": thread}
 
     async def _send_peer_message(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -16379,8 +16544,8 @@ class LocalAppDataService:
                 if key and key != canonical_chat_id:
                     self._chat_threads.pop(key, None)
             self._chat_threads[canonical_chat_id] = thread
-            self._write_map(self._chat_threads_file, self._chat_threads)
-            self._write_map(self._chat_users_file, self._chat_users)
+            await self._persist_map(self._chat_threads_file, self._chat_threads)
+            await self._persist_map(self._chat_users_file, self._chat_users)
         return {
             "ok": True,
             "status": "SUCCESS",
@@ -16425,7 +16590,7 @@ class LocalAppDataService:
         thread["read_by"] = read_by
         async with self._lock:
             self._chat_threads[thread_key] = thread
-            self._write_map(self._chat_threads_file, self._chat_threads)
+            await self._persist_map(self._chat_threads_file, self._chat_threads)
         return {"ok": True, "status": "SUCCESS"}
 
     async def _list_chat_directory(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -16571,7 +16736,7 @@ class LocalAppDataService:
                     break
             else:
                 self._doubts.append(row)
-            self._write_list(self._doubts_file, self._doubts)
+            await self._persist_list(self._doubts_file, self._doubts)
         return {"ok": True, "status": "SUCCESS", "id": doubt_id}
 
     async def _send_doubt_message(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -16622,7 +16787,7 @@ class LocalAppDataService:
                         "unread": True,
                     }
                 )
-            self._write_list(self._doubts_file, self._doubts)
+            await self._persist_list(self._doubts_file, self._doubts)
         return {"ok": True, "status": "SUCCESS"}
 
     async def _get_doubts(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -16651,7 +16816,7 @@ class LocalAppDataService:
                     row["status"] = next_status
                     row["time"] = self._now_ms()
                     break
-            self._write_list(self._doubts_file, self._doubts)
+            await self._persist_list(self._doubts_file, self._doubts)
         return {"ok": True, "status": "SUCCESS"}
 
     def _decode_payload_bytes(self, data_value: str) -> tuple[bytes | None, str]:
@@ -16699,7 +16864,10 @@ class LocalAppDataService:
         file_id = self._new_id("file")
         path = self._uploads_dir / f"{file_id}_{safe_name}"
         path.write_bytes(decoded)
-        file_url = f"{self._base_url(payload)}/app/file/{file_id}"
+        file_url = self._normalize_public_url(
+            f"{self._base_url(payload)}/app/file/{file_id}",
+            payload=payload,
+        )
 
         meta = {
             "id": file_id,
@@ -16711,7 +16879,13 @@ class LocalAppDataService:
         }
         async with self._lock:
             self._uploads[file_id] = meta
-            self._write_map(self._uploads_file, self._uploads)
+            await self._persist_map(self._uploads_file, self._uploads)
+        await self._write_upload_blob_to_db(
+            file_id=file_id,
+            file_name=safe_name,
+            mime=mime or "application/octet-stream",
+            content=decoded,
+        )
 
         return {
             "ok": True,
