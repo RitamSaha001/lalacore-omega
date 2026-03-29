@@ -35,16 +35,11 @@ COPY credentials /app/credentials
 COPY data/vault /app/data/vault
 COPY data/app/import_question_bank.json /app/data/app/import_question_bank.json
 COPY data/app/JEE_BANK_X.json /app/data/app/JEE_BANK_X.json
-COPY data/app/app_data.sqlite3 /app/data/app/app_data.sqlite3
 COPY data/app/assessments.json /app/data/app/assessments.json
 COPY data/app/materials.json /app/data/app/materials.json
 COPY data/app/live_class_schedule.json /app/data/app/live_class_schedule.json
 COPY data/app/uploads.json /app/data/app/uploads.json
-COPY data/app/ai_generated_quizzes.json /app/data/app/ai_generated_quizzes.json
-COPY data/app/results.json /app/data/app/results.json
-COPY data/app/teacher_review_queue.json /app/data/app/teacher_review_queue.json
 COPY data/app/import_drafts.json /app/data/app/import_drafts.json
-COPY data/app/chat_threads.json /app/data/app/chat_threads.json
 COPY data/app/chat_users.json /app/data/app/chat_users.json
 COPY data/auth/users.json /app/data/auth/users.json
 COPY data/auth/otp.json /app/data/auth/otp.json

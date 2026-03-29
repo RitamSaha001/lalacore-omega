@@ -35,16 +35,11 @@
 !data/app/
 !data/app/import_question_bank.json
 !data/app/JEE_BANK_X.json
-!data/app/app_data.sqlite3
 !data/app/assessments.json
 !data/app/materials.json
 !data/app/live_class_schedule.json
 !data/app/uploads.json
-!data/app/ai_generated_quizzes.json
-!data/app/results.json
-!data/app/teacher_review_queue.json
 !data/app/import_drafts.json
-!data/app/chat_threads.json
 !data/app/chat_users.json
 !data/auth/
 !data/auth/users.json
