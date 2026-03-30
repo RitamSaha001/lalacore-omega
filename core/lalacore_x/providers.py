@@ -27,12 +27,19 @@ from models.mini_loader import run_mini
 _PROVIDER_TIMEOUT_OVERRIDES: contextvars.ContextVar[Dict[str, float] | None] = (
     contextvars.ContextVar("lc9_provider_timeout_overrides", default=None)
 )
+_PROVIDER_REQUEST_POLICY: contextvars.ContextVar[Dict[str, Any] | None] = (
+    contextvars.ContextVar("lc9_provider_request_policy", default=None)
+)
+_PROVIDER_MODEL_PRIORITY: contextvars.ContextVar[Dict[str, List[str]] | None] = (
+    contextvars.ContextVar("lc9_provider_model_priority", default=None)
+)
 
 
 @contextmanager
 def provider_runtime_budget(
     *,
     timeout_overrides: Dict[str, float] | None = None,
+    request_policy: Dict[str, Any] | None = None,
 ):
     normalized: Dict[str, float] = {}
     if isinstance(timeout_overrides, dict):
@@ -46,11 +53,73 @@ def provider_runtime_budget(
                 continue
             if value > 0.0:
                 normalized[key] = value
+    normalized_policy: Dict[str, Any] = {}
+    if isinstance(request_policy, dict):
+        preferred_provider = str(request_policy.get("preferred_provider") or "").strip().lower()
+        preferred_model = str(request_policy.get("preferred_model") or "").strip()
+        provider_priority = request_policy.get("provider_priority") or []
+        if preferred_provider:
+            normalized_policy["preferred_provider"] = preferred_provider
+        if preferred_model:
+            normalized_policy["preferred_model"] = preferred_model
+        if isinstance(provider_priority, Sequence) and not isinstance(provider_priority, (str, bytes)):
+            normalized_policy["provider_priority"] = [
+                str(item).strip()
+                for item in provider_priority
+                if str(item).strip()
+            ]
+        if bool(request_policy.get("quality_retry")):
+            normalized_policy["quality_retry"] = True
+        if bool(request_policy.get("quality_retry_force_max")):
+            normalized_policy["quality_retry_force_max"] = True
     token = _PROVIDER_TIMEOUT_OVERRIDES.set(normalized or None)
+    policy_token = _PROVIDER_REQUEST_POLICY.set(normalized_policy or None)
     try:
         yield
     finally:
+        _PROVIDER_REQUEST_POLICY.reset(policy_token)
         _PROVIDER_TIMEOUT_OVERRIDES.reset(token)
+
+
+@contextmanager
+def provider_model_priority_plan(
+    model_priority_by_provider: Dict[str, Sequence[str]] | None = None,
+):
+    normalized: Dict[str, List[str]] = {}
+    if isinstance(model_priority_by_provider, dict):
+        for raw_provider, raw_models in model_priority_by_provider.items():
+            provider = str(raw_provider or "").strip().lower()
+            if not provider:
+                continue
+            if not isinstance(raw_models, Sequence) or isinstance(raw_models, (str, bytes)):
+                continue
+            models: List[str] = []
+            seen = set()
+            for raw_model in raw_models:
+                model = str(raw_model or "").strip()
+                if not model or model in seen:
+                    continue
+                seen.add(model)
+                models.append(model)
+            if models:
+                normalized[provider] = models
+    token = _PROVIDER_MODEL_PRIORITY.set(normalized or None)
+    try:
+        yield
+    finally:
+        _PROVIDER_MODEL_PRIORITY.reset(token)
+
+
+def current_request_policy() -> Dict[str, Any]:
+    return dict(_PROVIDER_REQUEST_POLICY.get() or {})
+
+
+def current_model_priority_overrides() -> Dict[str, List[str]]:
+    raw = _PROVIDER_MODEL_PRIORITY.get() or {}
+    return {
+        str(provider): [str(model) for model in models]
+        for provider, models in raw.items()
+    }
 
 
 class ProviderFabric:
@@ -89,6 +158,179 @@ class ProviderFabric:
         self.warmup_on_start = str(os.getenv("LC9_PROVIDER_WARMUP_ON_START", "1")).strip().lower() in {"1", "true", "yes", "on"}
         self.warmup_timeout_s = max(0.5, float(os.getenv("LC9_PROVIDER_WARMUP_TIMEOUT_S", "4.0") or 4.0))
         self._warmup_done = False
+
+    def candidate_models(
+        self,
+        provider: str,
+        profile: ProblemProfile,
+        *,
+        request_policy: Dict[str, Any] | None = None,
+    ) -> List[str]:
+        provider_key = str(provider or "").strip().lower()
+        request_policy = dict(request_policy or current_request_policy())
+        requested_provider = str(
+            request_policy.get("preferred_provider") or ""
+        ).strip().lower()
+        requested_model = self._normalize_model_alias(
+            provider_key,
+            str(request_policy.get("preferred_model") or "").strip(),
+        )
+        requested_priority = request_policy.get("provider_priority") or []
+        quality_retry = bool(request_policy.get("quality_retry"))
+        quality_retry_force_max = bool(request_policy.get("quality_retry_force_max"))
+        advanced = (
+            str(getattr(profile, "difficulty", "easy") or "easy").strip().lower()
+            in {"medium", "hard"}
+            or quality_retry
+            or quality_retry_force_max
+        )
+
+        override_models = current_model_priority_overrides().get(provider_key, [])
+        candidates: List[str] = []
+        seen = set()
+
+        def add(raw_model: str) -> None:
+            model = self._normalize_model_alias(provider_key, raw_model)
+            if not model or model in seen:
+                return
+            seen.add(model)
+            candidates.append(model)
+
+        for raw_model in override_models:
+            add(raw_model)
+
+        if requested_provider == provider_key and requested_model:
+            add(requested_model)
+
+        if isinstance(requested_priority, Sequence) and not isinstance(
+            requested_priority, (str, bytes)
+        ):
+            for raw_entry in requested_priority:
+                token = str(raw_entry or "").strip()
+                if not token:
+                    continue
+                normalized = self._normalize_model_alias(provider_key, token)
+                if normalized and normalized != token:
+                    add(normalized)
+
+        if provider_key == "openrouter":
+            if advanced:
+                for model in (
+                    "deepseek/deepseek-r1:free",
+                    "openrouter/free",
+                    "openai/gpt-4o-mini",
+                    "google/gemini-2.0-flash-001",
+                ):
+                    add(model)
+            add(os.getenv("OPENROUTER_MODEL", "meta-llama/llama-3.1-8b-instruct"))
+            for model in str(os.getenv("OPENROUTER_FALLBACK_MODELS", "")).split(","):
+                add(model)
+            for model in (
+                "meta-llama/llama-3.1-8b-instruct:free",
+                "openai/gpt-4o-mini",
+                "google/gemini-2.0-flash-001",
+            ):
+                add(model)
+        elif provider_key == "groq":
+            if advanced:
+                for model in (
+                    "deepseek-r1-distill-llama-70b",
+                    "llama3-70b-8192",
+                ):
+                    add(model)
+            add(os.getenv("GROQ_MODEL", "llama-3.1-8b-instant"))
+            add("llama3-70b-8192")
+        elif provider_key == "gemini":
+            if advanced:
+                for model in (
+                    "gemini-2.5-pro",
+                    "gemini-2.5-flash",
+                    "gemini-2.0-flash",
+                ):
+                    add(model)
+            add(os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite"))
+            add("gemini-2.5-flash-lite")
+            add("gemini-2.0-flash")
+        elif provider_key in {"hf", "huggingface"}:
+            add(os.getenv("HF_MODEL", "meta-llama/Llama-3.1-8B-Instruct"))
+            add("meta-llama/Llama-3.1-8B-Instruct")
+
+        return candidates
+
+    def _normalize_model_alias(self, provider: str, model: str) -> str:
+        text = str(model or "").strip()
+        if not text:
+            return ""
+        lowered = text.lower()
+        alias_map = {
+            "openrouter": {
+                "gpt-4o": "openai/gpt-4o",
+                "gpt-4": "openai/gpt-4",
+                "gpt-4o-mini": "openai/gpt-4o-mini",
+                "claude-3-7-sonnet": "anthropic/claude-3.7-sonnet",
+                "claude-3.7-sonnet": "anthropic/claude-3.7-sonnet",
+                "gemini-pro": "google/gemini-pro-1.5",
+                "gemini": "google/gemini-2.0-flash-001",
+            },
+            "groq": {
+                "deepseek-r1-distill-llama-70b": "deepseek-r1-distill-llama-70b",
+                "llama3-70b-8192": "llama3-70b-8192",
+                "llama-3.1-8b-instant": "llama-3.1-8b-instant",
+            },
+            "gemini": {
+                "gemini-pro": "gemini-2.5-pro",
+                "gemini": "gemini-2.5-flash",
+                "gemini-2.5-pro": "gemini-2.5-pro",
+                "gemini-2.5-flash": "gemini-2.5-flash",
+                "gemini-2.5-flash-lite": "gemini-2.5-flash-lite",
+                "gemini-2.0-flash": "gemini-2.0-flash",
+            },
+            "hf": {
+                "hf": "meta-llama/Llama-3.1-8B-Instruct",
+            },
+            "huggingface": {
+                "hf": "meta-llama/Llama-3.1-8B-Instruct",
+            },
+        }
+        resolved = alias_map.get(provider, {}).get(lowered)
+        return str(resolved or text).strip()
+
+    def _response_payload(self, response: Any) -> Dict[str, Any] | None:
+        try:
+            payload = response.json()
+        except Exception:
+            return None
+        return payload if isinstance(payload, dict) else None
+
+    def _should_try_next_model(
+        self,
+        provider: str,
+        *,
+        status_code: int,
+        response_text: str,
+        payload: Dict[str, Any] | None,
+    ) -> bool:
+        if int(status_code) not in {400, 404, 409, 415, 422}:
+            return False
+        haystack_parts = [str(response_text or "").lower()]
+        if payload:
+            haystack_parts.append(str(payload).lower())
+        haystack = "\n".join(haystack_parts)
+        markers = (
+            "model_not_available",
+            "model is deprecated",
+            "decommission",
+            "no endpoints found",
+            "unknown model",
+            "model not found",
+            "unable to access non-serverless model",
+            "not support this model",
+            "invalid model",
+            "unsupported model",
+        )
+        if provider == "groq":
+            markers = markers + ("model_decommissioned",)
+        return any(marker in haystack for marker in markers)
 
     def _timeout_for(self, provider: str) -> float:
         default = float(self.provider_timeouts_s.get(provider, 45.0))
@@ -536,88 +778,129 @@ class ProviderFabric:
         profile: ProblemProfile,
         retrieved: Sequence[RetrievedBlock],
     ) -> ProviderAnswer:
-        # Default to a currently serverless-accessible model. Legacy defaults may 400 on decommission.
-        model = os.getenv("OPENROUTER_MODEL", "meta-llama/llama-3.1-8b-instruct")
-
         prompt = self._build_prompt(question, profile, retrieved)
         system_instructions = "Return concise reasoning then final answer."
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system_instructions},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": 0.1,
-        }
-
-        prompt_meta = self._prompt_meta(
-            provider="openrouter",
-            model_name=model,
-            system_instructions=system_instructions,
-            prompt=prompt,
-        )
+        candidate_models = self.candidate_models("openrouter", profile)
         key_count = max(1, len(self.key_manager.keys.get("openrouter", [])))
         max_attempts = max(1, min(self.max_provider_key_attempts, key_count))
-        attempted: List[str] = []
-        attempted_hashes: List[str] = []
         last_exc: Exception | None = None
         last_reason = "invalid_response"
         start = time.time()
+        attempted_hashes: List[str] = []
+        attempted_models: List[str] = []
 
-        for attempt_idx in range(max_attempts):
-            key = self.key_manager.get_key("openrouter", exclude_keys=attempted)
-            attempted.append(key)
-            attempted_hashes.append(self._mask_key(key))
-            headers = {
-                "Authorization": f"Bearer {key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "http://localhost",
-                "X-Title": "LalaCore-X",
+        for model in candidate_models:
+            attempted_models.append(model)
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system_instructions},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.1,
             }
-            try:
-                response = await request_async(
-                    "POST",
-                    "https://openrouter.ai/api/v1/chat/completions",
-                    headers=headers,
-                    json_body=payload,
-                    timeout_s=40.0,
-                )
-                response.raise_for_status()
-                data = response.json()
-                content = self._extract_chat_content(data)
-                if not content:
-                    raise RuntimeError("openrouter_empty_content")
-                self.key_manager.report_success(key)
-                token_usage = self._usage_from_payload(data, prompt=prompt, completion_text=content)
-                return self._pack_text_answer(
-                    "openrouter",
-                    content,
-                    time.time() - start,
-                    data,
-                    question_text=question,
-                    profile=profile,
-                    prompt_meta=prompt_meta,
-                    token_usage=token_usage,
-                    extra_raw={"transport": response.transport},
-                )
-            except Exception as exc:
-                last_exc = exc
-                last_reason = self._failure_reason(exc)
-                self.key_manager.report_failure(key, error_type=last_reason)
-                if self._should_retry_with_next_key(last_reason, attempt_idx=attempt_idx, max_attempts=max_attempts):
-                    await asyncio.sleep(self.key_retry_backoff_s * float(attempt_idx + 1))
-                    continue
-                break
+            prompt_meta = self._prompt_meta(
+                provider="openrouter",
+                model_name=model,
+                system_instructions=system_instructions,
+                prompt=prompt,
+            )
+            attempted: List[str] = []
+            model_unavailable = False
+
+            for attempt_idx in range(max_attempts):
+                key = self.key_manager.get_key("openrouter", exclude_keys=attempted)
+                attempted.append(key)
+                masked = self._mask_key(key)
+                if masked not in attempted_hashes:
+                    attempted_hashes.append(masked)
+                headers = {
+                    "Authorization": f"Bearer {key}",
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "http://localhost",
+                    "X-Title": "LalaCore-X",
+                }
+                try:
+                    response = await request_async(
+                        "POST",
+                        "https://openrouter.ai/api/v1/chat/completions",
+                        headers=headers,
+                        json_body=payload,
+                        timeout_s=40.0,
+                    )
+                    if int(getattr(response, "status_code", 0) or 0) >= 400:
+                        payload_data = self._response_payload(response)
+                        if self._should_try_next_model(
+                            "openrouter",
+                            status_code=int(getattr(response, "status_code", 0) or 0),
+                            response_text=str(getattr(response, "text", "") or ""),
+                            payload=payload_data,
+                        ):
+                            self.key_manager.report_failure(
+                                key, error_type="schema_validation"
+                            )
+                            last_exc = RuntimeError(
+                                f"openrouter_model_unavailable:{model}"
+                            )
+                            last_reason = "schema_validation"
+                            model_unavailable = True
+                            break
+                        response.raise_for_status()
+                    data = response.json()
+                    content = self._extract_chat_content(data)
+                    if not content:
+                        raise RuntimeError("openrouter_empty_content")
+                    self.key_manager.report_success(key)
+                    token_usage = self._usage_from_payload(
+                        data, prompt=prompt, completion_text=content
+                    )
+                    return self._pack_text_answer(
+                        "openrouter",
+                        content,
+                        time.time() - start,
+                        data,
+                        question_text=question,
+                        profile=profile,
+                        prompt_meta=prompt_meta,
+                        token_usage=token_usage,
+                        extra_raw={
+                            "transport": response.transport,
+                            "model_candidates": candidate_models,
+                        },
+                    )
+                except Exception as exc:
+                    last_exc = exc
+                    last_reason = self._failure_reason(exc)
+                    self.key_manager.report_failure(key, error_type=last_reason)
+                    if self._should_retry_with_next_key(
+                        last_reason,
+                        attempt_idx=attempt_idx,
+                        max_attempts=max_attempts,
+                    ):
+                        await asyncio.sleep(
+                            self.key_retry_backoff_s * float(attempt_idx + 1)
+                        )
+                        continue
+                    break
+
+            if model_unavailable:
+                continue
 
         error = last_exc or RuntimeError("openrouter_request_failed")
         return self._error_answer(
             "openrouter",
             error,
-            prompt_meta=prompt_meta,
+            prompt_meta=self._prompt_meta(
+                provider="openrouter",
+                model_name=attempted_models[-1] if attempted_models else "",
+                system_instructions=system_instructions,
+                prompt=prompt,
+            ),
             extra_raw={
                 "failure_reason": last_reason,
                 "attempted_keys": attempted_hashes,
                 "attempt_count": len(attempted_hashes),
+                "attempted_models": attempted_models,
             },
         )
 
@@ -627,86 +910,127 @@ class ProviderFabric:
         profile: ProblemProfile,
         retrieved: Sequence[RetrievedBlock],
     ) -> ProviderAnswer:
-        # Legacy `llama3-8b-8192` is decommissioned.
-        model = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
         prompt = self._build_prompt(question, profile, retrieved)
         system_instructions = "Explain briefly and give exact final answer."
-
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system_instructions},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": 0.1,
-        }
-
-        prompt_meta = self._prompt_meta(
-            provider="groq",
-            model_name=model,
-            system_instructions=system_instructions,
-            prompt=prompt,
-        )
+        candidate_models = self.candidate_models("groq", profile)
         key_count = max(1, len(self.key_manager.keys.get("groq", [])))
         max_attempts = max(1, min(self.max_provider_key_attempts, key_count))
-        attempted: List[str] = []
-        attempted_hashes: List[str] = []
         last_exc: Exception | None = None
         last_reason = "invalid_response"
         start = time.time()
+        attempted_hashes: List[str] = []
+        attempted_models: List[str] = []
 
-        for attempt_idx in range(max_attempts):
-            key = self.key_manager.get_key("groq", exclude_keys=attempted)
-            attempted.append(key)
-            attempted_hashes.append(self._mask_key(key))
-            headers = {
-                "Authorization": f"Bearer {key}",
-                "Content-Type": "application/json",
+        for model in candidate_models:
+            attempted_models.append(model)
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system_instructions},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.1,
             }
-            try:
-                response = await request_async(
-                    "POST",
-                    "https://api.groq.com/openai/v1/chat/completions",
-                    headers=headers,
-                    json_body=payload,
-                    timeout_s=40.0,
-                )
-                response.raise_for_status()
-                data = response.json()
-                content = self._extract_chat_content(data)
-                if not content:
-                    raise RuntimeError("groq_empty_content")
-                self.key_manager.report_success(key)
-                token_usage = self._usage_from_payload(data, prompt=prompt, completion_text=content)
-                return self._pack_text_answer(
-                    "groq",
-                    content,
-                    time.time() - start,
-                    data,
-                    question_text=question,
-                    profile=profile,
-                    prompt_meta=prompt_meta,
-                    token_usage=token_usage,
-                    extra_raw={"transport": response.transport},
-                )
-            except Exception as exc:
-                last_exc = exc
-                last_reason = self._failure_reason(exc)
-                self.key_manager.report_failure(key, error_type=last_reason)
-                if self._should_retry_with_next_key(last_reason, attempt_idx=attempt_idx, max_attempts=max_attempts):
-                    await asyncio.sleep(self.key_retry_backoff_s * float(attempt_idx + 1))
-                    continue
-                break
+            prompt_meta = self._prompt_meta(
+                provider="groq",
+                model_name=model,
+                system_instructions=system_instructions,
+                prompt=prompt,
+            )
+            attempted: List[str] = []
+            model_unavailable = False
+
+            for attempt_idx in range(max_attempts):
+                key = self.key_manager.get_key("groq", exclude_keys=attempted)
+                attempted.append(key)
+                masked = self._mask_key(key)
+                if masked not in attempted_hashes:
+                    attempted_hashes.append(masked)
+                headers = {
+                    "Authorization": f"Bearer {key}",
+                    "Content-Type": "application/json",
+                }
+                try:
+                    response = await request_async(
+                        "POST",
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers=headers,
+                        json_body=payload,
+                        timeout_s=40.0,
+                    )
+                    if int(getattr(response, "status_code", 0) or 0) >= 400:
+                        payload_data = self._response_payload(response)
+                        if self._should_try_next_model(
+                            "groq",
+                            status_code=int(getattr(response, "status_code", 0) or 0),
+                            response_text=str(getattr(response, "text", "") or ""),
+                            payload=payload_data,
+                        ):
+                            self.key_manager.report_failure(
+                                key, error_type="schema_validation"
+                            )
+                            last_exc = RuntimeError(
+                                f"groq_model_unavailable:{model}"
+                            )
+                            last_reason = "schema_validation"
+                            model_unavailable = True
+                            break
+                        response.raise_for_status()
+                    data = response.json()
+                    content = self._extract_chat_content(data)
+                    if not content:
+                        raise RuntimeError("groq_empty_content")
+                    self.key_manager.report_success(key)
+                    token_usage = self._usage_from_payload(
+                        data, prompt=prompt, completion_text=content
+                    )
+                    return self._pack_text_answer(
+                        "groq",
+                        content,
+                        time.time() - start,
+                        data,
+                        question_text=question,
+                        profile=profile,
+                        prompt_meta=prompt_meta,
+                        token_usage=token_usage,
+                        extra_raw={
+                            "transport": response.transport,
+                            "model_candidates": candidate_models,
+                        },
+                    )
+                except Exception as exc:
+                    last_exc = exc
+                    last_reason = self._failure_reason(exc)
+                    self.key_manager.report_failure(key, error_type=last_reason)
+                    if self._should_retry_with_next_key(
+                        last_reason,
+                        attempt_idx=attempt_idx,
+                        max_attempts=max_attempts,
+                    ):
+                        await asyncio.sleep(
+                            self.key_retry_backoff_s * float(attempt_idx + 1)
+                        )
+                        continue
+                    break
+
+            if model_unavailable:
+                continue
 
         error = last_exc or RuntimeError("groq_request_failed")
         return self._error_answer(
             "groq",
             error,
-            prompt_meta=prompt_meta,
+            prompt_meta=self._prompt_meta(
+                provider="groq",
+                model_name=attempted_models[-1] if attempted_models else "",
+                system_instructions=system_instructions,
+                prompt=prompt,
+            ),
             extra_raw={
                 "failure_reason": last_reason,
                 "attempted_keys": attempted_hashes,
                 "attempt_count": len(attempted_hashes),
+                "attempted_models": attempted_models,
             },
         )
 
@@ -716,80 +1040,124 @@ class ProviderFabric:
         profile: ProblemProfile,
         retrieved: Sequence[RetrievedBlock],
     ) -> ProviderAnswer:
-        # Prefer a free-tier-friendly default; callers can override via GEMINI_MODEL.
-        model = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
         prompt = self._build_prompt(question, profile, retrieved)
         system_instructions = "Return concise reasoning then final answer."
-
-        payload = {
-            "contents": [
-                {
-                    "parts": [{"text": prompt}],
-                }
-            ],
-            "generationConfig": {"temperature": 0.1, "topP": 0.95},
-        }
-
-        prompt_meta = self._prompt_meta(
-            provider="gemini",
-            model_name=model,
-            system_instructions=system_instructions,
-            prompt=prompt,
-        )
+        candidate_models = self.candidate_models("gemini", profile)
         key_count = max(1, len(self.key_manager.keys.get("gemini", [])))
         max_attempts = max(1, min(self.max_provider_key_attempts, key_count))
-        attempted: List[str] = []
-        attempted_hashes: List[str] = []
         last_exc: Exception | None = None
         last_reason = "invalid_response"
         start = time.time()
+        attempted_hashes: List[str] = []
+        attempted_models: List[str] = []
 
-        for attempt_idx in range(max_attempts):
-            key = self.key_manager.get_key("gemini", exclude_keys=attempted)
-            attempted.append(key)
-            attempted_hashes.append(self._mask_key(key))
-            url = f"https://generativelanguage.googleapis.com/v1/models/{model}:generateContent?key={key}"
-            try:
-                response = await request_async(
-                    "POST",
-                    url,
-                    json_body=payload,
-                    timeout_s=50.0,
+        for model in candidate_models:
+            attempted_models.append(model)
+            payload = {
+                "contents": [
+                    {
+                        "parts": [{"text": prompt}],
+                    }
+                ],
+                "generationConfig": {"temperature": 0.1, "topP": 0.95},
+            }
+            prompt_meta = self._prompt_meta(
+                provider="gemini",
+                model_name=model,
+                system_instructions=system_instructions,
+                prompt=prompt,
+            )
+            attempted: List[str] = []
+            model_unavailable = False
+
+            for attempt_idx in range(max_attempts):
+                key = self.key_manager.get_key("gemini", exclude_keys=attempted)
+                attempted.append(key)
+                masked = self._mask_key(key)
+                if masked not in attempted_hashes:
+                    attempted_hashes.append(masked)
+                url = (
+                    f"https://generativelanguage.googleapis.com/v1/models/"
+                    f"{model}:generateContent?key={key}"
                 )
-                response.raise_for_status()
-                data = response.json()
-                content = data["candidates"][0]["content"]["parts"][0]["text"].strip()
-                self.key_manager.report_success(key)
-                token_usage = self._usage_from_payload(data, prompt=prompt, completion_text=content)
-                return self._pack_text_answer(
-                    "gemini",
-                    content,
-                    time.time() - start,
-                    data,
-                    question_text=question,
-                    profile=profile,
-                    prompt_meta=prompt_meta,
-                    token_usage=token_usage,
-                    extra_raw={"transport": response.transport},
-                )
-            except Exception as exc:
-                last_exc = exc
-                last_reason = self._failure_reason(exc)
-                self.key_manager.report_failure(key, error_type=last_reason)
-                if self._should_retry_with_next_key(last_reason, attempt_idx=attempt_idx, max_attempts=max_attempts):
-                    await asyncio.sleep(self.key_retry_backoff_s * float(attempt_idx + 1))
-                    continue
-                break
+                try:
+                    response = await request_async(
+                        "POST",
+                        url,
+                        json_body=payload,
+                        timeout_s=50.0,
+                    )
+                    if int(getattr(response, "status_code", 0) or 0) >= 400:
+                        payload_data = self._response_payload(response)
+                        if self._should_try_next_model(
+                            "gemini",
+                            status_code=int(getattr(response, "status_code", 0) or 0),
+                            response_text=str(getattr(response, "text", "") or ""),
+                            payload=payload_data,
+                        ):
+                            self.key_manager.report_failure(
+                                key, error_type="schema_validation"
+                            )
+                            last_exc = RuntimeError(
+                                f"gemini_model_unavailable:{model}"
+                            )
+                            last_reason = "schema_validation"
+                            model_unavailable = True
+                            break
+                        response.raise_for_status()
+                    data = response.json()
+                    content = data["candidates"][0]["content"]["parts"][0]["text"].strip()
+                    self.key_manager.report_success(key)
+                    token_usage = self._usage_from_payload(
+                        data, prompt=prompt, completion_text=content
+                    )
+                    return self._pack_text_answer(
+                        "gemini",
+                        content,
+                        time.time() - start,
+                        data,
+                        question_text=question,
+                        profile=profile,
+                        prompt_meta=prompt_meta,
+                        token_usage=token_usage,
+                        extra_raw={
+                            "transport": response.transport,
+                            "model_candidates": candidate_models,
+                        },
+                    )
+                except Exception as exc:
+                    last_exc = exc
+                    last_reason = self._failure_reason(exc)
+                    self.key_manager.report_failure(key, error_type=last_reason)
+                    if self._should_retry_with_next_key(
+                        last_reason,
+                        attempt_idx=attempt_idx,
+                        max_attempts=max_attempts,
+                    ):
+                        await asyncio.sleep(
+                            self.key_retry_backoff_s * float(attempt_idx + 1)
+                        )
+                        continue
+                    break
+
+            if model_unavailable:
+                continue
 
         error = last_exc or RuntimeError("gemini_request_failed")
         return self._error_answer(
             "gemini",
             error,
-            prompt_meta=prompt_meta,
+            prompt_meta=self._prompt_meta(
+                provider="gemini",
+                model_name=attempted_models[-1] if attempted_models else "",
+                system_instructions=system_instructions,
+                prompt=prompt,
+            ),
             extra_raw={
                 "failure_reason": last_reason,
                 "attempted_keys": attempted_hashes,
                 "attempt_count": len(attempted_hashes),
+                "attempted_models": attempted_models,
             },
         )
 
@@ -799,90 +1167,131 @@ class ProviderFabric:
         profile: ProblemProfile,
         retrieved: Sequence[RetrievedBlock],
     ) -> ProviderAnswer:
-        # `api-inference.huggingface.co` is sunset; use HF Router OpenAI-compatible endpoint.
-        model = os.getenv("HF_MODEL", "meta-llama/Llama-3.1-8B-Instruct")
         url = os.getenv("HF_CHAT_COMPLETIONS_URL", "https://router.huggingface.co/v1/chat/completions")
         prompt = self._build_prompt(question, profile, retrieved)
         system_instructions = "Return concise reasoning then exact final answer."
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system_instructions},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": 0.1,
-            "max_tokens": 300,
-        }
-
-        prompt_meta = self._prompt_meta(
-            provider="hf",
-            model_name=model,
-            system_instructions=system_instructions,
-            prompt=prompt,
-        )
+        candidate_models = self.candidate_models("hf", profile)
         key_count = max(1, len(self.key_manager.keys.get("hf", [])))
         max_attempts = max(1, min(self.max_provider_key_attempts, key_count))
-        attempted: List[str] = []
-        attempted_hashes: List[str] = []
         last_exc: Exception | None = None
         last_reason = "invalid_response"
         start = time.time()
+        attempted_hashes: List[str] = []
+        attempted_models: List[str] = []
 
-        for attempt_idx in range(max_attempts):
-            key = self.key_manager.get_key("hf", exclude_keys=attempted)
-            attempted.append(key)
-            attempted_hashes.append(self._mask_key(key))
-            headers = {"Authorization": f"Bearer {key}"}
-            try:
-                response = await request_async(
-                    "POST",
-                    url,
-                    headers=headers,
-                    json_body=payload,
-                    timeout_s=60.0,
-                )
-                response.raise_for_status()
-                data = response.json()
-                if isinstance(data, dict):
-                    content = self._extract_chat_content(data)
-                elif isinstance(data, list) and data:
-                    # Backward-compatible parsing for legacy inference payloads.
-                    content = str(data[0].get("generated_text", "")).strip()
-                else:
-                    content = str(data)
-                if not content:
-                    raise RuntimeError("hf_empty_content")
-                self.key_manager.report_success(key)
-                token_usage = self._usage_from_payload(data if isinstance(data, dict) else {"response": data}, prompt=prompt, completion_text=content)
-                return self._pack_text_answer(
-                    "hf",
-                    content,
-                    time.time() - start,
-                    data if isinstance(data, dict) else {"response": data},
-                    question_text=question,
-                    profile=profile,
-                    prompt_meta=prompt_meta,
-                    token_usage=token_usage,
-                    extra_raw={"transport": response.transport},
-                )
-            except Exception as exc:
-                last_exc = exc
-                last_reason = self._failure_reason(exc)
-                self.key_manager.report_failure(key, error_type=last_reason)
-                if self._should_retry_with_next_key(last_reason, attempt_idx=attempt_idx, max_attempts=max_attempts):
-                    await asyncio.sleep(self.key_retry_backoff_s * float(attempt_idx + 1))
-                    continue
-                break
+        for model in candidate_models:
+            attempted_models.append(model)
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system_instructions},
+                    {"role": "user", "content": prompt},
+                ],
+                "temperature": 0.1,
+                "max_tokens": 300,
+            }
+            prompt_meta = self._prompt_meta(
+                provider="hf",
+                model_name=model,
+                system_instructions=system_instructions,
+                prompt=prompt,
+            )
+            attempted: List[str] = []
+            model_unavailable = False
+
+            for attempt_idx in range(max_attempts):
+                key = self.key_manager.get_key("hf", exclude_keys=attempted)
+                attempted.append(key)
+                masked = self._mask_key(key)
+                if masked not in attempted_hashes:
+                    attempted_hashes.append(masked)
+                headers = {"Authorization": f"Bearer {key}"}
+                try:
+                    response = await request_async(
+                        "POST",
+                        url,
+                        headers=headers,
+                        json_body=payload,
+                        timeout_s=60.0,
+                    )
+                    if int(getattr(response, "status_code", 0) or 0) >= 400:
+                        payload_data = self._response_payload(response)
+                        if self._should_try_next_model(
+                            "hf",
+                            status_code=int(getattr(response, "status_code", 0) or 0),
+                            response_text=str(getattr(response, "text", "") or ""),
+                            payload=payload_data,
+                        ):
+                            self.key_manager.report_failure(
+                                key, error_type="schema_validation"
+                            )
+                            last_exc = RuntimeError(f"hf_model_unavailable:{model}")
+                            last_reason = "schema_validation"
+                            model_unavailable = True
+                            break
+                        response.raise_for_status()
+                    data = response.json()
+                    if isinstance(data, dict):
+                        content = self._extract_chat_content(data)
+                    elif isinstance(data, list) and data:
+                        content = str(data[0].get("generated_text", "")).strip()
+                    else:
+                        content = str(data)
+                    if not content:
+                        raise RuntimeError("hf_empty_content")
+                    self.key_manager.report_success(key)
+                    token_usage = self._usage_from_payload(
+                        data if isinstance(data, dict) else {"response": data},
+                        prompt=prompt,
+                        completion_text=content,
+                    )
+                    return self._pack_text_answer(
+                        "hf",
+                        content,
+                        time.time() - start,
+                        data if isinstance(data, dict) else {"response": data},
+                        question_text=question,
+                        profile=profile,
+                        prompt_meta=prompt_meta,
+                        token_usage=token_usage,
+                        extra_raw={
+                            "transport": response.transport,
+                            "model_candidates": candidate_models,
+                        },
+                    )
+                except Exception as exc:
+                    last_exc = exc
+                    last_reason = self._failure_reason(exc)
+                    self.key_manager.report_failure(key, error_type=last_reason)
+                    if self._should_retry_with_next_key(
+                        last_reason,
+                        attempt_idx=attempt_idx,
+                        max_attempts=max_attempts,
+                    ):
+                        await asyncio.sleep(
+                            self.key_retry_backoff_s * float(attempt_idx + 1)
+                        )
+                        continue
+                    break
+
+            if model_unavailable:
+                continue
 
         error = last_exc or RuntimeError("hf_request_failed")
         return self._error_answer(
             "hf",
             error,
-            prompt_meta=prompt_meta,
+            prompt_meta=self._prompt_meta(
+                provider="hf",
+                model_name=attempted_models[-1] if attempted_models else "",
+                system_instructions=system_instructions,
+                prompt=prompt,
+            ),
             extra_raw={
                 "failure_reason": last_reason,
                 "attempted_keys": attempted_hashes,
                 "attempt_count": len(attempted_hashes),
+                "attempted_models": attempted_models,
             },
         )
 

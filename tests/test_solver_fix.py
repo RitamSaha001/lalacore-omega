@@ -66,6 +66,22 @@ class SolverFixTests(unittest.TestCase):
         self.assertTrue(report["plausible"])
         self.assertEqual(report["expected_type"], "solution")
 
+    def test_geometry_equation_prompt_is_not_treated_as_plain_numeric(self):
+        question = (
+            "Find the condition that the equation ax^2 + 2hxy + by^2 + 2gx + 2fy + c = 0 "
+            "represents a pair of perpendicular lines."
+        )
+        report = check_answer_plausibility(question, "0.", {"observed_type": "numeric"})
+        self.assertEqual(report["expected_type"], "solution")
+        self.assertFalse(report["plausible"])
+        self.assertIn("expected_solution_type", report["issues"])
+
+    def test_equation_style_prompt_extraction_marks_solution_expected_type(self):
+        question = "Find the locus of the point of intersection of perpendicular tangents drawn to parabola y^2 = 4ax."
+        raw = "Final Answer: 0."
+        out = extract_answer(question, raw, {"numeric_expected": True})
+        self.assertEqual(out["expected_type"], "solution")
+
     def test_extraction_prefers_final_answer_tag(self):
         question = "Solve and provide final answer."
         raw = "Reasoning: expand equation and simplify.\nFinal Answer: 13"

@@ -20,6 +20,20 @@ _SUBJECT_PATTERNS: Dict[str, tuple[str, ...]] = {
         "combination",
         "binomial",
         "factorial",
+        "circle",
+        "parabola",
+        "ellipse",
+        "hyperbola",
+        "tangent",
+        "normal",
+        "chord",
+        "locus",
+        "asymptote",
+        "directrix",
+        "focus",
+        "envelope",
+        "intercept",
+        "coordinate geometry",
     ),
     "physics": (
         "force",
@@ -43,6 +57,30 @@ _SUBJECT_PATTERNS: Dict[str, tuple[str, ...]] = {
     ),
     "chemistry": ("mole", "reaction", "equilibrium", "acid", "base", "orbital", "stoichiometry"),
 }
+
+_ADVANCED_MATH_PATTERNS = (
+    "circle",
+    "parabola",
+    "ellipse",
+    "hyperbola",
+    "tangent",
+    "tangents",
+    "normal",
+    "chord",
+    "locus",
+    "asymptote",
+    "directrix",
+    "focus",
+    "envelope",
+    "intercept",
+    "axes",
+    "axis",
+    "midpoint",
+    "intersection",
+    "pair of perpendicular lines",
+    "chord of contact",
+    "fixed point",
+)
 
 _TRAP_PATTERNS = (
     r"except",
@@ -100,7 +138,14 @@ class ProblemClassifier:
 
         multi_concept = self._is_multi_concept(text)
         trap_probability = self._trap_probability(text)
-        difficulty = self._difficulty_label(text, multi_concept, trap_probability)
+        advanced_math_hits = sum(1 for pattern in _ADVANCED_MATH_PATTERNS if pattern in text)
+        difficulty = self._difficulty_label(
+            text,
+            multi_concept,
+            trap_probability,
+            advanced_math_hits=advanced_math_hits,
+            graph_like=graph_like,
+        )
 
         return ProblemProfile(
             subject=subject,
@@ -114,6 +159,7 @@ class ProblemClassifier:
                 "token_count": len(tokens),
                 "equation_count": text.count("="),
                 "operator_count": len(re.findall(r"[\+\-\*/\^]", text)),
+                "advanced_math_hits": advanced_math_hits,
                 "trap_pattern_hits": [p for p in _TRAP_PATTERNS if re.search(p, text)],
             },
         )
@@ -143,15 +189,43 @@ class ProblemClassifier:
 
         return round(min(base, 0.95), 4)
 
-    def _difficulty_label(self, text: str, multi_concept: bool, trap_probability: float) -> str:
+    def _difficulty_label(
+        self,
+        text: str,
+        multi_concept: bool,
+        trap_probability: float,
+        *,
+        advanced_math_hits: int = 0,
+        graph_like: bool = False,
+    ) -> str:
         score = 0
 
         score += len(re.findall(r"[\+\-\*/\^=]", text))
         score += 3 if multi_concept else 0
         score += int(trap_probability * 10)
+        score += min(8, advanced_math_hits * 2)
 
         if any(k in text for k in ("prove", "derive", "optimization", "mechanism", "eigen", "differential")):
             score += 4
+        if graph_like:
+            score += 2
+        if "locus" in text and advanced_math_hits > 0:
+            score += 4
+        if any(
+            k in text
+            for k in (
+                "tangent",
+                "tangents",
+                "normal",
+                "chord",
+                "envelope",
+                "asymptote",
+                "directrix",
+                "fixed point",
+                "pair of perpendicular lines",
+            )
+        ):
+            score += 2
 
         if score >= 12:
             return "hard"

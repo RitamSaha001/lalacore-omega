@@ -2327,12 +2327,34 @@ class LalaCorePipelineController:
         placeholder_explanation = explanation_text.lower().startswith(
             "provider error:"
         )
+        selected_plausibility = solve_result.get("plausibility")
+        if isinstance(selected_plausibility, dict):
+            graph_output_plausible = bool(
+                selected_plausibility.get("plausible", False)
+            )
+        else:
+            graph_output_plausible = bool(
+                check_answer_plausibility(
+                    question_text=state.question_text,
+                    final_answer=final_answer_text,
+                    metadata={
+                        "numeric_expected": bool(
+                            getattr(state.profile, "numeric", False)
+                        ),
+                        "observed_type": "numeric"
+                        if re.search(r"\d", final_answer_text)
+                        else "text",
+                    },
+                ).get("plausible", False)
+            )
         graph_supported_output = bool(
             visualization is not None
             and final_answer_text
             and explanation_text
             and not placeholder_final_answer
             and not placeholder_explanation
+            and graph_output_plausible
+            and "plausibility_failed" not in quality_gate_reasons
             and "all_provider_answers_empty" not in quality_gate_reasons
             and "empty_final_answer" not in quality_gate_reasons
         )

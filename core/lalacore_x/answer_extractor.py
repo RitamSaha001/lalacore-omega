@@ -90,6 +90,15 @@ def _expected_answer_type(question_text: str, metadata: Dict[str, Any]) -> str:
     if _is_counting_numeric_prompt(q):
         return "numeric"
     if re.search(
+        r"\b("
+        r"equation of|locus|tangent|tangents|normal|chord|chord of contact|"
+        r"circle|parabola|ellipse|hyperbola|asymptote|envelope|"
+        r"pair of perpendicular lines|condition"
+        r")\b",
+        q,
+    ):
+        return "solution"
+    if re.search(
         r"\b(list|roots?|ordered pair|ordered pairs|solution set|set of solutions|set of values|possible values|all values|all roots)\b",
         q,
     ):

@@ -398,6 +398,7 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
             "final_answer": (
                 "Eccentricity = 5/4; asymptotes are y = +(3/4)x and y = -(3/4)x."
             ),
+            "plausibility": {"plausible": True, "score": 1.0, "issues": []},
             "verification": {"verified": False, "risk_score": 0.95},
             "routing_decision": "test",
             "escalate": True,
@@ -515,6 +516,74 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
             "graph_metadata_override",
             str(((out.get("quality_gate") or {}).get("reasons") or [])),
         )
+
+    async def test_graph_metadata_does_not_override_implausible_solution(self):
+        fake_result = {
+            "question": "Circle family graph question",
+            "reasoning": (
+                "We compare the radical axis relation and the center-line constraint, "
+                "then inspect the candidate circle family."
+            ),
+            "final_answer": "0.",
+            "plausibility": {
+                "plausible": False,
+                "score": 0.4,
+                "issues": ["expected_solution_type"],
+            },
+            "verification": {"verified": False, "risk_score": 0.95},
+            "routing_decision": "test",
+            "escalate": True,
+            "winner_provider": "mini",
+            "profile": {
+                "subject": "math",
+                "difficulty": "hard",
+                "numeric": True,
+                "multiConcept": True,
+                "trapProbability": 0.0,
+            },
+            "arena": {
+                "entropy": 1.35,
+                "disagreement": 0.75,
+                "winner_margin": 0.02,
+                "ranked_providers": [{"provider": "mini", "score": 0.4}],
+            },
+            "quality_gate": {
+                "completion_ok": False,
+                "final_status": "Failed",
+                "force_escalate": True,
+                "reasons": [
+                    "plausibility_failed",
+                    "verification_unavailable",
+                    "high_entropy",
+                ],
+            },
+            "retrieval": {"top_blocks": [], "claim_support_score": 0.0},
+            "engine": {
+                "name": "LALACORE_X",
+                "version": "research-grade-v2",
+                "backward_compatible": True,
+                "provider_availability": {"mini": {"eligible": True}},
+            },
+        }
+
+        with patch("core.api.entrypoint.solve_question", new=AsyncMock(return_value=fake_result)):
+            out = await lalacore_entry(
+                input_data=(
+                    "Given two circles S1 and S2, find the equation of the circle "
+                    "through their intersection points whose center lies on x - y = 0."
+                ),
+                input_type="text",
+                options={"enable_meta_verification": False, "enable_persona": False},
+            )
+
+        self.assertEqual(out["status"], "uncertain")
+        self.assertNotIn("visualization", out)
+        self.assertFalse(bool((out.get("quality_gate") or {}).get("graph_supported_output")))
+        self.assertNotIn(
+            "graph_metadata_override",
+            str(((out.get("quality_gate") or {}).get("reasons") or [])),
+        )
+        self.assertIn("Uncertain answer", str(out.get("final_answer", "")))
 
     async def test_multimodal_default_limit_accepts_larger_ocr_preprocess(self):
         intake_payload = IntakePayload(

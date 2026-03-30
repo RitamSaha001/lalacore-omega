@@ -18,12 +18,17 @@ from core.lalacore_x.classifier import ProblemClassifier
 from core.lalacore_x.crash_replay import CrashReplayRecorder
 from core.lalacore_x.deterministic_guard import DeterministicDominanceGuard
 from core.lalacore_x.meta_verification import MetaVerificationLayer
+from core.lalacore_x.model_mix import ProviderModelMixLayer
 from core.lalacore_x.mini_distillation import LC9DistillationHub
 from core.lalacore_x.mini_evolution import MiniEvolutionEngine
 from core.lalacore_x.logging_debug import SolverDebugLogger
 from core.lalacore_x.plausibility_checker import check_answer_plausibility
 from core.lalacore_x.provider_orchestrator import ProviderOrchestrator
-from core.lalacore_x.providers import ProviderFabric
+from core.lalacore_x.providers import (
+    ProviderFabric,
+    current_request_policy,
+    provider_model_priority_plan,
+)
 from core.lalacore_x.recovery import retry_async
 from core.lalacore_x.reasoning import DAGReasoner
 from core.lalacore_x.replay import FailureReplayMemory
@@ -70,6 +75,7 @@ class LalaCoreXEngine:
         self.token_guardian = TokenBudgetGuardian()
         self.debug_logger = SolverDebugLogger()
         self.provider_orchestrator = ProviderOrchestrator(min_provider_count=2, strong_gap=0.08)
+        self.model_mix = ProviderModelMixLayer()
         self.solve_policy = SolvePipelinePolicy()
         self.answer_resolver = ProviderIndependentAnswerResolver()
         self._debate_cache: OrderedDict[str, Dict] = OrderedDict()
@@ -164,10 +170,54 @@ class LalaCoreXEngine:
             entropy_hint=entropy_hint,
         )
 
+        request_policy = current_request_policy()
+        mixed_enabled = bool(
+            str(getattr(profile, "difficulty", "easy") or "easy").strip().lower()
+            in {"medium", "hard"}
+            or bool(request_policy.get("preferred_provider"))
+            or bool(request_policy.get("preferred_model"))
+            or bool(request_policy.get("provider_priority"))
+            or bool(request_policy.get("quality_retry"))
+            or bool(request_policy.get("quality_retry_force_max"))
+        )
+        mixed_ranked = []
+        effective_ranked = list(decision.ranked)
+        effective_selected = list(decision.selected)
+        model_plan: Dict[str, List[str]] = {}
+        candidate_models_by_provider: Dict[str, List[str]] = {}
+        if mixed_enabled:
+            candidate_models_by_provider = {
+                str(provider): self.providers.candidate_models(
+                    str(provider),
+                    profile,
+                    request_policy=request_policy,
+                )
+                for provider, _ in decision.ranked
+                if str(provider) not in {"", "mini"}
+            }
+            if candidate_models_by_provider:
+                mixed_ranked = self.model_mix.rank(
+                    provider_ranked=decision.ranked,
+                    profile=profile,
+                    candidate_models_by_provider=candidate_models_by_provider,
+                    request_policy=request_policy,
+                )
+                if mixed_ranked:
+                    effective_ranked = self.model_mix.collapse_provider_scores(
+                        mixed_ranked,
+                        fallback_ranked=decision.ranked,
+                    )
+                    effective_selected = self.model_mix.initial_selected_providers(
+                        mixed_ranked,
+                        fallback_selected=decision.selected,
+                        limit=requested_arena_size,
+                    )
+                    model_plan = self.model_mix.model_plan_by_provider(mixed_ranked)
+
         selected = self.provider_orchestrator.select_for_run(
             available_providers=available,
-            ranked=decision.ranked,
-            initial_selected=decision.selected,
+            ranked=effective_ranked,
+            initial_selected=effective_selected,
             require_non_mini=symbolic_heavy and any(provider != "mini" for provider in available),
             target_provider_count=(3 if symbolic_heavy else None),
         )
@@ -177,12 +227,17 @@ class LalaCoreXEngine:
                 "available": list(available),
                 "provider_health": provider_health,
                 "ranked": [{"provider": p, "score": float(s)} for p, s in decision.ranked],
+                "effective_ranked": [{"provider": p, "score": float(s)} for p, s in effective_ranked],
                 "router_selected": list(decision.selected),
+                "effective_selected": list(effective_selected),
                 "orchestrator_selected": list(selected),
+                "model_mix_enabled": bool(mixed_enabled and mixed_ranked),
+                "model_plan": dict(model_plan),
                 "rationale": decision.rationale,
             }
         )
-        candidates = await self.providers.generate_many(selected, question, profile, retrieved)
+        with provider_model_priority_plan(model_plan):
+            candidates = await self.providers.generate_many(selected, question, profile, retrieved)
         crash_snapshot["responses"] = [self._snapshot_candidate(c) for c in candidates]
 
         if symbolic_heavy:
@@ -212,25 +267,28 @@ class LalaCoreXEngine:
         if self._all_empty(candidates):
             additional = [provider for provider in available if provider not in selected and provider != "mini"]
             if additional:
-                extra = await self.providers.generate_many(additional[:1], question, profile, retrieved)
+                with provider_model_priority_plan(model_plan):
+                    extra = await self.providers.generate_many(additional[:1], question, profile, retrieved)
                 candidates.extend(extra)
 
         # Quality floor: enforce minimum provider pool when possible.
         if len(candidates) < self.provider_orchestrator.min_provider_count:
             existing = {c.provider for c in candidates}
-            extra_pool = [provider for provider, _ in decision.ranked if provider not in existing]
+            extra_pool = [provider for provider, _ in effective_ranked if provider not in existing]
             needed = max(0, self.provider_orchestrator.min_provider_count - len(candidates))
             if needed > 0 and extra_pool:
-                extra = await self.providers.generate_many(extra_pool[:needed], question, profile, retrieved)
+                with provider_model_priority_plan(model_plan):
+                    extra = await self.providers.generate_many(extra_pool[:needed], question, profile, retrieved)
                 candidates.extend(extra)
 
         if self._all_empty(candidates):
-            rescue_candidates = await self._rescue_from_empty_pool(
-                question=question,
-                profile=profile,
-                retrieved=retrieved,
-                candidates=candidates,
-            )
+            with provider_model_priority_plan(model_plan):
+                rescue_candidates = await self._rescue_from_empty_pool(
+                    question=question,
+                    profile=profile,
+                    retrieved=retrieved,
+                    candidates=candidates,
+                )
             if rescue_candidates:
                 for rescue in rescue_candidates:
                     candidates = self._replace_candidate(candidates, rescue.provider, rescue)
@@ -244,6 +302,11 @@ class LalaCoreXEngine:
                 candidates=[],
                 verification_by_provider={},
                 reason="no_provider_candidates",
+                legacy_ranked=decision.ranked,
+                effective_ranked=effective_ranked,
+                mixed_ranked=mixed_ranked,
+                request_policy=request_policy,
+                model_plan=model_plan,
             )
             self.runtime_telemetry.log_incident(
                 "degraded_mode",
@@ -258,6 +321,11 @@ class LalaCoreXEngine:
                 candidates=candidates,
                 verification_by_provider={},
                 reason="all_provider_answers_empty",
+                legacy_ranked=decision.ranked,
+                effective_ranked=effective_ranked,
+                mixed_ranked=mixed_ranked,
+                request_policy=request_policy,
+                model_plan=model_plan,
             )
             self.runtime_telemetry.log_incident(
                 "degraded_mode",
@@ -478,6 +546,11 @@ class LalaCoreXEngine:
                 verification_by_provider=verification_by_provider,
                 reason="arena_posteriors_empty",
                 arena_outcome=arena_outcome,
+                legacy_ranked=decision.ranked,
+                effective_ranked=effective_ranked,
+                mixed_ranked=mixed_ranked,
+                request_policy=request_policy,
+                model_plan=model_plan,
             )
             self.runtime_telemetry.log_incident("degraded_mode", {"reason": "arena_posteriors_empty"})
             return degraded
@@ -558,22 +631,23 @@ class LalaCoreXEngine:
             candidate_count=len(candidates),
             selected_verification=selected_verification,
         ):
-            debate_outcome = await self._run_self_debate_lite(
-                question=question,
-                profile=profile,
-                retrieved=retrieved,
-                arena_outcome=arena_outcome,
-                candidates=candidates,
-                verification_by_provider=verification_by_provider,
-                provider_reliability=provider_reliability,
-                retrieval_strength=retrieval_strength,
-                coherence_by_provider=coherence_by_provider,
-                structure_by_provider=structure_by_provider,
-                process_reward_by_provider=process_reward_by_provider,
-                current_provider=selected_provider,
-                current_judge=selected_judge,
-                current_verification=selected_verification,
-            )
+            with provider_model_priority_plan(model_plan):
+                debate_outcome = await self._run_self_debate_lite(
+                    question=question,
+                    profile=profile,
+                    retrieved=retrieved,
+                    arena_outcome=arena_outcome,
+                    candidates=candidates,
+                    verification_by_provider=verification_by_provider,
+                    provider_reliability=provider_reliability,
+                    retrieval_strength=retrieval_strength,
+                    coherence_by_provider=coherence_by_provider,
+                    structure_by_provider=structure_by_provider,
+                    process_reward_by_provider=process_reward_by_provider,
+                    current_provider=selected_provider,
+                    current_judge=selected_judge,
+                    current_verification=selected_verification,
+                )
             if debate_outcome.get("accepted"):
                 updated_provider = str(debate_outcome.get("provider", selected_provider))
                 updated_candidate = debate_outcome.get("candidate")
@@ -687,13 +761,14 @@ class LalaCoreXEngine:
             selected_verification=selected_verification,
             deterministic_dominance=deterministic_dominance,
         )
-        shadow_bundle = await self._collect_shadow_candidates(
-            question=question,
-            profile=profile,
-            retrieved=retrieved,
-            base_candidates=candidates,
-            policy=shadow_policy,
-        )
+        with provider_model_priority_plan(model_plan):
+            shadow_bundle = await self._collect_shadow_candidates(
+                question=question,
+                profile=profile,
+                retrieved=retrieved,
+                base_candidates=candidates,
+                policy=shadow_policy,
+            )
 
         artifacts = SolveArtifacts(
             profile=profile,
@@ -704,6 +779,21 @@ class LalaCoreXEngine:
             mcts_trace=[],
             selected_provider=selected_provider,
         )
+
+        selected_model_name = self._candidate_model_name(selected_candidate)
+        mixed_ranked_payload = [
+            {
+                "provider": row.provider,
+                "model": row.model,
+                "score": float(row.score),
+                "base_provider_score": float(row.base_provider_score),
+                "model_bonus": float(row.model_bonus),
+                "policy_bonus": float(row.policy_bonus),
+                "cost_penalty": float(row.cost_penalty),
+                "rationale": row.rationale,
+            }
+            for row in mixed_ranked[:12]
+        ]
 
         result = {
             "question": question,
@@ -729,6 +819,11 @@ class LalaCoreXEngine:
             },
             "arena": {
                 "ranked_providers": [{"provider": provider, "score": score} for provider, score in decision.ranked],
+                "ranked_providers_effective": [
+                    {"provider": provider, "score": score}
+                    for provider, score in effective_ranked
+                ],
+                "ranked_provider_models": mixed_ranked_payload,
                 "judge_results": [
                     {
                         "provider": row.provider,
@@ -786,6 +881,8 @@ class LalaCoreXEngine:
             "engine": {
                 "name": "LALACORE_X",
                 "version": "research-grade-v2",
+                "model": selected_model_name,
+                "model_name": selected_model_name,
                 "backward_compatible": True,
                 "mini_shadow": mini_shadow,
                 "shadow_diversity": {
@@ -793,6 +890,12 @@ class LalaCoreXEngine:
                     "attempted_extra": list(shadow_bundle.get("attempted", [])),
                     "collected_extra": int(len(shadow_bundle.get("candidates", []))),
                     "policy": dict(shadow_policy),
+                },
+                "model_mix": {
+                    "enabled": bool(mixed_enabled and mixed_ranked),
+                    "request_policy_applied": dict(request_policy),
+                    "ranked_candidate_count": int(len(mixed_ranked)),
+                    "model_plan_by_provider": dict(model_plan),
                 },
                 "degraded_mode": degraded_reason is not None,
                 "degraded_reason": degraded_reason,
@@ -1576,6 +1679,16 @@ class LalaCoreXEngine:
                 return candidate
         return max(candidates, key=lambda candidate: candidate.confidence)
 
+    def _candidate_model_name(self, candidate: ProviderAnswer | None) -> str:
+        if candidate is None:
+            return ""
+        raw = candidate.raw if isinstance(candidate.raw, dict) else {}
+        prompt_meta = raw.get("prompt_meta") or {}
+        model_name = str(prompt_meta.get("model_name") or "").strip()
+        if model_name:
+            return model_name
+        return str(raw.get("model_name") or raw.get("model") or "").strip()
+
     def _disagreement(self, candidates: Sequence[ProviderAnswer], question_text: str = "") -> float:
         answers = [candidate.final_answer.strip().lower() for candidate in candidates if candidate.final_answer.strip()]
         if len(answers) <= 1:
@@ -2022,6 +2135,11 @@ class LalaCoreXEngine:
         verification_by_provider: Dict[str, Dict],
         reason: str,
         arena_outcome: Dict | None = None,
+        legacy_ranked: Sequence[tuple[str, float]] | None = None,
+        effective_ranked: Sequence[tuple[str, float]] | None = None,
+        mixed_ranked: Sequence[Any] | None = None,
+        request_policy: Dict[str, Any] | None = None,
+        model_plan: Dict[str, List[str]] | None = None,
     ) -> Dict:
         arena_outcome = arena_outcome or {"posteriors": {}, "thetas": {}, "pairwise": {"uncertainties": {}}, "winner_margin": 0.0}
         provider = self._fallback_provider_selection(
@@ -2034,6 +2152,24 @@ class LalaCoreXEngine:
         fallback_answer = str(selected.final_answer or "").strip()
         if not fallback_answer:
             fallback_answer = "Uncertain answer: providers returned no usable output for this prompt. Please retry."
+        selected_model_name = self._candidate_model_name(selected)
+        mixed_rows_payload = [
+            {
+                "provider": str(getattr(row, "provider", "")),
+                "model": str(getattr(row, "model", "")),
+                "score": float(getattr(row, "score", 0.0)),
+                "base_provider_score": float(getattr(row, "base_provider_score", 0.0)),
+                "model_bonus": float(getattr(row, "model_bonus", 0.0)),
+                "policy_bonus": float(getattr(row, "policy_bonus", 0.0)),
+                "cost_penalty": float(getattr(row, "cost_penalty", 0.0)),
+                "rationale": str(getattr(row, "rationale", "")),
+            }
+            for row in list(mixed_ranked or [])[:12]
+        ]
+        legacy_ranked = list(legacy_ranked or [])
+        effective_ranked = list(effective_ranked or legacy_ranked)
+        request_policy = dict(request_policy or {})
+        model_plan = dict(model_plan or {})
 
         return {
             "question": question,
@@ -2051,7 +2187,15 @@ class LalaCoreXEngine:
                 "trapProbability": profile.trap_probability,
             },
             "arena": {
-                "ranked_providers": [],
+                "ranked_providers": [
+                    {"provider": provider_name, "score": float(score)}
+                    for provider_name, score in legacy_ranked
+                ],
+                "ranked_providers_effective": [
+                    {"provider": provider_name, "score": float(score)}
+                    for provider_name, score in effective_ranked
+                ],
+                "ranked_provider_models": mixed_rows_payload,
                 "judge_results": [],
                 "bt_thetas": arena_outcome.get("thetas", {}),
                 "posteriors": arena_outcome.get("posteriors", {}),
@@ -2074,8 +2218,16 @@ class LalaCoreXEngine:
             "engine": {
                 "name": "LALACORE_X",
                 "version": "research-grade-v2",
+                "model": selected_model_name,
+                "model_name": selected_model_name,
                 "backward_compatible": True,
                 "mini_shadow": any(c.provider == "mini" for c in candidates),
+                "model_mix": {
+                    "enabled": bool(mixed_rows_payload),
+                    "request_policy_applied": request_policy,
+                    "ranked_candidate_count": int(len(mixed_rows_payload)),
+                    "model_plan_by_provider": model_plan,
+                },
                 "degraded_mode": True,
                 "degraded_reason": str(reason),
                 "provider_availability": self.providers.availability_report(),

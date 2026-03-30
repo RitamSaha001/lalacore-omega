@@ -26,12 +26,34 @@ def _is_counting_numeric_prompt(question_text: str) -> bool:
     return False
 
 
+def _is_equation_or_locus_prompt(question_text: str) -> bool:
+    q = _norm(question_text)
+    return bool(
+        re.search(
+            r"\b("
+            r"equation of|locus|tangent|tangents|normal|chord|chord of contact|"
+            r"asymptote|envelope|pair of perpendicular lines|condition"
+            r")\b",
+            q,
+        )
+    )
+
+
 def _detect_expected_type(question_text: str, metadata: Dict[str, Any]) -> str:
     q = _norm(question_text)
     if re.search(r"\b(option|mcq|correct option|which option)\b", q) or re.search(r"\([a-d]\)", q):
         return "option"
     if _is_counting_numeric_prompt(q):
         return "numeric"
+    if re.search(
+        r"\b("
+        r"equation of|locus|tangent|tangents|normal|chord|chord of contact|"
+        r"circle|parabola|ellipse|hyperbola|asymptote|envelope|"
+        r"pair of perpendicular lines|condition"
+        r")\b",
+        q,
+    ):
+        return "solution"
     if re.search(
         r"\b(list|roots?|ordered pair|ordered pairs|vector|vectors|solution set|set of solutions|set of values|possible values|all values|all roots)\b",
         q,
@@ -250,6 +272,9 @@ def check_answer_plausibility(question_text: str, final_answer: str, metadata: D
         if not _looks_solution(answer):
             issues.append("expected_solution_type")
             score -= 0.25
+        elif _looks_numeric(answer) and _is_equation_or_locus_prompt(question_text):
+            issues.append("expected_solution_type")
+            score -= 0.55
     elif expected_type == "list":
         if not _looks_list(answer):
             issues.append("expected_list_type")
