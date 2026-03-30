@@ -310,7 +310,7 @@ class ProviderFabric:
         response_text: str,
         payload: Dict[str, Any] | None,
     ) -> bool:
-        if int(status_code) not in {400, 404, 409, 415, 422}:
+        if int(status_code) not in {400, 402, 403, 404, 409, 415, 422, 429}:
             return False
         haystack_parts = [str(response_text or "").lower()]
         if payload:
@@ -327,9 +327,16 @@ class ProviderFabric:
             "not support this model",
             "invalid model",
             "unsupported model",
+            "insufficient credits",
+            "insufficient balance",
+            "payment required",
+            "quota exceeded",
+            "quota exhausted",
+            "rate limit exceeded",
+            "resource exhausted",
         )
         if provider == "groq":
-            markers = markers + ("model_decommissioned",)
+            markers = markers + ("model_decommissioned", "insufficient_quota")
         return any(marker in haystack for marker in markers)
 
     def _timeout_for(self, provider: str) -> float:
