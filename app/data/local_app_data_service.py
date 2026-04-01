@@ -37,6 +37,9 @@ from latex_sanitizer import (
     sanitize_question_payload,
     validate_question_structure,
 )
+from services.assessment_assignment_announcement_service import (
+    AssessmentAssignmentAnnouncementService,
+)
 from services.atlas_incident_email_service import AtlasIncidentEmailService
 from services.atlas_memory_service import AtlasMemoryService
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
@@ -93,6 +96,7 @@ class LocalAppDataService:
         auth_users_file: str | Path | None = None,
         auth_storage_db_file: str | Path | None = None,
         storage_db_file: str | Path | None = None,
+        assignment_announcement_service: AssessmentAssignmentAnnouncementService | None = None,
     ) -> None:
         root = Path(__file__).resolve().parents[2]
         app_dir = root / "data" / "app"
@@ -219,6 +223,16 @@ class LocalAppDataService:
         self._question_repair_engine = QuestionRepairEngine()
         self._atlas_memory = AtlasMemoryService(root=app_dir)
         self._atlas_incident_email = AtlasIncidentEmailService()
+        self._assignment_announcements = (
+            assignment_announcement_service
+            or AssessmentAssignmentAnnouncementService(
+                email_service=self._atlas_incident_email,
+                assessments_file=self._assessments_file,
+                auth_users_file=self._auth_users_file,
+                auth_storage_db_file=self._auth_storage.path,
+                app_storage_db_file=self._storage.path,
+            )
+        )
         self._live_class_schedule_event_queues: set[asyncio.Queue[dict[str, Any]]] = set()
         self._material_ai_cache: dict[str, dict[str, Any]] = {}
         self._material_ai_status: dict[str, dict[str, Any]] = {}
@@ -11499,6 +11513,10 @@ class LocalAppDataService:
             self._upsert_by_id(self._assessments, quiz_id, item)
             await self._persist_list(self._assessments_file, self._assessments)
 
+        asyncio.create_task(
+            self._send_assignment_announcement_in_background(dict(item))
+        )
+
         quiz_url = self._str(item.get("url"))
         return {
             "ok": True,
@@ -11510,6 +11528,18 @@ class LocalAppDataService:
             "quiz_url": quiz_url,
             "assessment": item,
         }
+
+    async def _send_assignment_announcement_in_background(
+        self,
+        assessment: dict[str, Any],
+    ) -> None:
+        try:
+            await asyncio.to_thread(
+                self._assignment_announcements.notify_assessment_assigned,
+                dict(assessment),
+            )
+        except Exception:
+            return
 
     async def _ai_generate_quiz(self, payload: dict[str, Any]) -> dict[str, Any]:
         subject = self._str(payload.get("subject") or payload.get("title") or "Physics")

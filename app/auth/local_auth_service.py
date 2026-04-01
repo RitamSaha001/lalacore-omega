@@ -13,6 +13,10 @@ from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
+from services.assessment_assignment_announcement_service import (
+    AssessmentAssignmentAnnouncementService,
+)
+from services.app_update_release_notifier import AppUpdateReleaseNotifierService
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
 
 
@@ -24,9 +28,12 @@ class LocalAuthService:
         users_file: str | Path | None = None,
         otp_file: str | Path | None = None,
         storage_db_file: str | Path | None = None,
+        assignment_announcement_service: AssessmentAssignmentAnnouncementService | None = None,
+        release_notifier_service: AppUpdateReleaseNotifierService | None = None,
     ) -> None:
         root = Path(__file__).resolve().parents[2]
         auth_dir = root / "data" / "auth"
+        app_dir = root / "data" / "app"
         auth_dir.mkdir(parents=True, exist_ok=True)
         self._users_file = Path(users_file) if users_file else auth_dir / "users.json"
         self._otp_file = Path(otp_file) if otp_file else auth_dir / "otp.json"
@@ -48,6 +55,21 @@ class LocalAuthService:
         self._users: dict[str, dict[str, Any]] = {}
         self._otps: dict[str, dict[str, Any]] = {}
         self._loaded = False
+        self._assignment_announcements = (
+            assignment_announcement_service
+            or AssessmentAssignmentAnnouncementService(
+                auth_users_file=self._users_file,
+                auth_storage_db_file=self._storage.path,
+                app_storage_db_file=app_dir / "app_data.sqlite3",
+            )
+        )
+        self._release_notifier = (
+            release_notifier_service
+            or AppUpdateReleaseNotifierService(
+                auth_users_file=self._users_file,
+                auth_storage_db_file=self._storage.path,
+            )
+        )
 
     async def handle_action(self, payload: dict[str, Any]) -> dict[str, Any]:
         await self._ensure_loaded()
@@ -258,6 +280,10 @@ class LocalAuthService:
             async with self._lock:
                 self._write_json_file(self._users_file, self._users)
 
+        user_role = self._str(user.get("role") or "student")
+        asyncio.create_task(self._notify_pending_assignments(email))
+        asyncio.create_task(self._notify_pending_releases(email, role=user_role))
+
         return {
             "ok": True,
             "status": "SUCCESS",
@@ -265,6 +291,7 @@ class LocalAuthService:
             "name": self._str(user.get("name")),
             "email": email,
             "username": self._str(user.get("username")),
+            "role": self._str(user.get("role") or "student"),
         }
 
     async def _register(self, payload: dict[str, Any]) -> dict[str, Any]:
@@ -313,6 +340,10 @@ class LocalAuthService:
                 "name": name,
                 "username": username,
                 "email": email,
+                "role": self._str(
+                    payload.get("role") or payload.get("user_role") or "student"
+                ).lower()
+                or "student",
                 "created_at": now_ms,
             }
         else:
@@ -321,6 +352,10 @@ class LocalAuthService:
             user["name"] = name
             user["username"] = username
             user["email"] = email
+            user["role"] = (
+                self._str(payload.get("role") or payload.get("user_role") or user.get("role") or "student").lower()
+                or "student"
+            )
             user["created_at"] = int(user.get("created_at", now_ms))
 
         if password:
@@ -346,7 +381,18 @@ class LocalAuthService:
         async with self._lock:
             self._write_json_file(self._users_file, self._users)
 
-        return {"ok": True, "status": "SUCCESS", "student_id": student_id, "name": name}
+        user_role = self._str(user.get("role") or "student")
+        asyncio.create_task(self._notify_pending_assignments(email))
+        asyncio.create_task(self._notify_pending_releases(email, role=user_role))
+
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "student_id": student_id,
+            "name": name,
+            "email": email,
+            "role": self._str(user.get("role") or "student"),
+        }
 
     async def _request_forgot_otp(self, payload: dict[str, Any]) -> dict[str, Any]:
         # request_email_otp is supported only for forgot-password flow here.
@@ -484,7 +530,7 @@ class LocalAuthService:
             smtp_port = int(smtp_port_raw)
         except ValueError:
             return False, f"Invalid OTP_SMTP_PORT: {smtp_port_raw}"
-        from_name = self._str(os.getenv("OTP_FROM_NAME", "LalaCore"))
+        from_name = "God of Maths"
 
         if not sender or not sender_password:
             return (
@@ -694,3 +740,22 @@ class LocalAuthService:
         async with self._lock:
             self._write_json_file(self._otp_file, self._otps)
         return {"ok": True, "status": "VERIFIED"}
+
+    async def _notify_pending_assignments(self, email: str) -> None:
+        try:
+            await asyncio.to_thread(
+                self._assignment_announcements.notify_pending_assessments_for_email,
+                email,
+            )
+        except Exception:
+            return
+
+    async def _notify_pending_releases(self, email: str, *, role: str) -> None:
+        try:
+            await asyncio.to_thread(
+                self._release_notifier.notify_pending_releases_for_email,
+                email,
+                role=role,
+            )
+        except Exception:
+            return

@@ -1,3 +1,4 @@
+import json
 import os
 import smtplib
 import unittest
@@ -13,6 +14,7 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             {
                 "ATLAS_SUPPORT_SENDER_EMAIL": "",
                 "ATLAS_SUPPORT_SENDER_PASSWORD": "",
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
                 "OTP_SENDER_EMAIL": "",
                 "OTP_SENDER_PASSWORD": "",
                 "FORGOT_OTP_SENDER_EMAIL": "",
@@ -70,6 +72,7 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             os.environ,
             {
                 "ATLAS_SUPPORT_EMAIL_RECIPIENT": recipients,
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
                 "OTP_SENDER_EMAIL": "sender@example.com",
                 "OTP_SENDER_PASSWORD": "secret",
                 "OTP_SMTP_HOST": "smtp.example.com",
@@ -108,3 +111,253 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
                 "halder.saptajit2009@gmail.com",
             ],
         )
+        self.assertEqual(
+            _FakeSMTP.last_instance.message["From"],
+            "God of Maths <sender@example.com>",
+        )
+
+    def test_release_announcement_sends_individual_messages_to_signed_in_users(self) -> None:
+        class _FakeSMTP:
+            sent_messages: list[tuple[list[str], object]] = []
+
+            def __init__(self, *args, **kwargs) -> None:
+                return None
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def ehlo(self) -> None:
+                return None
+
+            def starttls(self, context=None) -> None:
+                return None
+
+            def login(self, sender, password) -> None:
+                return None
+
+            def send_message(self, msg, to_addrs=None) -> None:
+                _FakeSMTP.sent_messages.append((list(to_addrs or []), msg))
+
+        with patch.dict(
+            os.environ,
+            {
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ), patch.object(smtplib, "SMTP", _FakeSMTP):
+            service = AtlasIncidentEmailService()
+            result = service.send_release_announcement(
+                releases=[
+                    {
+                        "version": "2.0.2",
+                        "build_number": "16",
+                        "audience": "all",
+                        "platform": "android",
+                        "android_url": "https://example.com/app.apk",
+                        "message": "A fresh update is ready.",
+                        "release_notes": "Railway stability\nTeacher analytics polish",
+                    }
+                ],
+                sheet_url="https://example.com/updates.csv",
+                recipients=["student1@example.com", "student2@example.com"],
+                trigger="publish_script",
+                checked_at="2026-03-31T12:00:00Z",
+            )
+
+        self.assertTrue(result.get("sent", False))
+        self.assertEqual(result.get("sent_count"), 2)
+        self.assertEqual(len(_FakeSMTP.sent_messages), 2)
+        self.assertEqual(
+            _FakeSMTP.sent_messages[0][1]["From"],
+            "God of Maths <sender@example.com>",
+        )
+        self.assertEqual(_FakeSMTP.sent_messages[0][0], ["student1@example.com"])
+        plain_body = _FakeSMTP.sent_messages[0][1].get_body(
+            preferencelist=("plain",)
+        )
+        self.assertIsNotNone(plain_body)
+        self.assertIn("Railway stability", plain_body.get_content())
+
+    def test_assessment_submission_report_uses_god_of_maths_sender(self) -> None:
+        class _FakeSMTP:
+            last_instance: "_FakeSMTP | None" = None
+
+            def __init__(self, *args, **kwargs) -> None:
+                self.sent_to = None
+                self.message = None
+                _FakeSMTP.last_instance = self
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def ehlo(self) -> None:
+                return None
+
+            def starttls(self, context=None) -> None:
+                return None
+
+            def login(self, sender, password) -> None:
+                return None
+
+            def send_message(self, msg, to_addrs=None) -> None:
+                self.message = msg
+                self.sent_to = list(to_addrs or [])
+
+        with patch.dict(
+            os.environ,
+            {
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ), patch.object(smtplib, "SMTP", _FakeSMTP):
+            service = AtlasIncidentEmailService()
+            result = service.send_assessment_submission_report(
+                report={
+                    "assessment_title": "Vectors Homework",
+                    "student_name": "Aarav",
+                    "submission_kind": "reattempt",
+                    "attempt_index": 2,
+                    "total_attempts_for_quiz": 2,
+                },
+                recipient="sanny86@gmail.com",
+            )
+
+        self.assertTrue(result.get("sent", False))
+        self.assertIsNotNone(_FakeSMTP.last_instance)
+        self.assertEqual(_FakeSMTP.last_instance.sent_to, ["sanny86@gmail.com"])
+        self.assertEqual(
+            _FakeSMTP.last_instance.message["From"],
+            "God of Maths <sender@example.com>",
+        )
+
+    def test_assignment_announcement_uses_god_of_maths_sender(self) -> None:
+        class _FakeSMTP:
+            last_instance: "_FakeSMTP | None" = None
+
+            def __init__(self, *args, **kwargs) -> None:
+                self.sent_to = None
+                self.message = None
+                _FakeSMTP.last_instance = self
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def ehlo(self) -> None:
+                return None
+
+            def starttls(self, context=None) -> None:
+                return None
+
+            def login(self, sender, password) -> None:
+                return None
+
+            def send_message(self, msg, to_addrs=None) -> None:
+                self.message = msg
+                self.sent_to = list(to_addrs or [])
+
+        with patch.dict(
+            os.environ,
+            {
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ), patch.object(smtplib, "SMTP", _FakeSMTP):
+            service = AtlasIncidentEmailService()
+            result = service.send_assignment_announcement(
+                report={
+                    "assessment_title": "Homework 1",
+                    "assessment_type": "Homework",
+                    "deadline": "2026-04-02T10:00:00Z",
+                    "question_count": 15,
+                    "total_marks": 60,
+                },
+                recipient="student@school.edu",
+            )
+
+        self.assertTrue(result.get("sent", False))
+        self.assertIsNotNone(_FakeSMTP.last_instance)
+        self.assertEqual(_FakeSMTP.last_instance.sent_to, ["student@school.edu"])
+        self.assertEqual(
+            _FakeSMTP.last_instance.message["From"],
+            "God of Maths <sender@example.com>",
+        )
+
+    def test_apps_script_mailer_handles_automatic_mail_without_smtp(self) -> None:
+        captured_payloads: list[dict[str, object]] = []
+
+        class _FakeResponse:
+            def __init__(self, body: str) -> None:
+                self._body = body.encode("utf-8")
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def read(self) -> bytes:
+                return self._body
+
+        def _fake_urlopen(request, timeout=None, context=None):
+            del timeout, context
+            captured_payloads.append(json.loads(request.data.decode("utf-8")))
+            return _FakeResponse('{"ok": true, "status": "sent", "message": "Apps Script sent"}')
+
+        with patch.dict(
+            os.environ,
+            {
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "https://script.google.com/macros/s/example/exec",
+                "ATLAS_AUTOMAIL_SHARED_SECRET": "shared-secret",
+                "OTP_SENDER_EMAIL": "",
+                "OTP_SENDER_PASSWORD": "",
+                "FORGOT_OTP_SENDER_EMAIL": "",
+            },
+            clear=False,
+        ), patch("services.atlas_incident_email_service.urlopen", _fake_urlopen):
+            service = AtlasIncidentEmailService()
+            self.assertTrue(service.smtp_configured())
+            result = service.send_assignment_announcement(
+                report={
+                    "assessment_title": "Homework 2",
+                    "assessment_type": "Homework",
+                    "deadline": "2026-04-02T10:00:00Z",
+                    "question_count": 15,
+                    "total_marks": 60,
+                },
+                recipient="student@school.edu",
+            )
+
+        self.assertTrue(result.get("sent", False))
+        self.assertEqual(result.get("transport"), "apps_script")
+        self.assertEqual(len(captured_payloads), 1)
+        self.assertEqual(
+            captured_payloads[0]["recipients"],
+            ["student@school.edu"],
+        )
+        self.assertEqual(captured_payloads[0]["sender_name"], "God of Maths")
+        self.assertEqual(captured_payloads[0]["secret"], "shared-secret")
+        self.assertIn("Homework 2", str(captured_payloads[0]["text_body"]))

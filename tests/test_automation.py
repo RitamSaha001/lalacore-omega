@@ -19,6 +19,7 @@ from core.lalacore_x.token_budget import TokenBudgetGuardian
 from app.auth.local_auth_service import LocalAuthService
 from app.data.local_app_data_service import LocalAppDataService
 from app.main import AtlasMaintenanceLockMiddleware
+from app.storage.sqlite_json_store import SQLiteJsonBlobStore
 from services.app_update_release_notifier import AppUpdateReleaseNotifierService
 from services.atlas_maintenance_service import (
     AtlasMaintenanceService,
@@ -30,14 +31,25 @@ class AutomationTests(unittest.TestCase):
     def test_app_update_release_notifier_sends_mail_for_new_release_once(self):
         class _FakeEmailService:
             def __init__(self) -> None:
-                self.calls: list[dict] = []
+                self.confirmation_calls: list[dict] = []
+                self.announcement_calls: list[dict] = []
 
             def send_release_confirmation(self, **kwargs):
-                self.calls.append(dict(kwargs))
+                self.confirmation_calls.append(dict(kwargs))
                 return {
                     "ok": True,
                     "sent": True,
                     "message": "release confirmation sent",
+                }
+
+            def send_release_announcement(self, **kwargs):
+                self.announcement_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release announcement sent",
+                    "sent_count": len(list(kwargs.get("recipients") or [])),
+                    "recipients": list(kwargs.get("recipients") or []),
                 }
 
         csv_text = (
@@ -60,23 +72,35 @@ class AutomationTests(unittest.TestCase):
         self.assertTrue(first.get("ok"))
         self.assertEqual(first.get("new_release_count"), 1)
         self.assertEqual(second.get("status"), "NO_NEW_RELEASE")
-        self.assertEqual(len(email.calls), 1)
+        self.assertEqual(len(email.confirmation_calls), 1)
+        self.assertEqual(len(email.announcement_calls), 1)
         self.assertEqual(
-            email.calls[0]["releases"][0]["release_key"],
+            email.confirmation_calls[0]["releases"][0]["release_key"],
             "lalacore_rebuild|stable|all|android|1.0.0|1",
         )
 
     def test_app_update_release_notifier_force_resend_ignores_seen_keys(self):
         class _FakeEmailService:
             def __init__(self) -> None:
-                self.calls: list[dict] = []
+                self.confirmation_calls: list[dict] = []
+                self.announcement_calls: list[dict] = []
 
             def send_release_confirmation(self, **kwargs):
-                self.calls.append(dict(kwargs))
+                self.confirmation_calls.append(dict(kwargs))
                 return {
                     "ok": True,
                     "sent": True,
                     "message": "release confirmation sent",
+                }
+
+            def send_release_announcement(self, **kwargs):
+                self.announcement_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release announcement sent",
+                    "sent_count": len(list(kwargs.get("recipients") or [])),
+                    "recipients": list(kwargs.get("recipients") or []),
                 }
 
         csv_text = (
@@ -103,7 +127,145 @@ class AutomationTests(unittest.TestCase):
 
         self.assertTrue(resent.get("ok"))
         self.assertEqual(resent.get("new_release_count"), 1)
-        self.assertEqual(len(email.calls), 2)
+        self.assertEqual(len(email.confirmation_calls), 2)
+        self.assertEqual(len(email.announcement_calls), 2)
+
+    def test_app_update_release_notifier_collects_signed_in_user_emails(self):
+        class _FakeEmailService:
+            def __init__(self) -> None:
+                self.confirmation_calls: list[dict] = []
+                self.announcement_calls: list[dict] = []
+
+            def send_release_confirmation(self, **kwargs):
+                self.confirmation_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release confirmation sent",
+                }
+
+            def send_release_announcement(self, **kwargs):
+                self.announcement_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release announcement sent",
+                    "sent_count": len(list(kwargs.get("recipients") or [])),
+                    "recipients": list(kwargs.get("recipients") or []),
+                }
+
+        csv_text = (
+            "enabled,app_id,channel,audience,platform,version,build_number,apk_url,force,message\n"
+            "TRUE,lalacore_rebuild,stable,teacher,android,2.0.2,16,https://example.com/teacher.apk,TRUE,Teacher update available\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            auth_root = root / "auth"
+            auth_root.mkdir(parents=True, exist_ok=True)
+            (auth_root / "users.json").write_text(
+                json.dumps(
+                    {
+                        "teacher@school.edu": {
+                            "email": "teacher@school.edu",
+                            "role": "teacher",
+                            "name": "Teacher",
+                        },
+                        "student@school.edu": {
+                            "email": "student@school.edu",
+                            "role": "student",
+                            "name": "Student",
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            SQLiteJsonBlobStore(auth_root / "auth_store.sqlite3").write_json(
+                "auth_users",
+                {
+                    "teacher2@school.edu": {
+                        "email": "teacher2@school.edu",
+                        "role": "teacher",
+                        "name": "Teacher Two",
+                    }
+                },
+            )
+
+            state = AutomationStateManager(path=str(root / "LC9_AUTOMATION_STATE.json"))
+            email = _FakeEmailService()
+            service = AppUpdateReleaseNotifierService(
+                state=state,
+                email_service=email,
+                fetcher=lambda url: csv_text,
+                sheet_url="https://example.com/updates.csv",
+                auth_users_file=auth_root / "users.json",
+                auth_storage_db_file=auth_root / "auth_store.sqlite3",
+            )
+
+            result = asyncio.run(service.poll_for_new_releases(trigger="manual"))
+
+        self.assertTrue(result.get("ok"))
+        self.assertEqual(len(email.announcement_calls), 1)
+        self.assertEqual(
+            email.announcement_calls[0]["recipients"],
+            ["teacher@school.edu", "teacher2@school.edu"],
+        )
+
+    def test_app_update_release_notifier_catches_up_latest_release_for_late_login(self):
+        class _FakeEmailService:
+            def __init__(self) -> None:
+                self.announcement_calls: list[dict] = []
+
+            def send_release_announcement(self, **kwargs):
+                payload = dict(kwargs)
+                recipients = list(payload.get("recipients") or [])
+                self.announcement_calls.append(payload)
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release announcement sent",
+                    "sent_count": len(recipients),
+                    "recipients": recipients,
+                    "sent_recipients": recipients,
+                }
+
+        csv_text = (
+            "enabled,app_id,channel,audience,platform,version,build_number,apk_url,force,message\n"
+            "TRUE,lalacore_rebuild,stable,all,android,2.0.1,15,https://example.com/all-old.apk,TRUE,Old update\n"
+            "TRUE,lalacore_rebuild,stable,all,android,3.0.1,17,https://example.com/all-new.apk,TRUE,Latest all update\n"
+            "TRUE,lalacore_rebuild,stable,teacher,android,2.0.2,16,https://example.com/teacher-old.apk,TRUE,Old teacher update\n"
+            "TRUE,lalacore_rebuild,stable,teacher,android,3.0.2,18,https://example.com/teacher-new.apk,TRUE,Latest teacher update\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            state = AutomationStateManager(path=str(root / "LC9_AUTOMATION_STATE.json"))
+            email = _FakeEmailService()
+            service = AppUpdateReleaseNotifierService(
+                state=state,
+                email_service=email,
+                fetcher=lambda url: csv_text,
+                sheet_url="https://example.com/updates.csv",
+                auth_users_file=root / "users.json",
+                auth_storage_db_file=root / "auth_store.sqlite3",
+            )
+
+            first = service.notify_pending_releases_for_email(
+                "teacher@school.edu",
+                role="teacher",
+            )
+            second = service.notify_pending_releases_for_email(
+                "teacher@school.edu",
+                role="teacher",
+            )
+
+        self.assertTrue(first.get("ok"))
+        self.assertEqual(first.get("sent_count"), 1)
+        self.assertEqual(len(email.announcement_calls), 1)
+        sent_releases = email.announcement_calls[0]["releases"]
+        self.assertEqual(
+            [release["version"] for release in sent_releases],
+            ["3.0.1", "3.0.2"],
+        )
+        self.assertEqual(second.get("status"), "NO_PENDING_RELEASES")
 
     def test_feeder_enqueue_is_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:

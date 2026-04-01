@@ -1,5 +1,7 @@
 import os
+import smtplib
 import tempfile
+import asyncio
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -133,9 +135,146 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(login.get("status"), "SUCCESS")
 
+    async def test_otp_email_uses_god_of_maths_sender_name(self):
+        class _FakeSMTP:
+            last_instance: "_FakeSMTP | None" = None
+
+            def __init__(self, *args, **kwargs) -> None:
+                self.message = None
+                _FakeSMTP.last_instance = self
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def ehlo(self) -> None:
+                return None
+
+            def starttls(self, context=None) -> None:
+                return None
+
+            def login(self, sender, password) -> None:
+                return None
+
+            def send_message(self, msg) -> None:
+                self.message = msg
+
+        with patch.dict(
+            os.environ,
+            {
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ), patch.object(smtplib, "SMTP", _FakeSMTP):
+            sent, message = self.service._send_otp_email(
+                "learner@example.com",
+                "123456",
+                600,
+            )
+
+        self.assertTrue(sent)
+        self.assertEqual(message, "OTP sent")
+        self.assertIsNotNone(_FakeSMTP.last_instance)
+        self.assertEqual(
+            _FakeSMTP.last_instance.message["From"],
+            "God of Maths <sender@example.com>",
+        )
+
     async def test_unknown_action(self):
         response = await self.service.handle_action({"action": "not_real"})
         self.assertEqual(response.get("status"), "UNKNOWN_ACTION")
+
+    async def test_login_triggers_pending_assignment_notification_sync(self):
+        class _FakeAssignmentAnnouncementService:
+            def __init__(self) -> None:
+                self.calls: list[str] = []
+
+            def notify_pending_assessments_for_email(self, email: str):
+                self.calls.append(email)
+                return {"ok": True, "sent_count": 0}
+
+        fake_assignment = _FakeAssignmentAnnouncementService()
+        service = LocalAuthService(
+            users_file=Path(self.tmp.name) / "users_2.json",
+            otp_file=Path(self.tmp.name) / "otp_2.json",
+            assignment_announcement_service=fake_assignment,
+        )
+        await service.handle_action(
+            {
+                "action": "register_direct",
+                "email": "student@school.edu",
+                "password": "abcd1234",
+                "name": "Student One",
+                "username": "student_one",
+                "device_id": self.device_id,
+            }
+        )
+        await service.handle_action(
+            {
+                "action": "login_direct",
+                "email": "student@school.edu",
+                "password": "abcd1234",
+                "device_id": self.device_id,
+            }
+        )
+        await asyncio.sleep(0.05)
+        self.assertEqual(
+            fake_assignment.calls,
+            ["student@school.edu", "student@school.edu"],
+        )
+
+    async def test_login_triggers_pending_release_notification_sync(self):
+        class _FakeAssignmentAnnouncementService:
+            def notify_pending_assessments_for_email(self, email: str):
+                return {"ok": True, "sent_count": 0, "email": email}
+
+        class _FakeReleaseNotifierService:
+            def __init__(self) -> None:
+                self.calls: list[tuple[str, str]] = []
+
+            def notify_pending_releases_for_email(self, email: str, *, role: str):
+                self.calls.append((email, role))
+                return {"ok": True, "sent_count": 0}
+
+        fake_release = _FakeReleaseNotifierService()
+        service = LocalAuthService(
+            users_file=Path(self.tmp.name) / "users_3.json",
+            otp_file=Path(self.tmp.name) / "otp_3.json",
+            assignment_announcement_service=_FakeAssignmentAnnouncementService(),
+            release_notifier_service=fake_release,
+        )
+        await service.handle_action(
+            {
+                "action": "register_direct",
+                "email": "student@school.edu",
+                "password": "abcd1234",
+                "name": "Student One",
+                "username": "student_one",
+                "device_id": self.device_id,
+            }
+        )
+        await service.handle_action(
+            {
+                "action": "login_direct",
+                "email": "student@school.edu",
+                "password": "abcd1234",
+                "device_id": self.device_id,
+            }
+        )
+        await asyncio.sleep(0.05)
+        self.assertEqual(
+            fake_release.calls,
+            [
+                ("student@school.edu", "student"),
+                ("student@school.edu", "student"),
+            ],
+        )
 
     async def test_forgot_otp_send_failure_returns_email_failure_by_default(self):
         await self.service.handle_action(
