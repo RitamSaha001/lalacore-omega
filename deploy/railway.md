@@ -33,3 +33,4 @@
 - OCR/PDF stages require `tesseract` and `poppler_utils`; `nixpacks.toml` installs them.
 - The FastAPI app is exported from `core.api.entrypoint` through a lazy ASGI wrapper so Railway can boot from the pipeline module without changing route contracts.
 - Pipeline concurrency and timeout guards are enforced inside `lalacore_entry`, so `/solve`, app actions, and other internal callers share the same runtime protections.
+- For the production same-project live-class API plus worker setup, see [railway_same_project_live_classes.md](/Users/ritamsaha/lalacore_omega/deploy/railway_same_project_live_classes.md).
