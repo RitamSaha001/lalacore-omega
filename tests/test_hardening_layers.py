@@ -92,6 +92,20 @@ class MetaContradictionTests(unittest.TestCase):
         self.assertTrue(contradiction["contradiction"])
         self.assertGreaterEqual(len(contradiction["signals"]), 1)
 
+    def test_research_verifier_treats_roots_prompt_as_list_like_answer(self):
+        verifier = ResearchMetaVerifier()
+        result = verifier.evaluate(
+            question="What are the roots of x^2+7x+9=0?",
+            final_answer="\\boxed{(-7+\\sqrt{13})/2, (-7-\\sqrt{13})/2}",
+            reasoning="Using the quadratic formula gives the two roots.",
+            profile={"subject": "math", "difficulty": "easy", "numeric": True},
+            base_verification={"verified": False, "risk_score": 1.0},
+            ocr_data=None,
+            vision_analysis=None,
+        )
+        self.assertEqual(result["answer_type"]["expected"], "list")
+        self.assertTrue(bool(result["answer_type"]["match"]))
+
 
 class LatencyTelemetryTests(unittest.TestCase):
     def test_latency_timing_and_slow_warning_logged(self):

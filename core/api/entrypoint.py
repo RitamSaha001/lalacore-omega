@@ -8,7 +8,6 @@ import re
 import threading
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from difflib import SequenceMatcher
 from pathlib import Path
 from time import perf_counter
 from typing import Any, Dict, Sequence
@@ -16,6 +15,7 @@ from typing import Any, Dict, Sequence
 from engine.got_engine import GraphOfThoughtEngine
 from engine.mcts_reasoner import MCTSSearch
 from core.api.persona_layer import apply_persona
+from core.lalacore_x.answer_quality_verifier import run_answer_quality_verifier
 from core.lalacore_x.classifier import ProblemClassifier
 from core.lalacore_x.plausibility_checker import check_answer_plausibility
 from core.lalacore_x.providers import ProviderFabric, provider_runtime_budget
@@ -594,6 +594,7 @@ class PipelineConfig:
     solve_stage_timeout_s: float | None
     solve_reevaluation_timeout_s: float | None
     provider_timeout_overrides: Dict[str, float]
+    request_policy: Dict[str, Any]
 
     @classmethod
     def from_options(cls, options: Dict[str, Any]) -> "PipelineConfig":
@@ -722,6 +723,26 @@ class PipelineConfig:
                     continue
                 if timeout_value > 0.0:
                     provider_timeout_overrides[key] = timeout_value
+        request_policy: Dict[str, Any] = {}
+        preferred_provider = str(options.get("preferred_provider") or "").strip()
+        preferred_model = str(options.get("preferred_model") or "").strip()
+        provider_priority = options.get("provider_priority")
+        if preferred_provider:
+            request_policy["preferred_provider"] = preferred_provider
+        if preferred_model:
+            request_policy["preferred_model"] = preferred_model
+        if isinstance(provider_priority, Sequence) and not isinstance(
+            provider_priority, (str, bytes)
+        ):
+            request_policy["provider_priority"] = [
+                str(item).strip()
+                for item in provider_priority
+                if str(item).strip()
+            ]
+        if bool(options.get("quality_retry")):
+            request_policy["quality_retry"] = True
+        if bool(options.get("quality_retry_force_max")):
+            request_policy["quality_retry_force_max"] = True
 
         return cls(
             max_input_chars=max_input_chars,
@@ -753,6 +774,7 @@ class PipelineConfig:
             solve_stage_timeout_s=solve_stage_timeout_s,
             solve_reevaluation_timeout_s=solve_reevaluation_timeout_s,
             provider_timeout_overrides=provider_timeout_overrides,
+            request_policy=request_policy,
         )
 
 
@@ -865,7 +887,8 @@ class LalaCorePipelineController:
     ) -> Dict[str, Any]:
         async def _call() -> Dict[str, Any]:
             with provider_runtime_budget(
-                timeout_overrides=state.config.provider_timeout_overrides
+                timeout_overrides=state.config.provider_timeout_overrides,
+                request_policy=state.config.request_policy,
             ):
                 return await solve_question(prompt)
 
@@ -1932,6 +1955,7 @@ class LalaCorePipelineController:
             question=state.question_text,
             solve_result=state.solve_result,
             profile=state.profile,
+            research_verification=state.research_verification,
             enabled=bool(state.options.get("enable_meta_verification", True)),
             timeout_s=state.config.meta_timeout_s,
         )
@@ -1946,6 +1970,48 @@ class LalaCorePipelineController:
                 "input_type": state.intake.input_type if state.intake else state.input_type
             },
         )
+
+        meta_risk = float(
+            max(
+                0.0,
+                min(
+                    1.0,
+                    state.meta_verification.get("risk_score", effective_risk)
+                    or effective_risk,
+                ),
+            )
+        )
+        meta_confidence = float(
+            max(
+                0.0,
+                min(
+                    1.0,
+                    state.meta_verification.get("confidence_score", 1.0 - meta_risk)
+                    or (1.0 - meta_risk),
+                ),
+            )
+        )
+        meta_quality = float(
+            max(
+                0.0,
+                min(
+                    1.0,
+                    state.meta_verification.get("answer_quality_score", 1.0 - meta_risk)
+                    or (1.0 - meta_risk),
+                ),
+            )
+        )
+        meta_should_block = bool(
+            state.meta_verification.get("should_block_response", False)
+        )
+        if bool(state.meta_verification.get("attempted", False)) and not bool(
+            base_verification.get("verified", False)
+        ):
+            effective_risk = max(effective_risk, meta_risk)
+            effective_confidence = min(effective_confidence, meta_confidence)
+        if meta_should_block:
+            effective_risk = max(effective_risk, 0.93, meta_risk)
+            effective_confidence = min(effective_confidence, meta_confidence, 0.12)
 
         state.calibration_metrics = {
             "risk_score": effective_risk,
@@ -1962,6 +2028,10 @@ class LalaCorePipelineController:
             "bayesian": bayesian_confidence,
             "adaptive": adaptive_state,
             "drift": drift_state,
+            "meta_verifier_risk_score": meta_risk,
+            "meta_verifier_confidence_score": meta_confidence,
+            "meta_verifier_quality_score": meta_quality,
+            "meta_should_block_response": bool(meta_should_block),
         }
 
         return {
@@ -2078,6 +2148,10 @@ class LalaCorePipelineController:
             str(quality_gate.get("final_status", "")).strip().lower() == "failed"
             or not bool(quality_gate.get("completion_ok", True))
         )
+        meta_should_block = bool(
+            state.meta_verification.get("should_block_response", False)
+        )
+        quality_failed = bool(quality_failed or meta_should_block)
         meta_min_confidence = float(
             max(
                 0.0,
@@ -2118,6 +2192,8 @@ class LalaCorePipelineController:
             block_reasons = []
             if quality_failed:
                 block_reasons.append("quality_gate_failed")
+            if meta_should_block:
+                block_reasons.append("meta_verifier_block")
             if low_confidence_guard:
                 block_reasons.append("low_confidence")
             if high_risk_guard:
@@ -2390,18 +2466,36 @@ class LalaCorePipelineController:
             (not str(solve_result.get("final_answer", "")).strip())
             and not bool(effective_verification.get("verified", False))
         )
+        best_effort_fallback = _select_best_effort_answer(
+            solve_result=solve_result,
+            meta_verification=state.meta_verification,
+        )
         if suppress_failed_answer:
             unsafe_candidate = str(solve_result.get("final_answer", "")).strip()
             if unsafe_candidate:
                 solve_result["unsafe_candidate_answer"] = unsafe_candidate
-            solve_result["final_answer"] = str(
-                state.options.get("uncertain_answer_message")
-                or "Uncertain answer: verification failed under high risk. Please retry with a stronger model."
-            )
+            if best_effort_fallback:
+                solve_result["final_answer"] = best_effort_fallback["answer"]
+                solve_result["best_effort_answer"] = best_effort_fallback["answer"]
+                solve_result["final_status"] = "Warning"
+                solve_result["escalate"] = True
+                quality_gate["output_suppressed"] = False
+                quality_gate["best_effort_fallback"] = True
+                quality_gate["final_status"] = "Warning"
+                solve_result["quality_gate"] = quality_gate
+                state.meta_verification["best_effort_fallback_applied"] = True
+                state.meta_verification["best_effort_answer_source"] = (
+                    best_effort_fallback["source"]
+                )
+            else:
+                solve_result["final_answer"] = str(
+                    state.options.get("uncertain_answer_message")
+                    or "Uncertain answer: verification failed under high risk. Please retry with a stronger model."
+                )
+                solve_result["final_status"] = "Failed"
+                quality_gate["output_suppressed"] = True
+                solve_result["quality_gate"] = quality_gate
             solve_result["escalate"] = True
-            solve_result["final_status"] = "Failed"
-            quality_gate["output_suppressed"] = True
-            solve_result["quality_gate"] = quality_gate
             if suggested_correction and not bool(
                 state.meta_verification.get("applied_correction", False)
             ):
@@ -2409,12 +2503,6 @@ class LalaCorePipelineController:
                     "correction_rejected", "guarded_failure_state"
                 )
         elif empty_final_answer_guard:
-            solve_result["final_answer"] = str(
-                state.options.get("empty_answer_message")
-                or "Uncertain answer: providers returned no usable output. Please retry with stronger settings."
-            )
-            solve_result["escalate"] = True
-            solve_result["final_status"] = "Failed"
             quality_gate = dict(solve_result.get("quality_gate") or {})
             reasons = [
                 str(item)
@@ -2423,15 +2511,41 @@ class LalaCorePipelineController:
             ]
             if "empty_final_answer" not in reasons:
                 reasons.append("empty_final_answer")
-            quality_gate.update(
-                {
-                    "completion_ok": False,
-                    "final_status": "Failed",
-                    "force_escalate": True,
-                    "reasons": reasons,
-                    "output_suppressed": True,
-                }
-            )
+            if best_effort_fallback:
+                solve_result["final_answer"] = best_effort_fallback["answer"]
+                solve_result["best_effort_answer"] = best_effort_fallback["answer"]
+                solve_result["escalate"] = True
+                solve_result["final_status"] = "Warning"
+                quality_gate.update(
+                    {
+                        "completion_ok": False,
+                        "final_status": "Warning",
+                        "force_escalate": True,
+                        "reasons": reasons,
+                        "output_suppressed": False,
+                        "best_effort_fallback": True,
+                    }
+                )
+                state.meta_verification["best_effort_fallback_applied"] = True
+                state.meta_verification["best_effort_answer_source"] = (
+                    best_effort_fallback["source"]
+                )
+            else:
+                solve_result["final_answer"] = str(
+                    state.options.get("empty_answer_message")
+                    or "Uncertain answer: providers returned no usable output. Please retry with stronger settings."
+                )
+                solve_result["escalate"] = True
+                solve_result["final_status"] = "Failed"
+                quality_gate.update(
+                    {
+                        "completion_ok": False,
+                        "final_status": "Failed",
+                        "force_escalate": True,
+                        "reasons": reasons,
+                        "output_suppressed": True,
+                    }
+                )
             solve_result["quality_gate"] = quality_gate
         elif evidence_required and not evidence_ok and strict_evidence:
             solve_result["final_answer"] = str(
@@ -2855,103 +2969,108 @@ async def _run_meta_verification(
     question: str,
     solve_result: Dict[str, Any],
     profile,
+    research_verification: Dict[str, Any],
     enabled: bool,
     timeout_s: float,
 ) -> Dict[str, Any]:
     if not enabled:
         return {"attempted": False, "reason": "disabled"}
 
-    winner = str(solve_result.get("winner_provider", "")).strip() or "mini"
+    base_verification = dict(solve_result.get("verification", {}) or {})
+    base_verified = bool(base_verification.get("verified", False))
+    base_risk = float(base_verification.get("risk_score", 1.0) or 1.0)
     answer = str(solve_result.get("final_answer", "")).strip()
-    original_reasoning = str(solve_result.get("reasoning", "")).strip()
+    original_reasoning = str(
+        solve_result.get("reasoning")
+        or solve_result.get("explanation")
+        or solve_result.get("solution")
+        or ""
+    ).strip()
     if not answer:
         return {"attempted": False, "reason": "empty_final_answer"}
     if not question.strip():
         return {"attempted": False, "reason": "empty_question"}
 
-    question_trimmed = _truncate_words(question, 320)
-    answer_trimmed = str(answer)[:600]
-    prompt = (
-        "Meta-verification task:\n"
-        "Given the original question and candidate final answer, check logical consistency.\n"
-        "If inconsistent, provide a corrected final answer.\n\n"
-        f"Question: {question_trimmed}\n"
-        f"Candidate Final Answer: {answer_trimmed}\n\n"
-        "Return format:\n"
-        "Reasoning: <brief consistency check>\n"
-        "Final Answer: <same as candidate if consistent, else corrected answer>"
-    )
-
     global _PROVIDER_FABRIC
     if _PROVIDER_FABRIC is None:
         _PROVIDER_FABRIC = ProviderFabric()
 
-    reviewer = winner
-    try:
-        available = [str(p).strip() for p in _PROVIDER_FABRIC.available_providers() if str(p).strip()]
-    except Exception:
-        available = []
-    if reviewer == "mini":
-        for preferred in ("openrouter", "gemini", "groq", "hf"):
-            if preferred in available:
-                reviewer = preferred
-                break
-    if reviewer not in available and available:
-        reviewer = available[0]
-
     try:
         review = await asyncio.wait_for(
-            _PROVIDER_FABRIC.generate(reviewer, prompt, profile, []),
+            run_answer_quality_verifier(
+                fabric=_PROVIDER_FABRIC,
+                question=question,
+                candidate_answer=answer,
+                candidate_reasoning=original_reasoning,
+                profile=profile,
+                base_verification=dict(solve_result.get("verification", {}) or {}),
+                research_verification=research_verification,
+                enabled=enabled,
+            ),
             timeout=float(max(1.0, timeout_s)),
         )
     except asyncio.TimeoutError:
         return {
             "attempted": True,
-            "provider": reviewer,
-            "consistent": False,
+            "provider": "fast_verifier",
+            "consistent": bool(base_verified or base_risk <= 0.68),
             "timed_out": True,
             "reason": "meta_verification_timeout",
-            "override_allowed": not bool((solve_result.get("verification") or {}).get("verified", False)),
+            "override_allowed": not bool(base_verified),
+            "should_block_response": False,
+            "risk_score": float(max(base_risk, 0.58)),
+            "confidence_score": float(max(0.10, 1.0 - max(base_risk, 0.58))),
+            "answer_quality_score": float(max(0.18, 1.0 - max(base_risk, 0.58))),
+            "review_final_answer": answer,
+            "review_reasoning": "Fast verifier timed out, so the pipeline preserved the best available candidate answer.",
         }
     except Exception as exc:
         return {
             "attempted": True,
-            "provider": reviewer,
-            "consistent": False,
+            "provider": "fast_verifier",
+            "consistent": bool(base_verified or base_risk <= 0.65),
             "error": str(exc)[:240],
             "timed_out": False,
             "reason": "meta_verification_error",
-            "override_allowed": not bool((solve_result.get("verification") or {}).get("verified", False)),
+            "override_allowed": not bool(base_verified),
+            "should_block_response": False,
+            "risk_score": float(max(base_risk, 0.60)),
+            "confidence_score": float(max(0.08, 1.0 - max(base_risk, 0.60))),
+            "answer_quality_score": float(max(0.16, 1.0 - max(base_risk, 0.60))),
+            "review_final_answer": answer,
+            "review_reasoning": "Fast verifier errored, so the pipeline preserved the best available candidate answer.",
         }
 
-    review_reasoning = _truncate_words(str(review.reasoning or ""), 180)
-    review_answer = str(review.final_answer or "").strip()
-    consistent = review_answer == answer
-    contradiction = _RESEARCH_VERIFIER.detect_self_contradiction(original_reasoning, review_reasoning)
-    circular_reasoning = False
-    if review_reasoning and original_reasoning:
-        similarity = SequenceMatcher(a=original_reasoning[:1600], b=review_reasoning[:1600]).ratio()
-        if similarity >= 0.92 and review_answer and review_answer != answer:
-            circular_reasoning = True
-    flags = []
+    contradiction = _RESEARCH_VERIFIER.detect_self_contradiction(
+        original_reasoning,
+        str(review.get("review_reasoning", "")).strip(),
+    )
+    flags = [
+        str(item).strip()
+        for item in (review.get("flags") or [])
+        if str(item).strip()
+    ]
     if contradiction.get("contradiction"):
         flags.append("self_contradiction")
-    if circular_reasoning:
-        flags.append("circular_reasoning")
-
-    return {
-        "attempted": True,
-        "provider": reviewer,
-        "consistent": bool(consistent),
-        "review_reasoning": review_reasoning,
-        "review_final_answer": review_answer,
-        "suggested_correction": None if consistent or flags else review_answer,
-        "self_contradiction": contradiction,
-        "circular_reasoning": bool(circular_reasoning),
-        "flags": flags,
-        "timed_out": False,
-        "override_allowed": not bool((solve_result.get("verification") or {}).get("verified", False)),
-    }
+    review["flags"] = list(dict.fromkeys(flags))
+    review["issues"] = list(
+        dict.fromkeys(
+            [
+                *[
+                    str(item).strip()
+                    for item in (review.get("issues") or [])
+                    if str(item).strip()
+                ],
+                *review["flags"],
+            ]
+        )
+    )
+    review["self_contradiction"] = contradiction
+    review["timed_out"] = bool(review.get("timed_out", False))
+    review["override_allowed"] = not bool(
+        (solve_result.get("verification") or {}).get("verified", False)
+    )
+    return review
 
 
 def _compose_question(parts: Sequence[str], *, fallback: str) -> str:
@@ -3063,6 +3182,70 @@ def _normalize_meta_correction(value: Any) -> str:
     if boxed.startswith("\\boxed{") and boxed.endswith("}"):
         boxed = boxed[len("\\boxed{") : -1].strip()
     return boxed or text
+
+
+def _looks_structured_payload_text(text: str) -> bool:
+    raw = str(text or "").strip()
+    if not raw:
+        return False
+    if raw.startswith("```"):
+        raw = re.sub(r"^```(?:json)?\s*", "", raw, flags=re.IGNORECASE)
+        raw = re.sub(r"\s*```$", "", raw)
+    if not raw.startswith("{") and not raw.startswith("["):
+        return False
+    try:
+        decoded = json.loads(raw)
+    except Exception:
+        return False
+    return isinstance(decoded, (dict, list))
+
+
+def _looks_placeholder_answer_text(text: str) -> bool:
+    lowered = str(text or "").strip().lower()
+    if not lowered:
+        return True
+    return any(
+        token in lowered
+        for token in (
+            "uncertain answer:",
+            "insufficient evidence to answer",
+            "provider error:",
+            "engine returned empty output",
+            "providers returned no usable output",
+            "verification failed under high risk",
+        )
+    )
+
+
+def _select_best_effort_answer(
+    *,
+    solve_result: Dict[str, Any],
+    meta_verification: Dict[str, Any],
+) -> Dict[str, str]:
+    original_answer = _normalize_meta_correction(solve_result.get("final_answer"))
+    reason = str(meta_verification.get("reason") or "").strip().lower()
+    can_reuse_original = reason in {"meta_verification_timeout", "meta_verification_error"}
+    candidates = [
+        (
+            "suggested_correction",
+            _normalize_meta_correction(meta_verification.get("suggested_correction")),
+        ),
+        (
+            "review_final_answer",
+            _normalize_meta_correction(meta_verification.get("review_final_answer")),
+        ),
+    ]
+    for source, value in candidates:
+        if not value:
+            continue
+        if _looks_placeholder_answer_text(value):
+            continue
+        if _looks_structured_payload_text(value):
+            continue
+        if value == original_answer and not can_reuse_original:
+            continue
+        return {"answer": value, "source": source}
+    return {}
 
 
 async def _warm_provider_availability() -> Dict[str, Any]:

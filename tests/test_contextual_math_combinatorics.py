@@ -25,6 +25,9 @@ class ContextualCombinatoricsTests(unittest.TestCase):
             ("How many arrangements of 6 books if 3 specific books are separated?", 144),
             ("How many 5-digit numbers from 1–7 without repetition greater than 50000?", 1080),
             ("How many 3-digit numbers from 1–9 with exactly one even digit?", 240),
+            ("How many 4-digit numbers using digits 0-9 without repetition have odd digit sum?", 2160),
+            ("How many 4-digit numbers using digits 0-9 without repetition have even digit sum?", 2376),
+            ("How many 4-digit numbers using digits 0-9 without repetition satisfy first digit > last digit?", 2520),
         ]
 
         for question, expected in cases:

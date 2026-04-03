@@ -108,13 +108,23 @@ def _parse_digit_permutation(text: str) -> Optional[StructuredProblem]:
     if m_gt:
         constraint["greater_than"] = int(m_gt.group(1))
 
-    if "sum odd" in q:
+    if "sum odd" in q or re.search(r"\bodd\s+digit\s+sum\b", q) or re.search(
+        r"\bdigit\s+sum\s+(?:is\s+)?odd\b", q
+    ):
         constraint["sum_parity"] = "odd"
-    elif "sum even" in q:
+    elif "sum even" in q or re.search(r"\beven\s+digit\s+sum\b", q) or re.search(
+        r"\bdigit\s+sum\s+(?:is\s+)?even\b", q
+    ):
         constraint["sum_parity"] = "even"
 
     if "exactly one even digit" in q:
         constraint["exact_even_count"] = 1
+
+    if (
+        "first digit > last digit" in q
+        or "first digit greater than last digit" in q
+    ):
+        constraint["first_digit_gt_last"] = True
 
     return StructuredProblem(
         type="digit_permutation",

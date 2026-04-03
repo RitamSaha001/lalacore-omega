@@ -185,6 +185,11 @@ def _format_value(expr) -> str:
     return text
 
 
+def _format_expression_set(expressions: List[sp.Expr]) -> str:
+    formatted = [_format_value(expr) for expr in expressions]
+    return ", ".join(item for item in formatted if str(item).strip())
+
+
 def _extract_derivative_at_point(question: str) -> tuple[str, str] | None:
     q = _normalize_text(question)
     patterns = (
@@ -197,6 +202,68 @@ def _extract_derivative_at_point(question: str) -> tuple[str, str] | None:
         if m:
             return m.group(1).strip(), m.group(2).strip()
     return None
+
+
+def _extract_univariate_equation(question: str) -> str | None:
+    q = _normalize_text(question)
+    patterns = (
+        r"^\s*(?:what are|find|determine|calculate|give)\s+(?:the\s+)?(?:roots?|solutions?|zeros?|zeroes?)\s+(?:of|for)\s+(.+?)\s*$",
+        r"^\s*(?:solve|find)\s+(.+?)\s*$",
+    )
+    for pattern in patterns:
+        match = re.match(pattern, q, flags=re.IGNORECASE)
+        if not match:
+            continue
+        candidate = match.group(1).strip().rstrip("?.").strip()
+        if "=" not in candidate:
+            continue
+        return candidate
+    return None
+
+
+def _solve_univariate_equation_question(question: str) -> Dict[str, Any] | None:
+    equation_text = _extract_univariate_equation(question)
+    if not equation_text:
+        return None
+    lhs_text, rhs_text = [part.strip() for part in equation_text.split("=", 1)]
+    lhs = _safe_parse_expr(lhs_text)
+    rhs = _safe_parse_expr(rhs_text)
+    if lhs is None or rhs is None:
+        return None
+    expr = sp.simplify(lhs - rhs)
+    symbols = sorted(expr.free_symbols, key=lambda sym: sym.sort_key())
+    if len(symbols) != 1:
+        return None
+    symbol = symbols[0]
+    try:
+        poly = sp.Poly(sp.expand(expr), symbol)
+    except Exception:
+        return None
+    if poly is None or poly.total_degree() <= 0 or poly.total_degree() > 4:
+        return None
+    try:
+        roots = [sp.simplify(root) for root in sp.solve(sp.Eq(expr, 0), symbol)]
+    except Exception:
+        return None
+    roots = sorted(
+        [root for root in roots if root is not None],
+        key=sp.default_sort_key,
+    )
+    if not roots:
+        return None
+    formatted_answer = _format_expression_set(roots)
+    if not formatted_answer:
+        return None
+    return {
+        "handled": True,
+        "kind": "solve_univariate_equation",
+        "answer": formatted_answer,
+        "expected_expr": None,
+        "expected_solution_text": None,
+        "verification_kind": "expression_set",
+        "expected_expressions": [sp.sstr(root) for root in roots],
+        "reasoning": f"Deterministic solve of the univariate equation in {symbol}.",
+    }
 
 
 def _extract_definite_integral(question: str) -> tuple[str, str, str] | None:
@@ -633,6 +700,7 @@ def _count_sequences(
     exact_even_count: int | None = None,
     gt_threshold: int | None = None,
     divisible_by: int | None = None,
+    first_digit_gt_last: bool = False,
 ) -> int:
     if length <= 0 or length > len(digits):
         return 0
@@ -658,6 +726,8 @@ def _count_sequences(
             value = int("".join(str(v) for v in perm))
             if divisible_by == 0 or value % divisible_by != 0:
                 continue
+        if first_digit_gt_last and perm[0] <= perm[-1]:
+            continue
         count += 1
     return count
 
@@ -1528,6 +1598,7 @@ def _solve_structured_problem(question: str) -> Dict[str, Any] | None:
         exact_even_count = constraint.get("exact_even_count")
         gt_threshold = constraint.get("greater_than")
         divisible_by = constraint.get("divisible_by")
+        first_digit_gt_last = bool(constraint.get("first_digit_gt_last", False))
 
         answer = 0
         if repetition:
@@ -1552,6 +1623,8 @@ def _solve_structured_problem(question: str) -> Dict[str, Any] | None:
                     divisor = int(divisible_by)
                     if divisor == 0 or value % divisor != 0:
                         continue
+                if first_digit_gt_last and tup[0] <= tup[-1]:
+                    continue
                 answer += 1
         else:
             digits_unique = list(dict.fromkeys(int(v) for v in digits))
@@ -1565,6 +1638,7 @@ def _solve_structured_problem(question: str) -> Dict[str, Any] | None:
                     exact_even_count=int(exact_even_count) if exact_even_count is not None else None,
                     gt_threshold=int(gt_threshold) if gt_threshold is not None else None,
                     divisible_by=int(divisible_by) if divisible_by is not None else None,
+                    first_digit_gt_last=first_digit_gt_last,
                 )
 
         return {
@@ -2178,6 +2252,10 @@ def solve_contextual_math_question(question: str) -> Dict[str, Any] | None:
     combinatorics_case = _solve_combinatorics_question(question)
     if combinatorics_case:
         return combinatorics_case
+
+    equation_case = _solve_univariate_equation_question(question)
+    if equation_case:
+        return equation_case
 
     derivative_case = _extract_derivative_at_point(question)
     if derivative_case:

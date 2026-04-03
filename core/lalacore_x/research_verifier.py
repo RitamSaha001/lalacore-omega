@@ -31,7 +31,11 @@ class ResearchMetaVerifier:
 
         expected_type = self._expected_answer_type(question=question, profile=profile)
         observed_type = self._observed_answer_type(final_answer)
-        answer_type_match = expected_type in {"unknown", observed_type}
+        answer_type_match = self._answer_type_match(
+            expected_type=expected_type,
+            observed_type=observed_type,
+            answer=final_answer,
+        )
 
         expected_units, observed_units = self._units(question, final_answer)
         unit_match = True if not expected_units else bool(expected_units.intersection(observed_units))
@@ -174,6 +178,39 @@ class ResearchMetaVerifier:
         q = str(question or "").lower()
         if any(token in q for token in ("true or false", "is it true", "boolean")):
             return "boolean"
+        if any(
+            token in q
+            for token in (
+                "roots",
+                "root of",
+                "root for",
+                "solutions",
+                "solution set",
+                "set of values",
+                "possible values",
+                "all values",
+                "all roots",
+                "zeros",
+                "zeroes",
+            )
+        ):
+            return "list"
+        if any(
+            token in q
+            for token in (
+                "equation of",
+                "equations of",
+                "locus",
+                "tangent",
+                "tangents",
+                "normal",
+                "chord",
+                "asymptote",
+                "asymptotes",
+                "line ",
+            )
+        ):
+            return "expression"
         if any(token in q for token in ("simplify", "expression", "in terms of", "prove")):
             return "expression"
         if any(
@@ -210,13 +247,43 @@ class ResearchMetaVerifier:
             return "unknown"
         if text in {"true", "false", "yes", "no"}:
             return "boolean"
-        if re.fullmatch(r"[-+]?\d+(?:\.\d+)?(?:/\d+)?", text):
+        numeric_compact = text.replace(",", "")
+        if re.fullmatch(r"[-+]?\d+(?:\.\d+)?(?:/\d+)?", numeric_compact):
             return "numeric"
+        if "," in text or re.search(r"\b(and|or)\b", text):
+            return "list"
+        if "\\pm" in text or "±" in text:
+            return "list"
+        if re.search(r"\\boxed|\\frac|\\sqrt", text):
+            return "expression"
         if re.search(r"[a-z]\s*[\+\-\*/\^=]", text):
             return "expression"
         if re.search(r"[=\+\-\*/\^]", text):
             return "expression"
         return "symbolic"
+
+    def _answer_type_match(
+        self,
+        *,
+        expected_type: str,
+        observed_type: str,
+        answer: str,
+    ) -> bool:
+        if expected_type == "unknown" or expected_type == observed_type:
+            return True
+        text = str(answer or "").strip().lower()
+        if expected_type == "list":
+            if observed_type in {"expression", "symbolic"} and (
+                "," in text
+                or re.search(r"\b(and|or)\b", text)
+                or "\\pm" in text
+                or "±" in text
+            ):
+                return True
+        if expected_type == "expression" and observed_type in {"symbolic", "list"}:
+            if re.search(r"\\boxed|\\frac|\\sqrt|[=xyabm]", text):
+                return True
+        return False
 
     def _units(self, question: str, answer: str) -> Tuple[set[str], set[str]]:
         expected_units = {m.group(1).lower() for m in _UNIT_PATTERN.finditer(str(question or ""))}

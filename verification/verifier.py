@@ -52,6 +52,11 @@ _PARSE_TRANSFORMS = standard_transformations + (
     factorial_notation,
 )
 _PARSE_LOCALS = {
+    "x": sp.Symbol("x", real=True),
+    "y": sp.Symbol("y", real=True),
+    "m": sp.Symbol("m", real=True),
+    "a": sp.Symbol("a", positive=True, real=True),
+    "b": sp.Symbol("b", positive=True, real=True),
     "C": sp.binomial,
     "nCr": sp.binomial,
     "NCR": sp.binomial,
@@ -524,6 +529,259 @@ def _verify_deterministic_inverse_trig(question: str, predicted_answer: str, dif
     return None
 
 
+def _normalize_text_answer(text: str) -> str:
+    value = str(text or "").strip().lower()
+    value = value.replace("−", "-").replace("±", "+/-")
+    value = re.sub(r"\s+", " ", value)
+    return value
+
+
+def _expand_plus_minus(text: str) -> list[str]:
+    raw = str(text or "").strip()
+    if not raw:
+        return []
+    out = [raw]
+    for token in ("±", "+/-"):
+        next_out: list[str] = []
+        for item in out:
+            if token in item:
+                next_out.append(item.replace(token, "+"))
+                next_out.append(item.replace(token, "-"))
+            else:
+                next_out.append(item)
+        out = next_out
+    dedup: list[str] = []
+    for item in out:
+        cleaned = str(item).strip()
+        if cleaned and cleaned not in dedup:
+            dedup.append(cleaned)
+    return dedup
+
+
+def _extract_equation_candidates(text: str) -> list[str]:
+    raw = _normalize_text_answer(text)
+    raw = raw.replace(" and ", "; ").replace("\n", "; ")
+    pieces = [chunk.strip(" .") for chunk in re.split(r"[;]", raw) if chunk.strip(" .")]
+    candidates: list[str] = []
+    for piece in pieces:
+        fragment = piece.split(":", 1)[-1].strip()
+        if "=" not in fragment:
+            continue
+        if not any(var in fragment for var in ("x", "y", "m")):
+            continue
+        for expanded in _expand_plus_minus(fragment):
+            if expanded not in candidates:
+                candidates.append(expanded)
+    return candidates
+
+
+def _parse_equation_expr(candidate: str):
+    text = str(candidate or "").strip()
+    if "=" not in text:
+        return None
+    lhs_text, rhs_text = text.split("=", 1)
+    try:
+        lhs = safe_parse(lhs_text)
+        rhs = safe_parse(rhs_text)
+    except Exception:
+        return None
+    return sp.expand(sp.together(lhs - rhs).as_numer_denom()[0])
+
+
+def _equation_equivalent(left: str, right: str) -> bool:
+    expr_left = _parse_equation_expr(left)
+    expr_right = _parse_equation_expr(right)
+    if expr_left is None or expr_right is None:
+        return False
+    try:
+        ratio = sp.simplify(expr_left / expr_right)
+        if ratio != 0 and not getattr(ratio, "free_symbols", set()):
+            return True
+    except Exception:
+        pass
+    try:
+        diff = sp.expand(expr_left - expr_right)
+        if diff == 0:
+            return True
+    except Exception:
+        pass
+    vars_ = list(expr_left.free_symbols.union(expr_right.free_symbols))
+    if not vars_:
+        return False
+    reference_ratio: complex | None = None
+    informative_samples = 0
+    for sample in (
+        {"x": 2, "y": -3, "m": 1, "a": 2, "b": 3},
+        {"x": -5, "y": 7, "m": 2, "a": 5, "b": 4},
+        {"x": 3, "y": 2, "m": -1, "a": 7, "b": 2},
+    ):
+        subs = {var: sample.get(str(var), 1) for var in vars_}
+        try:
+            lv = complex(sp.N(expr_left.subs(subs), 20))
+            rv = complex(sp.N(expr_right.subs(subs), 20))
+        except Exception:
+            return False
+        if abs(lv) < NUMERIC_TOL and abs(rv) < NUMERIC_TOL:
+            continue
+        if abs(lv) < NUMERIC_TOL or abs(rv) < NUMERIC_TOL:
+            return False
+        try:
+            ratio = lv / rv
+        except Exception:
+            return False
+        if abs(ratio.imag) > 1e-8 or abs(ratio.real) < NUMERIC_TOL:
+            return False
+        if reference_ratio is None:
+            reference_ratio = ratio
+        elif abs(ratio - reference_ratio) > max(1e-6, 1e-6 * abs(reference_ratio)):
+            return False
+        informative_samples += 1
+    if informative_samples == 0:
+        return False
+    return True
+
+
+def _extract_expression_candidates(text: str) -> list[str]:
+    raw = _normalize_text_answer(text)
+    raw = raw.replace(" or ", "; ").replace(" and ", "; ").replace("\n", "; ")
+    pieces = [chunk.strip(" .") for chunk in re.split(r"[;,]", raw) if chunk.strip(" .")]
+    out: list[str] = []
+    for piece in pieces:
+        fragment = piece.split(":", 1)[-1].strip()
+        if "=" in fragment:
+            fragment = fragment.rsplit("=", 1)[-1].strip()
+        for expanded in _expand_plus_minus(fragment):
+            candidate = _sanitize_expression_candidate(expanded)
+            if candidate and candidate not in out:
+                out.append(candidate)
+    return out
+
+
+def _expression_equivalent(left: str, right: str) -> bool:
+    try:
+        return bool(symbolic_equivalence(safe_parse(left), safe_parse(right))) or bool(
+            numeric_equivalence(safe_parse(left), safe_parse(right), samples=max(NUMERIC_SAMPLES, 14))
+        )
+    except Exception:
+        return False
+
+
+def _keyword_text_match(predicted_answer: str, expected_keywords: list[str]) -> bool:
+    low = _normalize_text_answer(predicted_answer)
+    return any(str(keyword or "").strip().lower() in low for keyword in expected_keywords if str(keyword or "").strip())
+
+
+def _verify_contextual_structured_answer(
+    contextual: Dict[str, Any],
+    predicted_answer: str,
+) -> Dict[str, Any] | None:
+    kind = str(contextual.get("verification_kind") or "").strip().lower()
+    if not kind:
+        return None
+
+    report = {
+        "verified": False,
+        "confidence_score": 0.0,
+        "stage_results": {"contextual_task_detected": True, "structured_kind": kind},
+        "stage_timings": {"contextual_task_detected": 0.0, "structured_kind": 0.0},
+        "risk_score": 1.0,
+        "escalate": True,
+        "reason": None,
+        "failure_reason": None,
+    }
+
+    if kind == "text":
+        expected_keywords = [str(x) for x in (contextual.get("expected_keywords") or []) if str(x).strip()]
+        matched = _keyword_text_match(predicted_answer, expected_keywords)
+        report["stage_results"]["contextual_text_match"] = bool(matched)
+        report["stage_timings"]["contextual_text_match"] = 0.0
+        report["verified"] = bool(matched)
+        report["confidence_score"] = 0.96 if matched else 0.05
+        report["risk_score"] = 1.0 - report["confidence_score"]
+        report["escalate"] = not bool(matched)
+        report["failure_reason"] = None if matched else "contextual_text_mismatch"
+        return report
+
+    if kind == "equation":
+        expected_equations = [str(x) for x in (contextual.get("expected_equations") or []) if str(x).strip()]
+        observed = _extract_equation_candidates(predicted_answer)
+        matched = bool(expected_equations) and any(
+            _equation_equivalent(obs, expected_equations[0]) for obs in observed
+        )
+        report["stage_results"]["contextual_equation_match"] = bool(matched)
+        report["stage_results"]["observed_equations"] = observed[:6]
+        report["stage_timings"]["contextual_equation_match"] = 0.0
+        report["verified"] = bool(matched)
+        report["confidence_score"] = 0.975 if matched else 0.06
+        report["risk_score"] = 1.0 - report["confidence_score"]
+        report["escalate"] = not bool(matched)
+        report["failure_reason"] = None if matched else "contextual_equation_mismatch"
+        return report
+
+    if kind == "equation_set":
+        expected_equations = [str(x) for x in (contextual.get("expected_equations") or []) if str(x).strip()]
+        observed = _extract_equation_candidates(predicted_answer)
+        matched_all = bool(expected_equations) and all(
+            any(_equation_equivalent(obs, exp) for obs in observed) for exp in expected_equations
+        )
+        report["stage_results"]["contextual_equation_set_match"] = bool(matched_all)
+        report["stage_results"]["observed_equations"] = observed[:8]
+        report["stage_timings"]["contextual_equation_set_match"] = 0.0
+        report["verified"] = bool(matched_all)
+        report["confidence_score"] = 0.975 if matched_all else 0.06
+        report["risk_score"] = 1.0 - report["confidence_score"]
+        report["escalate"] = not bool(matched_all)
+        report["failure_reason"] = None if matched_all else "contextual_equation_set_mismatch"
+        return report
+
+    if kind == "expression_set":
+        expected_expressions = [str(x) for x in (contextual.get("expected_expressions") or []) if str(x).strip()]
+        observed = _extract_expression_candidates(predicted_answer)
+        matched_all = bool(expected_expressions) and all(
+            any(_expression_equivalent(obs, exp) for obs in observed) for exp in expected_expressions
+        )
+        report["stage_results"]["contextual_expression_set_match"] = bool(matched_all)
+        report["stage_results"]["observed_expressions"] = observed[:8]
+        report["stage_timings"]["contextual_expression_set_match"] = 0.0
+        report["verified"] = bool(matched_all)
+        report["confidence_score"] = 0.97 if matched_all else 0.06
+        report["risk_score"] = 1.0 - report["confidence_score"]
+        report["escalate"] = not bool(matched_all)
+        report["failure_reason"] = None if matched_all else "contextual_expression_set_mismatch"
+        return report
+
+    if kind == "composite":
+        expected_numbers = [str(x) for x in (contextual.get("expected_numbers") or []) if str(x).strip()]
+        expected_equations = [str(x) for x in (contextual.get("expected_equations") or []) if str(x).strip()]
+        required_keywords = [str(x) for x in (contextual.get("required_keywords") or []) if str(x).strip()]
+        observed_numbers = _extract_expression_candidates(predicted_answer)
+        observed_equations = _extract_equation_candidates(predicted_answer)
+        number_ok = bool(expected_numbers) and all(
+            any(_expression_equivalent(obs, exp) for obs in observed_numbers) for exp in expected_numbers
+        )
+        equation_ok = bool(expected_equations) and all(
+            any(_equation_equivalent(obs, exp) for obs in observed_equations) for exp in expected_equations
+        )
+        keyword_ok = True if not required_keywords else _keyword_text_match(predicted_answer, required_keywords)
+        matched = bool(number_ok and equation_ok and (keyword_ok or (number_ok and equation_ok)))
+        report["stage_results"]["contextual_composite_numbers"] = bool(number_ok)
+        report["stage_results"]["contextual_composite_equations"] = bool(equation_ok)
+        report["stage_results"]["contextual_composite_keywords"] = bool(keyword_ok)
+        report["stage_results"]["observed_equations"] = observed_equations[:8]
+        report["stage_results"]["observed_expressions"] = observed_numbers[:8]
+        report["stage_timings"]["contextual_composite_numbers"] = 0.0
+        report["stage_timings"]["contextual_composite_equations"] = 0.0
+        report["stage_timings"]["contextual_composite_keywords"] = 0.0
+        report["verified"] = matched
+        report["confidence_score"] = 0.98 if matched else 0.06
+        report["risk_score"] = 1.0 - report["confidence_score"]
+        report["escalate"] = not bool(matched)
+        report["failure_reason"] = None if matched else "contextual_composite_mismatch"
+        return report
+
+    return None
+
+
 def _verify_contextual_math(
     question: str,
     predicted_answer: str,
@@ -533,6 +791,10 @@ def _verify_contextual_math(
     contextual = solve_contextual_math_question(question)
     if not contextual or not bool(contextual.get("handled")):
         return None
+
+    structured = _verify_contextual_structured_answer(contextual, predicted_answer)
+    if structured is not None:
+        return structured
 
     report = {
         "verified": False,

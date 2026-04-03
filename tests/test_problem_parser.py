@@ -23,6 +23,27 @@ class ProblemParserTests(unittest.TestCase):
         parsed = parse_structured_problem(question)
         self.assertIsNone(parsed)
 
+    def test_digit_permutation_parser_captures_digit_sum_parity(self):
+        question = "How many 4-digit numbers using digits 0-9 without repetition have odd digit sum?"
+        parsed = parse_structured_problem(question)
+        self.assertIsNotNone(parsed)
+        self.assertEqual(parsed.type, "digit_permutation")
+        payload = dict(parsed.payload or {})
+        self.assertEqual(
+            dict(payload.get("constraint") or {}).get("sum_parity"),
+            "odd",
+        )
+
+    def test_digit_permutation_parser_captures_first_digit_relation(self):
+        question = "How many 4-digit numbers using digits 0-9 without repetition satisfy first digit > last digit?"
+        parsed = parse_structured_problem(question)
+        self.assertIsNotNone(parsed)
+        self.assertEqual(parsed.type, "digit_permutation")
+        payload = dict(parsed.payload or {})
+        self.assertTrue(
+            bool(dict(payload.get("constraint") or {}).get("first_digit_gt_last"))
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

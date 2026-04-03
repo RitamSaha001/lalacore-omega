@@ -342,6 +342,75 @@ class LalaCoreEntrypointTests(unittest.IsolatedAsyncioTestCase):
             str((out.get("meta_verification") or {}).get("override_block_reason", "")),
         )
 
+    async def test_best_effort_review_answer_is_returned_instead_of_generic_failure(self):
+        fake_result = {
+            "question": "what are the roots of x^2+7x+9=0",
+            "reasoning": "The roots are -9/2 and -3.",
+            "final_answer": "-9/2 and -3",
+            "verification": {"verified": False, "risk_score": 0.95},
+            "routing_decision": "test",
+            "escalate": True,
+            "winner_provider": "openrouter",
+            "profile": {
+                "subject": "math",
+                "difficulty": "medium",
+                "numeric": True,
+                "multiConcept": False,
+                "trapProbability": 0.0,
+            },
+            "arena": {
+                "entropy": 0.8,
+                "disagreement": 0.55,
+                "winner_margin": 0.08,
+                "ranked_providers": [{"provider": "openrouter", "score": 0.55}],
+            },
+            "quality_gate": {
+                "completion_ok": False,
+                "final_status": "Failed",
+                "force_escalate": True,
+                "reasons": ["verification_failed_high_risk"],
+            },
+            "retrieval": {"top_blocks": [], "claim_support_score": 0.0},
+            "engine": {
+                "name": "LALACORE_X",
+                "version": "research-grade-v2",
+                "backward_compatible": True,
+                "provider_availability": {"openrouter": {"eligible": True}},
+            },
+        }
+        fake_meta = {
+            "attempted": True,
+            "override_allowed": False,
+            "timed_out": False,
+            "flags": ["deterministic_contextual_available"],
+            "suggested_correction": "(-7+sqrt(13))/2, (-7-sqrt(13))/2",
+            "review_final_answer": "(-7+sqrt(13))/2, (-7-sqrt(13))/2",
+            "consistent": False,
+            "should_block_response": True,
+            "risk_score": 0.96,
+            "answer_quality_score": 0.08,
+        }
+
+        with patch("core.api.entrypoint.solve_question", new=AsyncMock(return_value=fake_result)), patch(
+            "core.api.entrypoint._run_meta_verification",
+            new=AsyncMock(return_value=fake_meta),
+        ):
+            out = await lalacore_entry(
+                input_data="what are the roots of x^2+7x+9=0",
+                input_type="text",
+                options={"enable_meta_verification": True, "enable_persona": False},
+            )
+
+        self.assertEqual(out["status"], "uncertain")
+        self.assertEqual(
+            out["final_answer"],
+            "(-7+sqrt(13))/2, (-7-sqrt(13))/2",
+        )
+        self.assertEqual(out.get("unsafe_candidate_answer"), "-9/2 and -3")
+        self.assertTrue(
+            bool((out.get("meta_verification") or {}).get("best_effort_fallback_applied"))
+        )
+
     async def test_empty_final_answer_becomes_uncertain_payload(self):
         fake_result = {
             "question": "Hard unsupported prompt",
