@@ -252,8 +252,17 @@ class AtlasIncidentEmailService:
         recipients = self._recipient_list(
             recipient
             or os.getenv("ATLAS_ASSESSMENT_REPORT_EMAIL_RECIPIENT", "").strip()
-            or "sanny86@gmail.com"
         )
+        if not recipients:
+            return {
+                "ok": True,
+                "sent": False,
+                "recipient": "",
+                "recipients": [],
+                "message": (
+                    "Assessment report skipped because recipients are not configured"
+                ),
+            }
         to_email = ", ".join(recipients)
         title = str(report.get("assessment_title") or "Assessment").strip()
         assessment_type = str(report.get("assessment_type") or "Assessment").strip()
@@ -287,8 +296,17 @@ class AtlasIncidentEmailService:
             recipient
             or os.getenv("ATLAS_ASSESSMENT_SUBMISSION_EMAIL_RECIPIENT", "").strip()
             or os.getenv("ATLAS_ASSESSMENT_REPORT_EMAIL_RECIPIENT", "").strip()
-            or "sanny86@gmail.com"
         )
+        if not recipients:
+            return {
+                "ok": True,
+                "sent": False,
+                "recipient": "",
+                "recipients": [],
+                "message": (
+                    "Assessment submission report skipped because recipients are not configured"
+                ),
+            }
         to_email = ", ".join(recipients)
         title = str(report.get("assessment_title") or "Assessment").strip()
         student_name = str(

@@ -15,6 +15,7 @@ import app.routes as routes  # noqa: E402
 from app.data.local_app_data_service import LocalAppDataService  # noqa: E402
 from app.main import app  # noqa: E402
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore  # noqa: E402
+from services.atlas_planner_engine import AtlasProviderSpec  # noqa: E402
 
 
 class AppDataRoutesTests(unittest.TestCase):
@@ -292,6 +293,44 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(body.get("assessment_id"), body.get("id"))
         self.assertIn("app/quiz/", str(body.get("quiz_url") or body.get("url") or ""))
 
+    def test_create_quiz_republish_with_explicit_id_updates_in_place(self) -> None:
+        first = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "id": "quiz_publish_fixed",
+                "title": "First Draft",
+                "type": "Exam",
+                "duration": 30,
+                "role": "teacher",
+                "questions": [{"text": "1 + 1 = ?", "correct": "2"}],
+            },
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertTrue(first.json().get("ok"))
+
+        second = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "id": "quiz_publish_fixed",
+                "title": "Updated Draft",
+                "type": "Exam",
+                "duration": 35,
+                "role": "teacher",
+                "questions": [{"text": "2 + 2 = ?", "correct": "4"}],
+            },
+        )
+        self.assertEqual(second.status_code, 200)
+        self.assertTrue(second.json().get("ok"))
+
+        listed = self.client.get("/app/action", params={"action": "get_assessments"})
+        self.assertEqual(listed.status_code, 200)
+        rows = listed.json().get("list", [])
+        matching = [row for row in rows if row.get("id") == "quiz_publish_fixed"]
+        self.assertEqual(len(matching), 1)
+        self.assertEqual(matching[0].get("title"), "Updated Draft")
+
     def test_create_quiz_hides_answers_in_csv_but_keeps_backend_answer_key(self) -> None:
         response = self.client.post(
             "/app/action",
@@ -345,6 +384,59 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(len(answer_key), 1)
         self.assertEqual(answer_key[0].get("correct_option"), "C")
         self.assertIn("Newton", answer_key[0].get("correct_answer", ""))
+
+    def test_evaluate_quiz_submission_with_stable_id_is_idempotent(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Idempotent Submission Quiz",
+                "type": "Exam",
+                "duration": 30,
+                "role": "teacher",
+                "questions": [
+                    {
+                        "text": "3 + 3 = ?",
+                        "type": "MCQ",
+                        "options": ["5", "6", "7", "8"],
+                        "correct": "6",
+                    }
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        payload = {
+            "action": "evaluate_quiz_submission",
+            "id": "res_stable_1",
+            "submission_id": "res_stable_1",
+            "quiz_id": quiz_id,
+            "answers": {"0": ["B"]},
+            "student_name": "Ritam",
+            "student_id": "stu_11",
+            "account_id": "acct_11",
+            "submitted_at": "2026-04-03T09:00:00Z",
+            "ts": 1712134800000,
+        }
+        first = self.client.post("/app/action", json=payload)
+        second = self.client.post("/app/action", json=payload)
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(second.status_code, 200)
+        self.assertTrue(first.json().get("ok"))
+        self.assertTrue(second.json().get("ok"))
+
+        results = self.client.get("/app/action", params={"action": "get_results"})
+        self.assertEqual(results.status_code, 200)
+        rows = [
+            row
+            for row in results.json().get("list", [])
+            if row.get("id") == "res_stable_1"
+        ]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0].get("attempt_index"), 1)
+        self.assertFalse(bool(rows[0].get("is_reattempt")))
 
     def test_publish_study_material_alias_adds_material(self) -> None:
         response = self.client.post(
@@ -1210,6 +1302,38 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertIn("x = 4", str(body.get("answer", "")))
         self.assertEqual(mocked.await_count, 1)
 
+    def test_ai_chat_surfaces_selected_model_name_when_present(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "x = 4",
+            "reasoning": "Solve x + 1 = 5.",
+            "winner_provider": "gemini",
+            "engine": {
+                "version": "research-grade-v2",
+                "model": "gemini-2.5-pro",
+                "model_name": "gemini-2.5-pro",
+            },
+        }
+        with patch(
+            "core.api.entrypoint.lalacore_entry",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/app/action",
+                json={
+                    "action": "ai_chat",
+                    "prompt": "Solve x + 1 = 5",
+                    "user_id": "u1",
+                    "chat_id": "c1",
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertTrue(body.get("ok"))
+        self.assertEqual(body.get("provider"), "gemini")
+        self.assertEqual(body.get("model"), "gemini-2.5-pro")
+
     def test_material_generate_action_uses_dedicated_material_engine_with_content(self) -> None:
         fake_result = {
             "status": "ok",
@@ -1478,7 +1602,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ) as mocked:
             res = self.client.post(
@@ -1517,7 +1641,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "Structured plan returned in final_answer.",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1572,7 +1696,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "The candidate plan was suppressed by the solver quality gate.",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1615,7 +1739,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1660,7 +1784,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ) as mocked:
             res = self.client.post(
@@ -1699,7 +1823,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             observed = self.client.post(
@@ -1816,7 +1940,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1854,7 +1978,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1896,7 +2020,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ) as mocked:
             res = self.client.post(
@@ -1941,7 +2065,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -1989,7 +2113,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2019,7 +2143,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2047,7 +2171,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2092,7 +2216,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2134,7 +2258,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2167,6 +2291,213 @@ class AppDataRoutesTests(unittest.TestCase):
         )
         self.assertEqual(body.get("recovery_mode"), "instruction_signals")
 
+    def test_ai_app_agent_runs_real_dedicated_planner_pipeline_for_student(self) -> None:
+        planner_payload = json.dumps(
+            {
+                "type": "single_action",
+                "goal": "Open unread notifications",
+                "plan_id": "student_real_pipeline_1",
+                "summary": "Atlas will open unread notifications.",
+                "teacher_notice": None,
+                "student_notice": "Using the app notification center only.",
+                "requires_confirmation": False,
+                "needs_more_info": False,
+                "follow_up_questions": [],
+                "proposed_tools": ["open_notifications_center_unread"],
+                "actions": [],
+                "steps": [],
+                "tool": "open_notifications_center_unread",
+                "title": "Open unread notifications",
+                "detail": "Navigate to unread notifications.",
+                "risk": "low",
+                "args": {},
+                "confidence": 0.92,
+                "risk_score": 0.08,
+                "needs_escalation": False,
+                "recovery_mode": None,
+            }
+        )
+        with patch(
+            "services.atlas_planner_engine._atlas_provider_specs",
+            return_value=[AtlasProviderSpec("openrouter", "openai/gpt-4o-mini")],
+        ), patch(
+            "services.atlas_planner_engine._call_provider",
+            new=AsyncMock(return_value=planner_payload),
+        ) as mocked:
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Open my unread notifications.",
+                    "context": {"account_id": "student_real_1"},
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("type"), "single_action")
+        self.assertEqual(body.get("tool"), "open_notifications_center_unread")
+        self.assertEqual(mocked.await_count, 1)
+
+    def test_ai_app_agent_teacher_request_injects_request_clock_into_real_planner_context(self) -> None:
+        captured: dict[str, str] = {}
+
+        async def _fake_provider(*args, **kwargs):
+            captured["prompt"] = kwargs.get("prompt", "")
+            return json.dumps(
+                {
+                    "type": "single_action",
+                    "goal": "Schedule the next class.",
+                    "plan_id": "teacher_real_pipeline_clock",
+                    "summary": "Atlas will schedule the next class.",
+                    "teacher_notice": "Using the dedicated planner with request clock context.",
+                    "student_notice": None,
+                    "requires_confirmation": False,
+                    "needs_more_info": False,
+                    "follow_up_questions": [],
+                    "proposed_tools": ["schedule_next_class"],
+                    "actions": [],
+                    "steps": [],
+                    "tool": "schedule_next_class",
+                    "title": "Schedule next class",
+                    "detail": "Schedule the next class.",
+                    "risk": "low",
+                    "args": {
+                        "start_time": "2026-04-04T17:00:00+05:30",
+                        "duration_minutes": 90,
+                    },
+                    "confidence": 0.89,
+                    "risk_score": 0.12,
+                    "needs_escalation": False,
+                    "recovery_mode": None,
+                }
+            )
+
+        with patch(
+            "services.atlas_planner_engine._atlas_provider_specs",
+            return_value=[AtlasProviderSpec("openrouter", "openai/gpt-4o-mini")],
+        ), patch(
+            "services.atlas_planner_engine._call_provider",
+            new=AsyncMock(side_effect=_fake_provider),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Schedule the next physics class tomorrow at 5 PM for class 12.",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_real_1",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        self.assertIn("request_clock", captured.get("prompt", ""))
+        self.assertIn("timezone", captured.get("prompt", ""))
+
+    def test_ai_app_agent_student_mode_understands_latest_flashcards_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes._run_app_atlas_planner",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Open the latest flashcards from the last class.",
+                    "context": {"account_id": "student_flash_1"},
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "open_last_class_flashcards")
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_student_mode_understands_ai_chat_history_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes._run_app_atlas_planner",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Show me my AI chat history.",
+                    "context": {"account_id": "student_ai_hist_1"},
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "open_ai_chat_history")
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_teacher_mode_understands_review_queue_request(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes._run_app_atlas_planner",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Show the review queue and pending reviews.",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_review_1",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "get_teacher_review_queue_summary")
+        self.assertEqual(body.get("recovery_mode"), "instruction_signals")
+
+    def test_ai_app_agent_teacher_mode_infers_homework_assignment_args(self) -> None:
+        fake_result = {
+            "status": "ok",
+            "final_answer": "{}",
+            "reasoning": "",
+        }
+        with patch(
+            "app.routes._run_app_atlas_planner",
+            new=AsyncMock(return_value=fake_result),
+        ):
+            res = self.client.post(
+                "/ai/app/agent",
+                json={
+                    "instruction": "Create homework on thermodynamics for class 12 with 10 questions and 60 minutes duration.",
+                    "authority_level": "teacher_full_auto",
+                    "context": {
+                        "atlas_role": "teacher",
+                        "account_id": "teacher_hw_1",
+                    },
+                },
+            )
+
+        self.assertEqual(res.status_code, 200)
+        body = res.json()
+        self.assertEqual(body.get("tool"), "create_homework_assignment")
+        self.assertEqual(body.get("args", {}).get("class_name"), "Class 12")
+        self.assertEqual(body.get("args", {}).get("question_count"), 10)
+        self.assertEqual(body.get("args", {}).get("duration_minutes"), 60)
+        self.assertEqual(body.get("args", {}).get("topic"), "Thermodynamics")
+
     def test_ai_app_agent_allows_report_system_issue_tool(self) -> None:
         fake_result = {
             "status": "ok",
@@ -2188,7 +2519,7 @@ class AppDataRoutesTests(unittest.TestCase):
             ),
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2214,7 +2545,7 @@ class AppDataRoutesTests(unittest.TestCase):
             "reasoning": "",
         }
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(return_value=fake_result),
         ):
             res = self.client.post(
@@ -2239,7 +2570,7 @@ class AppDataRoutesTests(unittest.TestCase):
 
     def test_ai_app_agent_falls_back_to_deterministic_issue_plan_when_planner_fails(self) -> None:
         with patch(
-            "app.routes.lalacore_entry",
+            "app.routes._run_app_atlas_planner",
             new=AsyncMock(side_effect=RuntimeError("planner backend unavailable")),
         ):
             res = self.client.post(
@@ -3322,6 +3653,341 @@ Ans. 4 2
         self.assertTrue(student_search.json().get("ok"))
         student_users = student_search.json().get("list", [])
         self.assertTrue(any(x.get("user_id") == "stu_riya" for x in student_users))
+
+    def test_save_result_marks_first_attempt_and_reattempt(self) -> None:
+        for score in (62, 88):
+            response = self.client.post(
+                "/app/action",
+                json={
+                    "action": "save_result",
+                    "quiz_id": "quiz_attempts_1",
+                    "quiz_title": "Organic Chemistry",
+                    "student_name": "Aarav",
+                    "student_id": "stu_aarav",
+                    "account_id": "stu_aarav",
+                    "score": score,
+                    "max_score": 100,
+                },
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(response.json().get("ok"))
+
+        results = self.client.get("/app/action", params={"action": "get_results"})
+        self.assertEqual(results.status_code, 200)
+        rows = [
+            row
+            for row in results.json().get("list", [])
+            if row.get("quiz_id") == "quiz_attempts_1"
+        ]
+        self.assertEqual(len(rows), 2)
+        latest = rows[0]
+        first = rows[1]
+        self.assertEqual(latest.get("attempt_index"), 2)
+        self.assertTrue(latest.get("is_reattempt"))
+        self.assertFalse(latest.get("counts_for_teacher_analytics"))
+        self.assertEqual(first.get("attempt_index"), 1)
+        self.assertFalse(first.get("is_reattempt"))
+        self.assertTrue(first.get("counts_for_teacher_analytics"))
+        self.assertEqual(latest.get("first_attempt_id"), first.get("id"))
+        self.assertEqual(latest.get("total_attempts_for_quiz"), 2)
+
+    def test_save_result_sends_submission_mail_for_first_attempt_and_reattempt(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Permutation Homework",
+                "type": "Homework",
+                "deadline": "2026-12-01T00:00:00Z",
+                "duration": 25,
+                "questions": [
+                    {"text": "nPr formula?", "correct": "n!/(n-r)!"},
+                    {"text": "2 + 2 = ?", "correct": "4"},
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        with patch.object(
+            routes._APP_DATA._atlas_incident_email,
+            "send_assessment_submission_report",
+            return_value={"ok": True, "sent": True, "message": "sent"},
+        ) as mocked_mail:
+            first = self.client.post(
+                "/app/action",
+                json={
+                    "action": "save_result",
+                    "quiz_id": quiz_id,
+                    "quiz_title": "Permutation Homework",
+                    "student_name": "Aarav",
+                    "student_id": "stu_aarav",
+                    "account_id": "stu_aarav",
+                    "email": "aarav@example.com",
+                    "score": 52,
+                    "max_score": 100,
+                    "correct": 8,
+                    "wrong": 2,
+                    "skipped": 0,
+                    "total_time": 960,
+                },
+            )
+            second = self.client.post(
+                "/app/action",
+                json={
+                    "action": "save_result",
+                    "quiz_id": quiz_id,
+                    "quiz_title": "Permutation Homework",
+                    "student_name": "Aarav",
+                    "student_id": "stu_aarav",
+                    "account_id": "stu_aarav",
+                    "email": "aarav@example.com",
+                    "score": 81,
+                    "max_score": 100,
+                    "correct": 14,
+                    "wrong": 1,
+                    "skipped": 0,
+                    "total_time": 780,
+                },
+            )
+
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(mocked_mail.call_count, 2)
+
+        first_report = mocked_mail.call_args_list[0].kwargs["report"]
+        second_report = mocked_mail.call_args_list[1].kwargs["report"]
+
+        self.assertEqual(first_report.get("submission_kind"), "first_attempt")
+        self.assertEqual(first_report.get("attempt_index"), 1)
+        self.assertTrue(first_report.get("counts_for_teacher_analytics"))
+        self.assertEqual(first_report.get("student_email"), "aarav@example.com")
+        self.assertEqual(second_report.get("submission_kind"), "reattempt")
+        self.assertEqual(second_report.get("attempt_index"), 2)
+        self.assertFalse(second_report.get("counts_for_teacher_analytics"))
+        self.assertEqual(
+            second_report.get("first_attempt_baseline", {}).get("score_pct"),
+            52.0,
+        )
+        self.assertEqual(mocked_mail.call_args_list[1].kwargs["recipient"], "")
+
+    def test_save_result_defers_noncritical_reports_in_production(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Deferred Report Quiz",
+                "type": "Homework",
+                "deadline": "2026-12-01T00:00:00Z",
+                "duration": 25,
+                "questions": [
+                    {"text": "nPr formula?", "correct": "n!/(n-r)!"},
+                ],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        with patch.dict(os.environ, {"APP_ENV": "production"}, clear=False):
+            with patch.object(
+                routes._APP_DATA,
+                "_schedule_background_task",
+            ) as mocked_schedule:
+                saved = self.client.post(
+                    "/app/action",
+                    json={
+                        "action": "save_result",
+                        "quiz_id": quiz_id,
+                        "quiz_title": "Deferred Report Quiz",
+                        "student_name": "Aarav",
+                        "student_id": "stu_aarav",
+                        "account_id": "stu_aarav",
+                        "email": "aarav@example.com",
+                        "score": 52,
+                        "max_score": 100,
+                    },
+                )
+
+        self.assertEqual(saved.status_code, 200)
+        self.assertTrue(saved.json().get("ok"))
+        self.assertEqual(mocked_schedule.call_count, 1)
+
+    def test_save_result_does_not_merge_same_named_students_without_stable_identity(self) -> None:
+        for score in (41, 77):
+            response = self.client.post(
+                "/app/action",
+                json={
+                    "action": "save_result",
+                    "quiz_id": "quiz_same_name_no_identity",
+                    "quiz_title": "Coordinate Geometry",
+                    "student_name": "Aarav",
+                    "score": score,
+                    "max_score": 100,
+                },
+            )
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(response.json().get("ok"))
+
+        results = self.client.get("/app/action", params={"action": "get_results"})
+        self.assertEqual(results.status_code, 200)
+        rows = [
+            row
+            for row in results.json().get("list", [])
+            if row.get("quiz_id") == "quiz_same_name_no_identity"
+        ]
+        self.assertEqual(len(rows), 2)
+        self.assertEqual([row.get("attempt_index") for row in rows], [1, 1])
+        self.assertEqual([row.get("is_reattempt") for row in rows], [False, False])
+        self.assertEqual(
+            [row.get("counts_for_teacher_analytics") for row in rows],
+            [True, True],
+        )
+
+    def test_assessment_deadline_report_sends_once_after_deadline(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Past Deadline Quiz",
+                "type": "Exam",
+                "deadline": "2025-01-01T00:00:00Z",
+                "duration": 20,
+                "questions": [{"text": "2 + 2 = ?", "correct": "4"}],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        with patch.object(
+            routes._APP_DATA._atlas_incident_email,
+            "send_assessment_report",
+            return_value={"ok": True, "sent": True, "message": "sent"},
+        ) as mocked_mail:
+            saved = self.client.post(
+                "/app/action",
+                json={
+                    "action": "save_result",
+                    "quiz_id": quiz_id,
+                    "quiz_title": "Past Deadline Quiz",
+                    "student_name": "Riya",
+                    "student_id": "stu_riya",
+                    "account_id": "stu_riya",
+                    "score": 71,
+                    "max_score": 100,
+                },
+            )
+            self.assertEqual(saved.status_code, 200)
+            self.assertTrue(saved.json().get("ok"))
+            self.assertEqual(mocked_mail.call_count, 1)
+
+            listed = self.client.get("/app/action", params={"action": "get_assessments"})
+            self.assertEqual(listed.status_code, 200)
+            self.assertEqual(mocked_mail.call_count, 1)
+
+        assessment = next(
+            row for row in routes._APP_DATA._assessments if row.get("id") == quiz_id
+        )
+        metadata = assessment.get("metadata") or {}
+        self.assertTrue(metadata.get("deadline_report_mail_sent"))
+        self.assertTrue(str(metadata.get("deadline_report_sent_at") or "").strip())
+
+    def test_get_results_defers_due_report_scan_in_production(self) -> None:
+        created = self.client.post(
+            "/app/action",
+            json={
+                "action": "create_quiz",
+                "title": "Deferred Results Scan Quiz",
+                "type": "Exam",
+                "deadline": "2025-01-01T00:00:00Z",
+                "duration": 20,
+                "questions": [{"text": "2 + 2 = ?", "correct": "4"}],
+            },
+        )
+        self.assertEqual(created.status_code, 200)
+        quiz_id = str(created.json().get("id") or "")
+        self.assertTrue(quiz_id)
+
+        saved = self.client.post(
+            "/app/action",
+            json={
+                "action": "save_result",
+                "quiz_id": quiz_id,
+                "quiz_title": "Deferred Results Scan Quiz",
+                "student_name": "Riya",
+                "student_id": "stu_riya",
+                "account_id": "stu_riya",
+                "score": 71,
+                "max_score": 100,
+            },
+        )
+        self.assertEqual(saved.status_code, 200)
+        self.assertTrue(saved.json().get("ok"))
+
+        with patch.dict(os.environ, {"APP_ENV": "production"}, clear=False):
+            with patch.object(
+                routes._APP_DATA,
+                "_schedule_background_task",
+            ) as mocked_schedule:
+                listed = self.client.get("/app/action", params={"action": "get_results"})
+
+        self.assertEqual(listed.status_code, 200)
+        self.assertTrue(listed.json().get("ok"))
+        self.assertEqual(mocked_schedule.call_count, 1)
+
+    def test_ai_chat_history_is_account_scoped(self) -> None:
+        saved = self.client.post(
+            "/app/action",
+            json={
+                "action": "save_ai_chat_history",
+                "account_id": "student_11",
+                "chat_id": "AI_student_11_today",
+                "title": "Kinematics doubts",
+                "messages": [
+                    {"role": "user", "content": "Explain projectile motion"},
+                    {"role": "assistant", "content": "Start with x and y components"},
+                ],
+            },
+        )
+        self.assertEqual(saved.status_code, 200)
+        self.assertTrue(saved.json().get("ok"))
+
+        listing = self.client.post(
+            "/app/action",
+            json={
+                "action": "list_ai_chat_sessions",
+                "account_id": "student_11",
+            },
+        )
+        self.assertEqual(listing.status_code, 200)
+        rows = listing.json().get("list", [])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0].get("chat_id"), "AI_student_11_today")
+
+        hidden = self.client.post(
+            "/app/action",
+            json={
+                "action": "list_ai_chat_sessions",
+                "account_id": "student_22",
+            },
+        )
+        self.assertEqual(hidden.status_code, 200)
+        self.assertEqual(hidden.json().get("list", []), [])
+
+        history = self.client.post(
+            "/app/action",
+            json={
+                "action": "get_ai_chat_history",
+                "account_id": "student_11",
+                "chat_id": "AI_student_11_today",
+            },
+        )
+        self.assertEqual(history.status_code, 200)
+        messages = history.json().get("messages", [])
+        self.assertEqual(len(messages), 2)
+        self.assertEqual(messages[0].get("role"), "user")
 
     def test_chat_thread_canonicalizes_teacher_alias_and_dedupes_retry_by_message_id(self) -> None:
         first = self.client.post(

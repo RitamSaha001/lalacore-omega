@@ -18,7 +18,7 @@ import tempfile
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Awaitable, Callable
 from urllib.parse import parse_qs, quote_plus, unquote, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
@@ -152,6 +152,8 @@ class LocalAppDataService:
         )
         self._chat_users_file = app_dir / "chat_users.json"
         self._chat_threads_file = app_dir / "chat_threads.json"
+        self._ai_chat_sessions_file = app_dir / "ai_chat_sessions.json"
+        self._ai_chat_histories_file = app_dir / "ai_chat_histories.json"
         self._doubts_file = app_dir / "doubts.json"
         self._auth_users_file = (
             Path(auth_users_file) if auth_users_file else auth_dir / "users.json"
@@ -196,6 +198,8 @@ class LocalAppDataService:
             self._import_drafts_file.resolve(): "app_import_drafts",
             self._chat_users_file.resolve(): "app_chat_users",
             self._chat_threads_file.resolve(): "app_chat_threads",
+            self._ai_chat_sessions_file.resolve(): "app_ai_chat_sessions",
+            self._ai_chat_histories_file.resolve(): "app_ai_chat_histories",
             self._doubts_file.resolve(): "app_doubts",
         }
 
@@ -212,6 +216,8 @@ class LocalAppDataService:
         self._import_question_bank: list[dict[str, Any]] = []
         self._chat_users: dict[str, dict[str, Any]] = {}
         self._chat_threads: dict[str, dict[str, Any]] = {}
+        self._ai_chat_sessions: dict[str, dict[str, Any]] = {}
+        self._ai_chat_histories: dict[str, dict[str, Any]] = {}
         self._doubts: list[dict[str, Any]] = []
         self._last_pyq_web_diagnostics: dict[str, Any] = {}
         self._web_search_cache: dict[str, dict[str, Any]] = {}
@@ -548,6 +554,29 @@ class LocalAppDataService:
             return await self._get_results()
 
         if action in {
+            "save_ai_chat_session",
+            "upsert_ai_chat_session",
+            "record_ai_chat_session",
+        }:
+            return await self._save_ai_chat_session(payload)
+
+        if action in {"list_ai_chat_sessions", "get_ai_chat_sessions"}:
+            return await self._list_ai_chat_sessions(payload)
+
+        if action in {
+            "save_ai_chat_history",
+            "upsert_ai_chat_history",
+            "record_ai_chat_history",
+        }:
+            return await self._save_ai_chat_history(payload)
+
+        if action in {"get_ai_chat_history", "read_ai_chat_history"}:
+            return await self._get_ai_chat_history(payload)
+
+        if action in {"delete_ai_chat_history", "remove_ai_chat_history"}:
+            return await self._delete_ai_chat_history(payload)
+
+        if action in {
             "queue_teacher_review",
             "add_teacher_review",
             "send_to_teacher_review",
@@ -742,6 +771,8 @@ class LocalAppDataService:
             self._import_question_bank = self._load_preferred_question_bank()
             self._chat_users = await self._load_map(self._chat_users_file)
             self._chat_threads = await self._load_map(self._chat_threads_file)
+            self._ai_chat_sessions = await self._load_map(self._ai_chat_sessions_file)
+            self._ai_chat_histories = await self._load_map(self._ai_chat_histories_file)
             self._doubts = await self._load_list(self._doubts_file)
             self._loaded = True
 
@@ -1351,6 +1382,11 @@ class LocalAppDataService:
             or payload.get("accountId")
             or payload.get("user_id")
         )
+        account_id = self._str(
+            payload.get("account_id")
+            or payload.get("accountId")
+            or student_id
+        )
         max_score = self._to_float(
             payload.get("max_score")
             or payload.get("maxScore")
@@ -1387,9 +1423,9 @@ class LocalAppDataService:
             "student": student_name,
             "student_id": student_id,
             "studentId": student_id,
-            "account_id": self._str(payload.get("account_id") or student_id),
-            "accountId": self._str(payload.get("accountId") or payload.get("account_id") or student_id),
-            "user_id": self._str(payload.get("user_id") or payload.get("account_id") or student_id),
+            "account_id": account_id,
+            "accountId": account_id,
+            "user_id": self._str(payload.get("user_id") or account_id or student_id),
             "score": self._to_float(payload.get("score"), 0.0),
             "total": max_score,
             "max_score": max_score,
@@ -1401,9 +1437,11 @@ class LocalAppDataService:
             "totalTime": total_time,
             "time": total_time,
             "submitted_at": submitted_at,
+            "submittedAt": submitted_at,
             "savedAt": ts,
             "ts": ts,
             "type": self._str(payload.get("type") or payload.get("quiz_type") or "Exam"),
+            "email": self._str(payload.get("email")),
         }
         if section_accuracy:
             row["section_accuracy"] = section_accuracy
@@ -1417,10 +1455,147 @@ class LocalAppDataService:
             "assessment_title",
             "subject",
             "source_surface",
+            "attempt_index",
+            "attemptIndex",
+            "attempt_number",
+            "is_reattempt",
+            "isReattempt",
+            "reattempt",
+            "counts_for_teacher_analytics",
+            "countsForTeacherAnalytics",
+            "counts_for_analytics",
+            "first_attempt_id",
+            "firstAttemptId",
+            "first_attempt_ts",
+            "firstAttemptTs",
+            "total_attempts_for_quiz",
+            "totalAttemptsForQuiz",
+            "deadline_report_sent_at",
         ):
             if key in payload and payload.get(key) not in (None, "", [], {}):
                 row[key] = payload.get(key)
         return row
+
+    def _result_quiz_key(self, row: dict[str, Any]) -> str:
+        return self._str(
+            row.get("quiz_id")
+            or row.get("quizId")
+            or row.get("assessment_id")
+            or row.get("topic")
+            or row.get("quiz_title")
+            or row.get("title")
+        ).lower()
+
+    def _result_owner_key(self, row: dict[str, Any]) -> str:
+        for prefix, value in (
+            ("account", row.get("account_id") or row.get("accountId")),
+            ("student", row.get("student_id") or row.get("studentId")),
+            ("user", row.get("user_id") or row.get("userId")),
+            ("email", row.get("email") or row.get("student_email") or row.get("studentEmail")),
+        ):
+            normalized = self._str(value).lower()
+            if normalized:
+                return f"{prefix}:{normalized}"
+        return ""
+
+    def _result_ts(self, row: dict[str, Any]) -> int:
+        raw = row.get("ts") or row.get("savedAt") or row.get("submitted_at") or row.get("submittedAt")
+        ts = self._to_int(raw, 0)
+        if ts > 0:
+            return ts
+        stamp = self._str(raw)
+        if stamp:
+            try:
+                return int(datetime.fromisoformat(stamp.replace("Z", "+00:00")).timestamp() * 1000)
+            except Exception:
+                return 0
+        return 0
+
+    def _sort_result_group(self, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        return sorted(
+            rows,
+            key=lambda item: (
+                self._result_ts(item),
+                self._str(item.get("id")),
+            ),
+        )
+
+    def _apply_attempt_metadata_to_group(
+        self, rows: list[dict[str, Any]]
+    ) -> list[dict[str, Any]]:
+        ordered = self._sort_result_group(rows)
+        if not ordered:
+            return ordered
+        first = ordered[0]
+        first_id = self._str(first.get("id"))
+        first_ts = self._result_ts(first)
+        total_attempts = len(ordered)
+        for idx, item in enumerate(ordered, start=1):
+            is_reattempt = idx > 1
+            item["attempt_index"] = idx
+            item["attemptIndex"] = idx
+            item["attempt_number"] = idx
+            item["is_reattempt"] = is_reattempt
+            item["isReattempt"] = is_reattempt
+            item["reattempt"] = is_reattempt
+            item["counts_for_teacher_analytics"] = not is_reattempt
+            item["countsForTeacherAnalytics"] = not is_reattempt
+            item["counts_for_analytics"] = not is_reattempt
+            item["first_attempt_id"] = first_id
+            item["firstAttemptId"] = first_id
+            item["first_attempt_ts"] = first_ts
+            item["firstAttemptTs"] = first_ts
+            item["total_attempts_for_quiz"] = total_attempts
+            item["totalAttemptsForQuiz"] = total_attempts
+        return ordered
+
+    def _same_result_attempt_group(
+        self, left: dict[str, Any], right: dict[str, Any]
+    ) -> bool:
+        left_quiz_key = self._result_quiz_key(left)
+        right_quiz_key = self._result_quiz_key(right)
+        left_owner_key = self._result_owner_key(left)
+        right_owner_key = self._result_owner_key(right)
+        return (
+            bool(left_quiz_key)
+            and bool(left_owner_key)
+            and left_quiz_key == right_quiz_key
+            and left_owner_key == right_owner_key
+        )
+
+    def _upsert_result_with_attempt_metadata(
+        self, row: dict[str, Any]
+    ) -> dict[str, Any]:
+        current_id = self._str(row.get("id"))
+        peers = [
+            item
+            for item in self._results
+            if isinstance(item, dict)
+            and self._str(item.get("id")) != current_id
+            and self._same_result_attempt_group(item, row)
+        ]
+        normalized_group = self._apply_attempt_metadata_to_group(
+            [*(dict(item) for item in peers), dict(row)]
+        )
+        updated_row = next(
+            (
+                item
+                for item in normalized_group
+                if self._str(item.get("id")) == current_id
+            ),
+            dict(row),
+        )
+        filtered = [
+            item
+            for item in self._results
+            if not (
+                isinstance(item, dict)
+                and self._same_result_attempt_group(item, updated_row)
+            )
+        ]
+        filtered.extend(normalized_group)
+        self._results = filtered
+        return updated_row
 
     def _to_float(self, value: Any, fallback: float) -> float:
         if isinstance(value, bool):
@@ -11381,6 +11556,7 @@ class LocalAppDataService:
         title: str,
         quiz_type: str,
         deadline: str,
+        start_at: str = "",
         duration: int,
         class_name: str,
         chapters: str,
@@ -11402,6 +11578,8 @@ class LocalAppDataService:
             "title": title,
             "url": quiz_url,
             "deadline": deadline,
+            "start_at": start_at,
+            "start_time": start_at,
             "type": quiz_type,
             "duration": duration,
             "class": class_name,
@@ -11446,6 +11624,30 @@ class LocalAppDataService:
             deadline = time.strftime(
                 "%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time() + 7 * 86400)
             )
+        start_at = self._str(
+            payload.get("start_at")
+            or payload.get("start_time")
+            or payload.get("scheduled_at")
+        )
+        if start_at:
+            try:
+                start_dt = datetime.fromisoformat(start_at.replace("Z", "+00:00"))
+            except Exception:
+                return {
+                    "ok": False,
+                    "status": "INVALID_START_TIME",
+                    "message": "Invalid scheduled start time",
+                }
+            try:
+                deadline_dt = datetime.fromisoformat(deadline.replace("Z", "+00:00"))
+            except Exception:
+                deadline_dt = None
+            if deadline_dt is not None and deadline_dt <= start_dt:
+                return {
+                    "ok": False,
+                    "status": "INVALID_START_WINDOW",
+                    "message": "Scheduled start must be before the deadline",
+                }
         duration = max(
             1,
             self._to_int(
@@ -11496,6 +11698,7 @@ class LocalAppDataService:
             title=title,
             quiz_type=kind,
             deadline=deadline,
+            start_at=start_at,
             duration=duration,
             class_name=class_name,
             chapters=chapters,
@@ -11513,8 +11716,8 @@ class LocalAppDataService:
             self._upsert_by_id(self._assessments, quiz_id, item)
             await self._persist_list(self._assessments_file, self._assessments)
 
-        asyncio.create_task(
-            self._send_assignment_announcement_in_background(dict(item))
+        self._schedule_background_task(
+            lambda: self._send_assignment_announcement_in_background(dict(item))
         )
 
         quiz_url = self._str(item.get("url"))
@@ -11533,6 +11736,12 @@ class LocalAppDataService:
         self,
         assessment: dict[str, Any],
     ) -> None:
+        await self._run_background_assignment_announcement(dict(assessment))
+
+    async def _run_background_assignment_announcement(
+        self,
+        assessment: dict[str, Any],
+    ) -> None:
         try:
             await asyncio.to_thread(
                 self._assignment_announcements.notify_assessment_assigned,
@@ -11540,6 +11749,61 @@ class LocalAppDataService:
             )
         except Exception:
             return
+
+    def _should_defer_noncritical_side_effects(self) -> bool:
+        raw = os.getenv("APP_DEFER_NONCRITICAL_SIDE_EFFECTS")
+        if raw is not None and raw.strip():
+            return raw.strip().lower() in {"1", "true", "yes", "on"}
+        for key in ("APP_ENV", "NODE_ENV"):
+            value = os.getenv(key, "").strip().lower()
+            if value:
+                return value == "production"
+        return False
+
+    def _schedule_background_task(
+        self,
+        factory: Callable[[], Awaitable[Any]],
+    ) -> None:
+        async def runner() -> None:
+            try:
+                await factory()
+            except Exception:
+                return
+
+        task = runner()
+        try:
+            asyncio.create_task(task)
+        except Exception:
+            task.close()
+
+    async def _run_noncritical_side_effect(
+        self,
+        factory: Callable[[], Awaitable[Any]],
+    ) -> None:
+        if self._should_defer_noncritical_side_effects():
+            self._schedule_background_task(factory)
+            return
+        try:
+            await factory()
+        except Exception:
+            return
+
+    async def _run_result_side_effects(
+        self,
+        *,
+        quiz_ids: list[str] | None = None,
+        assessment: dict[str, Any] | None = None,
+        result: dict[str, Any] | None = None,
+        answer_key: list[dict[str, Any]] | None = None,
+        send_submission_report: bool = False,
+    ) -> None:
+        await self._maybe_send_due_assessment_reports(quiz_ids=quiz_ids)
+        if send_submission_report and result is not None:
+            await self._maybe_send_assessment_submission_report(
+                assessment=dict(assessment) if isinstance(assessment, dict) else None,
+                result=dict(result),
+                answer_key=list(answer_key) if isinstance(answer_key, list) else None,
+            )
 
     async def _ai_generate_quiz(self, payload: dict[str, Any]) -> dict[str, Any]:
         subject = self._str(payload.get("subject") or payload.get("title") or "Physics")
@@ -13469,6 +13733,15 @@ class LocalAppDataService:
                 "message": "Engine returned non-dict response",
             }
 
+        engine_payload = result.get("engine") or {}
+        if not isinstance(engine_payload, dict):
+            engine_payload = {}
+        resolved_model_name = self._str(
+            engine_payload.get("model")
+            or engine_payload.get("model_name")
+            or engine_payload.get("version")
+        )
+
         if str(result.get("status", "")).lower() == "error":
             return {
                 "ok": False,
@@ -13479,7 +13752,7 @@ class LocalAppDataService:
                     or "AI solve failed"
                 ),
                 "provider": self._str(result.get("winner_provider")),
-                "model": self._str((result.get("engine") or {}).get("version")),
+                "model": resolved_model_name,
                 "raw": result,
             }
 
@@ -13502,7 +13775,7 @@ class LocalAppDataService:
             result.get("winner_provider")
             or (result.get("provider_diagnostics") or {}).get("winner_provider")
         )
-        model_name = self._str((result.get("engine") or {}).get("version"))
+        model_name = resolved_model_name
         confidence_raw = (
             (result.get("calibration_metrics") or {}).get("confidence_score")
             if isinstance(result.get("calibration_metrics"), dict)
@@ -14090,30 +14363,61 @@ class LocalAppDataService:
             or payload.get("user_id")
             or payload.get("account_id")
         )
+        account_id = self._str(payload.get("account_id") or student_id)
+        explicit_result_id = self._safe_id(
+            payload.get("result_id")
+            or payload.get("submission_id")
+            or payload.get("id")
+        )
+        submitted_at = self._str(payload.get("submitted_at") or payload.get("submittedAt"))
+        if not submitted_at:
+            submitted_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        result_ts = self._to_int(
+            payload.get("ts")
+            or payload.get("savedAt")
+            or payload.get("saved_at"),
+            self._now_ms(),
+        )
         result_row = {
-            "id": self._new_id("res"),
+            "id": explicit_result_id or self._new_id("res"),
             "quiz_id": quiz_id,
             "topic": self._str(row.get("title") or row.get("subject") or "AI Quiz"),
             "name": student_name,
             "student_name": student_name,
             "student_id": student_id,
-            "account_id": student_id,
+            "account_id": account_id,
             "score": round(score, 2),
             "total": round(total, 2),
             "correct": correct,
             "wrong": wrong,
             "skipped": skipped,
             "section_accuracy": section_accuracy,
-            "submitted_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "ts": self._now_ms(),
+            "submitted_at": submitted_at,
+            "ts": result_ts,
+            "savedAt": result_ts,
             "engine_mode": self._str(row.get("engine_mode")),
             "type": self._str(row.get("type") or ("AIExam" if assessment_row is None else "Exam")),
             "correct_upload_count": len(uploaded_correct_only),
+            "user_answers": answer_map,
+            "email": self._str(payload.get("email")),
         }
         if not preview_only:
             async with self._lock:
-                self._results.append(result_row)
+                result_row = self._upsert_result_with_attempt_metadata(
+                    self._normalized_result_row(result_row, result_id=self._str(result_row.get("id")))
+                )
                 await self._persist_list(self._results_file, self._results)
+            await self._run_noncritical_side_effect(
+                lambda: self._run_result_side_effects(
+                    quiz_ids=[quiz_id],
+                    assessment=dict(assessment_row)
+                    if isinstance(assessment_row, dict)
+                    else None,
+                    result=dict(result_row),
+                    answer_key=answer_key if include_answer_key else None,
+                    send_submission_report=True,
+                )
+            )
 
         return {
             "ok": True,
@@ -14137,30 +14441,710 @@ class LocalAppDataService:
             "answer_key": answer_key if include_answer_key else [],
             "uploaded_correct_only": uploaded_correct_only if include_answer_key else [],
             "preview_only": preview_only,
+            "result": result_row,
         }
 
     async def _save_result(self, payload: dict[str, Any]) -> dict[str, Any]:
         result_id = self._safe_id(payload.get("id")) or self._new_id("res")
+        is_new_result = not any(
+            isinstance(item, dict) and self._str(item.get("id")) == result_id
+            for item in self._results
+        )
         row = self._normalized_result_row(payload, result_id=result_id)
         async with self._lock:
-            self._upsert_by_id(self._results, result_id, row)
+            row = self._upsert_result_with_attempt_metadata(row)
             await self._persist_list(self._results_file, self._results)
+        await self._run_noncritical_side_effect(
+            lambda: self._run_result_side_effects(
+                quiz_ids=[self._str(row.get("quiz_id"))],
+                assessment=self._find_assessment_quiz(
+                    self._str(row.get("quiz_id") or row.get("quizId"))
+                ),
+                result=dict(row),
+                send_submission_report=is_new_result,
+            )
+        )
         return {"ok": True, "status": "SUCCESS", "result": row}
 
     async def _get_results(self) -> dict[str, Any]:
-        rows = sorted(
-            [
-                self._normalized_result_row(
-                    row,
-                    result_id=self._safe_id(row.get("id")) or self._new_id("res"),
+        await self._run_noncritical_side_effect(
+            lambda: self._maybe_send_due_assessment_reports()
+        )
+        rows = self._results_with_attempt_metadata()
+        return {"ok": True, "status": "SUCCESS", "list": rows}
+
+    def _results_with_attempt_metadata(self) -> list[dict[str, Any]]:
+        grouped: dict[str, list[dict[str, Any]]] = {}
+        passthrough: list[dict[str, Any]] = []
+        for raw in self._results:
+            if not isinstance(raw, dict):
+                continue
+            row = self._normalized_result_row(
+                raw,
+                result_id=self._safe_id(raw.get("id")) or self._new_id("res"),
+            )
+            owner_key = self._result_owner_key(row)
+            quiz_key = self._result_quiz_key(row)
+            if owner_key and quiz_key:
+                grouped.setdefault(f"{owner_key}|{quiz_key}", []).append(row)
+            else:
+                passthrough.append(row)
+        rows: list[dict[str, Any]] = []
+        for items in grouped.values():
+            rows.extend(self._apply_attempt_metadata_to_group(items))
+        rows.extend(passthrough)
+        rows.sort(key=lambda x: self._result_ts(x), reverse=True)
+        return rows
+
+    def _assessment_deadline_dt(self, row: dict[str, Any]) -> datetime | None:
+        raw = self._str(row.get("deadline") or row.get("date"))
+        if not raw:
+            return None
+        try:
+            return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except Exception:
+            pass
+        try:
+            return datetime.strptime(raw, "%Y-%m-%d")
+        except Exception:
+            return None
+
+    def _assessment_report_recipient(self) -> str:
+        return os.getenv("ATLAS_ASSESSMENT_REPORT_EMAIL_RECIPIENT", "").strip()
+
+    def _assessment_submission_recipient(self) -> str:
+        return (
+            os.getenv("ATLAS_ASSESSMENT_SUBMISSION_EMAIL_RECIPIENT", "").strip()
+            or self._assessment_report_recipient()
+        )
+
+    def _assessment_submission_target(
+        self,
+        assessment: dict[str, Any] | None,
+        result: dict[str, Any],
+    ) -> dict[str, Any] | None:
+        base = dict(assessment or {})
+        fallback_type = self._str(result.get("type") or base.get("type")).lower()
+        if "exam" not in fallback_type and "homework" not in fallback_type:
+            return None
+        if not base:
+            base = {
+                "id": self._str(result.get("quiz_id") or result.get("quizId")),
+                "title": self._str(
+                    result.get("quiz_title")
+                    or result.get("quizTitle")
+                    or result.get("topic")
+                    or result.get("title")
+                ),
+                "type": self._str(result.get("type") or "Exam"),
+                "question_count": self._to_int(
+                    result.get("correct"), 0
                 )
-                for row in self._results
-                if isinstance(row, dict)
+                + self._to_int(result.get("wrong"), 0)
+                + self._to_int(result.get("skipped"), 0),
+                "duration": max(
+                    1,
+                    round(self._to_int(result.get("total_time"), 0) / 60)
+                    if self._to_int(result.get("total_time"), 0) > 0
+                    else 0,
+                ),
+            }
+        return base
+
+    def _assessment_question_rows(
+        self, assessment: dict[str, Any]
+    ) -> list[dict[str, Any]]:
+        raw = assessment.get("questions_json")
+        text = raw if isinstance(raw, str) else self._str(raw)
+        if not text:
+            return []
+        try:
+            decoded = json.loads(text)
+        except Exception:
+            return []
+        if not isinstance(decoded, list):
+            return []
+        return [dict(item) for item in decoded if isinstance(item, dict)]
+
+    def _format_submission_correct_answer(self, question: dict[str, Any]) -> str:
+        multi = question.get("correct_answers")
+        if isinstance(multi, list):
+            values = [self._str(item) for item in multi if self._str(item)]
+            if values:
+                return ", ".join(values)
+        for key in (
+            "correct_answer",
+            "correct",
+            "answer",
+            "numerical_answer",
+            "correct_option",
+            "correct_numerical",
+        ):
+            value = self._str(question.get(key))
+            if value:
+                return value
+        return "N/A"
+
+    def _build_submission_answer_snapshot(
+        self,
+        *,
+        assessment: dict[str, Any],
+        result: dict[str, Any],
+        answer_key: list[dict[str, Any]] | None = None,
+    ) -> list[dict[str, Any]]:
+        if isinstance(answer_key, list) and answer_key:
+            snapshot: list[dict[str, Any]] = []
+            for item in answer_key[:20]:
+                if not isinstance(item, dict):
+                    continue
+                correct_answer = self._str(item.get("correct_answer"))
+                if not correct_answer:
+                    correct_answer = ", ".join(
+                        self._to_list_str(item.get("correct_answers"))
+                    ) or self._str(item.get("correct_numerical"))
+                snapshot.append(
+                    {
+                        "question_index": self._to_int(
+                            item.get("question_index"), 0
+                        )
+                        + 1,
+                        "status": "correct"
+                        if self._to_bool(item.get("is_correct"))
+                        else "incorrect",
+                        "student_answer": self._str(item.get("student_answer"))
+                        or "Skipped",
+                        "correct_answer": correct_answer or "N/A",
+                    }
+                )
+            return snapshot
+        user_answers = self._normalize_user_answers(
+            result.get("user_answers") or result.get("userAnswers")
+        )
+        questions = self._assessment_question_rows(assessment)
+        snapshot = []
+        for index, question in enumerate(questions[:20]):
+            question_id = self._str(question.get("question_id")) or self._str(
+                question.get("id")
+            )
+            values = user_answers.get(str(index), [])
+            if not values and question_id:
+                values = user_answers.get(question_id, [])
+            student_answer = ", ".join(values) if values else "Skipped"
+            snapshot.append(
+                {
+                    "question_index": index + 1,
+                    "status": "answered" if values else "skipped",
+                    "student_answer": student_answer,
+                    "correct_answer": self._format_submission_correct_answer(
+                        question
+                    ),
+                }
+            )
+        return snapshot
+
+    def _build_assessment_submission_report(
+        self,
+        *,
+        assessment: dict[str, Any],
+        result: dict[str, Any],
+        answer_key: list[dict[str, Any]] | None = None,
+    ) -> dict[str, Any]:
+        current_results = [
+            row
+            for row in self._results_with_attempt_metadata()
+            if self._same_result_attempt_group(row, result)
+        ]
+        current = next(
+            (
+                row
+                for row in current_results
+                if self._str(row.get("id")) == self._str(result.get("id"))
+            ),
+            dict(result),
+        )
+        first_attempt = next(
+            (
+                row
+                for row in current_results
+                if not self._to_bool(row.get("is_reattempt"))
+            ),
+            {},
+        )
+        total_questions = max(
+            0,
+            self._to_int(assessment.get("question_count"), 0)
+            or len(self._assessment_question_rows(assessment))
+            or (
+                self._to_int(current.get("correct"), 0)
+                + self._to_int(current.get("wrong"), 0)
+                + self._to_int(current.get("skipped"), 0)
+            ),
+        )
+        attempted = self._to_int(current.get("correct"), 0) + self._to_int(
+            current.get("wrong"), 0
+        )
+        accuracy_pct = round(
+            (
+                self._to_int(current.get("correct"), 0) / max(1, attempted)
+            )
+            * 100.0,
+            2,
+        )
+        coverage_pct = round((attempted / max(1, total_questions)) * 100.0, 2)
+        deadline_text = self._str(assessment.get("deadline") or assessment.get("date"))
+        deadline_dt = self._assessment_deadline_dt(assessment)
+        submitted_dt = None
+        submitted_at = self._str(
+            current.get("submitted_at") or current.get("submittedAt")
+        )
+        if submitted_at:
+            try:
+                submitted_dt = datetime.fromisoformat(
+                    submitted_at.replace("Z", "+00:00")
+                )
+            except Exception:
+                submitted_dt = None
+        if deadline_dt is not None and deadline_dt.tzinfo is None:
+            deadline_dt = deadline_dt.replace(tzinfo=timezone.utc)
+        if submitted_dt is not None and submitted_dt.tzinfo is None:
+            submitted_dt = submitted_dt.replace(tzinfo=timezone.utc)
+        is_reattempt = self._to_bool(current.get("is_reattempt"))
+        baseline: dict[str, Any] = {}
+        if is_reattempt and first_attempt and self._str(first_attempt.get("id")) != self._str(
+            current.get("id")
+        ):
+            delta_pct = round(
+                self._result_score_pct(current) - self._result_score_pct(first_attempt),
+                2,
+            )
+            baseline = {
+                "score": round(self._to_float(first_attempt.get("score"), 0.0), 2),
+                "total": round(
+                    self._to_float(
+                        first_attempt.get("total")
+                        or first_attempt.get("max_score")
+                        or first_attempt.get("maxScore"),
+                        0.0,
+                    ),
+                    2,
+                ),
+                "score_pct": self._result_score_pct(first_attempt),
+                "submitted_at": self._str(
+                    first_attempt.get("submitted_at") or first_attempt.get("submittedAt")
+                ),
+                "delta_pct": delta_pct,
+            }
+        return {
+            "report_type": "assessment_submission",
+            "assessment_id": self._str(assessment.get("id")),
+            "assessment_title": self._str(
+                assessment.get("title")
+                or current.get("quiz_title")
+                or current.get("quizTitle")
+                or current.get("topic")
+                or "Assessment"
+            ),
+            "assessment_type": self._str(
+                assessment.get("type") or current.get("type") or "Assessment"
+            ),
+            "subject": self._str(
+                assessment.get("subject") or assessment.get("chapters")
+            ),
+            "chapters": self._str(assessment.get("chapters")),
+            "class_name": self._str(assessment.get("class") or assessment.get("class_name")),
+            "deadline": deadline_text,
+            "submitted_at": submitted_at,
+            "submitted_before_deadline": (
+                submitted_dt <= deadline_dt
+                if submitted_dt is not None and deadline_dt is not None
+                else False
+            ),
+            "submission_kind": "reattempt" if is_reattempt else "first_attempt",
+            "attempt_index": self._to_int(current.get("attempt_index"), 1),
+            "total_attempts_for_quiz": self._to_int(
+                current.get("total_attempts_for_quiz"), 1
+            ),
+            "counts_for_teacher_analytics": self._to_bool(
+                current.get("counts_for_teacher_analytics")
+                or current.get("countsForTeacherAnalytics")
+            ),
+            "student_name": self._str(
+                current.get("student_name")
+                or current.get("studentName")
+                or current.get("name")
+            ),
+            "student_id": self._str(
+                current.get("student_id")
+                or current.get("studentId")
+                or current.get("account_id")
+            ),
+            "account_id": self._str(
+                current.get("account_id") or current.get("accountId")
+            ),
+            "student_email": self._str(current.get("email")),
+            "score": round(self._to_float(current.get("score"), 0.0), 2),
+            "total": round(
+                self._to_float(
+                    current.get("total")
+                    or current.get("max_score")
+                    or current.get("maxScore"),
+                    0.0,
+                ),
+                2,
+            ),
+            "score_pct": self._result_score_pct(current),
+            "correct": self._to_int(current.get("correct"), 0),
+            "wrong": self._to_int(current.get("wrong"), 0),
+            "skipped": self._to_int(current.get("skipped"), 0),
+            "attempted": attempted,
+            "accuracy_pct": accuracy_pct,
+            "coverage_pct": coverage_pct,
+            "total_questions": total_questions,
+            "total_time_seconds": self._to_int(
+                current.get("total_time") or current.get("totalTime"), 0
+            ),
+            "duration_minutes": self._to_int(
+                assessment.get("duration") or current.get("duration_minutes"),
+                0,
+            ),
+            "section_accuracy": self._normalize_float_map(
+                current.get("section_accuracy") or current.get("sectionAccuracy")
+            ),
+            "first_attempt_baseline": baseline,
+            "answer_snapshot": self._build_submission_answer_snapshot(
+                assessment=assessment,
+                result=current,
+                answer_key=answer_key,
+            ),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "recipient_email": self._assessment_submission_recipient(),
+        }
+
+    async def _maybe_send_assessment_submission_report(
+        self,
+        *,
+        assessment: dict[str, Any] | None,
+        result: dict[str, Any],
+        answer_key: list[dict[str, Any]] | None = None,
+    ) -> None:
+        target = self._assessment_submission_target(assessment, result)
+        if target is None:
+            return
+        try:
+            report = self._build_assessment_submission_report(
+                assessment=target,
+                result=result,
+                answer_key=answer_key,
+            )
+            self._atlas_incident_email.send_assessment_submission_report(
+                report=report,
+                recipient=self._assessment_submission_recipient(),
+            )
+        except Exception:
+            return
+
+    def _result_score_pct(self, row: dict[str, Any]) -> float:
+        total = self._to_float(
+            row.get("total") or row.get("max_score") or row.get("maxScore"),
+            0.0,
+        )
+        score = self._to_float(row.get("score"), 0.0)
+        if total > 0:
+            return max(0.0, min(100.0, round((score / total) * 100.0, 2)))
+        return max(0.0, min(100.0, score))
+
+    def _build_assessment_deadline_report(
+        self,
+        *,
+        assessment: dict[str, Any],
+        submissions: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        first_attempts = [
+            row
+            for row in submissions
+            if row.get("counts_for_teacher_analytics") is True
+        ]
+        reattempts = [row for row in submissions if row.get("is_reattempt") is True]
+        first_pcts = [self._result_score_pct(row) for row in first_attempts]
+        avg_pct = round(sum(first_pcts) / len(first_pcts), 2) if first_pcts else 0.0
+        unique_students = {
+            self._result_owner_key(row)
+            for row in submissions
+            if self._result_owner_key(row)
+        }
+        reattempted_students = sorted(
+            {
+                self._str(
+                    row.get("student_name")
+                    or row.get("studentName")
+                    or row.get("name")
+                    or row.get("student_id")
+                    or row.get("account_id")
+                )
+                for row in reattempts
+                if self._str(
+                    row.get("student_name")
+                    or row.get("studentName")
+                    or row.get("name")
+                    or row.get("student_id")
+                    or row.get("account_id")
+                )
+            }
+        )
+        weak_sections: dict[str, list[float]] = {}
+        for row in first_attempts:
+            section_map = row.get("section_accuracy") or row.get("sectionAccuracy")
+            if not isinstance(section_map, dict):
+                continue
+            for key, value in section_map.items():
+                label = self._str(key)
+                if not label:
+                    continue
+                weak_sections.setdefault(label, []).append(
+                    self._to_float(value, 0.0)
+                )
+        weak_section_ranked = sorted(
+            (
+                {
+                    "section": key,
+                    "average_accuracy": round(sum(values) / len(values), 2),
+                }
+                for key, values in weak_sections.items()
+                if values
+            ),
+            key=lambda item: float(item.get("average_accuracy") or 0.0),
+        )
+        top_students = sorted(
+            first_attempts,
+            key=lambda row: self._result_score_pct(row),
+            reverse=True,
+        )[:8]
+        return {
+            "report_type": "assessment_deadline_summary",
+            "assessment_id": self._str(assessment.get("id")),
+            "assessment_title": self._str(assessment.get("title") or assessment.get("quiz_title") or "Assessment"),
+            "assessment_type": self._str(assessment.get("type") or "Exam"),
+            "deadline": self._str(assessment.get("deadline") or assessment.get("date")),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "recipient_email": self._assessment_report_recipient(),
+            "total_submissions": len(submissions),
+            "counted_first_attempts": len(first_attempts),
+            "reattempt_submissions": len(reattempts),
+            "unique_students": len(unique_students),
+            "first_attempt_average_pct": avg_pct,
+            "first_attempt_best_pct": max(first_pcts) if first_pcts else 0.0,
+            "first_attempt_worst_pct": min(first_pcts) if first_pcts else 0.0,
+            "reattempted_students": reattempted_students,
+            "weak_sections": weak_section_ranked[:8],
+            "top_students": [
+                {
+                    "student_name": self._str(
+                        row.get("student_name")
+                        or row.get("studentName")
+                        or row.get("name")
+                        or row.get("student_id")
+                    ),
+                    "student_id": self._str(row.get("student_id") or row.get("account_id")),
+                    "score_pct": self._result_score_pct(row),
+                    "score": round(self._to_float(row.get("score"), 0.0), 2),
+                    "total": round(
+                        self._to_float(
+                            row.get("total") or row.get("max_score") or row.get("maxScore"),
+                            0.0,
+                        ),
+                        2,
+                    ),
+                }
+                for row in top_students
             ],
-            key=lambda x: int(x.get("ts", 0) or 0),
+            "submissions": submissions[:50],
+        }
+
+    async def _maybe_send_due_assessment_reports(
+        self,
+        *,
+        quiz_ids: list[str] | None = None,
+    ) -> None:
+        now = datetime.now(timezone.utc)
+        allowed = {self._str(item).lower() for item in (quiz_ids or []) if self._str(item)}
+        results = self._results_with_attempt_metadata()
+        changed = False
+        for idx, assessment in enumerate(self._assessments):
+            if not isinstance(assessment, dict):
+                continue
+            quiz_id = self._str(assessment.get("id")).lower()
+            if allowed and quiz_id not in allowed:
+                continue
+            deadline = self._assessment_deadline_dt(assessment)
+            if deadline is None:
+                continue
+            if deadline.tzinfo is None:
+                deadline = deadline.replace(tzinfo=timezone.utc)
+            if deadline > now:
+                continue
+            metadata = dict(assessment.get("metadata")) if isinstance(assessment.get("metadata"), dict) else {}
+            if self._str(metadata.get("deadline_report_sent_at")):
+                continue
+            submissions = [
+                row
+                for row in results
+                if self._result_quiz_key(row) == quiz_id
+            ]
+            if not submissions:
+                continue
+            report = self._build_assessment_deadline_report(
+                assessment=assessment,
+                submissions=submissions,
+            )
+            email_result = self._atlas_incident_email.send_assessment_report(
+                report=report,
+                recipient=self._assessment_report_recipient(),
+            )
+            metadata["deadline_report_sent_at"] = (
+                datetime.now(timezone.utc).isoformat()
+                if email_result.get("sent") is True
+                else ""
+            )
+            metadata["deadline_report_mail_sent"] = email_result.get("sent") is True
+            metadata["deadline_report_submission_count"] = len(submissions)
+            metadata["deadline_report_message"] = self._str(email_result.get("message"))
+            assessment["metadata"] = metadata
+            self._assessments[idx] = self._normalize_assessment_item(assessment)
+            changed = True
+        if changed:
+            await self._persist_list(self._assessments_file, self._assessments)
+
+    def _ai_chat_account_key(self, payload: dict[str, Any]) -> str:
+        return self._str(
+            payload.get("account_id")
+            or payload.get("accountId")
+            or payload.get("user_id")
+            or payload.get("userId")
+        )
+
+    def _ai_chat_history_key(self, account_id: str, chat_id: str) -> str:
+        return f"{account_id.strip().lower()}::{chat_id.strip()}"
+
+    def _normalized_ai_chat_session(
+        self, payload: dict[str, Any]
+    ) -> dict[str, Any]:
+        now_ms = self._now_ms()
+        chat_id = self._str(payload.get("chat_id") or payload.get("chatId"))
+        return {
+            "chat_id": chat_id,
+            "chatId": chat_id,
+            "account_id": self._ai_chat_account_key(payload),
+            "user_id": self._ai_chat_account_key(payload),
+            "title": self._str(payload.get("title") or "New AI Chat"),
+            "created_at": self._to_int(
+                payload.get("created_at") or payload.get("createdAt"),
+                now_ms,
+            ),
+            "updated_at": self._to_int(
+                payload.get("updated_at") or payload.get("updatedAt"),
+                now_ms,
+            ),
+            "message_count": self._to_int(
+                payload.get("message_count") or payload.get("messageCount"),
+                0,
+            ),
+            "ai_generated_title": self._to_bool(
+                payload.get("ai_generated_title") or payload.get("aiGeneratedTitle")
+            ),
+            "pinned": self._to_bool(payload.get("pinned")),
+            "pinned_at": self._to_int(
+                payload.get("pinned_at") or payload.get("pinnedAt"),
+                0,
+            ),
+        }
+
+    async def _save_ai_chat_session(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._ai_chat_account_key(payload)
+        chat_id = self._str(payload.get("chat_id") or payload.get("chatId"))
+        if not account_id or not chat_id:
+            return {
+                "ok": False,
+                "status": "MISSING_FIELDS",
+                "message": "account_id and chat_id are required",
+            }
+        session = self._normalized_ai_chat_session(payload)
+        async with self._lock:
+            self._ai_chat_sessions[self._ai_chat_history_key(account_id, chat_id)] = session
+            await self._persist_map(self._ai_chat_sessions_file, self._ai_chat_sessions)
+        return {"ok": True, "status": "SUCCESS", "session": session}
+
+    async def _list_ai_chat_sessions(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._ai_chat_account_key(payload)
+        rows = [
+            dict(row)
+            for row in self._ai_chat_sessions.values()
+            if isinstance(row, dict)
+            and self._str(row.get("account_id")).lower() == account_id.lower()
+        ]
+        rows.sort(
+            key=lambda row: self._to_int(row.get("updated_at"), 0),
             reverse=True,
         )
         return {"ok": True, "status": "SUCCESS", "list": rows}
+
+    async def _save_ai_chat_history(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._ai_chat_account_key(payload)
+        chat_id = self._str(payload.get("chat_id") or payload.get("chatId"))
+        messages = payload.get("messages")
+        if not account_id or not chat_id or not isinstance(messages, list):
+            return {
+                "ok": False,
+                "status": "MISSING_FIELDS",
+                "message": "account_id, chat_id and messages are required",
+            }
+        normalized_messages = [
+            dict(item)
+            for item in messages
+            if isinstance(item, dict)
+        ]
+        now_ms = self._now_ms()
+        history = {
+            "account_id": account_id,
+            "chat_id": chat_id,
+            "messages": normalized_messages,
+            "updated_at": now_ms,
+        }
+        async with self._lock:
+            self._ai_chat_histories[self._ai_chat_history_key(account_id, chat_id)] = history
+            await self._persist_map(self._ai_chat_histories_file, self._ai_chat_histories)
+        await self._save_ai_chat_session(
+            {
+                **payload,
+                "account_id": account_id,
+                "chat_id": chat_id,
+                "message_count": len(normalized_messages),
+                "updated_at": now_ms,
+            }
+        )
+        return {"ok": True, "status": "SUCCESS", "history": history}
+
+    async def _get_ai_chat_history(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._ai_chat_account_key(payload)
+        chat_id = self._str(payload.get("chat_id") or payload.get("chatId"))
+        key = self._ai_chat_history_key(account_id, chat_id)
+        history = dict(self._ai_chat_histories.get(key) or {})
+        return {
+            "ok": True,
+            "status": "SUCCESS",
+            "messages": list(history.get("messages") or []),
+            "history": history,
+        }
+
+    async def _delete_ai_chat_history(self, payload: dict[str, Any]) -> dict[str, Any]:
+        account_id = self._ai_chat_account_key(payload)
+        chat_id = self._str(payload.get("chat_id") or payload.get("chatId"))
+        key = self._ai_chat_history_key(account_id, chat_id)
+        async with self._lock:
+            self._ai_chat_histories.pop(key, None)
+            self._ai_chat_sessions.pop(key, None)
+            await self._persist_map(self._ai_chat_histories_file, self._ai_chat_histories)
+            await self._persist_map(self._ai_chat_sessions_file, self._ai_chat_sessions)
+        return {"ok": True, "status": "SUCCESS"}
 
     async def _add_teacher_review(self, payload: dict[str, Any]) -> dict[str, Any]:
         item = {
