@@ -5,6 +5,7 @@ import json
 import os
 import smtplib
 import ssl
+import time
 from email.message import EmailMessage
 from typing import Any
 from urllib.request import Request, urlopen
@@ -14,7 +15,7 @@ class AtlasIncidentEmailService:
     """SMTP-backed support reporter reused by Atlas incident flows."""
 
     def __init__(self) -> None:
-        self._default_recipient = self._configured_support_recipient()
+        pass
 
     def smtp_configured(self) -> bool:
         if self._apps_script_configured():
@@ -81,9 +82,14 @@ class AtlasIncidentEmailService:
         to_email = ", ".join(recipients)
         if not recipients:
             return {
-                "ok": False,
+                "ok": True,
                 "sent": False,
-                "message": "Support recipient is missing",
+                "recipient": "",
+                "recipients": [],
+                "message": (
+                    "Release confirmation skipped because support recipients "
+                    "are not configured"
+                ),
             }
         cleaned_releases = [
             dict(item)
@@ -473,43 +479,53 @@ class AtlasIncidentEmailService:
             },
             method="POST",
         )
-        try:
-            with urlopen(  # noqa: S310
-                request,
-                timeout=int(settings["timeout_seconds"]),
-                context=self._ssl_context(),
-            ) as response:
-                body = response.read().decode("utf-8", errors="replace")
-            decoded = json.loads(body) if body.strip() else {}
-            success = bool(decoded.get("ok")) or str(decoded.get("status") or "").strip().lower() in {
-                "success",
-                "sent",
-            }
-            message = str(decoded.get("message") or "Apps Script mail sent").strip()
-            return {
-                "ok": success,
-                "sent": success,
-                "recipient": ", ".join(recipients),
-                "recipients": recipients,
-                "message": message,
-                "transport": "apps_script",
-                "response": decoded,
-            }
-        except Exception as exc:
-            return {
-                "ok": False,
-                "sent": False,
-                "recipient": ", ".join(recipients),
-                "recipients": recipients,
-                "message": f"Apps Script mail send failed: {exc}",
-                "transport": "apps_script",
-            }
+        attempts = max(1, int(settings.get("retry_count") or 0) + 1)
+        backoff_seconds = float(settings.get("retry_backoff_seconds") or 0.0)
+        last_error: Exception | None = None
+        for attempt_index in range(attempts):
+            try:
+                with urlopen(  # noqa: S310
+                    request,
+                    timeout=int(settings["timeout_seconds"]),
+                    context=self._ssl_context(),
+                ) as response:
+                    body = response.read().decode("utf-8", errors="replace")
+                decoded = json.loads(body) if body.strip() else {}
+                success = bool(decoded.get("ok")) or str(decoded.get("status") or "").strip().lower() in {
+                    "success",
+                    "sent",
+                }
+                message = str(decoded.get("message") or "Apps Script mail sent").strip()
+                if attempt_index > 0 and success:
+                    message = f"{message} after retry {attempt_index}"
+                return {
+                    "ok": success,
+                    "sent": success,
+                    "recipient": ", ".join(recipients),
+                    "recipients": recipients,
+                    "message": message,
+                    "transport": "apps_script",
+                    "response": decoded,
+                    "attempts": attempt_index + 1,
+                }
+            except Exception as exc:
+                last_error = exc
+                if attempt_index + 1 >= attempts:
+                    break
+                if backoff_seconds > 0:
+                    time.sleep(backoff_seconds * (attempt_index + 1))
+        return {
+            "ok": False,
+            "sent": False,
+            "recipient": ", ".join(recipients),
+            "recipients": recipients,
+            "message": f"Apps Script mail send failed: {last_error}",
+            "transport": "apps_script",
+            "attempts": attempts,
+        }
 
     def _configured_support_recipient(self) -> str:
-        return (
-            os.getenv("ATLAS_SUPPORT_EMAIL_RECIPIENT", "").strip()
-            or "saharitam171@gmail.com"
-        )
+        return os.getenv("ATLAS_SUPPORT_EMAIL_RECIPIENT", "").strip()
 
     def _build_assessment_report_body(self, report: dict[str, Any]) -> str:
         weak_sections = report.get("weak_sections") or []
@@ -700,7 +716,11 @@ class AtlasIncidentEmailService:
         return "\n".join(lines)
 
     def _recipient_list(self, recipient: str | None) -> list[str]:
-        source = (recipient or self._default_recipient).strip()
+        source = (
+            self._configured_support_recipient()
+            if recipient is None
+            else str(recipient).strip()
+        )
         if not source:
             return []
         recipients: list[str] = []
@@ -755,8 +775,14 @@ class AtlasIncidentEmailService:
     def _apps_script_settings(self) -> dict[str, Any]:
         webhook_url = str(os.getenv("ATLAS_AUTOMAIL_WEBHOOK_URL", "")).strip()
         timeout_raw = str(
-            os.getenv("ATLAS_AUTOMAIL_TIMEOUT_SECONDS", "20")
-        ).strip() or "20"
+            os.getenv("ATLAS_AUTOMAIL_TIMEOUT_SECONDS", "40")
+        ).strip() or "40"
+        retry_raw = str(
+            os.getenv("ATLAS_AUTOMAIL_RETRY_COUNT", "1")
+        ).strip() or "1"
+        retry_backoff_raw = str(
+            os.getenv("ATLAS_AUTOMAIL_RETRY_BACKOFF_SECONDS", "1.5")
+        ).strip() or "1.5"
         if not webhook_url:
             return {
                 "ok": False,
@@ -769,11 +795,30 @@ class AtlasIncidentEmailService:
                 "ok": False,
                 "message": f"Invalid ATLAS_AUTOMAIL_TIMEOUT_SECONDS: {timeout_raw}",
             }
+        try:
+            retry_count = max(0, min(3, int(retry_raw)))
+        except ValueError:
+            return {
+                "ok": False,
+                "message": f"Invalid ATLAS_AUTOMAIL_RETRY_COUNT: {retry_raw}",
+            }
+        try:
+            retry_backoff_seconds = max(0.0, min(10.0, float(retry_backoff_raw)))
+        except ValueError:
+            return {
+                "ok": False,
+                "message": (
+                    "Invalid ATLAS_AUTOMAIL_RETRY_BACKOFF_SECONDS: "
+                    f"{retry_backoff_raw}"
+                ),
+            }
         return {
             "ok": True,
             "webhook_url": webhook_url,
             "shared_secret": str(os.getenv("ATLAS_AUTOMAIL_SHARED_SECRET", "")).strip(),
             "timeout_seconds": timeout_seconds,
+            "retry_count": retry_count,
+            "retry_backoff_seconds": retry_backoff_seconds,
         }
 
     def _allow_apps_script_smtp_fallback(self) -> bool:

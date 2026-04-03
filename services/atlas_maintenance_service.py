@@ -197,7 +197,6 @@ class AtlasMaintenanceService:
                         "recipient_email": (
                             recipient_email
                             or os.getenv("ATLAS_SUPPORT_EMAIL_RECIPIENT", "").strip()
-                            or "saharitam171@gmail.com"
                         ),
                         "context": {
                             "surface": "atlas_weekly_maintenance",
@@ -1237,13 +1236,12 @@ class _AtlasPipelineMaintenanceAuditor:
         raw = (
             os.getenv("ATLAS_MAINTENANCE_OTP_EMAIL", "").strip()
             or os.getenv("ATLAS_SUPPORT_EMAIL_RECIPIENT", "").strip()
-            or "saharitam171@gmail.com"
         )
         for chunk in raw.replace(";", ",").replace("\n", ",").split(","):
             email = chunk.strip()
             if email:
                 return email
-        return "saharitam171@gmail.com"
+        return ""
 
     def _post(self, client: TestClient, url: str, **kwargs):
         return client.post(url, timeout=self._request_timeout_seconds, **kwargs)

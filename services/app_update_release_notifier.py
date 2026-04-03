@@ -13,6 +13,7 @@ from typing import Any, Callable
 from urllib.request import Request, urlopen
 
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
+from core.db.connection import Database
 from core.automation.state_manager import AutomationStateManager
 from services.atlas_incident_email_service import AtlasIncidentEmailService
 
@@ -25,6 +26,10 @@ class AppUpdateReleaseNotifierService:
     """Polls the published app-update sheet and emails on newly seen releases."""
 
     CHECKPOINT_SCOPE = "app_update_release_notifier"
+    SHARED_STATE_KEY = "app_update_release_notifier_shared_state"
+    CONFIRMATION_CLAIM_KEY_PREFIX = (
+        "app_update_release_notifier_confirmation_claim::"
+    )
     DEFAULT_SHEET_URL = (
         "https://docs.google.com/spreadsheets/d/"
         "1Il-ojLV1TecCPG43_a_ookL-Hb6EA46zS--a2xjVhng/"
@@ -60,6 +65,241 @@ class AppUpdateReleaseNotifierService:
             else auth_dir / "auth_store.sqlite3"
         )
         self._lock = asyncio.Lock()
+
+    async def _runtime_db_pool(self):
+        try:
+            return await Database.get_pool()
+        except Exception:
+            return None
+
+    async def _read_shared_state(self) -> dict[str, Any]:
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return {}
+        try:
+            async with pool.acquire() as conn:
+                row = await conn.fetchrow(
+                    """
+                    SELECT json_value
+                    FROM app_runtime_json_store
+                    WHERE blob_key = $1
+                    """,
+                    self.SHARED_STATE_KEY,
+                )
+        except Exception:
+            return {}
+        if not row:
+            return {}
+        raw_value = row.get("json_value") if hasattr(row, "get") else row["json_value"]
+        if raw_value is None:
+            return {}
+        try:
+            decoded = json.loads(str(raw_value))
+        except Exception:
+            return {}
+        return decoded if isinstance(decoded, dict) else {}
+
+    async def _write_shared_state(self, state: dict[str, Any]) -> None:
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return
+        payload = json.dumps(state, ensure_ascii=True, indent=2)
+        updated_at = int(_utc_now().timestamp() * 1000)
+        try:
+            async with pool.acquire() as conn:
+                await conn.execute(
+                    """
+                    INSERT INTO app_runtime_json_store (blob_key, json_value, updated_at)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (blob_key) DO UPDATE
+                    SET json_value = EXCLUDED.json_value,
+                        updated_at = EXCLUDED.updated_at
+                    """,
+                    self.SHARED_STATE_KEY,
+                    payload,
+                    updated_at,
+                )
+        except Exception:
+            return
+
+    def _confirmation_claim_blob_key(self, confirmation_key: str) -> str:
+        return f"{self.CONFIRMATION_CLAIM_KEY_PREFIX}{confirmation_key}"
+
+    async def _try_claim_confirmation_key(
+        self,
+        confirmation_key: str,
+        *,
+        checked_at: str,
+    ) -> bool:
+        key = str(confirmation_key or "").strip()
+        if not key:
+            return True
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return True
+        payload = json.dumps(
+            {
+                "status": "claimed",
+                "checked_at": checked_at,
+            },
+            ensure_ascii=True,
+        )
+        updated_at = int(_utc_now().timestamp() * 1000)
+        try:
+            async with pool.acquire() as conn:
+                row = await conn.fetchrow(
+                    """
+                    INSERT INTO app_runtime_json_store (blob_key, json_value, updated_at)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (blob_key) DO NOTHING
+                    RETURNING blob_key
+                    """,
+                    self._confirmation_claim_blob_key(key),
+                    payload,
+                    updated_at,
+                )
+        except Exception:
+            return True
+        return bool(row)
+
+    async def _clear_confirmation_claim(
+        self,
+        confirmation_key: str,
+    ) -> None:
+        key = str(confirmation_key or "").strip()
+        if not key:
+            return
+        pool = await self._runtime_db_pool()
+        if pool is None:
+            return
+        try:
+            async with pool.acquire() as conn:
+                await conn.execute(
+                    """
+                    DELETE FROM app_runtime_json_store
+                    WHERE blob_key = $1
+                    """,
+                    self._confirmation_claim_blob_key(key),
+                )
+        except Exception:
+            return
+
+    def _shared_state_snapshot(self) -> dict[str, Any]:
+        checkpoint = self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
+        return {
+            "seen_release_keys": self._seen_release_keys_from_row(checkpoint),
+            "release_recipient_sent_map": self._release_recipient_sent_map_from_row(
+                checkpoint
+            ),
+            "release_confirmation_sent_map": self._release_confirmation_sent_map_from_row(
+                checkpoint
+            ),
+        }
+
+    def _merge_release_recipient_maps(
+        self,
+        *maps: dict[str, dict[str, str]],
+    ) -> dict[str, dict[str, str]]:
+        merged: dict[str, dict[str, str]] = {}
+        for raw_map in maps:
+            if not isinstance(raw_map, dict):
+                continue
+            for raw_release_key, raw_recipient_map in raw_map.items():
+                release_key = str(raw_release_key or "").strip()
+                if not release_key or not isinstance(raw_recipient_map, dict):
+                    continue
+                current = dict(merged.get(release_key) or {})
+                for raw_email, raw_ts in raw_recipient_map.items():
+                    email = str(raw_email or "").strip().lower()
+                    ts = str(raw_ts or "").strip()
+                    if not email or not ts:
+                        continue
+                    existing = str(current.get(email) or "").strip()
+                    current[email] = max(existing, ts) if existing else ts
+                if current:
+                    if len(current) > 2000:
+                        current = dict(list(current.items())[-2000:])
+                    merged[release_key] = current
+        if len(merged) > 250:
+            merged = dict(list(merged.items())[-250:])
+        return merged
+
+    def _merge_confirmation_maps(
+        self,
+        *maps: dict[str, str],
+    ) -> dict[str, str]:
+        merged: dict[str, str] = {}
+        for raw_map in maps:
+            if not isinstance(raw_map, dict):
+                continue
+            for raw_key, raw_ts in raw_map.items():
+                key = str(raw_key or "").strip()
+                ts = str(raw_ts or "").strip()
+                if not key or not ts:
+                    continue
+                existing = str(merged.get(key) or "").strip()
+                merged[key] = max(existing, ts) if existing else ts
+        if len(merged) > 500:
+            merged = dict(list(merged.items())[-500:])
+        return merged
+
+    async def _effective_shared_state(self) -> dict[str, Any]:
+        local = self._shared_state_snapshot()
+        remote = await self._read_shared_state()
+        merged = {
+            "seen_release_keys": self._merged_seen_keys(
+                self._seen_release_keys_from_row(local),
+                self._seen_release_keys_from_row(remote),
+            ),
+            "release_recipient_sent_map": self._merge_release_recipient_maps(
+                self._release_recipient_sent_map_from_row(local),
+                self._release_recipient_sent_map_from_row(remote),
+            ),
+            "release_confirmation_sent_map": self._merge_confirmation_maps(
+                self._release_confirmation_sent_map_from_row(local),
+                self._release_confirmation_sent_map_from_row(remote),
+            ),
+        }
+        checkpoint_updates = {
+            "seen_release_keys": merged["seen_release_keys"],
+            "release_recipient_sent_map": merged["release_recipient_sent_map"],
+            "release_confirmation_sent_map": merged["release_confirmation_sent_map"],
+        }
+        self._state.checkpoint(self.CHECKPOINT_SCOPE, **checkpoint_updates)
+        if merged != remote:
+            await self._write_shared_state(merged)
+        return merged
+
+    async def _write_effective_shared_state(
+        self,
+        *,
+        seen_release_keys: list[str] | None = None,
+        release_recipient_sent_map: dict[str, dict[str, str]] | None = None,
+        release_confirmation_sent_map: dict[str, str] | None = None,
+    ) -> dict[str, Any]:
+        current = await self._effective_shared_state()
+        next_state = {
+            "seen_release_keys": self._merged_seen_keys(
+                current.get("seen_release_keys") or [],
+                seen_release_keys or [],
+            ),
+            "release_recipient_sent_map": self._merge_release_recipient_maps(
+                current.get("release_recipient_sent_map") or {},
+                release_recipient_sent_map or {},
+            ),
+            "release_confirmation_sent_map": self._merge_confirmation_maps(
+                current.get("release_confirmation_sent_map") or {},
+                release_confirmation_sent_map or {},
+            ),
+        }
+        self._state.checkpoint(
+            self.CHECKPOINT_SCOPE,
+            seen_release_keys=next_state["seen_release_keys"],
+            release_recipient_sent_map=next_state["release_recipient_sent_map"],
+            release_confirmation_sent_map=next_state["release_confirmation_sent_map"],
+        )
+        await self._write_shared_state(next_state)
+        return next_state
 
     def enabled(self) -> bool:
         raw = os.getenv("APP_UPDATE_CONFIRMATION_ENABLED")
@@ -153,7 +393,11 @@ class AppUpdateReleaseNotifierService:
             try:
                 csv_text = await asyncio.to_thread(self._fetcher, sheet_url)
                 releases = self._parse_release_rows(csv_text)
-                seen_release_keys = self._seen_release_keys()
+                shared_state = await self._effective_shared_state()
+                seen_release_keys = self._merged_seen_keys(
+                    self._seen_release_keys(),
+                    self._seen_release_keys_from_row(shared_state),
+                )
                 if force_resend:
                     new_releases = list(releases)
                 else:
@@ -183,75 +427,69 @@ class AppUpdateReleaseNotifierService:
                         "new_release_count": 0,
                     }
 
-                announcement_recipients = self._release_recipient_provider(
+                target_recipients = self._release_recipient_provider(
                     new_releases,
                     recipient_email,
                 )
-                announcement_result = await asyncio.to_thread(
-                    self._email.send_release_announcement,
+                announcement_result = await self._send_release_announcements_to_pending_recipients(
                     releases=new_releases,
                     sheet_url=sheet_url,
-                    recipients=announcement_recipients,
+                    recipients=target_recipients,
                     trigger=trigger,
                     checked_at=checked_at,
+                    shared_state=shared_state,
                 )
-                sent_recipients = [
-                    str(item).strip().lower()
-                    for item in list(announcement_result.get("sent_recipients") or [])
-                    if str(item).strip()
-                ]
-                if sent_recipients:
-                    self._mark_release_sent_for_recipients(
-                        releases=new_releases,
-                        recipients=sent_recipients,
-                    )
-                no_deliverable_recipients = bool(
-                    announcement_result.get("no_deliverable_recipients")
+                confirmation_result = await self._send_release_confirmation_if_needed(
+                    releases=new_releases,
+                    sheet_url=sheet_url,
+                    recipient=recipient_email,
+                    trigger=trigger,
+                    checked_at=checked_at,
+                    shared_state=shared_state,
                 )
-                if no_deliverable_recipients:
-                    confirmation_result = {
-                        "ok": True,
-                        "sent": False,
-                        "message": "Skipped support confirmation because no deliverable recipients were available",
-                    }
-                else:
-                    confirmation_result = await asyncio.to_thread(
-                        self._email.send_release_confirmation,
-                        releases=new_releases,
-                        sheet_url=sheet_url,
-                        recipient=recipient_email,
-                        trigger=trigger,
-                        checked_at=checked_at,
-                    )
                 mail_message = self._combined_mail_message(
                     announcement_result=announcement_result,
                     confirmation_result=confirmation_result,
                 )
-                if bool(announcement_result.get("ok")):
-                    updated_seen = self._merged_seen_keys(
-                        seen_release_keys,
-                        [release["release_key"] for release in new_releases],
+                announcement_ok = bool(announcement_result.get("ok"))
+                no_deliverable_recipients = bool(
+                    announcement_result.get("no_deliverable_recipients")
+                )
+                updated_seen = self._merged_seen_keys(
+                    seen_release_keys,
+                    [release["release_key"] for release in new_releases],
+                )
+                if announcement_ok and no_deliverable_recipients:
+                    await self._write_effective_shared_state(
+                        seen_release_keys=updated_seen,
                     )
                     self._state.checkpoint(
                         self.CHECKPOINT_SCOPE,
                         running=False,
-                        last_status=(
-                            "no_deliverable_recipients"
-                            if no_deliverable_recipients
-                            else "mail_sent"
-                        ),
+                        last_status="no_deliverable_recipients",
                         last_error="",
-                        last_mail_sent=not no_deliverable_recipients,
+                        last_mail_sent=False,
                         last_mail_message=mail_message,
-                        **(
-                            {"last_mail_sent_ts": checked_at}
-                            if not no_deliverable_recipients
-                            else {}
-                        ),
                         last_release_count=len(releases),
                         last_new_release_count=len(new_releases),
                         last_detected_release_keys=[r["release_key"] for r in releases[:20]],
                         seen_release_keys=updated_seen,
+                    )
+                elif announcement_ok:
+                    await self._write_effective_shared_state(
+                        seen_release_keys=updated_seen,
+                    )
+                    self._state.checkpoint(
+                        self.CHECKPOINT_SCOPE,
+                        running=False,
+                        last_status="mail_sent",
+                        last_error="",
+                        last_mail_sent=True,
+                        last_mail_message=mail_message,
+                        last_mail_sent_ts=checked_at,
+                        last_release_count=len(releases),
+                        last_new_release_count=len(new_releases),
+                        last_detected_release_keys=[r["release_key"] for r in releases[:20]],
                     )
                 else:
                     self._state.checkpoint(
@@ -266,12 +504,12 @@ class AppUpdateReleaseNotifierService:
                         last_detected_release_keys=[r["release_key"] for r in releases[:20]],
                     )
                 return {
-                    "ok": bool(announcement_result.get("ok")),
+                    "ok": announcement_ok,
                     "status": (
                         "NO_DELIVERABLE_RECIPIENTS"
-                        if bool(announcement_result.get("ok")) and no_deliverable_recipients
+                        if announcement_ok and no_deliverable_recipients
                         else "SUCCESS"
-                        if bool(announcement_result.get("ok"))
+                        if announcement_ok
                         else "MAIL_FAILED"
                     ),
                     "checked_at": checked_at,
@@ -279,7 +517,7 @@ class AppUpdateReleaseNotifierService:
                     "release_count": len(releases),
                     "new_release_count": len(new_releases),
                     "new_releases": new_releases,
-                    "announcement_recipients": announcement_recipients,
+                    "announcement_recipients": target_recipients,
                     "mail": dict(announcement_result),
                     "confirmation": dict(confirmation_result),
                 }
@@ -300,11 +538,12 @@ class AppUpdateReleaseNotifierService:
                     "message": str(exc),
                 }
 
-    def notify_pending_releases_for_email(
+    async def notify_pending_releases_for_email_async(
         self,
         email: str,
         *,
         role: str | None = None,
+        platform: str | None = None,
         trigger: str = "auth_login",
     ) -> dict[str, Any]:
         normalized_email = str(email or "").strip().lower()
@@ -338,13 +577,20 @@ class AppUpdateReleaseNotifierService:
             relevant_releases = self._latest_releases_for_role(
                 releases,
                 role=role,
+                platform=platform,
+            )
+            shared_state = await self._effective_shared_state()
+            recipient_map = self._merge_release_recipient_maps(
+                self._release_recipient_sent_map(),
+                self._release_recipient_sent_map_from_row(shared_state),
             )
             pending_releases = [
                 release
                 for release in relevant_releases
-                if not self._release_already_sent_to_recipient(
+                if not self._release_already_sent_to_recipient_from_map(
                     normalized_email,
                     str(release.get("release_key") or ""),
+                    recipient_map,
                 )
             ]
             if not pending_releases:
@@ -368,7 +614,7 @@ class AppUpdateReleaseNotifierService:
                 if str(item).strip()
             ]
             if sent_recipients:
-                self._mark_release_sent_for_recipients(
+                await self._mark_release_sent_for_recipients_async(
                     releases=pending_releases,
                     recipients=sent_recipients,
                 )
@@ -392,9 +638,35 @@ class AppUpdateReleaseNotifierService:
                 "message": str(exc),
             }
 
-    def _seen_release_keys(self) -> list[str]:
-        checkpoint = self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
-        raw = checkpoint.get("seen_release_keys")
+    def notify_pending_releases_for_email(
+        self,
+        email: str,
+        *,
+        role: str | None = None,
+        platform: str | None = None,
+        trigger: str = "auth_login",
+    ) -> dict[str, Any]:
+        try:
+            return asyncio.run(
+                self.notify_pending_releases_for_email_async(
+                    email,
+                    role=role,
+                    platform=platform,
+                    trigger=trigger,
+                )
+            )
+        except RuntimeError:
+            # Fall back to the async-safe path when already inside a running loop.
+            return {
+                "ok": False,
+                "status": "FAILED",
+                "sent_count": 0,
+                "releases": [],
+                "message": "notify_pending_releases_for_email_async must be awaited from async contexts",
+            }
+
+    def _seen_release_keys_from_row(self, row: dict[str, Any]) -> list[str]:
+        raw = row.get("seen_release_keys")
         if not isinstance(raw, list):
             return []
         return [
@@ -402,6 +674,10 @@ class AppUpdateReleaseNotifierService:
             for item in raw
             if str(item).strip()
         ]
+
+    def _seen_release_keys(self) -> list[str]:
+        checkpoint = self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
+        return self._seen_release_keys_from_row(checkpoint)
 
     def _merged_seen_keys(
         self,
@@ -417,9 +693,11 @@ class AppUpdateReleaseNotifierService:
             merged = merged[-500:]
         return merged
 
-    def _release_recipient_sent_map(self) -> dict[str, dict[str, str]]:
-        checkpoint = self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
-        raw = checkpoint.get("release_recipient_sent_map")
+    def _release_recipient_sent_map_from_row(
+        self,
+        row: dict[str, Any],
+    ) -> dict[str, dict[str, str]]:
+        raw = row.get("release_recipient_sent_map")
         if not isinstance(raw, dict):
             return {}
         cleaned: dict[str, dict[str, str]] = {}
@@ -437,8 +715,44 @@ class AppUpdateReleaseNotifierService:
                 cleaned[release_key] = recipient_map
         return cleaned
 
-    def _release_already_sent_to_recipient(self, email: str, release_key: str) -> bool:
-        recipient_map = self._release_recipient_sent_map()
+    def _release_recipient_sent_map(self) -> dict[str, dict[str, str]]:
+        checkpoint = self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
+        return self._release_recipient_sent_map_from_row(checkpoint)
+
+    def _release_confirmation_sent_map_from_row(
+        self,
+        row: dict[str, Any],
+    ) -> dict[str, str]:
+        raw = row.get("release_confirmation_sent_map")
+        if not isinstance(raw, dict):
+            return {}
+        cleaned: dict[str, str] = {}
+        for raw_key, raw_ts in raw.items():
+            key = str(raw_key or "").strip()
+            ts = str(raw_ts or "").strip()
+            if key and ts:
+                cleaned[key] = ts
+        return cleaned
+
+    def _release_confirmation_key(
+        self,
+        releases: list[dict[str, Any]],
+        recipient: str | None,
+    ) -> str:
+        release_keys = sorted(
+            str(item.get("release_key") or "").strip()
+            for item in releases
+            if isinstance(item, dict) and str(item.get("release_key") or "").strip()
+        )
+        recipient_key = "|".join(self._recipient_list(recipient))
+        return "::".join([recipient_key or "default", *release_keys])
+
+    def _release_already_sent_to_recipient_from_map(
+        self,
+        email: str,
+        release_key: str,
+        recipient_map: dict[str, dict[str, str]],
+    ) -> bool:
         normalized_email = str(email or "").strip().lower()
         normalized_release_key = str(release_key or "").strip()
         if not normalized_email or not normalized_release_key:
@@ -451,6 +765,202 @@ class AppUpdateReleaseNotifierService:
                 or ""
             ).strip()
         )
+
+    async def _mark_release_sent_for_recipients_async(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        recipients: list[str],
+    ) -> None:
+        shared_state = await self._effective_shared_state()
+        recipient_map = self._merge_release_recipient_maps(
+            self._release_recipient_sent_map(),
+            self._release_recipient_sent_map_from_row(shared_state),
+        )
+        sent_at = _utc_now().isoformat()
+        normalized_recipients = [
+            str(item).strip().lower()
+            for item in recipients
+            if self._looks_like_deliverable_email(str(item).strip().lower())
+        ]
+        for release in releases:
+            if not isinstance(release, dict):
+                continue
+            release_key = str(release.get("release_key") or "").strip()
+            if not release_key:
+                continue
+            current = dict(recipient_map.get(release_key) or {})
+            for email in normalized_recipients:
+                current[email] = sent_at
+            if len(current) > 2000:
+                current = dict(list(current.items())[-2000:])
+            recipient_map[release_key] = current
+        await self._write_effective_shared_state(
+            release_recipient_sent_map=recipient_map,
+        )
+
+    async def _mark_release_confirmation_sent_async(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        recipient: str | None,
+    ) -> None:
+        key = self._release_confirmation_key(releases, recipient)
+        if not key:
+            return
+        await self._write_effective_shared_state(
+            release_confirmation_sent_map={key: _utc_now().isoformat()},
+        )
+
+    async def _send_release_announcements_to_pending_recipients(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        sheet_url: str,
+        recipients: list[str],
+        trigger: str,
+        checked_at: str,
+        shared_state: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        recipient_list = self._recipient_list(",".join(recipients))
+        if not recipient_list:
+            return await asyncio.to_thread(
+                self._email.send_release_announcement,
+                releases=releases,
+                sheet_url=sheet_url,
+                recipients=[],
+                trigger=trigger,
+                checked_at=checked_at,
+            )
+        recipient_map = self._merge_release_recipient_maps(
+            self._release_recipient_sent_map(),
+            self._release_recipient_sent_map_from_row(shared_state or {}),
+        )
+        grouped_recipients: dict[tuple[str, ...], list[str]] = {}
+        grouped_releases: dict[tuple[str, ...], list[dict[str, Any]]] = {}
+        for recipient in recipient_list:
+            pending_releases = [
+                dict(release)
+                for release in releases
+                if isinstance(release, dict)
+                and not self._release_already_sent_to_recipient_from_map(
+                    recipient,
+                    str(release.get("release_key") or ""),
+                    recipient_map,
+                )
+            ]
+            if pending_releases:
+                signature = tuple(
+                    str(item.get("release_key") or "").strip()
+                    for item in pending_releases
+                    if str(item.get("release_key") or "").strip()
+                )
+                if not signature:
+                    continue
+                grouped_recipients.setdefault(signature, []).append(recipient)
+                grouped_releases[signature] = pending_releases
+        if not grouped_recipients:
+            return {
+                "ok": True,
+                "sent": False,
+                "message": "No signed-in user email recipients were pending for this release",
+                "recipients": recipient_list,
+                "sent_recipients": [],
+                "failed_recipients": [],
+                "sent_count": 0,
+                "failed_count": 0,
+                "no_deliverable_recipients": True,
+            }
+
+        sent_recipients: list[str] = []
+        failed_recipients: list[str] = []
+        last_message = ""
+        for signature, group_recipients in grouped_recipients.items():
+            pending_releases = grouped_releases.get(signature) or []
+            result = await asyncio.to_thread(
+                self._email.send_release_announcement,
+                releases=pending_releases,
+                sheet_url=sheet_url,
+                recipients=group_recipients,
+                trigger=trigger,
+                checked_at=checked_at,
+            )
+            last_message = str(result.get("message") or "").strip() or last_message
+            if bool(result.get("ok")):
+                sent_recipients.extend(group_recipients)
+                await self._mark_release_sent_for_recipients_async(
+                    releases=pending_releases,
+                    recipients=group_recipients,
+                )
+            else:
+                failed_recipients.extend(group_recipients)
+        return {
+            "ok": not failed_recipients and bool(sent_recipients),
+            "sent": not failed_recipients and bool(sent_recipients),
+            "message": last_message or "Release announcement completed",
+            "recipients": recipient_list,
+            "sent_recipients": sent_recipients,
+            "failed_recipients": failed_recipients,
+            "sent_count": len(sent_recipients),
+            "failed_count": len(failed_recipients),
+        }
+
+    async def _send_release_confirmation_if_needed(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        sheet_url: str,
+        recipient: str | None,
+        trigger: str,
+        checked_at: str,
+        shared_state: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        confirmation_map = self._merge_confirmation_maps(
+            self._release_confirmation_sent_map_from_row(
+                self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
+            ),
+            self._release_confirmation_sent_map_from_row(shared_state or {}),
+        )
+        confirmation_key = self._release_confirmation_key(releases, recipient)
+        if trigger == "scheduled" and confirmation_key and confirmation_key in confirmation_map:
+            return {
+                "ok": True,
+                "sent": False,
+                "message": "Release confirmation already sent for this release batch",
+            }
+        claimed = False
+        if trigger == "scheduled" and confirmation_key:
+            claimed = await self._try_claim_confirmation_key(
+                confirmation_key,
+                checked_at=checked_at,
+            )
+            if not claimed:
+                return {
+                    "ok": True,
+                    "sent": False,
+                    "message": (
+                        "Release confirmation is already being processed for "
+                        "this release batch"
+                    ),
+                }
+        result = await asyncio.to_thread(
+            self._email.send_release_confirmation,
+            releases=releases,
+            sheet_url=sheet_url,
+            recipient=recipient,
+            trigger=trigger,
+            checked_at=checked_at,
+        )
+        if bool(result.get("ok")):
+            await self._mark_release_confirmation_sent_async(
+                releases=releases,
+                recipient=recipient,
+            )
+            if claimed:
+                await self._clear_confirmation_claim(confirmation_key)
+        elif claimed:
+            await self._clear_confirmation_claim(confirmation_key)
+        return result
 
     def _mark_release_sent_for_recipients(
         self,
@@ -477,8 +987,6 @@ class AppUpdateReleaseNotifierService:
             if len(current) > 2000:
                 current = dict(list(current.items())[-2000:])
             recipient_map[release_key] = current
-        if len(recipient_map) > 250:
-            recipient_map = dict(list(recipient_map.items())[-250:])
         self._state.checkpoint(
             self.CHECKPOINT_SCOPE,
             release_recipient_sent_map=recipient_map,
@@ -587,17 +1095,21 @@ class AppUpdateReleaseNotifierService:
         releases: list[dict[str, Any]],
         *,
         role: str | None = None,
+        platform: str | None = None,
     ) -> list[dict[str, Any]]:
         normalized_role = str(role or "").strip().lower()
+        normalized_platform = self._normalize_platform(platform)
         latest: dict[str, dict[str, Any]] = {}
         for release in releases:
             if not isinstance(release, dict):
                 continue
+            if not self._release_targets_identity(
+                release,
+                role=normalized_role,
+                platform=normalized_platform,
+            ):
+                continue
             audience = str(release.get("audience") or "").strip().lower() or "all"
-            if audience != "all" and normalized_role and audience != normalized_role:
-                continue
-            if audience != "all" and not normalized_role:
-                continue
             group_key = "|".join(
                 [
                     str(release.get("app_id") or "").strip().lower(),
@@ -606,7 +1118,9 @@ class AppUpdateReleaseNotifierService:
                     audience,
                 ]
             )
-            latest[group_key] = dict(release)
+            current = latest.get(group_key)
+            if current is None or self._release_sort_key(release) >= self._release_sort_key(current):
+                latest[group_key] = dict(release)
         return list(latest.values())
 
     def _row_enabled(self, row: dict[str, str]) -> bool:
@@ -655,8 +1169,15 @@ class AppUpdateReleaseNotifierService:
             for item in releases
             if isinstance(item, dict)
         }
+        target_platforms = {
+            self._normalize_platform(item.get("platform")) or "all"
+            for item in releases
+            if isinstance(item, dict)
+        }
         if not target_audiences:
             target_audiences = {"all"}
+        if not target_platforms:
+            target_platforms = {"all"}
         recipients: list[str] = []
         seen: set[str] = set()
         for user in self._iter_auth_users():
@@ -664,17 +1185,45 @@ class AppUpdateReleaseNotifierService:
             if not self._looks_like_deliverable_email(email):
                 continue
             role = str(user.get("role") or "").strip().lower()
-            if (
-                "all" not in target_audiences
-                and role
-                and role not in target_audiences
-            ):
+            platform = self._user_platform(user)
+            if "all" not in target_audiences and role not in target_audiences:
+                continue
+            if "all" not in target_platforms and platform not in target_platforms:
                 continue
             if email in seen:
                 continue
             seen.add(email)
             recipients.append(email)
         return recipients
+
+    def _release_targets_identity(
+        self,
+        release: dict[str, Any],
+        *,
+        role: str,
+        platform: str,
+    ) -> bool:
+        audience = str(release.get("audience") or "").strip().lower() or "all"
+        target_platform = self._normalize_platform(release.get("platform"))
+        if audience != "all" and audience != role:
+            return False
+        if target_platform != "all" and target_platform != platform:
+            return False
+        return True
+
+    def _release_sort_key(self, release: dict[str, Any]) -> tuple[int, tuple[int | str, ...], str]:
+        build_number = self._to_int(release.get("build_number"), 0)
+        version = str(release.get("version") or "").strip()
+        version_parts: list[int | str] = []
+        for part in version.replace("-", ".").split("."):
+            token = part.strip()
+            if not token:
+                continue
+            if token.isdigit():
+                version_parts.append(int(token))
+            else:
+                version_parts.append(token.lower())
+        return build_number, tuple(version_parts), str(release.get("release_key") or "")
 
     def _iter_auth_users(self) -> list[dict[str, Any]]:
         merged: dict[str, dict[str, Any]] = {}
@@ -688,6 +1237,23 @@ class AppUpdateReleaseNotifierService:
             next_row["email"] = email
             merged[email] = next_row
         return list(merged.values())
+
+    def _user_platform(self, user: dict[str, Any]) -> str:
+        device_info = user.get("device_info")
+        if isinstance(device_info, dict):
+            raw = (
+                device_info.get("platform")
+                or device_info.get("os")
+                or device_info.get("device_platform")
+            )
+            normalized = self._normalize_platform(raw)
+            if normalized:
+                return normalized
+        return self._normalize_platform(
+            user.get("platform")
+            or user.get("last_platform")
+            or user.get("device_platform")
+        )
 
     def _auth_users_from_json_file(self) -> list[dict[str, Any]]:
         try:
@@ -724,6 +1290,28 @@ class AppUpdateReleaseNotifierService:
     def _looks_like_email(self, value: str) -> bool:
         text = str(value or "").strip()
         return "@" in text and "." in text.rsplit("@", 1)[-1]
+
+    def _normalize_platform(self, value: Any) -> str:
+        text = str(value or "").strip().lower()
+        if not text:
+            return ""
+        if text in {"all", "*"}:
+            return "all"
+        if "android" in text:
+            return "android"
+        if any(token in text for token in ("ios", "iphone", "ipad")):
+            return "ios"
+        if "mac" in text:
+            return "macos"
+        if any(token in text for token in ("web", "chrome", "browser", "safari")):
+            return "web"
+        return text
+
+    def _to_int(self, value: Any, fallback: int = 0) -> int:
+        try:
+            return int(float(str(value).strip()))
+        except Exception:
+            return fallback
 
     def _looks_like_deliverable_email(self, value: str) -> bool:
         text = str(value or "").strip().lower()
