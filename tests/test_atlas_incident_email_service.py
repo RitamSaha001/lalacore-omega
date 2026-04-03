@@ -186,6 +186,27 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
         self.assertIsNotNone(plain_body)
         self.assertIn("Railway stability", plain_body.get_content())
 
+    def test_release_announcement_without_recipients_is_non_fatal(self) -> None:
+        service = AtlasIncidentEmailService()
+        result = service.send_release_announcement(
+            releases=[
+                {
+                    "version": "3.0.1",
+                    "build_number": "17",
+                    "audience": "all",
+                    "platform": "android",
+                }
+            ],
+            sheet_url="https://example.com/updates.csv",
+            recipients=[],
+            trigger="scheduled",
+            checked_at="2026-04-03T07:00:00Z",
+        )
+
+        self.assertTrue(result.get("ok"))
+        self.assertFalse(result.get("sent"))
+        self.assertTrue(result.get("no_deliverable_recipients"))
+
     def test_assessment_submission_report_uses_god_of_maths_sender(self) -> None:
         class _FakeSMTP:
             last_instance: "_FakeSMTP | None" = None

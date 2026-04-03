@@ -157,10 +157,15 @@ class AtlasIncidentEmailService:
         ]
         if not target_recipients:
             return {
-                "ok": False,
+                "ok": True,
                 "sent": False,
                 "message": "No signed-in user email recipients were available",
                 "recipients": [],
+                "sent_recipients": [],
+                "failed_recipients": [],
+                "sent_count": 0,
+                "failed_count": 0,
+                "no_deliverable_recipients": True,
             }
         cleaned_releases = [
             dict(item)

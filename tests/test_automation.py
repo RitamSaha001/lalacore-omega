@@ -267,6 +267,78 @@ class AutomationTests(unittest.TestCase):
         )
         self.assertEqual(second.get("status"), "NO_PENDING_RELEASES")
 
+    def test_app_update_release_notifier_marks_release_seen_when_no_users_are_deliverable(self):
+        class _FakeEmailService:
+            def __init__(self) -> None:
+                self.confirmation_calls: list[dict] = []
+                self.announcement_calls: list[dict] = []
+
+            def send_release_confirmation(self, **kwargs):
+                self.confirmation_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": True,
+                    "message": "release confirmation sent",
+                }
+
+            def send_release_announcement(self, **kwargs):
+                self.announcement_calls.append(dict(kwargs))
+                return {
+                    "ok": True,
+                    "sent": False,
+                    "message": "No signed-in user email recipients were available",
+                    "recipients": [],
+                    "sent_recipients": [],
+                    "failed_recipients": [],
+                    "sent_count": 0,
+                    "failed_count": 0,
+                    "no_deliverable_recipients": True,
+                }
+
+        csv_text = (
+            "enabled,app_id,channel,audience,platform,version,build_number,apk_url,force,message\n"
+            "TRUE,lalacore_rebuild,stable,all,android,3.0.1,17,https://example.com/app.apk,TRUE,Fresh release\n"
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            auth_root = root / "auth"
+            auth_root.mkdir(parents=True, exist_ok=True)
+            (auth_root / "users.json").write_text(
+                json.dumps(
+                    {
+                        "student@example.com": {
+                            "email": "student@example.com",
+                            "role": "student",
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            state = AutomationStateManager(path=str(root / "LC9_AUTOMATION_STATE.json"))
+            email = _FakeEmailService()
+            service = AppUpdateReleaseNotifierService(
+                state=state,
+                email_service=email,
+                fetcher=lambda url: csv_text,
+                sheet_url="https://example.com/updates.csv",
+                auth_users_file=auth_root / "users.json",
+                auth_storage_db_file=auth_root / "auth_store.sqlite3",
+            )
+
+            first = asyncio.run(service.poll_for_new_releases(trigger="manual"))
+            first_snapshot = service.status_snapshot()
+            second = asyncio.run(service.poll_for_new_releases(trigger="manual"))
+            snapshot = service.status_snapshot()
+
+        self.assertTrue(first.get("ok"))
+        self.assertEqual(first.get("status"), "NO_DELIVERABLE_RECIPIENTS")
+        self.assertEqual(second.get("status"), "NO_NEW_RELEASE")
+        self.assertEqual(first_snapshot.get("last_status"), "no_deliverable_recipients")
+        self.assertEqual(snapshot.get("last_status"), "no_new_release")
+        self.assertEqual(snapshot.get("seen_release_count"), 1)
+        self.assertEqual(len(email.confirmation_calls), 0)
+        self.assertEqual(len(email.announcement_calls), 1)
+
     def test_feeder_enqueue_is_idempotent(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

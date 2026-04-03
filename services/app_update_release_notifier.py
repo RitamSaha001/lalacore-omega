@@ -205,14 +205,24 @@ class AppUpdateReleaseNotifierService:
                         releases=new_releases,
                         recipients=sent_recipients,
                     )
-                confirmation_result = await asyncio.to_thread(
-                    self._email.send_release_confirmation,
-                    releases=new_releases,
-                    sheet_url=sheet_url,
-                    recipient=recipient_email,
-                    trigger=trigger,
-                    checked_at=checked_at,
+                no_deliverable_recipients = bool(
+                    announcement_result.get("no_deliverable_recipients")
                 )
+                if no_deliverable_recipients:
+                    confirmation_result = {
+                        "ok": True,
+                        "sent": False,
+                        "message": "Skipped support confirmation because no deliverable recipients were available",
+                    }
+                else:
+                    confirmation_result = await asyncio.to_thread(
+                        self._email.send_release_confirmation,
+                        releases=new_releases,
+                        sheet_url=sheet_url,
+                        recipient=recipient_email,
+                        trigger=trigger,
+                        checked_at=checked_at,
+                    )
                 mail_message = self._combined_mail_message(
                     announcement_result=announcement_result,
                     confirmation_result=confirmation_result,
@@ -225,11 +235,19 @@ class AppUpdateReleaseNotifierService:
                     self._state.checkpoint(
                         self.CHECKPOINT_SCOPE,
                         running=False,
-                        last_status="mail_sent",
+                        last_status=(
+                            "no_deliverable_recipients"
+                            if no_deliverable_recipients
+                            else "mail_sent"
+                        ),
                         last_error="",
-                        last_mail_sent=True,
+                        last_mail_sent=not no_deliverable_recipients,
                         last_mail_message=mail_message,
-                        last_mail_sent_ts=checked_at,
+                        **(
+                            {"last_mail_sent_ts": checked_at}
+                            if not no_deliverable_recipients
+                            else {}
+                        ),
                         last_release_count=len(releases),
                         last_new_release_count=len(new_releases),
                         last_detected_release_keys=[r["release_key"] for r in releases[:20]],
@@ -249,7 +267,13 @@ class AppUpdateReleaseNotifierService:
                     )
                 return {
                     "ok": bool(announcement_result.get("ok")),
-                    "status": "SUCCESS" if bool(announcement_result.get("ok")) else "MAIL_FAILED",
+                    "status": (
+                        "NO_DELIVERABLE_RECIPIENTS"
+                        if bool(announcement_result.get("ok")) and no_deliverable_recipients
+                        else "SUCCESS"
+                        if bool(announcement_result.get("ok"))
+                        else "MAIL_FAILED"
+                    ),
                     "checked_at": checked_at,
                     "sheet_url": sheet_url,
                     "release_count": len(releases),
