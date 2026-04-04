@@ -307,6 +307,23 @@ class AppUpdateReleaseNotifierService:
             return True
         return raw.strip().lower() in {"1", "true", "yes", "on"}
 
+    def _runtime_is_production_like(self) -> bool:
+        candidates = (
+            os.getenv("APP_ENV", ""),
+            os.getenv("NODE_ENV", ""),
+            os.getenv("RAILWAY_ENVIRONMENT", ""),
+        )
+        return any(str(value or "").strip().lower() == "production" for value in candidates)
+
+    def _background_trigger_allowed(self, trigger: str) -> bool:
+        normalized = str(trigger or "").strip().lower()
+        if normalized not in {"scheduled", "tick"}:
+            return True
+        if self._runtime_is_production_like():
+            return True
+        raw = os.getenv("APP_UPDATE_CONFIRMATION_ALLOW_NON_PRODUCTION", "")
+        return raw.strip().lower() in {"1", "true", "yes", "on"}
+
     def sheet_url(self) -> str:
         return (
             self._sheet_url_override
@@ -362,6 +379,24 @@ class AppUpdateReleaseNotifierService:
                     "status": "DISABLED",
                     "checked_at": checked_at,
                     "sheet_url": self.sheet_url(),
+                }
+            if not self._background_trigger_allowed(trigger):
+                self._state.checkpoint(
+                    self.CHECKPOINT_SCOPE,
+                    running=False,
+                    last_checked_ts=checked_at,
+                    last_status="disabled_non_production",
+                    last_trigger=trigger,
+                )
+                return {
+                    "ok": True,
+                    "status": "DISABLED_NON_PRODUCTION",
+                    "checked_at": checked_at,
+                    "sheet_url": self.sheet_url(),
+                    "message": (
+                        "Background release polling is disabled outside production-like "
+                        "runtime unless APP_UPDATE_CONFIRMATION_ALLOW_NON_PRODUCTION=true."
+                    ),
                 }
 
             sheet_url = self.sheet_url()

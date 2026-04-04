@@ -28,6 +28,22 @@ from services.atlas_maintenance_service import (
 
 
 class AutomationTests(unittest.TestCase):
+    def setUp(self) -> None:
+        super().setUp()
+        self._env_patcher = unittest.mock.patch.dict(
+            os.environ,
+            {
+                "APP_UPDATE_CONFIRMATION_ENABLED": "1",
+                "APP_UPDATE_CONFIRMATION_ALLOW_NON_PRODUCTION": "1",
+            },
+            clear=False,
+        )
+        self._env_patcher.start()
+
+    def tearDown(self) -> None:
+        self._env_patcher.stop()
+        super().tearDown()
+
     def test_app_update_release_notifier_sends_mail_for_new_release_once(self):
         class _FakeEmailService:
             def __init__(self) -> None:
