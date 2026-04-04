@@ -1,21 +1,36 @@
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import os
 import smtplib
 import ssl
 import time
+from datetime import datetime, timezone
 from email.message import EmailMessage
 from typing import Any
 from urllib.request import Request, urlopen
+
+from core.automation.state_manager import AutomationStateManager
 
 
 class AtlasIncidentEmailService:
     """SMTP-backed support reporter reused by Atlas incident flows."""
 
-    def __init__(self) -> None:
-        pass
+    RELEASE_CONFIRMATION_SCOPE = "atlas_release_confirmation_mail"
+
+    def __init__(
+        self,
+        *,
+        state: AutomationStateManager | None = None,
+    ) -> None:
+        self._state = state or AutomationStateManager(
+            os.getenv(
+                "ATLAS_RELEASE_CONFIRMATION_STATE_PATH",
+                "data/lc9/LC9_AUTOMATION_STATE.json",
+            )
+        )
 
     def smtp_configured(self) -> bool:
         if self._apps_script_configured():
@@ -26,6 +41,76 @@ class AtlasIncidentEmailService:
 
     def _from_name(self) -> str:
         return "God of Maths"
+
+    def _runtime_is_production_like(self) -> bool:
+        candidates = (
+            os.getenv("APP_ENV", ""),
+            os.getenv("NODE_ENV", ""),
+            os.getenv("RAILWAY_ENVIRONMENT", ""),
+        )
+        return any(
+            str(value or "").strip().lower() == "production"
+            for value in candidates
+        )
+
+    def _release_confirmation_allowed(self) -> bool:
+        if self._runtime_is_production_like():
+            return True
+        raw = os.getenv("ATLAS_RELEASE_CONFIRMATION_ALLOW_NON_PRODUCTION", "")
+        return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+    def _release_confirmation_duplicates_allowed(self) -> bool:
+        raw = os.getenv("ATLAS_RELEASE_CONFIRMATION_ALLOW_DUPLICATES", "")
+        return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+    def _release_confirmation_sent_map(self) -> dict[str, str]:
+        row = self._state.checkpoint_row(self.RELEASE_CONFIRMATION_SCOPE)
+        raw_map = row.get("sent_map")
+        if not isinstance(raw_map, dict):
+            return {}
+        normalized: dict[str, str] = {}
+        for raw_key, raw_ts in raw_map.items():
+            key = str(raw_key or "").strip()
+            ts = str(raw_ts or "").strip()
+            if key and ts:
+                normalized[key] = ts
+        return normalized
+
+    def _release_confirmation_key(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        recipients: list[str],
+        sheet_url: str,
+    ) -> str:
+        payload = {
+            "sheet_url": str(sheet_url or "").strip(),
+            "recipients": sorted(
+                str(item or "").strip().lower()
+                for item in recipients
+                if str(item or "").strip()
+            ),
+            "releases": [
+                dict(item)
+                for item in releases
+                if isinstance(item, dict)
+            ],
+        }
+        encoded = json.dumps(payload, ensure_ascii=True, sort_keys=True).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
+
+    def _mark_release_confirmation_sent(self, confirmation_key: str) -> None:
+        key = str(confirmation_key or "").strip()
+        if not key:
+            return
+        sent_map = self._release_confirmation_sent_map()
+        sent_map[key] = datetime.now(timezone.utc).isoformat()
+        if len(sent_map) > 500:
+            sent_map = dict(list(sent_map.items())[-500:])
+        self._state.checkpoint(
+            self.RELEASE_CONFIRMATION_SCOPE,
+            sent_map=sent_map,
+        )
 
     def send_incident_report(
         self,
@@ -78,6 +163,18 @@ class AtlasIncidentEmailService:
         trigger: str = "scheduled",
         checked_at: str | None = None,
     ) -> dict[str, Any]:
+        if not self._release_confirmation_allowed():
+            return {
+                "ok": True,
+                "sent": False,
+                "recipient": "",
+                "recipients": [],
+                "message": (
+                    "Release confirmation skipped outside production-like runtime. "
+                    "Set ATLAS_RELEASE_CONFIRMATION_ALLOW_NON_PRODUCTION=true to "
+                    "override this guard intentionally."
+                ),
+            }
         recipients = self._recipient_list(recipient)
         to_email = ", ".join(recipients)
         if not recipients:
@@ -102,6 +199,26 @@ class AtlasIncidentEmailService:
                 "sent": False,
                 "recipient": to_email,
                 "message": "No release rows were provided for confirmation mail",
+            }
+        confirmation_key = self._release_confirmation_key(
+            releases=cleaned_releases,
+            recipients=recipients,
+            sheet_url=sheet_url,
+        )
+        if (
+            confirmation_key
+            and confirmation_key in self._release_confirmation_sent_map()
+            and not self._release_confirmation_duplicates_allowed()
+        ):
+            return {
+                "ok": True,
+                "sent": False,
+                "recipient": to_email,
+                "recipients": recipients,
+                "message": (
+                    "Release confirmation skipped because this exact release batch "
+                    "was already sent earlier."
+                ),
             }
         version_bits: list[str] = []
         for release in cleaned_releases[:3]:
@@ -141,11 +258,14 @@ class AtlasIncidentEmailService:
             )
         except Exception:
             pass
-        return self._send_message(
+        result = self._send_message(
             msg,
             recipients=recipients,
             from_name_override=self._from_name(),
         )
+        if bool(result.get("ok")) and bool(result.get("sent")):
+            self._mark_release_confirmation_sent(confirmation_key)
+        return result
 
     def send_release_announcement(
         self,
