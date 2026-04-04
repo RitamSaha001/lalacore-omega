@@ -4,6 +4,7 @@ import os
 import json
 import uuid
 import hashlib
+import hmac
 import re
 from datetime import datetime, timezone
 from urllib.parse import urlparse, urlunparse
@@ -68,6 +69,39 @@ def _request_public_base_url(request: Request) -> str:
         return urlunparse((public_scheme, netloc, "", "", "", "")).rstrip("/")
 
     return explicit or str(request.base_url).rstrip("/")
+
+
+def _request_signing_secret() -> str:
+    return str(os.getenv("REQUEST_SIGNING_SECRET", "") or "").strip()
+
+
+def _request_provided_signing_secret(request: Request) -> str:
+    direct = str(request.headers.get("x-request-signing-secret") or "").strip()
+    if direct:
+        return direct
+    legacy = str(request.headers.get("x-lalacore-signing-secret") or "").strip()
+    if legacy:
+        return legacy
+    auth = str(request.headers.get("authorization") or "").strip()
+    if auth.lower().startswith("bearer "):
+        return auth.split(" ", 1)[1].strip()
+    return ""
+
+
+def _require_signed_ops_request(request: Request, *, purpose: str) -> None:
+    expected = _request_signing_secret()
+    if not expected:
+        return
+    provided = _request_provided_signing_secret(request)
+    if provided and hmac.compare_digest(provided, expected):
+        return
+    raise HTTPException(
+        status_code=403,
+        detail=(
+            f"Missing or invalid request signing secret for {purpose}. "
+            "Provide X-Request-Signing-Secret."
+        ),
+    )
 
 
 # ==============================
@@ -3290,7 +3324,8 @@ async def automation_tick():
 
 
 @router.post("/ops/atlas-maintenance/run")
-async def atlas_maintenance_run(req: AtlasMaintenanceRunRequest):
+async def atlas_maintenance_run(request: Request, req: AtlasMaintenanceRunRequest):
+    _require_signed_ops_request(request, purpose="atlas maintenance run")
     try:
         return await _ATLAS_MAINTENANCE.run_weekly_maintenance(
             trigger=req.trigger,
@@ -3301,7 +3336,8 @@ async def atlas_maintenance_run(req: AtlasMaintenanceRunRequest):
 
 
 @router.post("/ops/atlas-maintenance/tick")
-async def atlas_maintenance_tick():
+async def atlas_maintenance_tick(request: Request):
+    _require_signed_ops_request(request, purpose="atlas maintenance tick")
     try:
         return await _ATLAS_MAINTENANCE.run_if_due()
     except Exception as e:
@@ -3317,7 +3353,11 @@ async def atlas_maintenance_status():
 
 
 @router.post("/ops/app-update-confirmation/run")
-async def app_update_confirmation_run(req: AppUpdateConfirmationRunRequest):
+async def app_update_confirmation_run(
+    request: Request,
+    req: AppUpdateConfirmationRunRequest,
+):
+    _require_signed_ops_request(request, purpose="app update confirmation run")
     try:
         return await _APP_UPDATE_RELEASE_NOTIFIER.poll_for_new_releases(
             trigger=req.trigger,
@@ -3332,7 +3372,8 @@ async def app_update_confirmation_run(req: AppUpdateConfirmationRunRequest):
 
 
 @router.post("/ops/app-update-confirmation/tick")
-async def app_update_confirmation_tick():
+async def app_update_confirmation_tick(request: Request):
+    _require_signed_ops_request(request, purpose="app update confirmation tick")
     try:
         return await _APP_UPDATE_RELEASE_NOTIFIER.poll_for_new_releases(
             trigger="tick",

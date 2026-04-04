@@ -109,6 +109,53 @@ class AppDataRoutesTests(unittest.TestCase):
         self.assertEqual(parsed.netloc, "testserver")
         self.assertTrue(parsed.path.startswith("/app/file/"))
 
+    def test_app_update_confirmation_run_requires_signing_secret(self) -> None:
+        previous = os.environ.get("REQUEST_SIGNING_SECRET")
+        os.environ["REQUEST_SIGNING_SECRET"] = "top-secret"
+        try:
+            response = self.client.post(
+                "/ops/app-update-confirmation/run",
+                json={"trigger": "publish_script"},
+            )
+        finally:
+            if previous is None:
+                os.environ.pop("REQUEST_SIGNING_SECRET", None)
+            else:
+                os.environ["REQUEST_SIGNING_SECRET"] = previous
+        self.assertEqual(response.status_code, 403)
+        self.assertIn("request signing secret", str(response.json().get("detail") or ""))
+
+    def test_app_update_confirmation_run_accepts_valid_signing_secret(self) -> None:
+        previous = os.environ.get("REQUEST_SIGNING_SECRET")
+        os.environ["REQUEST_SIGNING_SECRET"] = "top-secret"
+        try:
+            with patch.object(
+                routes._APP_UPDATE_RELEASE_NOTIFIER,
+                "poll_for_new_releases",
+                new=AsyncMock(return_value={"ok": True, "status": "SUCCESS"}),
+            ) as mocked:
+                response = self.client.post(
+                    "/ops/app-update-confirmation/run",
+                    json={
+                        "trigger": "publish_script",
+                        "recipient_email": "me@example.com,friend@example.com",
+                        "force_resend": True,
+                    },
+                    headers={"X-Request-Signing-Secret": "top-secret"},
+                )
+        finally:
+            if previous is None:
+                os.environ.pop("REQUEST_SIGNING_SECRET", None)
+            else:
+                os.environ["REQUEST_SIGNING_SECRET"] = previous
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.json().get("ok"))
+        mocked.assert_awaited_once_with(
+            trigger="publish_script",
+            recipient_email="me@example.com,friend@example.com",
+            force_resend=True,
+        )
+
     def test_get_assessments_normalizes_local_urls_to_request_origin(self) -> None:
         created = self.client.post(
             "/app/action",
