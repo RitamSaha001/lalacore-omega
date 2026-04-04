@@ -439,21 +439,31 @@ class AppUpdateReleaseNotifierService:
                     checked_at=checked_at,
                     shared_state=shared_state,
                 )
-                confirmation_result = await self._send_release_confirmation_if_needed(
-                    releases=new_releases,
-                    sheet_url=sheet_url,
-                    recipient=recipient_email,
-                    trigger=trigger,
-                    checked_at=checked_at,
-                    shared_state=shared_state,
-                )
-                mail_message = self._combined_mail_message(
-                    announcement_result=announcement_result,
-                    confirmation_result=confirmation_result,
-                )
                 announcement_ok = bool(announcement_result.get("ok"))
                 no_deliverable_recipients = bool(
                     announcement_result.get("no_deliverable_recipients")
+                )
+                if (
+                    no_deliverable_recipients
+                    and not self._trigger_requires_publish_confirmation(trigger)
+                ):
+                    confirmation_result = {
+                        "ok": True,
+                        "sent": False,
+                        "message": "",
+                    }
+                else:
+                    confirmation_result = await self._send_release_confirmation_if_needed(
+                        releases=new_releases,
+                        sheet_url=sheet_url,
+                        recipient=recipient_email,
+                        trigger=trigger,
+                        checked_at=checked_at,
+                        shared_state=shared_state,
+                    )
+                mail_message = self._combined_mail_message(
+                    announcement_result=announcement_result,
+                    confirmation_result=confirmation_result,
                 )
                 updated_seen = self._merged_seen_keys(
                     seen_release_keys,
@@ -747,6 +757,23 @@ class AppUpdateReleaseNotifierService:
         recipient_key = "|".join(self._recipient_list(recipient))
         return "::".join([recipient_key or "default", *release_keys])
 
+    def _trigger_allows_release_confirmation(self, trigger: str) -> bool:
+        normalized = str(trigger or "").strip().lower()
+        return normalized in {
+            "manual",
+            "publish_script",
+            "release_publish",
+            "sheet_publish",
+        }
+
+    def _trigger_requires_publish_confirmation(self, trigger: str) -> bool:
+        normalized = str(trigger or "").strip().lower()
+        return normalized in {
+            "publish_script",
+            "release_publish",
+            "sheet_publish",
+        }
+
     def _release_already_sent_to_recipient_from_map(
         self,
         email: str,
@@ -915,6 +942,12 @@ class AppUpdateReleaseNotifierService:
         checked_at: str,
         shared_state: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
+        if not self._trigger_allows_release_confirmation(trigger):
+            return {
+                "ok": True,
+                "sent": False,
+                "message": "",
+            }
         confirmation_map = self._merge_confirmation_maps(
             self._release_confirmation_sent_map_from_row(
                 self._state.checkpoint_row(self.CHECKPOINT_SCOPE)
