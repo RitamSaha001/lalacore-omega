@@ -13,12 +13,68 @@ from typing import Any
 from urllib.request import Request, urlopen
 
 from core.automation.state_manager import AutomationStateManager
+from services.email_branding import (
+    EmailTheme,
+    build_email_document,
+    bullet_list,
+    buttons,
+    code_block,
+    detail_rows,
+    esc,
+    metric_grid,
+    nl2br,
+    paragraph,
+    pill,
+    section,
+)
 
 
 class AtlasIncidentEmailService:
     """SMTP-backed support reporter reused by Atlas incident flows."""
 
     RELEASE_CONFIRMATION_SCOPE = "atlas_release_confirmation_mail"
+    RELEASE_THEME = EmailTheme(
+        accent="#2457ff",
+        accent_soft="#eaf0ff",
+        hero_from="#10214d",
+        hero_to="#2d7eff",
+        border="#d8e2ff",
+    )
+    OPERATOR_THEME = EmailTheme(
+        accent="#5b3df5",
+        accent_soft="#efeafd",
+        hero_from="#1d1438",
+        hero_to="#6e54ff",
+        border="#e0d7ff",
+    )
+    ASSIGNMENT_THEME = EmailTheme(
+        accent="#038b72",
+        accent_soft="#e5fbf4",
+        hero_from="#0f3d3c",
+        hero_to="#19b28f",
+        border="#d5f1ea",
+    )
+    ANALYTICS_THEME = EmailTheme(
+        accent="#0d8abf",
+        accent_soft="#e6f7ff",
+        hero_from="#0a2338",
+        hero_to="#1592cf",
+        border="#d4edf9",
+    )
+    PERFORMANCE_THEME = EmailTheme(
+        accent="#b56a00",
+        accent_soft="#fff3dd",
+        hero_from="#362012",
+        hero_to="#de8c16",
+        border="#f1dfbd",
+    )
+    INCIDENT_THEME = EmailTheme(
+        accent="#d1495b",
+        accent_soft="#fdeced",
+        hero_from="#351621",
+        hero_to="#d1495b",
+        border="#f5d3d8",
+    )
 
     def __init__(
         self,
@@ -112,6 +168,43 @@ class AtlasIncidentEmailService:
             sent_map=sent_map,
         )
 
+    def _footer_html(self, *, purpose: str, theme: EmailTheme) -> str:
+        return (
+            f'<div style="margin:0 0 10px;color:{theme.footer_ink};font-size:12px;'
+            'line-height:1.7;">'
+            f"{esc(purpose)}"
+            "</div>"
+            f'<div style="color:{theme.footer_ink};font-size:12px;line-height:1.7;">'
+            "Sent by God of Maths through the LalaCore communication system. "
+            "Designed for clear learning workflows, calm updates, and dependable delivery."
+            "</div>"
+        )
+
+    def _brand_orb(self, *, theme: EmailTheme, primary: str, secondary: str) -> str:
+        return (
+            '<div style="padding:18px;border-radius:24px;background:rgba(255,255,255,0.12);'
+            'border:1px solid rgba(255,255,255,0.18);">'
+            '<div style="width:148px;height:148px;margin:0 auto 14px;border-radius:50%;'
+            f'background:radial-gradient(circle at 30% 30%, {primary} 0%, rgba(255,255,255,0.92) 28%, {secondary} 100%);'
+            'box-shadow:0 18px 44px rgba(16,33,77,0.22);"></div>'
+            '<div style="text-align:center;color:rgba(255,255,255,0.92);font-size:13px;line-height:1.6;'
+            'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;">'
+            f'{pill("crafted mail", background="rgba(255,255,255,0.15)", color="#ffffff")}'
+            "</div>"
+            "</div>"
+        )
+
+    def _meta_aside(self, items: list[tuple[str, str]], *, theme: EmailTheme) -> str:
+        inner = detail_rows(items)
+        if not inner:
+            return ""
+        return (
+            '<div style="padding:18px 18px 6px;border-radius:24px;background:rgba(255,255,255,0.12);'
+            'border:1px solid rgba(255,255,255,0.18);backdrop-filter:blur(8px);">'
+            f"{inner}"
+            "</div>"
+        )
+
     def send_incident_report(
         self,
         *,
@@ -139,6 +232,10 @@ class AtlasIncidentEmailService:
         if reply_to:
             msg["Reply-To"] = reply_to
         msg.set_content(self._build_text_body(report))
+        msg.add_alternative(
+            self._build_incident_report_html(report),
+            subtype="html",
+        )
         try:
             msg.add_attachment(
                 json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"),
@@ -242,6 +339,15 @@ class AtlasIncidentEmailService:
                 checked_at=checked_at,
             )
         )
+        msg.add_alternative(
+            self._build_release_confirmation_html(
+                releases=cleaned_releases,
+                sheet_url=sheet_url,
+                trigger=trigger,
+                checked_at=checked_at,
+            ),
+            subtype="html",
+        )
         manifest = {
             "trigger": trigger,
             "checked_at": checked_at or "",
@@ -324,6 +430,16 @@ class AtlasIncidentEmailService:
                     recipient=str(recipient).strip(),
                 )
             )
+            msg.add_alternative(
+                self._build_release_announcement_html(
+                    releases=cleaned_releases,
+                    sheet_url=sheet_url,
+                    trigger=trigger,
+                    checked_at=checked_at,
+                    recipient=str(recipient).strip(),
+                ),
+                subtype="html",
+            )
             manifest = {
                 "trigger": trigger,
                 "checked_at": checked_at or "",
@@ -391,6 +507,10 @@ class AtlasIncidentEmailService:
         msg["Subject"] = f"[ASSESSMENT REPORT] {assessment_type} - {title[:96]}"
         msg["To"] = to_email
         msg.set_content(self._build_assessment_report_body(report))
+        msg.add_alternative(
+            self._build_assessment_report_html(report),
+            subtype="html",
+        )
         try:
             msg.add_attachment(
                 json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"),
@@ -447,6 +567,10 @@ class AtlasIncidentEmailService:
         )
         msg["To"] = to_email
         msg.set_content(self._build_assessment_submission_report_body(report))
+        msg.add_alternative(
+            self._build_assessment_submission_report_html(report),
+            subtype="html",
+        )
         try:
             msg.add_attachment(
                 json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"),
@@ -487,6 +611,10 @@ class AtlasIncidentEmailService:
         )
         msg["To"] = ", ".join(recipients)
         msg.set_content(self._build_assignment_announcement_body(report))
+        msg.add_alternative(
+            self._build_assignment_announcement_html(report),
+            subtype="html",
+        )
         try:
             msg.add_attachment(
                 json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"),
@@ -1172,6 +1300,141 @@ class AtlasIncidentEmailService:
             ]
         )
 
+    def _incident_json_block(self, label: str, value: Any) -> str:
+        if isinstance(value, dict):
+            payload = json.dumps(value, indent=2, ensure_ascii=False)
+        elif isinstance(value, list):
+            payload = json.dumps(value, indent=2, ensure_ascii=False)
+        else:
+            payload = str(value or "").strip()
+        if not payload:
+            return ""
+        return section(
+            label,
+            code_block(payload),
+            accent=self.INCIDENT_THEME.accent,
+            background="#fff8f8",
+        )
+
+    def _normalized_lines(self, value: Any) -> list[str]:
+        if isinstance(value, list):
+            return [str(item).strip() for item in value if str(item).strip()]
+        if isinstance(value, str):
+            return [line.strip() for line in value.splitlines() if line.strip()]
+        return []
+
+    def _display_url(self, *candidates: Any) -> str:
+        for candidate in candidates:
+            text = str(candidate or "").strip()
+            if text:
+                return text
+        return ""
+
+    def _build_incident_report_html(self, report: dict[str, Any]) -> str:
+        severity = str(report.get("severity") or "medium").strip().upper()
+        likely_root_causes = self._normalized_lines(report.get("likely_root_causes"))
+        next_steps = self._normalized_lines(report.get("next_steps"))
+        evidence = self._normalized_lines(report.get("evidence"))
+        reporter = report.get("reporter") if isinstance(report.get("reporter"), dict) else {}
+        hero_aside = self._meta_aside(
+            [
+                ("Severity", severity or "MEDIUM"),
+                ("Incident id", str(report.get("incident_id") or "Pending")),
+                ("Surface", str(report.get("surface") or "General")),
+            ],
+            theme=self.INCIDENT_THEME,
+        )
+        body_html = "".join(
+            [
+                section(
+                    "Issue summary",
+                    "".join(
+                        [
+                            paragraph(
+                                report.get("issue_summary") or "Atlas raised an incident without a short summary yet.",
+                                size=18,
+                            ),
+                            paragraph(
+                                report.get("summary") or "A deeper Atlas summary was not attached to this report.",
+                                color=self.INCIDENT_THEME.muted,
+                            ),
+                        ]
+                    ),
+                    accent=self.INCIDENT_THEME.accent,
+                    background="#fffaf8",
+                ),
+                metric_grid(
+                    [
+                        ("Role", str(report.get("role") or "N/A")),
+                        ("Impact", str(report.get("impact_assessment") or "Needs review")),
+                    ],
+                    accent=self.INCIDENT_THEME.accent,
+                    soft=self.INCIDENT_THEME.accent_soft,
+                ),
+                section(
+                    "Likely root causes",
+                    bullet_list(
+                        likely_root_causes,
+                        accent=self.INCIDENT_THEME.accent,
+                        empty_message="Atlas could not isolate a dominant cause yet.",
+                    ),
+                    accent=self.INCIDENT_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Evidence",
+                    bullet_list(
+                        evidence,
+                        accent=self.INCIDENT_THEME.accent,
+                        empty_message="No strong evidence list was generated.",
+                    ),
+                    accent=self.INCIDENT_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Next steps",
+                    bullet_list(
+                        next_steps,
+                        accent=self.INCIDENT_THEME.accent,
+                        empty_message="No next-step list was generated.",
+                    ),
+                    accent=self.INCIDENT_THEME.accent,
+                    background="#fffaf8",
+                ),
+                section(
+                    "Reporter",
+                    detail_rows(
+                        [
+                            ("Name", str(reporter.get("name") or "N/A")),
+                            ("Email", str(reporter.get("email") or "N/A")),
+                            ("Reply to", str(report.get("reply_to_email") or reporter.get("email") or "N/A")),
+                        ]
+                    ),
+                    accent=self.INCIDENT_THEME.accent,
+                    background="#ffffff",
+                ),
+                self._incident_json_block("Diagnostics snapshot", report.get("diagnostics")),
+                self._incident_json_block(
+                    "Diagnostics before repair",
+                    report.get("diagnostics_before_repair"),
+                ),
+                self._incident_json_block("Runtime logs excerpt", report.get("runtime_logs")),
+            ]
+        )
+        return build_email_document(
+            theme=self.INCIDENT_THEME,
+            eyebrow="operator incident",
+            title="Atlas raised an incident",
+            subtitle="A sharply formatted operator digest with the issue, impact, evidence, and next repair steps in one place.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="Operator incident digest",
+                theme=self.INCIDENT_THEME,
+            ),
+            preheader=f"{severity} incident: {str(report.get('issue_summary') or '').strip()}",
+            hero_aside_html=hero_aside,
+        )
+
     def _build_release_confirmation_body(
         self,
         *,
@@ -1219,6 +1482,103 @@ class AtlasIncidentEmailService:
                 ]
             )
         return "\n".join(lines)
+
+    def _build_release_confirmation_html(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        sheet_url: str,
+        trigger: str,
+        checked_at: str | None,
+    ) -> str:
+        cards: list[str] = []
+        for idx, release in enumerate(releases, start=1):
+            notes = self._normalized_lines(release.get("release_notes"))
+            cards.append(
+                section(
+                    f"Release {idx}",
+                    "".join(
+                        [
+                            metric_grid(
+                                [
+                                    ("Version", str(release.get("version") or "N/A")),
+                                    ("Build", str(release.get("build_number") or "N/A")),
+                                    ("Audience", str(release.get("audience") or "all")),
+                                    ("Platform", str(release.get("platform") or "all")),
+                                ],
+                                accent=self.OPERATOR_THEME.accent,
+                                soft=self.OPERATOR_THEME.accent_soft,
+                            ),
+                            detail_rows(
+                                [
+                                    ("App id", str(release.get("app_id") or "lalacore_rebuild")),
+                                    ("Channel", str(release.get("channel") or "stable")),
+                                    ("Force update", "Yes" if bool(release.get("force")) else "No"),
+                                    (
+                                        "Message",
+                                        str(release.get("message") or "No message was provided in the release row."),
+                                    ),
+                                    (
+                                        "Android URL",
+                                        self._display_url(release.get("android_url"), release.get("apk_url")) or "N/A",
+                                    ),
+                                    ("iOS URL", self._display_url(release.get("ios_url")) or "N/A"),
+                                    ("Generic URL", self._display_url(release.get("download_url")) or "N/A"),
+                                ]
+                            ),
+                            section(
+                                "Patch notes",
+                                bullet_list(
+                                    notes,
+                                    accent=self.OPERATOR_THEME.accent,
+                                    empty_message="No release notes were provided.",
+                                ),
+                                accent=self.OPERATOR_THEME.accent,
+                                background="#faf7ff",
+                            ),
+                        ]
+                    ),
+                    accent=self.OPERATOR_THEME.accent,
+                    background="#ffffff",
+                )
+            )
+        hero_aside = self._meta_aside(
+            [
+                ("Trigger", trigger or "scheduled"),
+                ("Checked at", checked_at or "N/A"),
+                ("Rows", str(len(releases))),
+            ],
+            theme=self.OPERATOR_THEME,
+        )
+        body_html = "".join(
+            [
+                section(
+                    "Published feed",
+                    detail_rows(
+                        [
+                            ("Sheet URL", sheet_url),
+                            ("Release rows detected", str(len(releases))),
+                        ]
+                    ),
+                    accent=self.OPERATOR_THEME.accent,
+                    background="#faf7ff",
+                ),
+                "".join(cards),
+            ]
+        )
+        return build_email_document(
+            theme=self.OPERATOR_THEME,
+            eyebrow="release control",
+            title="Atlas published release metadata",
+            subtitle="A clean operator confirmation for the exact release batch that entered the update pipeline.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="Internal release confirmation",
+                theme=self.OPERATOR_THEME,
+            ),
+            preheader=f"{len(releases)} release row(s) published from Atlas",
+            hero_aside_html=hero_aside,
+        )
 
     def _release_subject_suffix(self, releases: list[dict[str, Any]]) -> str:
         version_bits: list[str] = []
@@ -1298,3 +1658,405 @@ class AtlasIncidentEmailService:
             ]
         )
         return "\n".join(lines)
+
+    def _build_release_announcement_html(
+        self,
+        *,
+        releases: list[dict[str, Any]],
+        sheet_url: str,
+        trigger: str,
+        checked_at: str | None,
+        recipient: str,
+    ) -> str:
+        cards: list[str] = []
+        for idx, release in enumerate(releases, start=1):
+            notes = self._normalized_lines(release.get("release_notes"))
+            actions = [
+                ("Download for Android", self._display_url(release.get("android_url"), release.get("apk_url"))),
+                ("Download for iPhone or iPad", self._display_url(release.get("ios_url"))),
+                ("Open update link", self._display_url(release.get("download_url"))),
+            ]
+            cards.append(
+                section(
+                    f"Release {idx}",
+                    "".join(
+                        [
+                            metric_grid(
+                                [
+                                    ("Version", str(release.get("version") or "N/A")),
+                                    ("Build", str(release.get("build_number") or "N/A")),
+                                    ("Forced", "Yes" if bool(release.get("force")) else "No"),
+                                    ("Platform", str(release.get("platform") or "all")),
+                                ],
+                                accent=self.RELEASE_THEME.accent,
+                                soft=self.RELEASE_THEME.accent_soft,
+                            ),
+                            paragraph(
+                                str(release.get("message") or "A new update is ready for your app experience."),
+                                size=18,
+                            ),
+                            detail_rows(
+                                [
+                                    ("Channel", str(release.get("channel") or "stable")),
+                                    ("Audience", str(release.get("audience") or "all")),
+                                    (
+                                        "Minimum supported version",
+                                        str(release.get("min_supported_version") or "N/A"),
+                                    ),
+                                    (
+                                        "Minimum supported build",
+                                        str(release.get("min_supported_build") or "N/A"),
+                                    ),
+                                ]
+                            ),
+                            buttons(
+                                actions,
+                                accent=self.RELEASE_THEME.accent,
+                                text_color=self.RELEASE_THEME.button_text,
+                            ),
+                            section(
+                                "Patch notes",
+                                bullet_list(
+                                    notes,
+                                    accent=self.RELEASE_THEME.accent,
+                                    empty_message="Detailed release notes were not attached to this release row.",
+                                ),
+                                accent=self.RELEASE_THEME.accent,
+                                background="#f8faff",
+                            ),
+                        ]
+                    ),
+                    accent=self.RELEASE_THEME.accent,
+                    background="#ffffff",
+                )
+            )
+        hero_aside = self._brand_orb(
+            theme=self.RELEASE_THEME,
+            primary="#7db7ff",
+            secondary="#2457ff",
+        )
+        body_html = "".join(
+            [
+                section(
+                    "Delivery details",
+                    detail_rows(
+                        [
+                            ("Sent to", recipient),
+                            ("Detected via", trigger),
+                            ("Checked at", checked_at or "N/A"),
+                            ("Release sheet", sheet_url),
+                        ]
+                    ),
+                    accent=self.RELEASE_THEME.accent,
+                    background="#f8faff",
+                ),
+                "".join(cards),
+            ]
+        )
+        return build_email_document(
+            theme=self.RELEASE_THEME,
+            eyebrow="app update",
+            title="A polished LalaCore update is ready",
+            subtitle="A calmer, more premium release note built to help students and teachers update without friction or noise.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="User-facing release announcement",
+                theme=self.RELEASE_THEME,
+            ),
+            preheader=self._release_subject_suffix(releases),
+            hero_aside_html=hero_aside,
+        )
+
+    def _build_assessment_report_html(self, report: dict[str, Any]) -> str:
+        weak_sections = report.get("weak_sections") or []
+        weak_section_lines = [
+            f"{item.get('section')}: {item.get('average_accuracy')}% average accuracy"
+            for item in weak_sections[:8]
+            if isinstance(item, dict)
+        ]
+        top_students = report.get("top_students") or []
+        top_student_lines = [
+            f"{item.get('student_name') or item.get('student_id')}: {item.get('score_pct')}%"
+            for item in top_students[:10]
+            if isinstance(item, dict)
+        ]
+        reattempted_students = [
+            str(item).strip()
+            for item in (report.get("reattempted_students") or [])[:20]
+            if str(item).strip()
+        ]
+        hero_aside = self._meta_aside(
+            [
+                ("Assessment", str(report.get("assessment_type") or "Assessment")),
+                ("Deadline", str(report.get("deadline") or "N/A")),
+                ("Generated", str(report.get("generated_at") or "N/A")),
+            ],
+            theme=self.ANALYTICS_THEME,
+        )
+        body_html = "".join(
+            [
+                metric_grid(
+                    [
+                        ("Total submissions", str(report.get("total_submissions") or 0)),
+                        ("Unique students", str(report.get("unique_students") or 0)),
+                        ("First-attempt average", f"{report.get('first_attempt_average_pct') or 0}%"),
+                        ("Reattempts", str(report.get("reattempt_submissions") or 0)),
+                    ],
+                    accent=self.ANALYTICS_THEME.accent,
+                    soft=self.ANALYTICS_THEME.accent_soft,
+                ),
+                section(
+                    "Assessment snapshot",
+                    detail_rows(
+                        [
+                            ("Title", str(report.get("assessment_title") or "Assessment")),
+                            ("Type", str(report.get("assessment_type") or "Assessment")),
+                            ("Deadline", str(report.get("deadline") or "N/A")),
+                            ("First-attempt best", f"{report.get('first_attempt_best_pct') or 0}%"),
+                            ("First-attempt worst", f"{report.get('first_attempt_worst_pct') or 0}%"),
+                        ]
+                    ),
+                    accent=self.ANALYTICS_THEME.accent,
+                    background="#f5fbff",
+                ),
+                section(
+                    "Weak sections",
+                    bullet_list(
+                        weak_section_lines,
+                        accent=self.ANALYTICS_THEME.accent,
+                        empty_message="No weak section cluster was identified.",
+                    ),
+                    accent=self.ANALYTICS_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Top first attempts",
+                    bullet_list(
+                        top_student_lines,
+                        accent=self.ANALYTICS_THEME.accent,
+                        empty_message="No top-attempt summary was available.",
+                    ),
+                    accent=self.ANALYTICS_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Students who reattempted",
+                    bullet_list(
+                        reattempted_students,
+                        accent=self.ANALYTICS_THEME.accent,
+                        empty_message="No reattempts were recorded.",
+                    ),
+                    accent=self.ANALYTICS_THEME.accent,
+                    background="#f5fbff",
+                ),
+            ]
+        )
+        return build_email_document(
+            theme=self.ANALYTICS_THEME,
+            eyebrow="teacher analytics",
+            title="Assessment performance digest",
+            subtitle="A premium analytics snapshot for deadlines, first-attempt quality, and student reattempt behaviour.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="Assessment deadline report",
+                theme=self.ANALYTICS_THEME,
+            ),
+            preheader=str(report.get("assessment_title") or "Assessment report"),
+            hero_aside_html=hero_aside,
+        )
+
+    def _build_assessment_submission_report_html(self, report: dict[str, Any]) -> str:
+        section_accuracy = report.get("section_accuracy") or {}
+        first_attempt_baseline = report.get("first_attempt_baseline") or {}
+        answer_snapshot = report.get("answer_snapshot") or []
+        answer_lines = [
+            (
+                f"Q{item.get('question_index') or '?'} [{item.get('status') or 'unknown'}]: "
+                f"Student {item.get('student_answer') or 'Skipped'} | "
+                f"Correct {item.get('correct_answer') or 'N/A'}"
+            )
+            for item in answer_snapshot[:20]
+            if isinstance(item, dict)
+        ]
+        section_lines = [
+            f"{key}: {value}%"
+            for key, value in section_accuracy.items()
+        ] if isinstance(section_accuracy, dict) else []
+        baseline_rows = (
+            [
+                ("Score", f"{first_attempt_baseline.get('score') or 0} / {first_attempt_baseline.get('total') or 0}"),
+                ("Score percent", f"{first_attempt_baseline.get('score_pct') or 0}%"),
+                ("Submitted at", str(first_attempt_baseline.get("submitted_at") or "N/A")),
+                ("Delta vs first attempt", f"{first_attempt_baseline.get('delta_pct')}%"),
+            ]
+            if isinstance(first_attempt_baseline, dict) and first_attempt_baseline
+            else []
+        )
+        hero_aside = self._meta_aside(
+            [
+                ("Student", str(report.get("student_name") or report.get("student_id") or "Unknown")),
+                ("Attempt", str(report.get("attempt_index") or 1)),
+                ("Counts for ranking", "Yes" if report.get("counts_for_teacher_analytics") else "No"),
+            ],
+            theme=self.PERFORMANCE_THEME,
+        )
+        body_html = "".join(
+            [
+                metric_grid(
+                    [
+                        ("Score", f"{report.get('score') or 0} / {report.get('total') or 0}"),
+                        ("Score percent", f"{report.get('score_pct') or 0}%"),
+                        ("Accuracy", f"{report.get('accuracy_pct') or 0}%"),
+                        ("Coverage", f"{report.get('coverage_pct') or 0}%"),
+                    ],
+                    accent=self.PERFORMANCE_THEME.accent,
+                    soft=self.PERFORMANCE_THEME.accent_soft,
+                ),
+                section(
+                    "Student details",
+                    detail_rows(
+                        [
+                            ("Name", str(report.get("student_name") or "N/A")),
+                            ("Student ID", str(report.get("student_id") or "N/A")),
+                            ("Account ID", str(report.get("account_id") or "N/A")),
+                            ("Email", str(report.get("student_email") or "N/A")),
+                        ]
+                    ),
+                    accent=self.PERFORMANCE_THEME.accent,
+                    background="#fffaf2",
+                ),
+                section(
+                    "Submission summary",
+                    detail_rows(
+                        [
+                            ("Assessment", str(report.get("assessment_title") or "Assessment")),
+                            ("Type", str(report.get("assessment_type") or "Assessment")),
+                            ("Submission kind", str(report.get("submission_kind") or "submission")),
+                            ("Submitted at", str(report.get("submitted_at") or "N/A")),
+                            ("Deadline", str(report.get("deadline") or "N/A")),
+                            ("Time taken", f"{report.get('total_time_seconds') or 0} seconds"),
+                            ("Scheduled duration", f"{report.get('duration_minutes') or 0} minutes"),
+                        ]
+                    ),
+                    accent=self.PERFORMANCE_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Section accuracy",
+                    bullet_list(
+                        section_lines,
+                        accent=self.PERFORMANCE_THEME.accent,
+                        empty_message="No section-level breakdown was attached.",
+                    ),
+                    accent=self.PERFORMANCE_THEME.accent,
+                    background="#ffffff",
+                ),
+                (
+                    section(
+                        "First-attempt baseline",
+                        detail_rows(baseline_rows),
+                        accent=self.PERFORMANCE_THEME.accent,
+                        background="#fffaf2",
+                    )
+                    if baseline_rows
+                    else ""
+                ),
+                section(
+                    "Answer snapshot",
+                    bullet_list(
+                        answer_lines,
+                        accent=self.PERFORMANCE_THEME.accent,
+                        empty_message="No answer snapshot was attached.",
+                    ),
+                    accent=self.PERFORMANCE_THEME.accent,
+                    background="#ffffff",
+                ),
+            ]
+        )
+        return build_email_document(
+            theme=self.PERFORMANCE_THEME,
+            eyebrow="submission intelligence",
+            title="Assessment submission detail",
+            subtitle="A tighter teacher-side performance email for scores, reattempt context, and answer review without digging into raw JSON first.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="Assessment submission report",
+                theme=self.PERFORMANCE_THEME,
+            ),
+            preheader=str(report.get("assessment_title") or "Assessment submission"),
+            hero_aside_html=hero_aside,
+        )
+
+    def _build_assignment_announcement_html(self, report: dict[str, Any]) -> str:
+        title = str(report.get("assessment_title") or "Assessment").strip()
+        question_count = int(report.get("question_count") or 0)
+        total_marks = int(report.get("total_marks") or 0)
+        duration_minutes = int(report.get("duration_minutes") or 0)
+        start_at = str(report.get("start_at") or "").strip()
+        deadline = str(report.get("deadline") or "N/A").strip() or "N/A"
+        quiz_url = str(report.get("quiz_url") or "").strip()
+        hero_aside = self._brand_orb(
+            theme=self.ASSIGNMENT_THEME,
+            primary="#6ff0d8",
+            secondary="#038b72",
+        )
+        body_html = "".join(
+            [
+                metric_grid(
+                    [
+                        ("Questions", str(question_count)),
+                        ("Marks", str(total_marks)),
+                        ("Duration", f"{duration_minutes} min" if duration_minutes > 0 else "Flexible"),
+                        ("Deadline", deadline),
+                    ],
+                    accent=self.ASSIGNMENT_THEME.accent,
+                    soft=self.ASSIGNMENT_THEME.accent_soft,
+                ),
+                section(
+                    "Assignment brief",
+                    detail_rows(
+                        [
+                            ("Title", title),
+                            ("Type", str(report.get("assessment_type") or "Assessment")),
+                            ("Class", str(report.get("class_name") or "N/A")),
+                            ("Subject", str(report.get("subject") or "N/A")),
+                            ("Chapter or topic", str(report.get("chapters") or "N/A")),
+                            ("Available from", start_at or "Immediately"),
+                            ("Deadline", deadline),
+                        ]
+                    ),
+                    accent=self.ASSIGNMENT_THEME.accent,
+                    background="#f5fffb",
+                ),
+                section(
+                    "What to do next",
+                    "".join(
+                        [
+                            paragraph(
+                                "Open the app to review instructions, solve carefully, and track analytics after submission.",
+                            ),
+                            buttons(
+                                [("Open assignment", quiz_url)],
+                                accent=self.ASSIGNMENT_THEME.accent,
+                                text_color=self.ASSIGNMENT_THEME.button_text,
+                            ),
+                        ]
+                    ),
+                    accent=self.ASSIGNMENT_THEME.accent,
+                    background="#ffffff",
+                ),
+            ]
+        )
+        return build_email_document(
+            theme=self.ASSIGNMENT_THEME,
+            eyebrow="new assignment",
+            title="A new task is ready in LalaCore",
+            subtitle="A cleaner student-facing announcement with the essentials up front and a direct path back into the app.",
+            body_html=body_html,
+            footer_html=self._footer_html(
+                purpose="Assignment announcement",
+                theme=self.ASSIGNMENT_THEME,
+            ),
+            preheader=title,
+            hero_aside_html=hero_aside,
+        )

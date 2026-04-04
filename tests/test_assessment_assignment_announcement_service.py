@@ -1,7 +1,9 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
 from services.assessment_assignment_announcement_service import (
@@ -23,6 +25,17 @@ class _FakeEmailService:
 
 
 class AssessmentAssignmentAnnouncementServiceTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self._assignment_enabled = patch.dict(
+            os.environ,
+            {"ATLAS_ASSIGNMENT_ANNOUNCEMENT_ENABLED": "true"},
+            clear=False,
+        )
+        self._assignment_enabled.start()
+
+    def tearDown(self) -> None:
+        self._assignment_enabled.stop()
+
     def test_notify_assessment_assigned_sends_only_to_deliverable_students_once(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -166,3 +179,92 @@ class AssessmentAssignmentAnnouncementServiceTests(unittest.TestCase):
             email="student@school.edu",
         )
         self.assertEqual(report["start_at"], "2026-04-05T06:30:00Z")
+
+    def test_notify_pending_assessments_for_email_skips_expired_archived_and_completed_items(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            auth_root = root / "auth"
+            app_root = root / "app"
+            auth_root.mkdir(parents=True, exist_ok=True)
+            app_root.mkdir(parents=True, exist_ok=True)
+            (auth_root / "users.json").write_text(
+                json.dumps(
+                    {
+                        "latejoiner@school.edu": {
+                            "email": "latejoiner@school.edu",
+                            "role": "student",
+                            "account_id": "stu_late",
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (app_root / "assessments.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "id": "quiz_fresh_exam",
+                            "title": "Fresh Exam",
+                            "type": "Exam",
+                            "deadline": "2099-01-01T00:00:00Z",
+                        },
+                        {
+                            "id": "quiz_fresh_hw",
+                            "title": "Fresh Homework",
+                            "type": "Homework",
+                            "deadline": "2099-01-02T00:00:00Z",
+                            "start_at": "2098-12-31T10:00:00Z",
+                        },
+                        {
+                            "id": "quiz_expired",
+                            "title": "Expired Exam",
+                            "type": "Exam",
+                            "deadline": "2020-01-01T00:00:00Z",
+                        },
+                        {
+                            "id": "quiz_archived",
+                            "title": "Archived Homework",
+                            "type": "Homework",
+                            "archived": True,
+                            "deadline": "2099-01-03T00:00:00Z",
+                        },
+                        {
+                            "id": "quiz_done",
+                            "title": "Already Submitted",
+                            "type": "Exam",
+                            "deadline": "2099-01-04T00:00:00Z",
+                        },
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            (app_root / "results.json").write_text(
+                json.dumps(
+                    [
+                        {
+                            "quiz_id": "quiz_done",
+                            "account_id": "stu_late",
+                            "score": 92,
+                        }
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            fake_email = _FakeEmailService()
+            service = AssessmentAssignmentAnnouncementService(
+                email_service=fake_email,
+                assessments_file=app_root / "assessments.json",
+                results_file=app_root / "results.json",
+                auth_users_file=auth_root / "users.json",
+                auth_storage_db_file=auth_root / "auth_store.sqlite3",
+                app_storage_db_file=app_root / "app_data.sqlite3",
+            )
+
+            result = service.notify_pending_assessments_for_email("latejoiner@school.edu")
+
+        self.assertTrue(result.get("ok"))
+        self.assertEqual(result.get("sent_count"), 2)
+        self.assertEqual(
+            [call["report"]["assessment_id"] for call in fake_email.calls],
+            ["quiz_fresh_exam", "quiz_fresh_hw"],
+        )

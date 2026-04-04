@@ -20,6 +20,7 @@ class AssessmentAssignmentAnnouncementService:
         *,
         email_service: AtlasIncidentEmailService | None = None,
         assessments_file: str | Path | None = None,
+        results_file: str | Path | None = None,
         auth_users_file: str | Path | None = None,
         auth_storage_db_file: str | Path | None = None,
         app_storage_db_file: str | Path | None = None,
@@ -30,6 +31,9 @@ class AssessmentAssignmentAnnouncementService:
         self._email = email_service or AtlasIncidentEmailService()
         self._assessments_file = (
             Path(assessments_file) if assessments_file else app_dir / "assessments.json"
+        )
+        self._results_file = (
+            Path(results_file) if results_file else app_dir / "results.json"
         )
         self._auth_users_file = (
             Path(auth_users_file) if auth_users_file else auth_dir / "users.json"
@@ -75,7 +79,7 @@ class AssessmentAssignmentAnnouncementService:
         details: list[dict[str, Any]] = []
         all_ok = True
         for assessment in assessments:
-            if not self._is_assignable_assessment(assessment):
+            if not self._is_pending_assessment_for_email(assessment, normalized):
                 continue
             result = self._send_to_recipients(
                 assessment=assessment,
@@ -213,6 +217,21 @@ class AssessmentAssignmentAnnouncementService:
         except Exception:
             return []
 
+    def _all_results(self) -> list[dict[str, Any]]:
+        from_db = self._app_storage.read_json("app_results")
+        if isinstance(from_db, list):
+            return [dict(row) for row in from_db if isinstance(row, dict)]
+        try:
+            if not self._results_file.exists():
+                return []
+            raw = self._results_file.read_text(encoding="utf-8").strip()
+            decoded = json.loads(raw) if raw else []
+            if not isinstance(decoded, list):
+                return []
+            return [dict(row) for row in decoded if isinstance(row, dict)]
+        except Exception:
+            return []
+
     def _student_recipients(self) -> list[str]:
         recipients: list[str] = []
         seen: set[str] = set()
@@ -258,6 +277,18 @@ class AssessmentAssignmentAnnouncementService:
         except Exception:
             return []
 
+    def _iter_auth_users(self) -> list[dict[str, Any]]:
+        merged: dict[str, dict[str, Any]] = {}
+        for row in self._auth_users_from_json_file() + self._auth_users_from_sqlite_store():
+            email = self._normalize_email(row.get("email"))
+            if not email:
+                continue
+            merged_row = dict(merged.get(email) or {})
+            merged_row.update(dict(row))
+            merged_row["email"] = email
+            merged[email] = merged_row
+        return list(merged.values())
+
     def _read_state(self) -> dict[str, Any]:
         decoded = self._app_storage.read_json(self._STATE_KEY)
         if not isinstance(decoded, dict):
@@ -285,6 +316,79 @@ class AssessmentAssignmentAnnouncementService:
     def _is_assignable_assessment(self, assessment: dict[str, Any]) -> bool:
         kind = self._string(assessment.get("type")).lower()
         return "exam" in kind or "homework" in kind
+
+    def _is_pending_assessment_for_email(
+        self,
+        assessment: dict[str, Any],
+        email: str,
+    ) -> bool:
+        if not self._is_assignable_assessment(assessment):
+            return False
+        if self._assessment_is_hidden_or_inactive(assessment):
+            return False
+        if self._assessment_is_expired(assessment):
+            return False
+        if self._assessment_has_submission_for_email(assessment, email):
+            return False
+        return True
+
+    def _assessment_is_hidden_or_inactive(self, assessment: dict[str, Any]) -> bool:
+        metadata = (
+            dict(assessment.get("metadata"))
+            if isinstance(assessment.get("metadata"), dict)
+            else {}
+        )
+        for raw in (
+            assessment.get("archived"),
+            assessment.get("is_archived"),
+            assessment.get("deleted"),
+            assessment.get("is_deleted"),
+            assessment.get("disabled"),
+            metadata.get("archived"),
+            metadata.get("deleted"),
+            metadata.get("disabled"),
+        ):
+            if self._to_bool(raw):
+                return True
+        published = assessment.get("published")
+        if published is not None and not self._to_bool(published):
+            return True
+        status = self._string(
+            assessment.get("status") or metadata.get("status")
+        ).lower()
+        return status in {
+            "archived",
+            "cancelled",
+            "canceled",
+            "deleted",
+            "disabled",
+            "draft",
+            "inactive",
+        }
+
+    def _assessment_is_expired(self, assessment: dict[str, Any]) -> bool:
+        deadline = self._parse_dt(assessment.get("deadline") or assessment.get("date"))
+        if deadline is None:
+            return False
+        return deadline < datetime.now(timezone.utc)
+
+    def _assessment_has_submission_for_email(
+        self,
+        assessment: dict[str, Any],
+        email: str,
+    ) -> bool:
+        assessment_id = self._assessment_id(assessment)
+        if not assessment_id:
+            return False
+        identity_tokens = self._identity_tokens_for_email(email)
+        if not identity_tokens:
+            return False
+        for result in self._all_results():
+            if self._result_assessment_id(result) != assessment_id:
+                continue
+            if self._result_matches_identity_tokens(result, identity_tokens):
+                return True
+        return False
 
     def _assessment_id(self, assessment: dict[str, Any]) -> str:
         return self._string(assessment.get("id") or assessment.get("quiz_id"))
@@ -319,3 +423,80 @@ class AssessmentAssignmentAnnouncementService:
             return int(float(str(value).strip()))
         except Exception:
             return fallback
+
+    def _to_bool(self, value: Any) -> bool:
+        return str(value or "").strip().lower() in {"1", "true", "yes", "on"}
+
+    def _parse_dt(self, value: Any) -> datetime | None:
+        raw = self._string(value)
+        if not raw:
+            return None
+        try:
+            parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except Exception:
+            try:
+                parsed = datetime.strptime(raw, "%Y-%m-%d")
+            except Exception:
+                return None
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+
+    def _identity_tokens_for_email(self, email: str) -> set[str]:
+        normalized_email = self._normalize_email(email)
+        tokens: set[str] = set()
+        if normalized_email:
+            tokens.add(normalized_email)
+        for user in self._iter_auth_users():
+            if self._normalize_email(user.get("email")) != normalized_email:
+                continue
+            for key in (
+                "account_id",
+                "accountId",
+                "student_id",
+                "studentId",
+                "user_id",
+                "userId",
+                "username",
+                "roll_number",
+                "rollNumber",
+            ):
+                value = self._string(user.get(key)).lower()
+                if value:
+                    tokens.add(value)
+        return tokens
+
+    def _result_assessment_id(self, row: dict[str, Any]) -> str:
+        return self._string(
+            row.get("quiz_id")
+            or row.get("quizId")
+            or row.get("assessment_id")
+            or row.get("assessmentId")
+            or row.get("id")
+        )
+
+    def _result_matches_identity_tokens(
+        self,
+        row: dict[str, Any],
+        identity_tokens: set[str],
+    ) -> bool:
+        if not identity_tokens:
+            return False
+        for key in (
+            "email",
+            "student_email",
+            "studentEmail",
+            "account_id",
+            "accountId",
+            "student_id",
+            "studentId",
+            "user_id",
+            "userId",
+            "username",
+            "roll_number",
+            "rollNumber",
+        ):
+            value = self._string(row.get(key)).lower()
+            if value and value in identity_tokens:
+                return True
+        return False

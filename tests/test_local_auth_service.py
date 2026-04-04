@@ -185,6 +185,10 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
             _FakeSMTP.last_instance.message["From"],
             "God of Maths <sender@example.com>",
         )
+        html_body = _FakeSMTP.last_instance.message.get_body(preferencelist=("html",))
+        self.assertIsNotNone(html_body)
+        self.assertIn("Your secure reset code", html_body.get_content())
+        self.assertIn("123456", html_body.get_content())
 
     async def test_unknown_action(self):
         response = await self.service.handle_action({"action": "not_real"})
@@ -236,10 +240,29 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
 
         class _FakeReleaseNotifierService:
             def __init__(self) -> None:
-                self.calls: list[tuple[str, str]] = []
+                self.calls: list[tuple[str, str, str]] = []
 
-            def notify_pending_releases_for_email(self, email: str, *, role: str):
-                self.calls.append((email, role))
+            async def notify_pending_releases_for_email_async(
+                self,
+                email: str,
+                *,
+                role: str,
+                platform: str = "",
+            ):
+                return self.notify_pending_releases_for_email(
+                    email,
+                    role=role,
+                    platform=platform,
+                )
+
+            def notify_pending_releases_for_email(
+                self,
+                email: str,
+                *,
+                role: str,
+                platform: str = "",
+            ):
+                self.calls.append((email, role, platform))
                 return {"ok": True, "sent_count": 0}
 
         fake_release = _FakeReleaseNotifierService()
@@ -257,6 +280,7 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
                 "name": "Student One",
                 "username": "student_one",
                 "device_id": self.device_id,
+                "platform": "android",
             }
         )
         await service.handle_action(
@@ -265,14 +289,15 @@ class LocalAuthServiceTests(unittest.IsolatedAsyncioTestCase):
                 "email": "student@school.edu",
                 "password": "abcd1234",
                 "device_id": self.device_id,
+                "platform": "android",
             }
         )
         await asyncio.sleep(0.05)
         self.assertEqual(
             fake_release.calls,
             [
-                ("student@school.edu", "student"),
-                ("student@school.edu", "student"),
+                ("student@school.edu", "student", "android"),
+                ("student@school.edu", "student", "android"),
             ],
         )
 

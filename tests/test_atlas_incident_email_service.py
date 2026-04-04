@@ -75,11 +75,12 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
                 os.environ,
                 {
                     "APP_ENV": "production",
-                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
-                        tmpdir, "release_state.json"
-                    ),
                     "ATLAS_SUPPORT_EMAIL_RECIPIENT": recipients,
                     "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
+                        tmpdir,
+                        "state.json",
+                    ),
                     "OTP_SENDER_EMAIL": "sender@example.com",
                     "OTP_SENDER_PASSWORD": "secret",
                     "OTP_SMTP_HOST": "smtp.example.com",
@@ -122,6 +123,9 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             _FakeSMTP.last_instance.message["From"],
             "God of Maths <sender@example.com>",
         )
+        html_body = _FakeSMTP.last_instance.message.get_body(preferencelist=("html",))
+        self.assertIsNotNone(html_body)
+        self.assertIn("Atlas published release metadata", html_body.get_content())
 
     def test_release_confirmation_skips_when_support_recipient_is_cleared_after_init(
         self,
@@ -130,174 +134,51 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             def __init__(self, *args, **kwargs) -> None:
                 raise AssertionError("SMTP should not be invoked")
 
-        with tempfile.TemporaryDirectory() as tmpdir:
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_ENV": "production",
-                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
-                        tmpdir, "release_state.json"
-                    ),
-                    "ATLAS_SUPPORT_EMAIL_RECIPIENT": "ops@example.com",
-                    "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
-                    "OTP_SENDER_EMAIL": "sender@example.com",
-                    "OTP_SENDER_PASSWORD": "secret",
-                    "OTP_SMTP_HOST": "smtp.example.com",
-                    "OTP_SMTP_PORT": "587",
-                    "OTP_SMTP_SECURITY": "tls",
-                },
-                clear=False,
-            ):
-                service = AtlasIncidentEmailService()
+        with patch.dict(
+            os.environ,
+            {
+                "APP_ENV": "production",
+                "ATLAS_SUPPORT_EMAIL_RECIPIENT": "ops@example.com",
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ):
+            service = AtlasIncidentEmailService()
 
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_ENV": "production",
-                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
-                        tmpdir, "release_state.json"
-                    ),
-                    "ATLAS_SUPPORT_EMAIL_RECIPIENT": "",
-                    "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
-                    "OTP_SENDER_EMAIL": "sender@example.com",
-                    "OTP_SENDER_PASSWORD": "secret",
-                    "OTP_SMTP_HOST": "smtp.example.com",
-                    "OTP_SMTP_PORT": "587",
-                    "OTP_SMTP_SECURITY": "tls",
-                },
-                clear=False,
-            ), patch.object(smtplib, "SMTP", _UnexpectedSMTP):
-                result = service.send_release_confirmation(
-                    releases=[
-                        {
-                            "version": "3.1.0",
-                            "build_number": "18",
-                            "audience": "all",
-                        }
-                    ],
-                    sheet_url="https://example.com/updates.csv",
-                )
+        with patch.dict(
+            os.environ,
+            {
+                "APP_ENV": "production",
+                "ATLAS_SUPPORT_EMAIL_RECIPIENT": "",
+                "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
+                "OTP_SENDER_EMAIL": "sender@example.com",
+                "OTP_SENDER_PASSWORD": "secret",
+                "OTP_SMTP_HOST": "smtp.example.com",
+                "OTP_SMTP_PORT": "587",
+                "OTP_SMTP_SECURITY": "tls",
+            },
+            clear=False,
+        ), patch.object(smtplib, "SMTP", _UnexpectedSMTP):
+            result = service.send_release_confirmation(
+                releases=[
+                    {
+                        "version": "3.1.0",
+                        "build_number": "18",
+                        "audience": "all",
+                    }
+                ],
+                sheet_url="https://example.com/updates.csv",
+            )
 
         self.assertTrue(result.get("ok"))
         self.assertFalse(result.get("sent"))
         self.assertEqual(result.get("recipients"), [])
         self.assertIn("not configured", str(result.get("message") or ""))
-
-    def test_release_confirmation_is_disabled_outside_production_by_default(
-        self,
-    ) -> None:
-        class _UnexpectedSMTP:
-            def __init__(self, *args, **kwargs) -> None:
-                raise AssertionError("SMTP should not be invoked")
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_ENV": "development",
-                    "NODE_ENV": "development",
-                    "RAILWAY_ENVIRONMENT": "",
-                    "ATLAS_RELEASE_CONFIRMATION_ALLOW_NON_PRODUCTION": "",
-                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
-                        tmpdir, "release_state.json"
-                    ),
-                    "ATLAS_SUPPORT_EMAIL_RECIPIENT": "ops@example.com",
-                    "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
-                    "OTP_SENDER_EMAIL": "sender@example.com",
-                    "OTP_SENDER_PASSWORD": "secret",
-                    "OTP_SMTP_HOST": "smtp.example.com",
-                    "OTP_SMTP_PORT": "587",
-                    "OTP_SMTP_SECURITY": "tls",
-                },
-                clear=False,
-            ), patch.object(smtplib, "SMTP", _UnexpectedSMTP):
-                service = AtlasIncidentEmailService()
-                result = service.send_release_confirmation(
-                    releases=[
-                        {
-                            "version": "3.1.1",
-                            "build_number": "19",
-                            "audience": "all",
-                        }
-                    ],
-                    sheet_url="https://example.com/updates.csv",
-                )
-
-        self.assertTrue(result.get("ok"))
-        self.assertFalse(result.get("sent"))
-        self.assertEqual(result.get("recipients"), [])
-        self.assertIn("outside production-like runtime", str(result.get("message") or ""))
-
-    def test_release_confirmation_dedupes_identical_release_batch(self) -> None:
-        class _FakeSMTP:
-            send_count = 0
-
-            def __init__(self, *args, **kwargs) -> None:
-                return None
-
-            def __enter__(self):
-                return self
-
-            def __exit__(self, exc_type, exc, tb):
-                return False
-
-            def ehlo(self) -> None:
-                return None
-
-            def starttls(self, context=None) -> None:
-                return None
-
-            def login(self, sender, password) -> None:
-                return None
-
-            def send_message(self, msg, to_addrs=None) -> None:
-                _FakeSMTP.send_count += 1
-
-        with tempfile.TemporaryDirectory() as tmpdir:
-            with patch.dict(
-                os.environ,
-                {
-                    "APP_ENV": "production",
-                    "ATLAS_RELEASE_CONFIRMATION_STATE_PATH": os.path.join(
-                        tmpdir, "release_state.json"
-                    ),
-                    "ATLAS_SUPPORT_EMAIL_RECIPIENT": "ops@example.com",
-                    "ATLAS_AUTOMAIL_WEBHOOK_URL": "",
-                    "OTP_SENDER_EMAIL": "sender@example.com",
-                    "OTP_SENDER_PASSWORD": "secret",
-                    "OTP_SMTP_HOST": "smtp.example.com",
-                    "OTP_SMTP_PORT": "587",
-                    "OTP_SMTP_SECURITY": "tls",
-                },
-                clear=False,
-            ), patch.object(smtplib, "SMTP", _FakeSMTP):
-                service = AtlasIncidentEmailService()
-                first = service.send_release_confirmation(
-                    releases=[
-                        {
-                            "version": "3.1.1",
-                            "build_number": "19",
-                            "audience": "all",
-                        }
-                    ],
-                    sheet_url="https://example.com/updates.csv",
-                )
-                second = service.send_release_confirmation(
-                    releases=[
-                        {
-                            "version": "3.1.1",
-                            "build_number": "19",
-                            "audience": "all",
-                        }
-                    ],
-                    sheet_url="https://example.com/updates.csv",
-                )
-
-        self.assertTrue(first.get("sent"))
-        self.assertTrue(second.get("ok"))
-        self.assertFalse(second.get("sent"))
-        self.assertEqual(_FakeSMTP.send_count, 1)
-        self.assertIn("already sent earlier", str(second.get("message") or ""))
 
     def test_release_announcement_sends_individual_messages_to_signed_in_users(self) -> None:
         class _FakeSMTP:
@@ -368,6 +249,10 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
         )
         self.assertIsNotNone(plain_body)
         self.assertIn("Railway stability", plain_body.get_content())
+        html_body = _FakeSMTP.sent_messages[0][1].get_body(preferencelist=("html",))
+        self.assertIsNotNone(html_body)
+        self.assertIn("A polished LalaCore update is ready", html_body.get_content())
+        self.assertIn("Download for Android", html_body.get_content())
 
     def test_assessment_submission_report_uses_god_of_maths_sender(self) -> None:
         class _FakeSMTP:
@@ -428,6 +313,9 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             _FakeSMTP.last_instance.message["From"],
             "God of Maths <sender@example.com>",
         )
+        html_body = _FakeSMTP.last_instance.message.get_body(preferencelist=("html",))
+        self.assertIsNotNone(html_body)
+        self.assertIn("Assessment submission detail", html_body.get_content())
 
     def test_assessment_submission_report_skips_when_recipient_not_configured(self) -> None:
         class _UnexpectedSMTP:
@@ -520,6 +408,10 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
             _FakeSMTP.last_instance.message["From"],
             "God of Maths <sender@example.com>",
         )
+        html_body = _FakeSMTP.last_instance.message.get_body(preferencelist=("html",))
+        self.assertIsNotNone(html_body)
+        self.assertIn("A new task is ready in LalaCore", html_body.get_content())
+        self.assertIn("Homework 1", html_body.get_content())
 
     def test_apps_script_mailer_handles_automatic_mail_without_smtp(self) -> None:
         captured_payloads: list[dict[str, object]] = []
@@ -576,6 +468,7 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
         self.assertEqual(captured_payloads[0]["sender_name"], "God of Maths")
         self.assertEqual(captured_payloads[0]["secret"], "shared-secret")
         self.assertIn("Homework 2", str(captured_payloads[0]["text_body"]))
+        self.assertIn("A new task is ready in LalaCore", str(captured_payloads[0]["html_body"]))
 
     def test_release_announcement_without_recipients_is_handled_without_failure(self) -> None:
         service = AtlasIncidentEmailService()

@@ -17,11 +17,27 @@ from services.assessment_assignment_announcement_service import (
     AssessmentAssignmentAnnouncementService,
 )
 from services.app_update_release_notifier import AppUpdateReleaseNotifierService
+from services.email_branding import (
+    EmailTheme,
+    build_email_document,
+    detail_rows,
+    paragraph,
+    pill,
+    section,
+)
 from app.storage.sqlite_json_store import SQLiteJsonBlobStore
 
 
 class LocalAuthService:
     """SQLite-backed auth + OTP service with JSON-file migration support."""
+
+    OTP_THEME = EmailTheme(
+        accent="#1a56db",
+        accent_soft="#ebf2ff",
+        hero_from="#0f1d3b",
+        hero_to="#2e74ff",
+        border="#dae5ff",
+    )
 
     def __init__(
         self,
@@ -218,6 +234,36 @@ class LocalAuthService:
         # Keep ID compact and deterministic for storage comparisons.
         return re.sub(r"[^a-zA-Z0-9:_-]", "", value)[:128]
 
+    def _normalize_platform(self, raw: Any) -> str:
+        value = self._str(raw).lower()
+        if not value:
+            return ""
+        if value in {"all", "*"}:
+            return "all"
+        if "android" in value:
+            return "android"
+        if any(token in value for token in ("ios", "iphone", "ipad")):
+            return "ios"
+        if "mac" in value:
+            return "macos"
+        if any(token in value for token in ("web", "chrome", "browser", "safari")):
+            return "web"
+        return value
+
+    def _platform_from_payload(self, payload: dict[str, Any]) -> str:
+        device_info = payload.get("device_info")
+        if isinstance(device_info, dict):
+            normalized = self._normalize_platform(
+                device_info.get("platform")
+                or device_info.get("os")
+                or device_info.get("device_platform")
+            )
+            if normalized:
+                return normalized
+        return self._normalize_platform(
+            payload.get("platform") or payload.get("device_platform")
+        )
+
     def _require_trusted_device_for_reset(self) -> bool:
         return self._env_flag("OTP_REQUIRE_TRUSTED_DEVICE_FOR_RESET", False)
 
@@ -273,7 +319,12 @@ class LocalAuthService:
         if expected != current:
             return {"ok": False, "status": "WRONG_PASSWORD"}
 
+        platform = self._platform_from_payload(payload)
         user_changed = self._attach_trusted_device(user, device_id)
+        if platform and self._str(user.get("platform")).lower() != platform:
+            user["platform"] = platform
+            user["last_platform"] = platform
+            user_changed = True
         if user_changed:
             user["updated_at"] = int(time.time() * 1000)
             self._users[email] = user
@@ -282,7 +333,13 @@ class LocalAuthService:
 
         user_role = self._str(user.get("role") or "student")
         asyncio.create_task(self._notify_pending_assignments(email))
-        asyncio.create_task(self._notify_pending_releases(email, role=user_role))
+        asyncio.create_task(
+            self._notify_pending_releases(
+                email,
+                role=user_role,
+                platform=platform or self._str(user.get("platform")),
+            )
+        )
 
         return {
             "ok": True,
@@ -333,6 +390,7 @@ class LocalAuthService:
         if not student_id:
             student_id = self._stable_student_id(email, username)
         now_ms = int(time.time() * 1000)
+        platform = self._platform_from_payload(payload)
 
         if existing is None:
             user = {
@@ -345,6 +403,8 @@ class LocalAuthService:
                 ).lower()
                 or "student",
                 "created_at": now_ms,
+                "platform": platform,
+                "last_platform": platform,
             }
         else:
             user = dict(existing)
@@ -357,6 +417,9 @@ class LocalAuthService:
                 or "student"
             )
             user["created_at"] = int(user.get("created_at", now_ms))
+            if platform:
+                user["platform"] = platform
+                user["last_platform"] = platform
 
         if password:
             if len(password) < 4:
@@ -383,7 +446,13 @@ class LocalAuthService:
 
         user_role = self._str(user.get("role") or "student")
         asyncio.create_task(self._notify_pending_assignments(email))
-        asyncio.create_task(self._notify_pending_releases(email, role=user_role))
+        asyncio.create_task(
+            self._notify_pending_releases(
+                email,
+                role=user_role,
+                platform=platform or self._str(user.get("platform")),
+            )
+        )
 
         return {
             "ok": True,
@@ -550,6 +619,10 @@ class LocalAuthService:
                 "If you did not request this, you can ignore this email."
             )
         )
+        msg.add_alternative(
+            self._build_otp_email_html(email=email, otp=otp, ttl_seconds=ttl_seconds),
+            subtype="html",
+        )
 
         # Use certifi bundle when available to avoid platform CA drift.
         try:
@@ -575,6 +648,87 @@ class LocalAuthService:
             return True, "OTP sent"
         except Exception as exc:
             return False, f"OTP email send failed: {exc}"
+
+    def _build_otp_email_html(self, *, email: str, otp: str, ttl_seconds: int) -> str:
+        minutes = max(1, ttl_seconds // 60)
+        hero_aside = (
+            '<div style="padding:18px;border-radius:24px;background:rgba(255,255,255,0.12);'
+            'border:1px solid rgba(255,255,255,0.18);">'
+            '<div style="margin:0 auto 14px;width:136px;height:136px;border-radius:50%;'
+            'background:radial-gradient(circle at 30% 30%, #9ec0ff 0%, rgba(255,255,255,0.94) 32%, #1a56db 100%);'
+            'box-shadow:0 20px 40px rgba(8,20,43,0.24);"></div>'
+            '<div style="text-align:center;">'
+            f'{pill("secure reset", background="rgba(255,255,255,0.15)", color="#ffffff")}'
+            "</div></div>"
+        )
+        otp_panel = (
+            '<div style="margin:0 0 4px;padding:22px 20px;border-radius:24px;'
+            'background:#111c32;border:1px solid rgba(255,255,255,0.08);text-align:center;">'
+            '<div style="margin:0 0 10px;color:#94a8d4;font-size:12px;font-weight:700;'
+            'letter-spacing:0.14em;text-transform:uppercase;'
+            'font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;">'
+            "One-time password</div>"
+            '<div style="color:#ffffff;font-size:40px;line-height:1.1;font-weight:800;'
+            'letter-spacing:0.24em;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;">'
+            f"{otp}</div>"
+            "</div>"
+        )
+        body_html = "".join(
+            [
+                section(
+                    "Reset access",
+                    "".join(
+                        [
+                            paragraph(
+                                "Use this code to reset your password in LalaCore. It is intentionally short, readable, and valid for a limited time only.",
+                                size=18,
+                            ),
+                            otp_panel,
+                        ]
+                    ),
+                    accent=self.OTP_THEME.accent,
+                    background="#f8fbff",
+                ),
+                section(
+                    "Security details",
+                    detail_rows(
+                        [
+                            ("Requested for", email),
+                            ("Expires in", f"{minutes} minute(s)"),
+                            ("Requested action", "Password reset"),
+                        ]
+                    ),
+                    accent=self.OTP_THEME.accent,
+                    background="#ffffff",
+                ),
+                section(
+                    "Important",
+                    paragraph(
+                        "If you did not request this reset, you can ignore this email. Your current password stays unchanged until a reset is completed.",
+                    ),
+                    accent=self.OTP_THEME.accent,
+                    background="#f8fbff",
+                ),
+            ]
+        )
+        footer_html = (
+            '<div style="margin:0 0 10px;color:#708099;font-size:12px;line-height:1.7;">'
+            "Password reset verification"
+            "</div>"
+            '<div style="color:#708099;font-size:12px;line-height:1.7;">'
+            "Sent by God of Maths through the LalaCore secure auth system."
+            "</div>"
+        )
+        return build_email_document(
+            theme=self.OTP_THEME,
+            eyebrow="password reset",
+            title="Your secure reset code",
+            subtitle="A cleaner verification email designed to be easy to scan, trustworthy, and calm on both phone and desktop.",
+            body_html=body_html,
+            footer_html=footer_html,
+            preheader=f"Your LalaCore reset code is {otp}",
+            hero_aside_html=hero_aside,
+        )
 
     async def _verify_forgot_otp(
         self,
@@ -750,12 +904,18 @@ class LocalAuthService:
         except Exception:
             return
 
-    async def _notify_pending_releases(self, email: str, *, role: str) -> None:
+    async def _notify_pending_releases(
+        self,
+        email: str,
+        *,
+        role: str,
+        platform: str = "",
+    ) -> None:
         try:
-            await asyncio.to_thread(
-                self._release_notifier.notify_pending_releases_for_email,
+            await self._release_notifier.notify_pending_releases_for_email_async(
                 email,
                 role=role,
+                platform=platform,
             )
         except Exception:
             return
