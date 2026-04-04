@@ -66,9 +66,9 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
                 self.sent_to = list(to_addrs or [])
 
         recipients = (
-            "saharitam171@gmail.com,"
-            "sanny86@gmail.com,"
-            "halder.saptajit2009@gmail.com"
+            "ops.primary@example.com,"
+            "ops.secondary@example.com,"
+            "ops.third@example.com"
         )
         with tempfile.TemporaryDirectory() as tmpdir:
             with patch.dict(
@@ -104,18 +104,18 @@ class AtlasIncidentEmailServiceTests(unittest.TestCase):
         self.assertEqual(
             result.get("recipients"),
             [
-                "saharitam171@gmail.com",
-                "sanny86@gmail.com",
-                "halder.saptajit2009@gmail.com",
+                "ops.primary@example.com",
+                "ops.secondary@example.com",
+                "ops.third@example.com",
             ],
         )
         self.assertIsNotNone(_FakeSMTP.last_instance)
         self.assertEqual(
             _FakeSMTP.last_instance.sent_to,
             [
-                "saharitam171@gmail.com",
-                "sanny86@gmail.com",
-                "halder.saptajit2009@gmail.com",
+                "ops.primary@example.com",
+                "ops.secondary@example.com",
+                "ops.third@example.com",
             ],
         )
         self.assertEqual(

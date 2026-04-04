@@ -310,6 +310,6 @@ class AppConfig {
 
   static const String forgotOtpSenderEmail = String.fromEnvironment(
     'FORGOT_OTP_SENDER_EMAIL',
-    defaultValue: 'agodofmathematics@gmail.com',
+    defaultValue: 'saharitam1212@gmail.com',
   );
 }

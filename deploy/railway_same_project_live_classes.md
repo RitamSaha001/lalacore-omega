@@ -52,7 +52,7 @@ ATLAS_ASSIGNMENT_ANNOUNCEMENT_ENABLED=true
 ATLAS_AUTOMAIL_ALLOW_SMTP_FALLBACK=false
 ATLAS_AUTOMAIL_TIMEOUT_SECONDS=40
 ATLAS_AUTOMAIL_WEBHOOK_URL=<apps-script-webhook>
-ATLAS_SUPPORT_EMAIL_RECIPIENT=saharitam171@gmail.com,sanny86@gmail.com,halder.saptajit2009@gmail.com
+ATLAS_SUPPORT_EMAIL_RECIPIENT=saharitam1212@gmail.com,sanny86@gmail.com,halder.saptajit2009@gmail.com
 ATLAS_ASSESSMENT_SUBMISSION_EMAIL_RECIPIENT=sanny86@gmail.com
 
 DATABASE_URL=<railway-postgres-url>
