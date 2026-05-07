@@ -32,6 +32,8 @@
 !telemetry/**
 !vault/
 !vault/**
+!ai_chat_site/
+!ai_chat_site/**
 !credentials/
 !credentials/google_service_account.json
 

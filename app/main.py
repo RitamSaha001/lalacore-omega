@@ -3,10 +3,14 @@ import base64
 import json
 from dotenv import load_dotenv
 from fastapi import Body, FastAPI, File, Form, HTTPException, UploadFile
-from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse, Response
+from fastapi.staticfiles import StaticFiles
 import logging
 import os
 import sys
+from pathlib import Path
+from urllib.parse import urlparse
 
 from app.live_classes_api import router as live_classes_router
 from app import routes as app_routes
@@ -34,6 +38,50 @@ _public_pdf = PDFProcessor(
     ocr_engine=_public_ocr,
     enable_remote_worker=False,
 )
+_AI_CHAT_SITE_DIR = Path(__file__).resolve().parents[1] / "ai_chat_site"
+_AI_CHAT_STATIC_DIR = _AI_CHAT_SITE_DIR / "static"
+
+
+def _cors_allowed_origins() -> list[str]:
+    configured: list[str] = []
+    for env_name in (
+        "APP_CORS_ALLOWED_ORIGINS",
+        "CORS_ALLOWED_ORIGINS",
+        "WEB_APP_ORIGIN",
+        "WEB_APP_URL",
+        "FIREBASE_HOSTING_URL",
+        "APP_PUBLIC_BASE_URL",
+    ):
+        raw = str(os.getenv(env_name, "") or "").strip()
+        if not raw:
+            continue
+        for token in raw.split(","):
+            value = token.strip().rstrip("/")
+            if not value:
+                continue
+            parsed = urlparse(value)
+            if parsed.scheme and parsed.netloc:
+                configured.append(f"{parsed.scheme}://{parsed.netloc}")
+
+    defaults = [
+        "https://jeel-db659.web.app",
+        "https://jeel-db659.firebaseapp.com",
+    ]
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for origin in [*configured, *defaults]:
+        if origin and origin not in seen:
+            seen.add(origin)
+            ordered.append(origin)
+    return ordered
+
+
+def _cors_allowed_origin_regex() -> str:
+    return (
+        r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$|"
+        r"^https://[a-z0-9-]+\.web\.app$|"
+        r"^https://[a-z0-9-]+\.firebaseapp\.com$"
+    )
 
 
 class AtlasMaintenanceLockMiddleware:
@@ -83,6 +131,23 @@ class AtlasMaintenanceLockMiddleware:
 
 
 app.add_middleware(AtlasMaintenanceLockMiddleware, service=_atlas_maintenance_service)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_cors_allowed_origins(),
+    allow_origin_regex=_cors_allowed_origin_regex(),
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=86400,
+)
+
+if _AI_CHAT_STATIC_DIR.exists():
+    app.mount(
+        "/ai-chat/static",
+        StaticFiles(directory=str(_AI_CHAT_STATIC_DIR)),
+        name="ai-chat-static",
+    )
 
 
 def _bool_env(name: str, default: bool) -> bool:
@@ -90,6 +155,36 @@ def _bool_env(name: str, default: bool) -> bool:
     if raw is None:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _runtime_is_production_like() -> bool:
+    candidates = (
+        os.getenv("APP_ENV", ""),
+        os.getenv("NODE_ENV", ""),
+        os.getenv("RAILWAY_ENVIRONMENT", ""),
+    )
+    return any(str(value or "").strip().lower() == "production" for value in candidates)
+
+
+def _allow_background_scheduler(
+    *,
+    enabled_env: str,
+    allow_non_production_env: str,
+    default_enabled: bool,
+) -> bool:
+    if not _bool_env(enabled_env, default_enabled):
+        return False
+    if _runtime_is_production_like():
+        return True
+    if _bool_env(allow_non_production_env, False):
+        return True
+    logger.warning(
+        "%s=true ignored outside production-like runtime. "
+        "Set %s=true to allow local/dev scheduler startup explicitly.",
+        enabled_env,
+        allow_non_production_env,
+    )
+    return False
 
 
 def _validate_env() -> None:
@@ -253,6 +348,21 @@ async def _warm_atlas_runtime_in_background() -> None:
 @app.get("/")
 async def root():
     return {"status": "Omega running"}
+
+
+@app.get("/ai-chat")
+@app.get("/ai-chat/")
+async def ai_chat_site():
+    index_path = _AI_CHAT_SITE_DIR / "index.html"
+    if not index_path.exists():
+        raise HTTPException(status_code=404, detail="AI chat site not found")
+    return FileResponse(index_path)
+
+
+@app.head("/ai-chat")
+@app.head("/ai-chat/")
+async def ai_chat_site_head():
+    return Response(status_code=200)
 
 
 @app.get("/health")

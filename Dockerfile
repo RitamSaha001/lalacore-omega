@@ -34,6 +34,7 @@ COPY migrations /app/migrations
 COPY models /app/models
 COPY telemetry /app/telemetry
 COPY vault /app/vault
+COPY ai_chat_site /app/ai_chat_site
 COPY credentials /app/credentials
 COPY data/vault /app/data/vault
 COPY data/app/import_question_bank.json /app/data/app/import_question_bank.json
